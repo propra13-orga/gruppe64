@@ -1,4 +1,4 @@
-package hhu.gruppe64.boxedGame;
+package com.github.propra13.gruppe64;
 /*************************************************************************
 
  *  Compilation:  javac StdDraw.java
