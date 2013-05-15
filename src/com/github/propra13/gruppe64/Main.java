@@ -10,24 +10,44 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 
 
-public class Main extends JFrame{
-	/*
-	 * TODO Kruder Java-Hack, aber inner-class sind auch schlecht implementiert
-	 */
-	private Main myself;
-	/*
-	 * TODO Was ist das?
-	 */
-	private static final long serialVersionUID = 1L;
+public class Main extends JFrame implements ActionListener{
+	//serialiseable
+	private static final long serialVersionUID = -7278907361953613792L;
+
+	
 	private Game myGame;
 
 	private Container cp;
+	
+	private class myGBC extends GridBagConstraints{
+
+		private static final long serialVersionUID = 4632170617578570378L;
+		//private static final long serialVersionUID = -964164546900389807L;
+		public myGBC(int gridx, int gridy){
+			super();
+			this.gridx = gridx;
+			this.gridy = gridy;
+			this.fill = GridBagConstraints.HORIZONTAL;
+		}
+		public myGBC(int gridx, int gridy, int gridwidth, double weightx){
+			this(gridx,gridy);
+			this.gridwidth = gridwidth;
+			this.weightx = weightx;
+		}
+	}
+	
+	private class myJButton extends JButton{
+		myJButton(String label,ActionListener al){
+			super(label);
+			addActionListener(al);
+		}
+	}
+	private JButton bNGame, bIGame, bRandom,bRead,bClose;
 	/**
 	 * Gibt Titel an JFrame
 	 */
 	public Main(){
 		super("Spiel †berschrift");
-		myself=this;
 		
 	}
 	private void initMain(){
@@ -37,96 +57,29 @@ public class Main extends JFrame{
 		/*
 		 * Neues Spiel Button
 		 */
-		JButton bNGame = new JButton("Neues Spiel");
+		bNGame = new JButton("Neues Spiel");
 		bNGame.setDefaultCapable(true);
-		bNGame.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				myself.startGame();
-				
-			}
-		});
-
-		GridBagConstraints bNGameC = new GridBagConstraints();
-		bNGameC.gridx = 1;
-		bNGameC.gridy = 1;
-		bNGameC.fill = GridBagConstraints.HORIZONTAL;
-		bNGameC.weightx = 1.0;
-		
 		/*
 		 * Neues Netzwerkgame 
 		 */
-		JButton bIGame = new JButton("Neues Netzwerk Spiel");
-
-		bIGame.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				//netGame=new NetworkGame(myself);
-				//javax.swing.SwingUtilities.invokeLater(myGame);
-			}
-		});
-
-		GridBagConstraints bIGameC = new GridBagConstraints();
-		bIGameC.gridx = 1;
-		bIGameC.gridy = 2;
-		bIGameC.fill = GridBagConstraints.HORIZONTAL;
-		bIGameC.weightx = 1.0;
-		
+		 bIGame = new JButton("Neues Netzwerk Spiel");
+		 bIGame.addActionListener(this);
 		//Neues Randomlevel
-		JButton bRandom = new JButton("Speichere Random-Level");
-
-		bRandom.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
-			}
-		});
-
-		GridBagConstraints bRandomC = new GridBagConstraints();
-		bRandomC.gridx = 1;
-		bRandomC.gridy = 3;
-		bRandomC.fill = GridBagConstraints.HORIZONTAL;
-		bRandomC.weightx = 0.5;
-		
+		 bRandom = new JButton("Speichere Random-Level");
 		//Lade Level-Game
-		JButton bRead = new JButton("Speichere Read-Level");
-
-		bRead.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
-			}
-		});
-
-		GridBagConstraints bReadC = new GridBagConstraints();
-		bReadC.gridx = 1;
-		bReadC.gridy = 4;
-		bReadC.fill = GridBagConstraints.HORIZONTAL;
-		bReadC.weightx = 0.5;
-		
+		bRead = new JButton("Lese Level");
 		 //Beenden Button
-		JButton bClose = new JButton("Beenden");
-
-		bClose.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
-			}
-		});
-
-		GridBagConstraints bCloseC = new GridBagConstraints();
-		bCloseC.gridx = 1;
-		bCloseC.gridy = 5;
-		bCloseC.fill = GridBagConstraints.HORIZONTAL;
-		bCloseC.weightx = 1.0;
-
+		bClose = new JButton("Beenden");
+		bClose.addActionListener(this);
+		
 		cp.setLayout(new GridBagLayout());
 
-		cp.add(bClose, bCloseC);
-		cp.add(bNGame, bNGameC);
-		cp.add(bIGame, bIGameC);
-		cp.add(bRandom, bRandomC);
-		cp.add(bRead, bReadC);
+		
+		cp.add(bNGame, 	new myGBC(0,0,2,1));
+		cp.add(bIGame, 	new myGBC(0,1,2,1));
+		cp.add(bRandom, new myGBC(0,2,1,0.5));
+		cp.add(bRead, 	new myGBC(1,2,1,0.5));
+		cp.add(bClose, 	new myGBC(0,3,2,1));
 		this.pack();
 		this.setSize(600, 600);
 		
@@ -137,7 +90,7 @@ public class Main extends JFrame{
 		this.setVisible(true);
 	}
 	private void startGame(){
-		myGame=new Game(this.cp);
+		myGame=new Game(this,this.cp);
 		// TODO vergleiche mit myGame.start()
 		javax.swing.SwingUtilities.invokeLater(myGame);
 		
@@ -147,7 +100,19 @@ public class Main extends JFrame{
 		Main mainFrame = new Main();
 		mainFrame.initMain();
 	
+	
 	}
-
+	@Override
+	public void actionPerformed(ActionEvent ae) {
+		if(ae.getSource()==this.bNGame){
+			this.startGame();
+		}
+		if(ae.getSource()==this.bClose){
+			System.exit(0);
+		}
+		//netGame=new NetworkGame(myself);
+		//javax.swing.SwingUtilities.invokeLater(myGame);
+		
+	}
 }
 

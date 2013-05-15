@@ -5,12 +5,12 @@ import java.awt.Container;
 import javax.swing.JFrame;
 
 //Soll in einem extra Thread laufen
-public class Game implements  Runnable{
+public class Game implements Runnable{
 	
 	private Map map;
-	
+	private Container cp;
 	// das content-pane von unserem JFrame
-	public Game(Container cp) {
+	public Game(Main myMain, Container cp) {
 		// TODO Auto-generated constructor stub
 		// Create Map, stelle sie auch dem cp dar (1.ändere sein Layoutmanager, 2.add)
 		
@@ -31,6 +31,7 @@ public class Game implements  Runnable{
 		// Mein Main erzeugt alles wie gewünscht und euer Game.run() schliest
 		// Hoffe Ihr macht mehr daraus. Dies diente nur meinem "Proof of concept"
 		// 
+		this.cp.setLayout(null);
 		System.exit(0);
 	}
 }
