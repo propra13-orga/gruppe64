@@ -1,4 +1,4 @@
-package com.github.propra13.gruppe64;
+package oldLibraries;
 /*************************************************************************
 
  *  Compilation:  javac StdDraw.java
