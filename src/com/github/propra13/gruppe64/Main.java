@@ -96,6 +96,9 @@ public class Main extends JFrame implements ActionListener{
 		Thread gameThread = new Thread(myGame);
 		gameThread.start();
 		
+		Controller controller1 = new Controller(new Player());
+		this.cp.addKeyListener(controller1);
+		
 	}
 	public static void main(String[] args) {
 	

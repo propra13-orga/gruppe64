@@ -31,11 +31,14 @@ public class GameGraphic implements Runnable{
 	}
 	public void run(){
 		//Ein Layout, bei dem es kein ¬??
-		cp.setLayout(new BorderLayout());
-		cp.setBackground(Color.BLACK);
+		cp.setLayout(null);
+		cp.setBackground(Color.WHITE);
 		cp.removeAll();
 		//load maparray
-		cp.add(map);
+		Sprite s1= map.getSprite(0, 0);
+		
+		cp.add(s1);
+		
 		//System.exit(0);
 	}
 }

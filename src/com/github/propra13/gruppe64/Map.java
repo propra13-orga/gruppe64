@@ -30,7 +30,7 @@ public class Map extends JPanel{
 	
 	
 	//gibt Name des Feldes bei (x,y) zurück
-	public static String getField(int x, int y){
+	public  String getField(int x, int y){
 		
 		
 		if (x>=mapwidth || x<0 || y>=mapheight || y<0) return "Auserhalb Spielfeld";
@@ -69,10 +69,7 @@ public Sprite getSprite(int X, int Y){
 		}
 		
 	}
-	public static void main(String[] args) {
-		
-		
-	}
+	
 }
 
 
