@@ -1,5 +1,6 @@
 package com.github.propra13.gruppe64;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 import javax.swing.JComponent;
@@ -7,6 +8,7 @@ import javax.swing.JComponent;
 public class Sprite extends JComponent {
 
 	private static final long serialVersionUID = 1419758802002837841L;
+
 	
 	//Aktuelle Position in Pixel !!!
 	int x,y;
@@ -18,23 +20,31 @@ public class Sprite extends JComponent {
 	// Geschwindigkeits vektor 
 	public boolean[] velocity;
 	
-	//Ausmasse
-	double dimx, dimy;
-	//Bezeichnung z.b. frei, Gegner
-	String name;
-	
-	public Sprite(String name) {
+
+
+	//Geschwindigkeit bei Bewegung
+	double vx, vy;
+
+	int xDim, yDim ;
+	char name;
+	public Sprite(char name) {
+		xDim=50;
+		yDim=50;
 		this.name=name;
 		velocity = new boolean[4];
 		this.stopAll();
-		
+		this.setLocation( 100, 100);
 	
 	}
+	
 	public void paintComponent(Graphics g){
 		
-		//switch
-			//g.drawRect
-		//unterschiedliche Sachen malen
+		switch (this.name){
+			case 'x': g.setColor(Color.black); g.fillRect(0, 0, xDim, yDim); break;
+			case 'e': g.setColor(Color.gray);  g.fillRect(x, y, xDim, yDim); break;
+			case 'a': g.setColor(Color.green); g.fillRect(x, y, xDim, yDim); break;
+			case 'g': g.setColor(Color.red);   g.fillRect(x, y, xDim, yDim); break;	
+		}
 	}
 	public void startMot(int direction){
 		velocity[direction]=true;
