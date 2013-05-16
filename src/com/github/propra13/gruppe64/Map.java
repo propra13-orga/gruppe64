@@ -20,13 +20,14 @@ public class Map extends JPanel{
 	 */
 	//char map[][]=new char [mapwidth][mapheight];
 	
-	static char map[][]= {	{'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'},
+	char map[][]= {	{'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'},
 					{'x', 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X'},
 					{'x', 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X'},
 					{'E', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'A'},
 					{'x', 'x', ' ', ' ', ' ', ' ', 'X', 'X', 'X', 'X'},
 					{'x', 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X'},
 					{'x', 'x', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'}};
+	
 	
 	//gibt Name des Feldes bei (x,y) zurück
 	public static String getField(int x, int y){
@@ -49,12 +50,26 @@ public class Map extends JPanel{
 		
 	}
 	
+public Sprite getSprite(int X, int Y){
+		
+		
+		//if (x>=mapwidth || x<0 || y>=mapheight || y<0) return "Auserhalb Spielfeld";
+		char field=map[Y][X];
+		switch (field){
+			
+			case 'x': 
+			case 'X': 
+			case 'e':
+			case 'E': 
+			case 'a':
+			case 'A': 
+			case 'g':
+			case 'G': return new Sprite (field);
+			default: return null;
+		}
+		
+	}
 	public static void main(String[] args) {
-		
-		
-		String ausgabe = getField(9,3);
-		
-		System.out.println(ausgabe);
 		
 		
 	}
