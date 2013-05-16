@@ -11,12 +11,14 @@ public class GameGraphic implements Runnable{
 	
 	private Map map;
 	private Container cp;
+	private Main myMain;
 	// das content-pane von unserem JFrame
 	public GameGraphic(Main myMain, Container cp) {
 		// TODO Auto-generated constructor stub
 		// cp ist das JPanel auf das gezeichnet wird
 		this.cp=cp;
 		map = new Map();
+		this.myMain=myMain;
 	}
 	
 	public boolean isReady(){
@@ -30,14 +32,32 @@ public class GameGraphic implements Runnable{
 		
 	}
 	public void run(){
-		//Ein Layout, bei dem es kein ¬??
+		//Ein Layout ohne 
 		cp.setLayout(null);
 		cp.setBackground(Color.WHITE);
 		cp.removeAll();
 		//load maparray
-		Sprite s1= map.getSprite(0, 0);
 		
-		cp.add(s1);
+		
+		int zeile=7, spalte=10,x,y;
+		
+		//Test paint sprite
+		for(int i=0; i<spalte;i++){
+			x=i*51+10;
+			for(int j=0; j< zeile; j++){
+				y=j*51+10;
+				Sprite sp1 = map.getSprite(j, i);
+				
+				if(sp1!=null){
+					System.out.print("("+x+","+y+")- {"+i+","+j+"}");
+					sp1.setLocation(x,y);
+					cp.add(sp1);
+					
+				}
+			System.out.print("\n");
+			}
+		}
+		cp.repaint();
 		
 		//System.exit(0);
 	}

@@ -6,6 +6,9 @@ public class Player extends Sprite {
 		super(name);
 		// TODO Auto-generated constructor stub
 	}
+	public Player(){
+		super();
+	}
 
 	public void setMot(int i) {
 		// TODO Auto-generated method stub

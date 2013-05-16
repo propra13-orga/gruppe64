@@ -22,8 +22,8 @@ public class Map extends JPanel{
 	
 	char map[][]= {	{'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'},
 					{'x', 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X'},
-					{'x', 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X'},
-					{'E', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'A'},
+					{'x', 'x', ' ', ' ', 'g', ' ', ' ', ' ', ' ', 'X'},
+					{'e', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'a'},
 					{'x', 'x', ' ', ' ', ' ', ' ', 'X', 'X', 'X', 'X'},
 					{'x', 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X'},
 					{'x', 'x', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'}};
@@ -54,7 +54,7 @@ public Sprite getSprite(int X, int Y){
 		
 		
 		//if (x>=mapwidth || x<0 || y>=mapheight || y<0) return "Auserhalb Spielfeld";
-		char field=map[Y][X];
+		char field=map[X][Y];
 		switch (field){
 			
 			case 'x': 

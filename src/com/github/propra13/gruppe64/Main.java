@@ -82,7 +82,7 @@ public class Main extends JFrame implements ActionListener{
 		cp.add(bRead, 	new myGBC(1,2,1,0.5));
 		cp.add(bClose, 	new myGBC(0,3,2,1));
 		this.pack();
-		this.setSize(600, 600);
+		this.setSize(1200, 1000);
 		
 		
 		

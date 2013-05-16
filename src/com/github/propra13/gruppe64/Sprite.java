@@ -8,60 +8,46 @@ import javax.swing.JComponent;
 public class Sprite extends JComponent {
 
 	private static final long serialVersionUID = 1419758802002837841L;
-
 	
-	//Aktuelle Position in Pixel !!!
+	//Aktuelle Position (px) linker obere Ecke
 	int x,y;
-	
-	//stetige 
-		
-	//Maximale Geschwindigkeit bei Bewegung
-	double VelMax=0.1;
-	// Geschwindigkeits vektor 
-	public boolean[] velocity;
-	
-
-
-	//Geschwindigkeit bei Bewegung
-	double vx, vy;
-
+	//aktuelle Geschwindigkeit
+	int vx, vy;
+	//Ausmasse
 	int xDim, yDim ;
+	//Sprite name
 	char name;
+	
+	//Wird meist fuer Gelaende verwendet
 	public Sprite(char name) {
+		//nur gerade  Werte
 		xDim=50;
 		yDim=50;
-		this.name=name;
-		velocity = new boolean[4];
-		this.stopAll();
+		this.name=name;		
+		this.setBounds(0,0,xDim,yDim);
+	}
+	//Voller Konstruktor
+	public Sprite(char name, int x, int y){
+		this(name);
+		this.x=x;
+		this.y=y;
 		this.setLocation( 100, 100);
-	
 	}
-	
-	public void paintComponent(Graphics g){
+	//leerer Konstruktor
+	public Sprite(){
 		
+	}
+	public void paintComponent(Graphics g){
+		//Zeichnet jenach Typ
 		switch (this.name){
-			case 'x': g.setColor(Color.black); g.fillRect(0, 0, xDim, yDim); break;
-			case 'e': g.setColor(Color.gray);  g.fillRect(x, y, xDim, yDim); break;
-			case 'a': g.setColor(Color.green); g.fillRect(x, y, xDim, yDim); break;
-			case 'g': g.setColor(Color.red);   g.fillRect(x, y, xDim, yDim); break;	
+			case 'x':case 'X':
+					g.setColor(Color.black); break;
+			case 'e': g.setColor(Color.gray); break;
+			case 'a': g.setColor(Color.green); break;
+			case 'g': g.setColor(Color.red);  break;	
+			
 		}
-	}
-	public void startMot(int direction){
-		velocity[direction]=true;
-	}
-	public void stopMovt(int direction){
-		velocity[direction]=false;
+		g.fillRect(0, 0, xDim, yDim);
 	}
 	
-	public void stopAll(){
-		for(int i=0; i<4; i++){
-			velocity[i]=false;
-		}
-	}
-	/**
-	 * Mit einem Timer wird diese Funktion aufgerufen, diese setzt die aktuelle Position
-	 */
-	public void updateMotion(){
-		this.setLocation( x, y);
-	}
 }
