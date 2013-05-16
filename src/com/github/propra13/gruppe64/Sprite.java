@@ -1,5 +1,6 @@
 package com.github.propra13.gruppe64;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 import javax.swing.JComponent;
@@ -11,9 +12,9 @@ public class Sprite extends JComponent {
 	double vx, vy;
 	//Aktuelle Position
 	double x,y;
-	double dimx, dimy;
-	String name;
-	public Sprite(String name) {
+	int xDim, yDim ;
+	char name;
+	public Sprite(char name) {
 		this.name=name;
 		
 		//switch
@@ -23,9 +24,12 @@ public class Sprite extends JComponent {
 	
 	public void paintComponent(Graphics g){
 		
-		//switch
-			//g.drawRect
-		//unterschiedliche Sachen malen
+		switch (this.name){
+			case 'x': g.setColor(Color.black); g.fillRect(0, 0, xDim, yDim); break;
+			case 'e': g.setColor(Color.gray);  g.fillRect(0, 0, xDim, yDim); break;
+			case 'a': g.setColor(Color.green); g.fillRect(0, 0, xDim, yDim); break;
+			case 'g': g.setColor(Color.red);   g.fillRect(0, 0, xDim, yDim); break;	
+		}
 	}
 	
 }
