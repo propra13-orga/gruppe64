@@ -12,14 +12,15 @@ public class Sprite extends JComponent {
 	//Aktuelle Position
 	double x,y;
 	double dimx, dimy;
-	char name;
-	public Sprite(char name) {
+	String name;
+	public Sprite(String name) {
 		this.name=name;
 		
 		//switch
 		//unterschiedliche double dimx, dimy;
 		//je nach
 	}
+	
 	public void paintComponent(Graphics g){
 		
 		//switch
