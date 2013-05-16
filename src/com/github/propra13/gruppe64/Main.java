@@ -95,7 +95,8 @@ public class Main extends JFrame implements ActionListener{
 		//javax.swing.SwingUtilities.invokeLater(myGame);
 		Thread gameThread = new Thread(myGame);
 		gameThread.start();
-		Controller controller1 = new Controller();
+		
+		Controller controller1 = new Controller(new Player());
 		this.cp.addKeyListener(controller1);
 		
 	}
