@@ -1,19 +1,22 @@
 package com.github.propra13.gruppe64;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Container;
 
 import javax.swing.JFrame;
 
 //Soll in einem extra Thread laufen
-public class Game implements Runnable{
+public class GameGraphic implements Runnable{
 	
 	private Map map;
 	private Container cp;
 	// das content-pane von unserem JFrame
-	public Game(Main myMain, Container cp) {
+	public GameGraphic(Main myMain, Container cp) {
 		// TODO Auto-generated constructor stub
-		// Create Map, stelle sie auch dem cp dar (1.ändere sein Layoutmanager, 2.add)
-		
+		// cp ist das JPanel auf das gezeichnet wird
+		this.cp=cp;
+		map = new Map();
 	}
 	
 	public boolean isReady(){
@@ -27,12 +30,13 @@ public class Game implements Runnable{
 		
 	}
 	public void run(){
-		// TODO
-		// Mein Main erzeugt alles wie gewünscht und euer Game.run() schliest
-		// Hoffe Ihr macht mehr daraus. Dies diente nur meinem "Proof of concept"
-		// 
-		this.cp.setLayout(null);
-		System.exit(0);
+		//Ein Layout, bei dem es kein ¨??
+		cp.setLayout(new BorderLayout());
+		cp.setBackground(Color.BLACK);
+		cp.removeAll();
+		//load maparray
+		cp.add(map);
+		//System.exit(0);
 	}
 }
 

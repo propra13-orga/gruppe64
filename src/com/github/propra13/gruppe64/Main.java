@@ -15,7 +15,7 @@ public class Main extends JFrame implements ActionListener{
 	private static final long serialVersionUID = -7278907361953613792L;
 
 	
-	private Game myGame;
+	private GameGraphic myGame;
 
 	private Container cp;
 	
@@ -59,6 +59,7 @@ public class Main extends JFrame implements ActionListener{
 		 */
 		bNGame = new JButton("Neues Spiel");
 		bNGame.setDefaultCapable(true);
+		bNGame.addActionListener(this);
 		/*
 		 * Neues Netzwerkgame 
 		 */
@@ -90,9 +91,10 @@ public class Main extends JFrame implements ActionListener{
 		this.setVisible(true);
 	}
 	private void startGame(){
-		myGame=new Game(this,this.cp);
-		// TODO vergleiche mit myGame.start()
-		javax.swing.SwingUtilities.invokeLater(myGame);
+		myGame=new GameGraphic(this,this.cp);
+		//javax.swing.SwingUtilities.invokeLater(myGame);
+		Thread gameThread = new Thread(myGame);
+		gameThread.start();
 		
 	}
 	public static void main(String[] args) {
