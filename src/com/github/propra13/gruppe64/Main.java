@@ -15,7 +15,7 @@ public class Main extends JFrame implements ActionListener{
 	private static final long serialVersionUID = -7278907361953613792L;
 
 	
-	private GameGraphic myGame;
+	private Game myGame;
 
 	private Container cp;
 	
@@ -37,12 +37,12 @@ public class Main extends JFrame implements ActionListener{
 	}
 	
 	private class myJButton extends JButton{
-		myJButton(String label,ActionListener al){
+		myJButton(String label){
 			super(label);
-			addActionListener(al);
+			addActionListener(Main.this);
 		}
 	}
-	private JButton bNGame, bIGame, bRandom,bRead,bClose;
+	
 	/**
 	 * Gibt Titel an JFrame
 	 */
@@ -50,28 +50,33 @@ public class Main extends JFrame implements ActionListener{
 		super("Spiel Überschrift");
 		
 	}
+	
+	/**
+	 * Erzeugt alle Buttons für das Menu
+	 */
+	private JButton bNGame, bIGame, bRandom,bRead,bClose;
 	private void initMain(){
+		//was passiert, wenn man das Fenster schliesst TODO Schliessen-Dialog
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
+		// das ContetnPane auf das gezeichnet werden soll
 		cp = this.getContentPane();
-		/*
-		 * Neues Spiel Button
+		
+		/* 
+		 * First Menu-Buttons
 		 */
-		bNGame = new JButton("Neues Spiel");
+		//Neues Spiel Button
+		bNGame = new myJButton("Neues Spiel");
 		bNGame.setDefaultCapable(true);
-		bNGame.addActionListener(this);
-		/*
-		 * Neues Netzwerkgame 
-		 */
-		 bIGame = new JButton("Neues Netzwerk Spiel");
-		 bIGame.addActionListener(this);
+		// Neues Netzwerkgame 
+		bIGame = new myJButton("Neues Netzwerk Spiel");
 		//Neues Randomlevel
-		 bRandom = new JButton("Speichere Random-Level");
+		bRandom = new myJButton("Speichere Random-Level");
 		//Lade Level-Game
-		bRead = new JButton("Lese Level");
-		 //Beenden Button
-		bClose = new JButton("Beenden");
-		bClose.addActionListener(this);
+		bRead = new myJButton("Lese Level");
+		//Beenden Button
+		bClose = new myJButton("Beenden");
+
 		
 		cp.setLayout(new GridBagLayout());
 
@@ -82,22 +87,19 @@ public class Main extends JFrame implements ActionListener{
 		cp.add(bRead, 	new myGBC(1,2,1,0.5));
 		cp.add(bClose, 	new myGBC(0,3,2,1));
 		this.pack();
-		this.setSize(1200, 1000);
-		
-		
+		this.setSize(600, 600);
 		
 		//this.setResizable(false);
 		
 		this.setVisible(true);
 	}
 	private void startGame(){
-		myGame=new GameGraphic(this,this.cp);
-		//javax.swing.SwingUtilities.invokeLater(myGame);
+		//Erzeugt neues Spiel und startet es
+		myGame=new Game(this.cp);
 		Thread gameThread = new Thread(myGame);
 		gameThread.start();
 		
-		Controller controller1 = new Controller(new Player());
-		this.cp.addKeyListener(controller1);
+		
 		
 	}
 	public static void main(String[] args) {

@@ -26,14 +26,14 @@ public class Sprite extends JComponent {
 		this.name=name;		
 		this.setBounds(0,0,xDim,yDim);
 	}
-	//Voller Konstruktor
+	// Konstruktor mit Position
 	public Sprite(char name, int x, int y){
 		this(name);
 		this.x=x;
 		this.y=y;
 		this.setLocation( 100, 100);
 	}
-	//leerer Konstruktor
+	//leerer Konstruktor fuer z.B. Spieler, der ja immer am Eingang startet
 	public Sprite(){
 		
 	}
