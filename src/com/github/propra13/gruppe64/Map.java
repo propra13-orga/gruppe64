@@ -226,6 +226,7 @@ public class Map extends JPanel{
 	}
 
 
+
 	
 	/*public void paint(Graphics g){
 		this.paintChildren(g);
