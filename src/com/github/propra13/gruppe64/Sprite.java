@@ -34,7 +34,7 @@ public class Sprite extends JComponent {
 	 * @uml.property  name="xDim"
 	 */
 	int xDim ;
-
+	
 	/**
 	 * @uml.property  name="yDim"
 	 */
@@ -55,14 +55,21 @@ public class Sprite extends JComponent {
 	}
 	// Konstruktor mit Position
 	public Sprite(char name, int x, int y){
-		this(name);
+		this.name=name;
 		this.x=x;
 		this.y=y;
 		this.setLocation( 100, 100);
 	}
+	// Konstruktor Namenloser 
+		public Sprite(int x, int y, int xDim, int yDim){
+			this.xDim = xDim;
+			this.yDim = yDim;
+			this.x=x;
+			this.y=y;
+			this.setBounds( x, y, xDim, yDim);
+	}
 	//leerer Konstruktor fuer z.B. Spieler, der ja immer am Eingang startet
 	public Sprite(){
-		
 	}
 	public void paintComponent(Graphics g){
 		//Zeichnet jenach Typ

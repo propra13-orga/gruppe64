@@ -144,7 +144,7 @@ public class Main extends JFrame implements ActionListener{
 	private void startGame(){
 		try {
 		    File wavFile=new File("res/nerv.wav");
-		    if(wavFile==null)	System.out.print("file nicht gefunden!");
+		    if(wavFile==null)	{System.out.print("file nicht gefunden!");}
 		    AudioInputStream stream;
 		    AudioFormat format;
 		    DataLine.Info info;
