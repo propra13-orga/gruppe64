@@ -99,7 +99,10 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
     private static final double DEFAULT_XMAX = 1.0;
     private static final double DEFAULT_YMIN = 0.0;
     private static final double DEFAULT_YMAX = 1.0;
-    private static double xmin, ymin, xmax, ymax;
+    private static double xmin;
+	private static double ymin;
+	private static double xmax;
+	private static double ymax;
 
     // for synchronization
     private static Object mouseLock = new Object();
@@ -112,8 +115,10 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
     private static Font font;
 
     // double buffered graphics
-    private static BufferedImage offscreenImage, onscreenImage;
-    private static Graphics2D offscreen, onscreen;
+    private static BufferedImage offscreenImage;
+	private static BufferedImage onscreenImage;
+    private static Graphics2D offscreen;
+	private static Graphics2D onscreen;
 
     // singleton for callbacks: avoids generation of extra .class files
     private static StdDraw std = new StdDraw();

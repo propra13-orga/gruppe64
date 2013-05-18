@@ -4,8 +4,8 @@ import java.awt.Container;
 
 public class NetworkGame extends Game {
 
-	public NetworkGame(Main myMain, Container cp) {
-		super(myMain, cp);
+	public NetworkGame(Container cp) {
+		super(cp);
 		// TODO Auto-generated constructor stub
 	}
 

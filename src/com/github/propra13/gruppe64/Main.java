@@ -15,8 +15,15 @@ public class Main extends JFrame implements ActionListener{
 	private static final long serialVersionUID = -7278907361953613792L;
 
 	
+	/**
+	 * @uml.property  name="myGame"
+	 * @uml.associationEnd  
+	 */
 	private Game myGame;
 
+	/**
+	 * @uml.property  name="cp"
+	 */
 	private Container cp;
 	
 	private class myGBC extends GridBagConstraints{
@@ -53,8 +60,42 @@ public class Main extends JFrame implements ActionListener{
 	
 	/**
 	 * Erzeugt alle Buttons für das Menu
+	 * @uml.property  name="bNGame"
+	 * @uml.associationEnd  
 	 */
-	private JButton bNGame, bIGame, bRandom,bRead,bClose;
+	private JButton bNGame;
+
+
+	/**
+	 * Erzeugt alle Buttons für das Menu
+	 * @uml.property  name="bIGame"
+	 * @uml.associationEnd  
+	 */
+	private JButton bIGame;
+
+
+	/**
+	 * Erzeugt alle Buttons für das Menu
+	 * @uml.property  name="bRandom"
+	 * @uml.associationEnd  
+	 */
+	private JButton bRandom;
+
+
+	/**
+	 * Erzeugt alle Buttons für das Menu
+	 * @uml.property  name="bRead"
+	 * @uml.associationEnd  
+	 */
+	private JButton bRead;
+
+
+	/**
+	 * Erzeugt alle Buttons für das Menu
+	 * @uml.property  name="bClose"
+	 * @uml.associationEnd  
+	 */
+	private JButton bClose;
 	private void initMain(){
 		//was passiert, wenn man das Fenster schliesst TODO Schliessen-Dialog
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
