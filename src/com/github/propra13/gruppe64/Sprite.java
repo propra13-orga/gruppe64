@@ -65,14 +65,21 @@ public class Sprite extends JComponent {
 		
 	}
 	//Konstruktor der auch Laenge und Breite festlegt
-			public Sprite(char name, int x, int y, int xDim, int yDim){
-				this.name=name;
-				this.x=x;
-				this.y=y;
-				this.xDim=xDim;
-				this.yDim=yDim;
-				this.setBounds(x,y,xDim,yDim);
-			}
+	public Sprite(char name, int x, int y, int xDim, int yDim){
+		this.name=name;
+		this.x=x;
+		this.y=y;
+		this.xDim=xDim;
+		this.yDim=yDim;
+		this.setBounds(x,y,xDim,yDim);
+	}
+	
+	public Sprite(int xDim, int yDim, char name){
+		this.name=name;
+		this.xDim=xDim;
+		this.yDim=yDim;
+		this.setBounds(x,y,xDim,yDim);
+	}
 			
 	
 	public void paintComponent(Graphics g){

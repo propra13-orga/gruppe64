@@ -78,6 +78,7 @@ public class Game extends JPanel implements Runnable{
 		}
 		
 		
+		
 		cp.repaint();
 		
 		Player player = new Player();
