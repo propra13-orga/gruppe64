@@ -136,6 +136,7 @@ public class Map extends JPanel{
 		if (this.map[Y][X]==' ') return true;
 		else return false;
 	}
+	
 	public Component add(Player player){
 		Component component=super.add(player);
 		//TODO
