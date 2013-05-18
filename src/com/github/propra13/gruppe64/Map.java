@@ -26,11 +26,10 @@ public class Map extends JPanel{
 	private int spritewidth;
 	private int spriteheight;
 	private int mapwidth=10;
-	/**
-	 * @uml.property  name="mapheight"
-	 */
 	private int mapheight=7;
 	
+	int playersizex=30;
+	int playersizey=30;
 	/*  Beispiel: x_max = mapwidth = 4 und y_max = mapheight = 3:
 	 * 
 	 *  [0][0]   [0][1]   [0][2]  [0][3]
@@ -161,13 +160,32 @@ public class Map extends JPanel{
 	/**
 	 * Fragt ob man da drauf darf
 	 */
-	public boolean isCrossable(int x, int y) {
-		// TODO Kollisionsabfrage
-		//unterscheidung ob Spieler sichbar ist?
-		int X= (int) (x/this.spritewidth);
-		int Y= (int) (y/this.spriteheight);
-		if (this.map[Y][X]==' ') return true;
-		else return false;
+	public char wouldTouch(int x, int y) {
+		int X,Y;
+		
+		//Oben-Links
+		X= (int) (x/this.spritewidth);
+		Y= (int) (y/this.spriteheight);
+		char OL = map[X][Y];
+		//Oben-Rechts
+		X=(int)	((x+playersizex)/this.spritewidth);
+		Y=(int)(y/this.spriteheight);
+		char OR = map[X][Y];
+		//Unten-Links
+		X= (int) (x/this.spritewidth);
+		Y= (int) ((y+playersizey)/this.spriteheight);
+		char UL = map[X][Y];
+		//Unten-Rechts
+		X= (int) ((x+playersizex)/this.spritewidth);
+		Y= (int) ((y+playersizey)/this.spriteheight);
+		char UR = map[X][Y];
+		
+		
+		if		(OL=='g' || OR=='g' || UL=='g' || UR=='g') return 'g';
+		else if	(OL=='x' || OR=='x' || UL=='x' || UR=='x') return 'x';
+		else if(OL=='a' || OR=='a' || UL=='a' || UR=='a') return 'a';
+		else if	(OL=='e' || OR=='e' || UL=='e' || UR=='e') return 'e';
+		else return' ';
 	}
 	
 	public boolean isEnemy(int x, int y){
