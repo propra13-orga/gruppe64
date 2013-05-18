@@ -38,12 +38,6 @@ public class Player extends Sprite {
 		int y_off=0;
 		x=this.getX();
 		y=this.getY();
-		/*
-		if(vy==-1) 	y_off=yDim;
-		if(vx==1) 	x_off=xDim;
-		*/
-		//System.out.println(map.wouldTouch(x+x_off+vx,y+y_off-vy,xDim,yDim));
-		System.out.println("x="+x);System.out.println("y="+y);
 		if(map.wouldTouch(x+x_off+vx,y+y_off-vy,xDim,yDim)!='x'){
 			x = x+vx;
 			y = y-vy;
