@@ -58,7 +58,7 @@ public class Controller extends KeyAdapter{									//brauche playerobject mit p
 	}
 	
 	public void keyPressed(KeyEvent e){										//	if(...&&___) -> Wenn der spieler in entgegengesetzte Richtungen drückt,
-			System.out.print("kp");
+			//System.out.print("kp");
 			keyp=e.getKeyCode();											
 			if(player!=null){												//			0			1	         wird die letzte Eingabe ignoriert.
 				if(keyp== hoch && player.vy != -1)player.setMot(0);			//			|			|

@@ -61,7 +61,7 @@ public class Game extends JPanel implements Runnable{
 		//load maparray
 		
 		map = new Map(50,50, 2);
-		player = new Player(0,150,map);
+		player = new Player(5,155,map);
 		//player.setVisible(true);
 		map.add(player);
 		

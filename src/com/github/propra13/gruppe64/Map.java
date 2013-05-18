@@ -28,8 +28,6 @@ public class Map extends JPanel{
 	private int mapwidth=10;
 	private int mapheight=7;
 	
-	int playersizex=30;
-	int playersizey=30;
 	/*  Beispiel: x_max = mapwidth = 4 und y_max = mapheight = 3:
 	 * 
 	 *  [0][0]   [0][1]   [0][2]  [0][3]
@@ -160,25 +158,27 @@ public class Map extends JPanel{
 	/**
 	 * Fragt ob man da drauf darf
 	 */
-	public char wouldTouch(int x, int y) {
+	public char wouldTouch(int x, int y, int playersizex, int playersizey) {
 		int X,Y;
 		
+		if (x<0 || (x+playersizex+1) > ((mapwidth)*spritewidth)   ) return 'x';
+		if (y<0 || (y+playersizey+1) > (mapheight*spriteheight) ) return 'x';
 		//Oben-Links
 		X= (int) (x/this.spritewidth);
 		Y= (int) (y/this.spriteheight);
-		char OL = map[X][Y];
+		char OL = map[Y][X];
 		//Oben-Rechts
 		X=(int)	((x+playersizex)/this.spritewidth);
 		Y=(int)(y/this.spriteheight);
-		char OR = map[X][Y];
+		char OR = map[Y][X];
 		//Unten-Links
 		X= (int) (x/this.spritewidth);
 		Y= (int) ((y+playersizey)/this.spriteheight);
-		char UL = map[X][Y];
+		char UL = map[Y][X];
 		//Unten-Rechts
 		X= (int) ((x+playersizex)/this.spritewidth);
 		Y= (int) ((y+playersizey)/this.spriteheight);
-		char UR = map[X][Y];
+		char UR = map[Y][X];
 		
 		
 		if		(OL=='g' || OR=='g' || UL=='g' || UR=='g') return 'g';
