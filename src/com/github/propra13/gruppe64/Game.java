@@ -24,7 +24,7 @@ public class Game extends JPanel implements Runnable{
 	private Container cp;
 	
 	/**
-	 * Der Trick ist hier, das der Thread vom Main, dann fŸr die Map benutzt wird
+	 * Der Trick ist hier, das der Thread vom Main, dann fï¿½r die Map benutzt wird
 	 * @param cp ist content-pane von unserem JFrame
 	 */
 	public Game(Container cp) {
@@ -62,9 +62,9 @@ public class Game extends JPanel implements Runnable{
 		//TODO Wo soll das eigentlich hin (vgl. WIKI)
 		//Test paint sprite
 		for(int i=0; i<spalte;i++){
-			x=i*51+10;
+			x=i*50+10;
 			for(int j=0; j< zeile; j++){
-				y=j*51+10;
+				y=j*50+10;
 				Sprite sp1 = map.getSprite(j, i);
 				
 				if(sp1!=null){

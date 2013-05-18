@@ -71,6 +71,17 @@ public class Sprite extends JComponent {
 	//leerer Konstruktor fuer z.B. Spieler, der ja immer am Eingang startet
 	public Sprite(){
 	}
+	//Konstruktor der auch Laenge und Breite festlegt
+			public Sprite(char name, int x, int y, int xDim, int yDim){
+				this.name=name;
+				this.x=x;
+				this.y=y;
+				this.xDim=xDim;
+				this.yDim=yDim;
+				this.setBounds(x,y,xDim,yDim);
+			}
+			
+	
 	public void paintComponent(Graphics g){
 		//Zeichnet jenach Typ
 		switch (this.name){
@@ -83,5 +94,9 @@ public class Sprite extends JComponent {
 		}
 		g.fillRect(0, 0, xDim, yDim);
 	}
+	
+	
+		
+	
 	
 }

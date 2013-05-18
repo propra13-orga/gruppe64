@@ -17,10 +17,7 @@ public class Map extends JPanel{
 	 * - ?Siehe WIKI?
 	 */
 	
-	//Gršse der Map
-	/**
-	 * @uml.property  name="mapwidth"
-	 */
+	//Grï¿½se der Map
 	private int mapwidth=10;
 	/**
 	 * @uml.property  name="mapheight"
@@ -50,14 +47,14 @@ public class Map extends JPanel{
 	 */
 	public Map(){
 		super();
-		this.setBounds(10, 10, 500, 500);
+		this.setBounds(0, 0, 1000, 1000);
 		/*System.out.print("ThreadGesammt" +Thread.activeCount());
 		this.setBackground(Color.PINK);
 		this.setVisible(true);*/
 	}
+	
 	//gibt Name des Feldes bei (x,y) zurÃ¼ck
 	public  String getField(int x, int y){
-		
 		
 		if (x>=mapwidth || x<0 || y>=mapheight || y<0) return "Auserhalb Spielfeld";
 		
@@ -78,7 +75,6 @@ public class Map extends JPanel{
 
 	public Sprite getSprite(int X, int Y){
 		
-		
 		//if (x>=mapwidth || x<0 || y>=mapheight || y<0) return "Auserhalb Spielfeld";
 		char field=map[X][Y];
 		switch (field){
@@ -93,7 +89,6 @@ public class Map extends JPanel{
 			case 'G': return new Sprite (field);
 			default: return null;
 		}
-		
 	}
 
 	/**
