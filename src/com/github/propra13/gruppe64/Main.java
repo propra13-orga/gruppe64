@@ -6,6 +6,8 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -65,7 +67,7 @@ public class Main extends JFrame implements ActionListener{
 	}
 	
 	/**
-	 * Erzeugt alle Buttons fŸr das Menu
+	 * Erzeugt alle Buttons fï¿½r das Menu
 	 * @uml.property  name="bNGame"
 	 * @uml.associationEnd  
 	 */
@@ -73,7 +75,7 @@ public class Main extends JFrame implements ActionListener{
 
 
 	/**
-	 * Erzeugt alle Buttons fŸr das Menu
+	 * Erzeugt alle Buttons fï¿½r das Menu
 	 * @uml.property  name="bIGame"
 	 * @uml.associationEnd  
 	 */
@@ -81,7 +83,7 @@ public class Main extends JFrame implements ActionListener{
 
 
 	/**
-	 * Erzeugt alle Buttons fŸr das Menu
+	 * Erzeugt alle Buttons fï¿½r das Menu
 	 * @uml.property  name="bRandom"
 	 * @uml.associationEnd  
 	 */
@@ -89,7 +91,7 @@ public class Main extends JFrame implements ActionListener{
 
 
 	/**
-	 * Erzeugt alle Buttons fŸr das Menu
+	 * Erzeugt alle Buttons fï¿½r das Menu
 	 * @uml.property  name="bRead"
 	 * @uml.associationEnd  
 	 */
@@ -97,7 +99,7 @@ public class Main extends JFrame implements ActionListener{
 
 
 	/**
-	 * Erzeugt alle Buttons fŸr das Menu
+	 * Erzeugt alle Buttons fï¿½r das Menu
 	 * @uml.property  name="bClose"
 	 * @uml.associationEnd  
 	 * Erzeugt alle Buttons fuer das Menu
