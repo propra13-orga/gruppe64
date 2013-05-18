@@ -140,10 +140,11 @@ public class Map extends JPanel{
 	/**
 	 * Fragt ob man da drauf darf
 	 */
-	public boolean isCrossable(int i, int j) {
+	public boolean isCrossable(int X, int Y) {
 		// TODO Kollisionsabfrage
 		//unterscheidung ob Spieler sichbar ist?
-		return true;
+		if (this.map[Y][X]==' ') return true;
+		else return false;
 	}
 	public Component add(Player player){
 		Component component=super.add(player);
