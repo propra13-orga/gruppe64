@@ -11,6 +11,7 @@ import java.util.TimerTask;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JTextField;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -96,7 +97,7 @@ public class Main extends JFrame implements ActionListener{
 	 * @uml.associationEnd  
 	 */
 	private JButton bRead;
-
+	private JButton bRestart;
 
 	/**
 	 * Erzeugt alle Buttons f�r das Menu
@@ -189,8 +190,28 @@ public class Main extends JFrame implements ActionListener{
 		if(ae.getSource()==this.bClose){
 			System.exit(0);
 		}
+		if(ae.getSource()==this.bRestart){
+			this.removeAll();
+			this.initMain();
+		}
 		//netGame=new NetworkGame(myself);
 		//javax.swing.SwingUtilities.invokeLater(myGame);
+		
+	}
+	
+	public void win(boolean b) {
+		//this.removeAll();
+		JTextField msg = new JTextField();
+		if(b){
+			msg.setText("Herzlichen Glueckwunsch");
+		} else{
+			msg.setText("Loser");
+		}
+			bRestart = new myJButton("Weiter zum Haupmenue");
+			cp.add(bRestart,new myGBC(0,0,3,1));
+			cp.setLayout(new GridBagLayout());
+			this.pack();
+		
 		
 	}
 }

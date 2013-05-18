@@ -2,6 +2,8 @@ package com.github.propra13.gruppe64;								// # 0001
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
 
 public class Player extends Sprite {
 	//der bei der Bewegung bachtenswerter Offset zum (x,y)
@@ -38,11 +40,11 @@ public class Player extends Sprite {
 		int y_off=0;
 		x=this.getX();
 		y=this.getY();
-		if(vy==-1) 	y_off=yDim;
-		if(vx==1) 	x_off=xDim;
+
 		if(map.wouldTouch(x+x_off+vx,y+y_off-vy,xDim,yDim)!='x'){
 			x = x+vx;
 			y = y-vy;
+			
 			this.setLocation(x,y); 
 		}
 		map.updateState();
@@ -57,8 +59,12 @@ public class Player extends Sprite {
 
 	public void paintComponent(Graphics g){
 		//Zeichnet jenach Typ
-		g.setColor(Color.ORANGE);
-		g.fillRect(0, 0, xDim, yDim);
+	//	g.setColor(Color.ORANGE);
+	//	g.fillRect(0, 0, xDim, yDim);
+		
+		Image img2 = Toolkit.getDefaultToolkit().getImage("res/banana.gif");
+	    g.drawImage(img2, 0, 0, this);
+	    g.finalize();	
 		//System.out.print("playerDraw");
 	}
 	
