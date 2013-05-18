@@ -17,14 +17,7 @@ public class Map extends JPanel{
 	 * - ?Siehe WIKI?
 	 */
 	
-<<<<<<< HEAD
 	//Grï¿½se der Map
-=======
-	//Gršse der Map
-	/**
-	 * @uml.property  name="mapwidth"
-	 */
->>>>>>> 67f9803cf0ab66f85ada33975d447ac05bc07250
 	private int mapwidth=10;
 	/**
 	 * @uml.property  name="mapheight"
