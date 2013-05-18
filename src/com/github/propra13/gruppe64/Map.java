@@ -205,6 +205,11 @@ public class Map extends JPanel{
 		// TODO Auto-generated method stub
 		
 	}
+
+	public char wouldTouch(int i, int j, int xDim, int yDim) {
+		// TODO Auto-generated method stub
+		return ' ';
+	}
 	
 	/*public void paint(Graphics g){
 		this.paintChildren(g);
