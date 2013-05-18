@@ -10,15 +10,14 @@ public class Player extends Sprite {
 	 * @uml.property  name="map"
 	 * @uml.associationEnd  readOnly="true"
 	 */
+
 	private Map map;
 	//Test Konstruktor
-	public Player(){
-		super();
+	public Player(int x, int y){
+		super(x,y,30,30);
+		
 	}
-	public Player(int x, int y, Map map){
-		super();
-		// TODO
-	}
+	
 	public boolean putOnMap(int x, int y, Map map){
 		//TODO ist die Stelle Ÿberhaupt sinnvoll -> map.isCrossable
 		return true;
@@ -41,6 +40,7 @@ public class Player extends Sprite {
 		if(map.isCrossable(x+x_off+vx,y+y_off-vy)){
 			x = x+vx;
 			y = y-vy;
+			this.setLocation(x,y); 
 		}
 	}
 
@@ -50,11 +50,12 @@ public class Player extends Sprite {
 			case 1: vx= 0; break;
 		}
 	}
-	@Override
+
 	public void paintComponent(Graphics g){
 		//Zeichnet jenach Typ
 		g.setColor(Color.ORANGE);
 		g.fillRect(0, 0, xDim, yDim);
+		System.out.print("playerDraw");
 	}
 	
 }

@@ -58,7 +58,7 @@ public class Game extends JPanel implements Runnable{
 		//load maparray
 		
 		
-		int zeile=7, spalte=10,x,y;
+		/*int zeile=7, spalte=10,x,y;
 		//TODO Wo soll das eigentlich hin (vgl. WIKI)
 		//Test paint sprite
 		for(int i=0; i<spalte;i++){
@@ -75,16 +75,18 @@ public class Game extends JPanel implements Runnable{
 				}
 			//System.out.print("\n");
 			}
-		}
+		}*/
 		
 		
 		
 		cp.repaint();
 		
-		Player player = new Player();
+		Player player = new Player(300,300);
+		//player.setVisible(true);
 		cp.add(player);
-		Controller controller1 = new Controller(player);
-		this.cp.addKeyListener(controller1);
+		
+		/*Controller controller1 = new Controller(player);
+		this.cp.addKeyListener(controller1);*/
 		//System.exit(0);
 		cp.repaint();
 
