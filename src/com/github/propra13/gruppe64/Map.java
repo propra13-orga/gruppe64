@@ -66,6 +66,8 @@ public class Map extends JPanel{
 					{'x', 'x', ' ', ' ', ' ', ' ', 'x', 'x', 'x', 'x'},
 					{'x', 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
 					{'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'}};
+	private Player player;
+	private Game game;
 	/**
 	 * Erzeuge neues JPanel und ordne es an, hier kann auch das auslesen aus Datei gestartet werden
 	 */
@@ -80,7 +82,7 @@ public class Map extends JPanel{
 		this.setVisible(true);
 	}
 	
-	public Map(int spritewidth, int spriteheight, int level){
+	public Map(int spritewidth, int spriteheight, int level, Game game){
 		super();
 		this.spritewidth= spritewidth;
 		this.spriteheight= spriteheight;
@@ -88,6 +90,8 @@ public class Map extends JPanel{
 		this.setBackground(Color.WHITE);
 		this.setLayout(null);
 		this.setVisible(true);
+		
+		this.game=game;
 		
 		switch(level){
 		case 1: break;
@@ -186,7 +190,7 @@ public class Map extends JPanel{
 	
 	public Component add(Player player){
 		Component component=super.add(player);
-		//TODO
+		this.player=player;
 		return component;
 	}
 	public Component addComponent(Sprite sprite){
@@ -196,14 +200,29 @@ public class Map extends JPanel{
 	}
 	public void remove(Player player){
 		super.remove(player);
+		//SPAETER suche aus PlayerArray
 	}
 	public void remove(Sprite sprite){
 		super.remove(sprite);
 	}
 
 	public void updateState() {
-		// TODO Auto-generated method stub
+		char touchedSprite = wouldTouch(player.x, player.y,player.xDim, player.yDim);	
 		
+		switch(touchedSprite){
+		case 'g': case 'G':
+			game.gameOver();
+		break;
+		case 'a':case 'A':
+			game.nextLevel();
+		}
+		
+		
+	}
+
+	public char wouldTouch(int i, int j, int xDim, int yDim) {
+		
+		return ' ';
 	}
 	
 	/*public void paint(Graphics g){
