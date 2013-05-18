@@ -165,8 +165,8 @@ public class Map extends JPanel{
 	public char wouldTouch(int x, int y, int playersizex, int playersizey) {
 		int X,Y;
 		
-		if (x<0 || (x+playersizex+1) > ((mapwidth)*spritewidth)   ) return 'x';
-		if (y<0 || (y+playersizey+1) > (mapheight*spriteheight) ) return 'x';
+		if (x<0 || (x+playersizex) > ((mapwidth)*spritewidth)   ) return 'x';
+		if (y<0 || (y+playersizey) > (mapheight*spriteheight) ) return 'x';
 		//Oben-Links
 		X= (int) (x/this.spritewidth);
 		Y= (int) (y/this.spriteheight);
