@@ -24,15 +24,10 @@ public class Game extends JPanel implements Runnable{
 	private Container cp;
 	
 	/**
-	 * Der Trick ist hier, das der Thread vom Main, dann f�r die Map benutzt wird
 	 * @param cp ist content-pane von unserem JFrame
 	 */
 	public Game(Container cp) {
 	
-		//default bzw. erste Map wird geladen
-		map = new Map();
-		//fuege die Map in das Grund-Panel
-		cp.add(map);
 		this.cp=cp;
 	}
 	
@@ -76,8 +71,12 @@ public class Game extends JPanel implements Runnable{
 			//System.out.print("\n");
 			}
 		}*/
-		
-		
+		//default bzw. erste Map wird geladen und macht sie sichtbar
+		map = new Map();
+		//fuege die Map in das Grund-Panel
+		cp.add(map);
+		//zeichne die Map
+		map.drawMap(50,50);
 		
 		cp.repaint();
 		
