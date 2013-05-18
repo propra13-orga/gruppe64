@@ -218,6 +218,11 @@ public class Map extends JPanel{
 	public void remove(Sprite sprite){
 		super.remove(sprite);
 	}
+
+	public void updateState() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	/*public void paint(Graphics g){
 		this.paintChildren(g);

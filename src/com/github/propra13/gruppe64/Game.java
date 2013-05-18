@@ -27,13 +27,15 @@ public class Game extends JPanel implements Runnable{
 	 * @uml.property  name="cp"
 	 */
 	private Container cp;
+	private Main main;
 	
 	/**
 	 * @param cp ist content-pane von unserem JFrame
 	 */
-	public Game(Container cp) {
+	public Game(Container cp, Main main) {
 	
 		this.cp=cp;
+		this.main =main;
 		
 	}
 	
@@ -66,7 +68,10 @@ public class Game extends JPanel implements Runnable{
 		//fuege die Map in das Grund-Panel
 		cp.add(map);
 		//zeichne die Map
+
+		main.controller.setPlayer(player);
 		map.drawMap();
+
 		map.repaint(100);
 		TimerTask action = new TimerTask() {
 			public void run() {
@@ -75,10 +80,8 @@ public class Game extends JPanel implements Runnable{
 		};
 
 		Timer caretaker = new Timer();
-		caretaker.schedule(action, 0, 100);
+		caretaker.schedule(action, 0, 5);
 		
-		Controller controller1 = new Controller(player);
-		this.cp.addKeyListener(controller1);
 		
 
 	}
