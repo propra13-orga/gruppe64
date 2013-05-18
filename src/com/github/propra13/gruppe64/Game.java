@@ -24,15 +24,10 @@ public class Game extends JPanel implements Runnable{
 	private Container cp;
 	
 	/**
-	 * Der Trick ist hier, das der Thread vom Main, dann für die Map benutzt wird
 	 * @param cp ist content-pane von unserem JFrame
 	 */
 	public Game(Container cp) {
 	
-		//default bzw. erste Map wird geladen
-		map = new Map();
-		//fuege die Map in das Grund-Panel
-		cp.add(map);
 		this.cp=cp;
 	}
 	
@@ -58,13 +53,13 @@ public class Game extends JPanel implements Runnable{
 		//load maparray
 		
 		
-		int zeile=7, spalte=10,x,y;
+		/*int zeile=7, spalte=10,x,y;
 		//TODO Wo soll das eigentlich hin (vgl. WIKI)
 		//Test paint sprite
 		for(int i=0; i<spalte;i++){
-			x=i*51+10;
+			x=i*50+10;
 			for(int j=0; j< zeile; j++){
-				y=j*51+10;
+				y=j*50+10;
 				Sprite sp1 = map.getSprite(j, i);
 				
 				if(sp1!=null){
@@ -75,15 +70,22 @@ public class Game extends JPanel implements Runnable{
 				}
 			//System.out.print("\n");
 			}
-		}
-		
+		}*/
+		//default bzw. erste Map wird geladen und macht sie sichtbar
+		map = new Map();
+		//fuege die Map in das Grund-Panel
+		cp.add(map);
+		//zeichne die Map
+		map.drawMap(50,50);
 		
 		cp.repaint();
 		
-		Player player = new Player();
+		Player player = new Player(300,300);
+		//player.setVisible(true);
 		cp.add(player);
-		Controller controller1 = new Controller(player);
-		this.cp.addKeyListener(controller1);
+		
+		/*Controller controller1 = new Controller(player);
+		this.cp.addKeyListener(controller1);*/
 		//System.exit(0);
 		cp.repaint();
 
