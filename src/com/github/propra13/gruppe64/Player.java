@@ -36,12 +36,12 @@ public class Player extends Sprite {
 	}
 	
 	public void updMot(){
-		int x_off=0;
-		int y_off=0;
 		x=this.getX();
 		y=this.getY();
 
-		if(map.wouldTouch(x+x_off+vx,y+y_off-vy,xDim,yDim)!='x'){
+
+		if(map.wouldTouch(x+(vx-1)/2,y-(vy+1)/2,xDim,yDim)!='x'){
+
 			x = x+vx;
 			y = y-vy;
 			
