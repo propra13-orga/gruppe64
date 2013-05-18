@@ -40,6 +40,7 @@ public class Player extends Sprite {
 		if(map.wouldTouch(x+(vx-1)/2,y-(vy+1)/2,xDim,yDim)!='x'){
 			x = x+vx;
 			y = y-vy;
+			
 			this.setLocation(x,y); 
 		}
 		map.updateState();

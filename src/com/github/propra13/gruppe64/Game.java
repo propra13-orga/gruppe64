@@ -23,11 +23,18 @@ public class Game extends JPanel implements Runnable{
 	private Map map;
 	
 	private Player player;
+	
+	Timer caretaker;
 	/**
 	 * @uml.property  name="cp"
 	 */
 	private Container cp;
 	private Main main;
+
+	//Aktuelles Level
+	private int aLevel=1;
+	//Maximales Level
+	private int mLevel=3;
 	
 	/**
 	 * @param cp ist content-pane von unserem JFrame
@@ -54,36 +61,56 @@ public class Game extends JPanel implements Runnable{
 		
 	}
 	public void run(){
-		//Ein Layout ohne 
-		cp.setLayout(null);
-		cp.setBackground(Color.WHITE);
-		cp.removeAll();
-		//load maparray
-		
-		map = new Map(50,50, 2);
-		player = new Player(0,150,map);
-		//player.setVisible(true);
-		map.add(player);
-		
-		//fuege die Map in das Grund-Panel
-		cp.add(map);
-		//zeichne die Map
 
-		main.controller.setPlayer(player);
-		map.drawMap();
+		startLevel();
 
-		map.repaint(100);
 		TimerTask action = new TimerTask() {
 			public void run() {
 				player.updMot();
 			}
 		};
 
-		Timer caretaker = new Timer();
+		caretaker = new Timer();
 		caretaker.schedule(action, 0, 5);
 		
 		
 
+	}
+	private void startLevel(){
+		//Ein Layout ohne 
+				cp.setLayout(null);
+				cp.setBackground(Color.WHITE);
+				cp.removeAll();
+				//load maparray
+				
+				map = new Map(50,50, aLevel, this);
+				player = new Player(0,150,map);
+				//player.setVisible(true);
+				map.add(player);
+				
+				//fuege die Map in das Grund-Panel
+				cp.add(map);
+				//zeichne die Map
+
+				main.controller.setPlayer(player);
+				map.drawMap();
+
+				map.repaint(100);
+				
+	}
+	public void gameOver() {
+		caretaker.cancel();
+		main.win(false);
+		
+	}
+
+	public void nextLevel() {
+		//setzte naechstes Level
+		aLevel++;
+		if(aLevel>mLevel){
+			main.win(true);
+		}
+		startLevel();
 	}
 
 
