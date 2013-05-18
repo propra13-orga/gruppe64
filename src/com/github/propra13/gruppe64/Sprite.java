@@ -112,7 +112,7 @@ public class Sprite extends JComponent {
 			
 			case 'g':
 	
-				Image img1 = Toolkit.getDefaultToolkit().getImage("res/nyan.gif");
+				Image img1 = Toolkit.getDefaultToolkit().getImage("res/nyan_cat2.gif");
 			    g.drawImage(img1, 0, 0, this);
 			    g.finalize();	
 				//		g.setColor(Color.red); 
