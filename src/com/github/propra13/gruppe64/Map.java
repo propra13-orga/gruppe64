@@ -18,7 +18,13 @@ public class Map extends JPanel{
 	 */
 	
 	//Gršse der Map
+	/**
+	 * @uml.property  name="mapwidth"
+	 */
 	private int mapwidth=10;
+	/**
+	 * @uml.property  name="mapheight"
+	 */
 	private int mapheight=7;
 	
 	/*  Beispiel: x_max = mapwidth = 4 und y_max = mapheight = 3:
@@ -29,6 +35,9 @@ public class Map extends JPanel{
 	 */
 	//char map[][]=new char [mapwidth][mapheight];
 	
+	/**
+	 * @uml.property  name="map" multiplicity="(0 -1)" dimension="2"
+	 */
 	char map[][]= {	{'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'},
 					{'x', 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X'},
 					{'x', 'x', ' ', ' ', 'g', ' ', ' ', ' ', ' ', 'X'},

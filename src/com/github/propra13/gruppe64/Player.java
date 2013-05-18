@@ -6,6 +6,10 @@ import java.awt.Graphics;
 public class Player extends Sprite {
 	//der bei der Bewegung bachtenswerter Offset zum (x,y)
 	//int x_off, y_off;
+	/**
+	 * @uml.property  name="map"
+	 * @uml.associationEnd  readOnly="true"
+	 */
 	private Map map;
 	//Test Konstruktor
 	public Player(){
@@ -46,6 +50,7 @@ public class Player extends Sprite {
 			case 1: vx= 0; break;
 		}
 	}
+	@Override
 	public void paintComponent(Graphics g){
 		//Zeichnet jenach Typ
 		g.setColor(Color.ORANGE);

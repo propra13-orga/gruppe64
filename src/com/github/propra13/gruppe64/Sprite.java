@@ -10,12 +10,39 @@ public class Sprite extends JComponent {
 	private static final long serialVersionUID = 1419758802002837841L;
 	
 	//Aktuelle Position (px) linker obere Ecke
-	int x,y;
+	/**
+	 * @uml.property  name="x"
+	 */
+	int x;
+
+	/**
+	 * @uml.property  name="y"
+	 */
+	int y;
 	//aktuelle Geschwindigkeit
-	int vx, vy;
+	/**
+	 * @uml.property  name="vx"
+	 */
+	int vx;
+
+	/**
+	 * @uml.property  name="vy"
+	 */
+	int vy;
 	//Ausmasse
-	int xDim, yDim ;
+	/**
+	 * @uml.property  name="xDim"
+	 */
+	int xDim ;
+
+	/**
+	 * @uml.property  name="yDim"
+	 */
+	int yDim;
 	//Sprite name
+	/**
+	 * @uml.property  name="name"
+	 */
 	char name;
 	
 	//Wird meist fuer Gelaende verwendet

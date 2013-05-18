@@ -5,9 +5,15 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
 
 
 public class Main extends JFrame implements ActionListener{
@@ -15,8 +21,15 @@ public class Main extends JFrame implements ActionListener{
 	private static final long serialVersionUID = -7278907361953613792L;
 
 	
+	/**
+	 * @uml.property  name="myGame"
+	 * @uml.associationEnd  
+	 */
 	private Game myGame;
 
+	/**
+	 * @uml.property  name="cp"
+	 */
 	private Container cp;
 	
 	private class myGBC extends GridBagConstraints{
@@ -47,14 +60,49 @@ public class Main extends JFrame implements ActionListener{
 	 * Gibt Titel an JFrame
 	 */
 	public Main(){
-		super("Spiel Überschrift");
+		super("Spiel ÔøΩberschrift");
 		
 	}
 	
 	/**
 	 * Erzeugt alle Buttons für das Menu
+	 * @uml.property  name="bNGame"
+	 * @uml.associationEnd  
 	 */
-	private JButton bNGame, bIGame, bRandom,bRead,bClose;
+	private JButton bNGame;
+
+
+	/**
+	 * Erzeugt alle Buttons für das Menu
+	 * @uml.property  name="bIGame"
+	 * @uml.associationEnd  
+	 */
+	private JButton bIGame;
+
+
+	/**
+	 * Erzeugt alle Buttons für das Menu
+	 * @uml.property  name="bRandom"
+	 * @uml.associationEnd  
+	 */
+	private JButton bRandom;
+
+
+	/**
+	 * Erzeugt alle Buttons für das Menu
+	 * @uml.property  name="bRead"
+	 * @uml.associationEnd  
+	 */
+	private JButton bRead;
+
+
+	/**
+	 * Erzeugt alle Buttons für das Menu
+	 * @uml.property  name="bClose"
+	 * @uml.associationEnd  
+	 * Erzeugt alle Buttons fuer das Menu
+	 */
+	private JButton bClose;
 	private void initMain(){
 		//was passiert, wenn man das Fenster schliesst TODO Schliessen-Dialog
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -94,11 +142,29 @@ public class Main extends JFrame implements ActionListener{
 		this.setVisible(true);
 	}
 	private void startGame(){
+		try {
+		    File wavFile=new File("res/nerv.wav");
+		    if(wavFile==null)	System.out.print("file nicht gefunden!");
+		    AudioInputStream stream;
+		    AudioFormat format;
+		    DataLine.Info info;
+		    Clip clip;
+
+		    stream = AudioSystem.getAudioInputStream(wavFile);
+		    format = stream.getFormat();
+		    info = new DataLine.Info(Clip.class, format);
+		    clip = (Clip) AudioSystem.getLine(info);
+		    clip.open(stream);
+		    clip.start();
+		    
+		}
+		catch (Exception e) {
+		    //whatevers
+		}
 		//Erzeugt neues Spiel und startet es
 		myGame=new Game(this.cp);
 		Thread gameThread = new Thread(myGame);
-		gameThread.start();
-		
+		gameThread.start();		
 		
 		
 	}

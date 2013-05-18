@@ -6,8 +6,35 @@ import java.awt.event.KeyEvent;
 
 
 public class Controller extends KeyAdapter{									//brauche playerobject mit public x,y
+	/**
+	 * @uml.property  name="player"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private Player player;
-	public int hoch,runter,rechts,links,keyp,keyr;							//keyp: key pressed		keyr: key released
+	/**
+	 * @uml.property  name="hoch"
+	 */
+	public int hoch;							//keyp: key pressed		keyr: key released
+	/**
+	 * @uml.property  name="runter"
+	 */
+	public int runter;
+	/**
+	 * @uml.property  name="rechts"
+	 */
+	public int rechts;
+	/**
+	 * @uml.property  name="links"
+	 */
+	public int links;
+	/**
+	 * @uml.property  name="keyp"
+	 */
+	public int keyp;
+	/**
+	 * @uml.property  name="keyr"
+	 */
+	public int keyr;
 	
 	
 	

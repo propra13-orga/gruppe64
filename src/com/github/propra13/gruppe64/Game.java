@@ -13,7 +13,14 @@ import javax.swing.JPanel;
 //Soll in einem extra Thread laufen
 public class Game extends JPanel implements Runnable{
 	
+	/**
+	 * @uml.property  name="map"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private Map map;
+	/**
+	 * @uml.property  name="cp"
+	 */
 	private Container cp;
 	
 	/**
@@ -32,6 +39,10 @@ public class Game extends JPanel implements Runnable{
 	public boolean isReady(){
 		return true;
 	}
+	/**
+	 * @return
+	 * @uml.property  name="map"
+	 */
 	public Map getMap(){
 		return map;
 	}
