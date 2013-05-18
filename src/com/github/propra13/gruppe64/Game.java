@@ -60,16 +60,18 @@ public class Game extends JPanel implements Runnable{
 		cp.removeAll();
 		//load maparray
 		
-		map = new Map();
-		player = new Player(120,240,map);
+		map = new Map(50,50, 2);
+		player = new Player(0,150,map);
 		//player.setVisible(true);
 		map.add(player);
 		
 		//fuege die Map in das Grund-Panel
 		cp.add(map);
 		//zeichne die Map
+
 		main.controller.setPlayer(player);
-		map.drawMap(50,50);
+		map.drawMap();
+
 		map.repaint(100);
 		TimerTask action = new TimerTask() {
 			public void run() {

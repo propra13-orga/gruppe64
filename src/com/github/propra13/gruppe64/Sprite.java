@@ -2,6 +2,8 @@ package com.github.propra13.gruppe64;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
 
 import javax.swing.JComponent;
 
@@ -109,15 +111,21 @@ public class Sprite extends JComponent {
 			break;
 			
 			case 'g':
-				g.setColor(Color.red); 
-				g.fillRect(0, 0, xDim, yDim);
+	
+				Image img1 = Toolkit.getDefaultToolkit().getImage("res/nyan_cat2.gif");
+			    g.drawImage(img1, 0, 0, this);
+			    g.finalize();	
+				//		g.setColor(Color.red); 
+		//		g.fillRect(0, 0, xDim, yDim);
 			break;	
 			
-			case 'r':
-				g.setColor(Color.cyan);
+	//		case 'r':
+				
+		/*		g.setColor(Color.cyan);
 				g.drawOval(0, 0, 10, 50);//Oval Zeichnen
 				g.fillOval(10,10,25,25);
-			break;
+		*/
+	//		break;
 			
 			
 		}
