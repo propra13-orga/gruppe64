@@ -23,6 +23,8 @@ public class Game extends JPanel implements Runnable{
 	private Map map;
 	
 	private Player player;
+	
+	Timer caretaker;
 	/**
 	 * @uml.property  name="cp"
 	 */
@@ -59,14 +61,16 @@ public class Game extends JPanel implements Runnable{
 		
 	}
 	public void run(){
+
 		startLevel();
+
 		TimerTask action = new TimerTask() {
 			public void run() {
 				player.updMot();
 			}
 		};
 
-		Timer caretaker = new Timer();
+		caretaker = new Timer();
 		caretaker.schedule(action, 0, 5);
 		
 		
@@ -95,6 +99,7 @@ public class Game extends JPanel implements Runnable{
 				
 	}
 	public void gameOver() {
+		caretaker.cancel();
 		main.win(false);
 		
 	}

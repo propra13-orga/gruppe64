@@ -26,9 +26,6 @@ public class Map extends JPanel{
 	private int spritewidth;
 	private int spriteheight;
 	private int mapwidth=10;
-	/**
-	 * @uml.property  name="mapheight"
-	 */
 	private int mapheight=7;
 	
 	/*  Beispiel: x_max = mapwidth = 4 und y_max = mapheight = 3:
@@ -165,28 +162,36 @@ public class Map extends JPanel{
 	/**
 	 * Fragt ob man da drauf darf
 	 */
-	public boolean isCrossable(int x, int y) {
-		// TODO Kollisionsabfrage
-		//unterscheidung ob Spieler sichbar ist?
-		int X= (int) (x/this.spritewidth);
-		int Y= (int) (y/this.spriteheight);
-		if (this.map[Y][X]==' '||this.map[Y][X]=='e') return true;
-		else return false;
+	public char wouldTouch(int x, int y, int playersizex, int playersizey) {
+		int X,Y;
+		
+		if (x<0 || (x+playersizex+1) > ((mapwidth)*spritewidth)   ) return 'x';
+		if (y<0 || (y+playersizey+1) > (mapheight*spriteheight) ) return 'x';
+		//Oben-Links
+		X= (int) (x/this.spritewidth);
+		Y= (int) (y/this.spriteheight);
+		char OL = map[Y][X];
+		//Oben-Rechts
+		X=(int)	((x+playersizex)/this.spritewidth);
+		Y=(int)(y/this.spriteheight);
+		char OR = map[Y][X];
+		//Unten-Links
+		X= (int) (x/this.spritewidth);
+		Y= (int) ((y+playersizey)/this.spriteheight);
+		char UL = map[Y][X];
+		//Unten-Rechts
+		X= (int) ((x+playersizex)/this.spritewidth);
+		Y= (int) ((y+playersizey)/this.spriteheight);
+		char UR = map[Y][X];
+		
+		
+		if		(OL=='g' || OR=='g' || UL=='g' || UR=='g') return 'g';
+		else if	(OL=='x' || OR=='x' || UL=='x' || UR=='x') return 'x';
+		else if(OL=='a' || OR=='a' || UL=='a' || UR=='a') return 'a';
+		else if	(OL=='e' || OR=='e' || UL=='e' || UR=='e') return 'e';
+		else return' ';
 	}
 	
-	public boolean isEnemy(int x, int y){
-		int X= (int) (x/this.spritewidth);
-		int Y= (int) (y/this.spriteheight);
-		if (this.map[Y][X]=='g') return true;
-		else return false;
-	}
-	
-	public boolean isExit(int x, int y){
-		int X= (int) (x/this.spritewidth);
-		int Y= (int) (y/this.spriteheight);
-		if (this.map[Y][X]=='a') return true;
-		else return false;
-	}
 	
 	public Component add(Player player){
 		Component component=super.add(player);
@@ -220,10 +225,7 @@ public class Map extends JPanel{
 		
 	}
 
-	public char wouldTouch(int i, int j, int xDim, int yDim) {
-		
-		return ' ';
-	}
+
 	
 	/*public void paint(Graphics g){
 		this.paintChildren(g);

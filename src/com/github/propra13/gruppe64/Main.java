@@ -200,7 +200,7 @@ public class Main extends JFrame implements ActionListener{
 	}
 	
 	public void win(boolean b) {
-		this.removeAll();
+		//this.removeAll();
 		JTextField msg = new JTextField();
 		if(b){
 			msg.setText("Herzlichen Glueckwunsch");
