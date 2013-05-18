@@ -15,12 +15,14 @@ import javax.swing.JPanel;
 public class Game extends JPanel implements Runnable{
 	
 
-	private Player player = new Player(300,300);
+	
 	/**
 	 * @uml.property  name="map"
 	 * @uml.associationEnd  multiplicity="(1 1)"
 	 */
 	private Map map;
+	
+	private Player player;
 	/**
 	 * @uml.property  name="cp"
 	 */
@@ -32,6 +34,7 @@ public class Game extends JPanel implements Runnable{
 	public Game(Container cp) {
 	
 		this.cp=cp;
+		
 	}
 	
 	public boolean isReady(){
@@ -55,12 +58,8 @@ public class Game extends JPanel implements Runnable{
 		cp.removeAll();
 		//load maparray
 		
-		
-		//default bzw. erste Map wird geladen und macht sie sichtbar
 		map = new Map();
-		
-		
-		
+		player = new Player(300,300,map);
 		//player.setVisible(true);
 		map.add(player);
 		
@@ -68,15 +67,15 @@ public class Game extends JPanel implements Runnable{
 		cp.add(map);
 		//zeichne die Map
 		map.drawMap(50,50);
+		map.repaint(100);
 		TimerTask action = new TimerTask() {
 			public void run() {
 				player.updMot();
-				map.repaint();
 			}
 		};
 
 		Timer caretaker = new Timer();
-		caretaker.schedule(action, 1000, 5000);
+		caretaker.schedule(action, 0, 100);
 		
 		Controller controller1 = new Controller(player);
 		this.cp.addKeyListener(controller1);
