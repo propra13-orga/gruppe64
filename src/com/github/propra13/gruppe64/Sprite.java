@@ -78,14 +78,36 @@ public class Sprite extends JComponent {
 	public void paintComponent(Graphics g){
 		//Zeichnet jenach Typ
 		switch (this.name){
-			case 'x':case 'X':
-					g.setColor(Color.black); break;
-			case 'e': g.setColor(Color.gray); break;
-			case 'a': g.setColor(Color.green); break;
-			case 'g': g.setColor(Color.red);  break;	
+			case 'x':
+			case 'X':	
+					g.setColor(Color.black); 
+					g.fillRect(0, 0, xDim, yDim);
+			break;
+			
+			case 'e':
+				g.setColor(Color.gray); 
+				g.fillRect(0, 0, xDim, yDim);
+			break;
+			
+			case 'a': 
+				g.setColor(Color.green); 
+				g.fillRect(0, 0, xDim, yDim);
+			break;
+			
+			case 'g':
+				g.setColor(Color.red); 
+				g.fillRect(0, 0, xDim, yDim);
+			break;	
+			
+			case 'r':
+				g.setColor(Color.cyan);
+				g.drawOval(0, 0, 10, 50);//Oval Zeichnen
+				g.fillOval(10,10,25,25);
+			break;
+			
 			
 		}
-		g.fillRect(0, 0, xDim, yDim);
+		
 	}
 	
 	

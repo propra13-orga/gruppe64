@@ -17,7 +17,7 @@ public class Map extends JPanel{
 	 * - ?Siehe WIKI?
 	 */
 	
-	//Gršse der Map
+	//Grï¿½se der Map
 	/**
 	 * @uml.property  name="mapwidth"
 	 */
@@ -90,6 +90,7 @@ public class Map extends JPanel{
 			case 'a':
 			case 'A': 
 			case 'g':
+			case 'r':	
 			case 'G': return new Sprite (field);
 			default: return null;
 		}
