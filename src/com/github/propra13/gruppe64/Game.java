@@ -100,6 +100,7 @@ public class Game extends JPanel implements Runnable{
 	}
 	public void gameOver() {
 		caretaker.cancel();
+		caretaker.purge();
 		main.win(false);
 		
 	}
@@ -108,8 +109,12 @@ public class Game extends JPanel implements Runnable{
 		//setzte naechstes Level
 		aLevel++;
 		if(aLevel>mLevel){
+			caretaker.cancel();
+			caretaker.purge();
 			main.win(true);
 		}
+		map.removeAll();
+		cp.remove(map);
 		startLevel();
 	}
 

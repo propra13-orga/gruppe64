@@ -23,7 +23,7 @@ public class Main extends JFrame implements ActionListener{
 	//serialiseable
 	private static final long serialVersionUID = -7278907361953613792L;
 
-	
+	Thread gameThread;
 	/**
 	 * @uml.property  name="myGame"
 	 * @uml.associationEnd  
@@ -106,6 +106,12 @@ public class Main extends JFrame implements ActionListener{
 	 * Erzeugt alle Buttons fuer das Menu
 	 */
 	private JButton bClose;
+
+
+	private int xFrame=500;
+	private int yFrame=400;
+	
+	
 	private void initMain(){
 		//was passiert, wenn man das Fenster schliesst TODO Schliessen-Dialog
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -138,7 +144,8 @@ public class Main extends JFrame implements ActionListener{
 		cp.add(bRead, 	new myGBC(1,2,1,0.5));
 		cp.add(bClose, 	new myGBC(0,3,2,1));
 		this.pack();
-		this.setSize(600, 600);
+		
+		this.setSize(xFrame, yFrame);
 		
 		//this.setResizable(false);
 		
@@ -166,7 +173,7 @@ public class Main extends JFrame implements ActionListener{
 		}
 		//Erzeugt neues Spiel und startet es
 		myGame=new Game(this.cp, this);
-		Thread gameThread = new Thread(myGame);
+		gameThread = new Thread(myGame);
 		gameThread.start();	
 		//Controller
 		controller = new Controller();
@@ -200,7 +207,8 @@ public class Main extends JFrame implements ActionListener{
 	}
 	
 	public void win(boolean b) {
-		//this.removeAll();
+		
+		this.removeAll();
 		JTextField msg = new JTextField();
 		if(b){
 			msg.setText("Herzlichen Glueckwunsch");
@@ -208,10 +216,12 @@ public class Main extends JFrame implements ActionListener{
 			msg.setText("Loser");
 		}
 			bRestart = new myJButton("Weiter zum Haupmenue");
-			cp.add(bRestart,new myGBC(0,0,3,1));
+			cp.add(msg, new myGBC(0,2,3,1));
+			cp.add(bRestart,new myGBC(1,0,3,1));
 			cp.setLayout(new GridBagLayout());
 			this.pack();
-		
+			this.setVisible(true);
+			this.setSize(xFrame,yFrame);
 		
 	}
 }
