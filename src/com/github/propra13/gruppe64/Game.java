@@ -10,14 +10,19 @@ import java.util.TimerTask;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+
 //Soll in einem extra Thread laufen
 public class Game extends JPanel implements Runnable{
+	
+
 	
 	/**
 	 * @uml.property  name="map"
 	 * @uml.associationEnd  multiplicity="(1 1)"
 	 */
 	private Map map;
+	
+	private Player player;
 	/**
 	 * @uml.property  name="cp"
 	 */
@@ -29,6 +34,7 @@ public class Game extends JPanel implements Runnable{
 	public Game(Container cp) {
 	
 		this.cp=cp;
+		
 	}
 	
 	public boolean isReady(){
@@ -52,42 +58,28 @@ public class Game extends JPanel implements Runnable{
 		cp.removeAll();
 		//load maparray
 		
-		
-		/*int zeile=7, spalte=10,x,y;
-		//TODO Wo soll das eigentlich hin (vgl. WIKI)
-		//Test paint sprite
-		for(int i=0; i<spalte;i++){
-			x=i*50+10;
-			for(int j=0; j< zeile; j++){
-				y=j*50+10;
-				Sprite sp1 = map.getSprite(j, i);
-				
-				if(sp1!=null){
-					//System.out.print("("+x+","+y+")- {"+i+","+j+"}");
-					sp1.setLocation(x,y);
-					cp.add(sp1);
-					
-				}
-			//System.out.print("\n");
-			}
-		}*/
-		//default bzw. erste Map wird geladen und macht sie sichtbar
 		map = new Map();
+		player = new Player(300,300,map);
+		//player.setVisible(true);
+		map.add(player);
+		
 		//fuege die Map in das Grund-Panel
 		cp.add(map);
 		//zeichne die Map
 		map.drawMap(50,50);
+		map.repaint(100);
+		TimerTask action = new TimerTask() {
+			public void run() {
+				player.updMot();
+			}
+		};
+
+		Timer caretaker = new Timer();
+		caretaker.schedule(action, 0, 100);
 		
-		cp.repaint();
+		Controller controller1 = new Controller(player);
+		this.cp.addKeyListener(controller1);
 		
-		Player player = new Player(300,300);
-		//player.setVisible(true);
-		cp.add(player);
-		
-		/*Controller controller1 = new Controller(player);
-		this.cp.addKeyListener(controller1);*/
-		//System.exit(0);
-		cp.repaint();
 
 	}
 

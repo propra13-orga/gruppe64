@@ -13,13 +13,14 @@ public class Player extends Sprite {
 
 	private Map map;
 	//Test Konstruktor
-	public Player(int x, int y){
+	public Player(int x, int y, Map map){
 		super(x,y,30,30);
+		this.map = map;
 		
 	}
 	
 	public boolean putOnMap(int x, int y, Map map){
-		//TODO ist die Stelle Ÿberhaupt sinnvoll -> map.isCrossable
+		//TODO ist die Stelle ï¿½berhaupt sinnvoll -> map.isCrossable
 		return true;
 	}
 	public void setMot(int i) {
@@ -35,6 +36,8 @@ public class Player extends Sprite {
 	public void updMot(){
 		int x_off=0;
 		int y_off=0;
+		x=this.getX();
+		y=this.getY();
 		if(vy==-1) 	y_off=yDim;
 		if(vx==1) 	x_off=xDim;
 		if(map.isCrossable(x+x_off+vx,y+y_off-vy)){
@@ -55,7 +58,7 @@ public class Player extends Sprite {
 		//Zeichnet jenach Typ
 		g.setColor(Color.ORANGE);
 		g.fillRect(0, 0, xDim, yDim);
-		System.out.print("playerDraw");
+		//System.out.print("playerDraw");
 	}
 	
 }

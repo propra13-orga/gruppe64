@@ -53,9 +53,10 @@ public class Map extends JPanel{
 	 */
 	public Map(){
 		super();
-		this.setBounds(0, 0, 1000, 1000);
+		this.setBounds(0, 0, 600, 600);
 		//System.out.print("ThreadGesammt" +Thread.activeCount());
-		this.setBackground(Color.PINK);
+		this.setBackground(Color.WHITE);
+		this.setLayout(null);
 		this.setVisible(true);
 	}
 	
@@ -162,6 +163,10 @@ public class Map extends JPanel{
 	public void remove(Sprite sprite){
 		super.remove(sprite);
 	}
+	
+	/*public void paint(Graphics g){
+		this.paintChildren(g);
+	}*/
 }
 
 
