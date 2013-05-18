@@ -42,9 +42,26 @@ public class Map extends JPanel{
 	/**
 	 * @uml.property  name="map" multiplicity="(0 -1)" dimension="2"
 	 */
-	char map[][]= {	{'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'},
+	
+	char map[][]={	{'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'},
+					{'x', 'x', ' ', ' ', ' ', ' ', 'x', ' ', 'x', 'x'},
 					{'x', 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
-					{'x', 'x', ' ', ' ', 'g', ' ', ' ', ' ', ' ', 'x'},
+					{'e', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'a'},
+					{'x', 'x', ' ', ' ', ' ', ' ', 'x', ' ', 'x', 'x'},
+					{'x', 'x', ' ', 'g', ' ', ' ', ' ', ' ', ' ', 'x'},
+					{'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'}};
+	
+	char map2[][]={	{'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'},
+					{'x', 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
+					{'x', 'x', ' ', ' ', 'x', ' ', ' ', ' ', ' ', 'x'},
+					{'e', ' ', ' ', 'g', ' ', ' ', ' ', ' ', ' ', 'a'},
+					{'x', 'x', ' ', ' ', ' ', ' ', 'x', 'x', 'x', 'x'},
+					{'x', 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
+					{'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'}};
+	
+	char map3[][]={	{'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'},
+					{'x', 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
+					{'x', 'x', ' ', ' ', 'g', ' ', 'x', 'x', 'x', 'x'},
 					{'e', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'a'},
 					{'x', 'x', ' ', ' ', ' ', ' ', 'x', 'x', 'x', 'x'},
 					{'x', 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
@@ -61,6 +78,22 @@ public class Map extends JPanel{
 		this.setBackground(Color.WHITE);
 		this.setLayout(null);
 		this.setVisible(true);
+	}
+	
+	public Map(int spritewidth, int spriteheight, int level){
+		super();
+		this.spritewidth= spritewidth;
+		this.spriteheight= spriteheight;
+		this.setBounds(0, 0, 600, 600);
+		this.setBackground(Color.WHITE);
+		this.setLayout(null);
+		this.setVisible(true);
+		
+		switch(level){
+		case 1: break;
+		case 2: this.map=this.map2; break;
+		case 3: this.map=this.map3; break;
+		}
 	}
 	
 	//gibt Name des Feldes bei (x,y) zurück

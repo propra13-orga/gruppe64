@@ -58,8 +58,8 @@ public class Game extends JPanel implements Runnable{
 		cp.removeAll();
 		//load maparray
 		
-		map = new Map(50,50);
-		player = new Player(300,300,map);
+		map = new Map(50,50, 2);
+		player = new Player(0,150,map);
 		//player.setVisible(true);
 		map.add(player);
 		
