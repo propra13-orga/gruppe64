@@ -137,6 +137,20 @@ public class Map extends JPanel{
 		else return false;
 	}
 	
+	public boolean isEnemy(int x, int y){
+		int X= (int) (x/this.spritewidth);
+		int Y= (int) (y/this.spriteheight);
+		if (this.map[Y][X]=='g') return true;
+		else return false;
+	}
+	
+	public boolean isExit(int x, int y){
+		int X= (int) (x/this.spritewidth);
+		int Y= (int) (y/this.spriteheight);
+		if (this.map[Y][X]=='a') return true;
+		else return false;
+	}
+	
 	public Component add(Player player){
 		Component component=super.add(player);
 		//TODO
