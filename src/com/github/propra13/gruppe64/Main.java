@@ -33,7 +33,7 @@ public class Main extends JFrame implements ActionListener{
 	 * @uml.property  name="cp"
 	 */
 	private Container cp;
-	
+	public Controller controller;
 	private class myGBC extends GridBagConstraints{
 
 		private static final long serialVersionUID = 4632170617578570378L;
@@ -164,9 +164,13 @@ public class Main extends JFrame implements ActionListener{
 		    //whatevers
 		}
 		//Erzeugt neues Spiel und startet es
-		myGame=new Game(this.cp);
+		myGame=new Game(this.cp, this);
 		Thread gameThread = new Thread(myGame);
-		gameThread.start();		
+		gameThread.start();	
+		//Controller
+		controller = new Controller();
+		this.setFocusable(true);
+		this.addKeyListener(controller);
 		
 		
 	}
