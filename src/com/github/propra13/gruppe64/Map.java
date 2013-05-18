@@ -49,9 +49,9 @@ public class Map extends JPanel{
 	public Map(){
 		super();
 		this.setBounds(0, 0, 1000, 1000);
-		/*System.out.print("ThreadGesammt" +Thread.activeCount());
+		//System.out.print("ThreadGesammt" +Thread.activeCount());
 		this.setBackground(Color.PINK);
-		this.setVisible(true);*/
+		this.setVisible(true);
 	}
 	
 	//gibt Name des Feldes bei (x,y) zurück
@@ -77,7 +77,7 @@ public class Map extends JPanel{
 	public Sprite getSprite(int X, int Y){
 			
 			//if (x>=mapwidth || x<0 || y>=mapheight || y<0) return "Auserhalb Spielfeld";
-			char field=map[X][Y];
+			char field=map[Y][X];
 			switch (field){
 				
 				case 'x': 
@@ -94,7 +94,7 @@ public class Map extends JPanel{
 	public Sprite getSprite(int X, int Y, int spritewidth, int spriteheight){
 		
 		//if (x>=mapwidth || x<0 || y>=mapheight || y<0) return "Auserhalb Spielfeld";
-		char field=map[X][Y];
+		char field=map[Y][X];
 		switch (field){
 			
 			case 'x': 

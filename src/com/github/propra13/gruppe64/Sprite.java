@@ -85,7 +85,7 @@ public class Sprite extends JComponent {
 		this.name=name;
 		this.xDim=xDim;
 		this.yDim=yDim;
-		this.setBounds(x,y,xDim,yDim);
+		this.setBounds(0,0,xDim,yDim);
 	}
 			
 	
