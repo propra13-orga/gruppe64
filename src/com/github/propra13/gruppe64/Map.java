@@ -166,7 +166,7 @@ public class Map extends JPanel{
 		//unterscheidung ob Spieler sichbar ist?
 		int X= (int) (x/this.spritewidth);
 		int Y= (int) (y/this.spriteheight);
-		if (this.map[Y][X]==' ') return true;
+		if (this.map[Y][X]==' '||this.map[Y][X]=='e') return true;
 		else return false;
 	}
 	
@@ -199,6 +199,11 @@ public class Map extends JPanel{
 	}
 	public void remove(Sprite sprite){
 		super.remove(sprite);
+	}
+
+	public void updateState() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	/*public void paint(Graphics g){
