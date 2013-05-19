@@ -165,23 +165,23 @@ public class Map extends JPanel{
 	public char wouldTouch(int x, int y, int playersizex, int playersizey) {
 		int X,Y;
 		
-		if (x<0 || (x+playersizex+1) > ((mapwidth)*spritewidth)   ) return 'x';
-		if (y<0 || (y+playersizey+1) > (mapheight*spriteheight) ) return 'x';
+		if (x<0 || (x+playersizex) > ((mapwidth)*spritewidth)   ) return 'x';
+		if (y<0 || (y+playersizey) > (mapheight*spriteheight) ) return 'x';
 		//Oben-Links
 		X= (int) (x/this.spritewidth);
 		Y= (int) (y/this.spriteheight);
 		char OL = map[Y][X];
 		//Oben-Rechts
-		X=(int)	((x+playersizex)/this.spritewidth);
+		X=(int)	((x+playersizex-1)/this.spritewidth);
 		Y=(int)(y/this.spriteheight);
 		char OR = map[Y][X];
 		//Unten-Links
 		X= (int) (x/this.spritewidth);
-		Y= (int) ((y+playersizey)/this.spriteheight);
+		Y= (int) ((y+playersizey-1)/this.spriteheight);
 		char UL = map[Y][X];
 		//Unten-Rechts
-		X= (int) ((x+playersizex)/this.spritewidth);
-		Y= (int) ((y+playersizey)/this.spriteheight);
+		X= (int) ((x+playersizex-1)/this.spritewidth);
+		Y= (int) ((y+playersizey-1)/this.spriteheight);
 		char UR = map[Y][X];
 		
 		
