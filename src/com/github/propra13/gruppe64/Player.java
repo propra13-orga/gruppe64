@@ -1,8 +1,11 @@
 package com.github.propra13.gruppe64;								// # 0001
 
-import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
 
+
+@SuppressWarnings({ "serial" })
 public class Player extends Sprite {
 	//der bei der Bewegung bachtenswerter Offset zum (x,y)
 	//int x_off, y_off;
@@ -14,6 +17,7 @@ public class Player extends Sprite {
 	private Map map;
 	//Test Konstruktor
 	public Player(int x, int y, Map map){
+		//Groesse des Spielers 
 		super(x,y,30,30);
 		this.map = map;
 		
@@ -36,7 +40,11 @@ public class Player extends Sprite {
 	public void updMot(){
 		x=this.getX();
 		y=this.getY();
+
+
+		//if(map.wouldTouch(x+(vx-1)/2,y-(vy+1)/2,xDim,yDim)!='x')
 		if(map.wouldTouch(x+vx,y-vy,xDim,yDim)!='x'){
+
 			x = x+vx;
 			y = y-vy;
 			
@@ -54,8 +62,12 @@ public class Player extends Sprite {
 
 	public void paintComponent(Graphics g){
 		//Zeichnet jenach Typ
-		g.setColor(Color.ORANGE);
-		g.fillRect(0, 0, xDim, yDim);
+	//	g.setColor(Color.ORANGE);
+	//	g.fillRect(0, 0, xDim, yDim);
+		
+		Image img2 = Toolkit.getDefaultToolkit().getImage("res/banana.gif");
+	    g.drawImage(img2, 0, 0, this);
+	    g.finalize();	
 		//System.out.print("playerDraw");
 	}
 	
