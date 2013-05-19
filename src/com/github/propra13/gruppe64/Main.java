@@ -6,8 +6,8 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.util.Timer;
-import java.util.TimerTask;
+//import java.util.Timer;
+//import java.util.TimerTask;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,26 +19,18 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
 
 
+@SuppressWarnings("serial")
 public class Main extends JFrame implements ActionListener{
-	//serialiseable
-	private static final long serialVersionUID = -7278907361953613792L;
+
 
 	Thread gameThread;
-	/**
-	 * @uml.property  name="myGame"
-	 * @uml.associationEnd  
-	 */
+
 	private Game myGame;
 
-	/**
-	 * @uml.property  name="cp"
-	 */
 	private Container cp;
 	public Controller controller;
 	private class myGBC extends GridBagConstraints{
 
-		private static final long serialVersionUID = 4632170617578570378L;
-		//private static final long serialVersionUID = -964164546900389807L;
 		public myGBC(int gridx, int gridy){
 			super();
 			this.gridx = gridx;
@@ -52,6 +44,7 @@ public class Main extends JFrame implements ActionListener{
 		}
 	}
 	
+
 	private class myJButton extends JButton{
 		myJButton(String label){
 			super(label);
@@ -63,48 +56,33 @@ public class Main extends JFrame implements ActionListener{
 	 * Gibt Titel an JFrame
 	 */
 	public Main(){
-		super("Spiel �berschrift");
+		super("-=PBJT=-");
 		
 	}
 	
 	/**
 	 * Erzeugt alle Buttons f�r das Menu
-	 * @uml.property  name="bNGame"
-	 * @uml.associationEnd  
 	 */
 	private JButton bNGame;
 
 
 	/**
-	 * Erzeugt alle Buttons f�r das Menu
-	 * @uml.property  name="bIGame"
-	 * @uml.associationEnd  
+	 * Erzeugt alle Buttons f�r das Menu 
 	 */
 	private JButton bIGame;
 
 
 	/**
-	 * Erzeugt alle Buttons f�r das Menu
-	 * @uml.property  name="bRandom"
-	 * @uml.associationEnd  
+	 * Erstelle Zuffalslevel
 	 */
 	private JButton bRandom;
 
 
 	/**
-	 * Erzeugt alle Buttons f�r das Menu
-	 * @uml.property  name="bRead"
-	 * @uml.associationEnd  
+	 * Erzeugt alle Buttons fuer das Menu 
 	 */
 	private JButton bRead;
 	private JButton bRestart;
-
-	/**
-	 * Erzeugt alle Buttons f�r das Menu
-	 * @uml.property  name="bClose"
-	 * @uml.associationEnd  
-	 * Erzeugt alle Buttons fuer das Menu
-	 */
 	private JButton bClose;
 
 
@@ -112,7 +90,7 @@ public class Main extends JFrame implements ActionListener{
 	private int yFrame=400;
 	
 	
-	private void initMain(){
+	private void initMain(){//TODO in Menu-Klasse auslagern
 		//was passiert, wenn man das Fenster schliesst TODO Schliessen-Dialog
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -151,10 +129,12 @@ public class Main extends JFrame implements ActionListener{
 		
 		this.setVisible(true);
 	}
+	/**
+	 * Started das Spiel
+	 */
 	private void startGame(){
 		try {
 		    File wavFile=new File("res/nerv.wav");
-		    if(wavFile==null)	{System.out.print("file nicht gefunden!");}
 		    AudioInputStream stream;
 		    AudioFormat format;
 		    DataLine.Info info;
@@ -165,12 +145,12 @@ public class Main extends JFrame implements ActionListener{
 		    info = new DataLine.Info(Clip.class, format);
 		    clip = (Clip) AudioSystem.getLine(info);
 		    clip.open(stream);
-		    clip.start();
-		    
+		    clip.start();   
 		}
 		catch (Exception e) {
-		    //whatevers
+		    System.err.print("Sound-Fehler");
 		}
+		
 		//Erzeugt neues Spiel und startet es
 		myGame=new Game(this.cp, this);
 		gameThread = new Thread(myGame);
@@ -186,8 +166,7 @@ public class Main extends JFrame implements ActionListener{
 	
 		Main mainFrame = new Main();
 		mainFrame.initMain();
-	
-	
+
 	}
 	@Override
 	public void actionPerformed(ActionEvent ae) {
@@ -205,10 +184,13 @@ public class Main extends JFrame implements ActionListener{
 		//javax.swing.SwingUtilities.invokeLater(myGame);
 		
 	}
-	
+	/**
+	 * hat man Gewonnen oder Verloren? TODO
+	 */
 	public void win(boolean b) {
 		
 		this.removeAll();
+		this.setSize(xFrame,yFrame);
 		JTextField msg = new JTextField();
 		if(b){
 			msg.setText("Herzlichen Glueckwunsch");

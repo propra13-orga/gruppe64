@@ -7,43 +7,27 @@ import java.awt.Toolkit;
 
 import javax.swing.JComponent;
 
+@SuppressWarnings("serial")
 public class Sprite extends JComponent {
 
-	private static final long serialVersionUID = 1419758802002837841L;
-	
-	//Aktuelle Position (px) linker obere Ecke
-	/**
-	 * @uml.property  name="x"
-	 */
-	int x;
-
-	/**
-	 * @uml.property  name="y"
-	 */
-	int y;
-	//aktuelle Geschwindigkeit
-	/**
-	 * @uml.property  name="vx"
-	 */
-	int vx;
-
-	/**
-	 * @uml.property  name="vy"
-	 */
-	int vy;
-	//Ausmasse
-	/**
-	 * @uml.property  name="xDim"
-	 */
-	int xDim ;
 	
 	/**
-	 * @uml.property  name="yDim"
+	 * Aktuelle Position (px) linker obere Ecke
 	 */
-	int yDim;
-	//Sprite name
+	int x,y;
+
 	/**
-	 * @uml.property  name="name"
+	 * aktuelle Geschwindigkeit
+	 */
+	int vx,vy;
+
+	/**
+	 * Ausmasse
+	 */
+	int xDim,yDim ;
+
+	/**
+	 * Sprite name
 	 */
 	char name;
 	

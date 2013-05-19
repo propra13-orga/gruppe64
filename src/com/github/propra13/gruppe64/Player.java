@@ -1,10 +1,11 @@
 package com.github.propra13.gruppe64;								// # 0001
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
 
+
+@SuppressWarnings({ "serial" })
 public class Player extends Sprite {
 	//der bei der Bewegung bachtenswerter Offset zum (x,y)
 	//int x_off, y_off;
@@ -16,6 +17,7 @@ public class Player extends Sprite {
 	private Map map;
 	//Test Konstruktor
 	public Player(int x, int y, Map map){
+		//Groesse des Spielers 
 		super(x,y,30,30);
 		this.map = map;
 		
