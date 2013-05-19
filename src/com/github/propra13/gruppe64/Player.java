@@ -36,8 +36,7 @@ public class Player extends Sprite {
 	public void updMot(){
 		x=this.getX();
 		y=this.getY();
-
-		if(map.wouldTouch(x+(vx-1)/2,y-(vy+1)/2,xDim,yDim)!='x'){
+		if(map.wouldTouch(x+vx,y-vy,xDim,yDim)!='x'){
 			x = x+vx;
 			y = y-vy;
 			
