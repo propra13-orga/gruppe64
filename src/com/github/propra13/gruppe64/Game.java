@@ -1,17 +1,13 @@
 package com.github.propra13.gruppe64;
 
-//import java.awt.BorderLayout;
+
 import java.awt.Color;
-//import java.awt.Component;
 import java.awt.Container;
 import java.util.Timer;
 import java.util.TimerTask;
-
-//import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 
-//Soll in einem extra Thread laufen
 @SuppressWarnings("serial")
 public class Game extends JPanel implements Runnable{
 	
@@ -60,7 +56,7 @@ public class Game extends JPanel implements Runnable{
 	}
 	private void startLevel(){
 		//kein Layoutmanager
-		cp.setLayout(null);
+		
 		cp.setBackground(Color.WHITE);
 		cp.removeAll();
 		
@@ -75,6 +71,7 @@ public class Game extends JPanel implements Runnable{
 		map.drawMap();
 		//fuege die Map in das Grund-Panel
 		cp.add(map);
+		//main.pack();
 		//zeichne die Map alle 100 millisec
 		map.repaint(100);
 		
@@ -87,6 +84,8 @@ public class Game extends JPanel implements Runnable{
 	public void gameOver() {
 		caretaker.cancel();
 		caretaker.purge();
+		cp.remove(map);
+		map=null;
 		main.win(false);
 		
 	}
@@ -99,6 +98,7 @@ public class Game extends JPanel implements Runnable{
 		aLevel++;
 		map.removeAll();
 		cp.remove(map);
+		map=null;
 		if(aLevel>mLevel){
 			caretaker.cancel();
 			caretaker.purge();

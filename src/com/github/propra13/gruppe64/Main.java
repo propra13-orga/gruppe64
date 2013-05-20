@@ -1,5 +1,6 @@
 package com.github.propra13.gruppe64;
 
+
 import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -9,9 +10,12 @@ import java.io.File;
 //import java.util.Timer;
 //import java.util.TimerTask;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JTextField;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -23,12 +27,16 @@ import javax.sound.sampled.DataLine;
 public class Main extends JFrame implements ActionListener{
 
 
-	Thread gameThread;
+	private Thread gameThread;
+	//private Thread musicThread;
 
 	private Game myGame;
-
+	public  Controller controller;
+	private JPanel pWeiter;
+	
 	private Container cp;
-	public Controller controller;
+	
+	
 	private class myGBC extends GridBagConstraints{
 
 		public myGBC(int gridx, int gridy){
@@ -43,8 +51,6 @@ public class Main extends JFrame implements ActionListener{
 			this.weightx = weightx;
 		}
 	}
-	
-
 	private class myJButton extends JButton{
 		myJButton(String label){
 			super(label);
@@ -61,26 +67,11 @@ public class Main extends JFrame implements ActionListener{
 	}
 	
 	/**
-	 * Erzeugt alle Buttons f�r das Menu
+	 * Allelle Buttons fuer das Haupt-Menu
 	 */
 	private JButton bNGame;
-
-
-	/**
-	 * Erzeugt alle Buttons f�r das Menu 
-	 */
 	private JButton bIGame;
-
-
-	/**
-	 * Erstelle Zuffalslevel
-	 */
 	private JButton bRandom;
-
-
-	/**
-	 * Erzeugt alle Buttons fuer das Menu 
-	 */
 	private JButton bRead;
 	private JButton bRestart;
 	private JButton bClose;
@@ -125,7 +116,7 @@ public class Main extends JFrame implements ActionListener{
 		
 		this.setSize(xFrame, yFrame);
 		
-		//this.setResizable(false);
+		this.setResizable(false);
 		
 		this.setVisible(true);
 	}
@@ -133,6 +124,7 @@ public class Main extends JFrame implements ActionListener{
 	 * Started das Spiel
 	 */
 	private void startGame(){
+		//TODO mit music Thread ersetzten, der nicht aus dem RAM abspielt
 		try {
 		    File wavFile=new File("res/nerv.wav");
 		    AudioInputStream stream;
@@ -148,17 +140,24 @@ public class Main extends JFrame implements ActionListener{
 		    clip.start();   
 		}
 		catch (Exception e) {
-		    System.err.print("Sound-Fehler");
+		    System.err.print("Sound-Fehler:\n");
+		    System.err.print(e.toString());
+		    System.err.print("\nOSX-specific\n");
 		}
+		
+		//Controller
+		controller = new Controller();
+		this.setFocusable(true);
+		this.addKeyListener(controller);
+				
+		//Neues Layout, Map (ueber Game-stat)
+		cp.setLayout(new BoxLayout(cp, BoxLayout.Y_AXIS));
 		
 		//Erzeugt neues Spiel und startet es
 		myGame=new Game(this.cp, this);
 		gameThread = new Thread(myGame);
 		gameThread.start();	
-		//Controller
-		controller = new Controller();
-		this.setFocusable(true);
-		this.addKeyListener(controller);
+		
 		
 		
 	}
@@ -177,7 +176,7 @@ public class Main extends JFrame implements ActionListener{
 			System.exit(0);
 		}
 		if(ae.getSource()==this.bRestart){
-			this.removeAll();
+			this.remove(pWeiter);
 			this.initMain();
 		}
 		//netGame=new NetworkGame(myself);
@@ -188,22 +187,35 @@ public class Main extends JFrame implements ActionListener{
 	 * hat man Gewonnen oder Verloren? TODO
 	 */
 	public void win(boolean b) {
+		// Destroy myGame
+		//cp.remove(myGame);
+		myGame=null;
 		
-		this.removeAll();
-		this.setSize(xFrame,yFrame);
-		JTextField msg = new JTextField();
+		// Weiter-Menu
+		pWeiter = new JPanel();
+		pWeiter.setBounds(0, 0, 600, 600);
+		pWeiter.setLayout(new GridBagLayout());
+		JLabel msg = new JLabel("",SwingConstants.CENTER);
 		if(b){
 			msg.setText("Herzlichen Glueckwunsch");
 		} else{
-			msg.setText("Loser");
+			msg.setText("Loser!");
 		}
-			bRestart = new myJButton("Weiter zum Haupmenue");
-			cp.add(msg, new myGBC(0,2,3,1));
-			cp.add(bRestart,new myGBC(1,0,3,1));
-			cp.setLayout(new GridBagLayout());
-			this.pack();
-			this.setVisible(true);
-			this.setSize(xFrame,yFrame);
+		bRestart = new myJButton("Weiter zum Haupmenue");
+		bRestart.setDefaultCapable(true);
+		pWeiter.add(msg, new myGBC(0,0,1,1));
+		pWeiter.add(bRestart,new myGBC(0,1,1,1));
+		
+		pWeiter.setVisible(true);
+		
+		
+		cp.add(pWeiter);
+		
+		
+		this.pack();
+		this.setSize(xFrame, yFrame);
+		
+		
 		
 	}
 }

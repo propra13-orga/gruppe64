@@ -18,7 +18,7 @@ public class Map extends JPanel{
 	 * - ?Siehe WIKI?
 	 */
 	
-	//Gr�se der Map
+	//Grose der Map
 
 	/**
 	 * @uml.property  name="mapwidth"
@@ -160,7 +160,7 @@ public class Map extends JPanel{
 	}
 
 	/**
-	 * Fragt ob man da drauf darf
+	 * Gibt aus welches Spriteberuert wird
 	 */
 	public char wouldTouch(int x, int y, int playersizex, int playersizey) {
 		int X,Y;
@@ -184,7 +184,7 @@ public class Map extends JPanel{
 		Y= (int) ((y+playersizey)/this.spriteheight);
 		char UR = map[Y][X];
 		
-		
+		//Wichtig ist die Reihenfolge, was wichtiger ist oben
 		if		(OL=='g' || OR=='g' || UL=='g' || UR=='g') return 'g';
 		else if	(OL=='x' || OR=='x' || UL=='x' || UR=='x') return 'x';
 		else if(OL=='a' || OR=='a' || UL=='a' || UR=='a') return 'a';
@@ -220,6 +220,9 @@ public class Map extends JPanel{
 		break;
 		case 'a':case 'A':
 			game.nextLevel();
+		break;
+		default:
+		break;
 		}
 		
 		
