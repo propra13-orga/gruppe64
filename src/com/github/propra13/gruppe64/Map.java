@@ -4,12 +4,13 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 import javax.swing.JPanel;
 
 
 @SuppressWarnings({ "serial", "unused" })
-public class Map extends JPanel{
+public class Map extends JPanel {
 
 	/*
 	 * TODO
@@ -23,8 +24,8 @@ public class Map extends JPanel{
 	/**
 	 * @uml.property  name="mapwidth"
 	 */
-	private int spritewidth;
-	private int spriteheight;
+	protected int spritewidth;
+	protected int spriteheight;
 	private int mapwidth=10;
 	private int mapheight=7;
 	
@@ -96,8 +97,10 @@ public class Map extends JPanel{
 		case 3: this.map=this.map3; break;
 		}
 	}
-	
-	//gibt Name des Feldes bei (x,y) zurück
+	public Map(char[][] mapArray){
+		
+	}
+	//gibt Name des Feldes bei (x,y) zur��ck
 	public  String getField(int x, int y){
 		
 		if (x>=mapwidth || x<0 || y>=mapheight || y<0) return "Auserhalb Spielfeld";
@@ -159,6 +162,9 @@ public class Map extends JPanel{
 		}
 	}
 
+	public char wouldTouch(Rectangle rect){
+		return wouldTouch(rect.x,rect.y,rect.width,rect.height);
+	}
 	/**
 	 * Gibt aus welches Spriteberuert wird
 	 */
@@ -195,7 +201,9 @@ public class Map extends JPanel{
 	
 	public Component add(Player player){
 		Component component=super.add(player);
+		//player.set
 		this.player=player;
+		player.setMap();
 		return component;
 	}
 	public Component addComponent(Sprite sprite){
@@ -211,8 +219,9 @@ public class Map extends JPanel{
 		super.remove(sprite);
 	}
 
-	public void updateState() {
-		char touchedSprite = wouldTouch(player.x, player.y,player.xDim, player.yDim);	
+	public void updateState(Moveable character) {
+		char touchedSprite = wouldTouch(player.getRectangle());	
+		//System.out.println(player.getVisibleRect().toString());
 		
 		switch(touchedSprite){
 		case 'g': case 'G':
@@ -227,8 +236,19 @@ public class Map extends JPanel{
 		
 		
 	}
+	/**
+	 * Changes the State of the Character, 
+	 * @param character
+	 */
+	void influence(Moveable character) {
+		// TODO Auto-generated method stub
+		
+	}
 
-
+	void updateState() {
+		// TODO Auto-generated method stub
+		
+	}
 
 	
 	/*public void paint(Graphics g){

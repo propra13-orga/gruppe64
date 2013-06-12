@@ -37,20 +37,7 @@ public class Main extends JFrame implements ActionListener{
 	private Container cp;
 	
 	
-	private class myGBC extends GridBagConstraints{
-
-		public myGBC(int gridx, int gridy){
-			super();
-			this.gridx = gridx;
-			this.gridy = gridy;
-			this.fill = GridBagConstraints.HORIZONTAL;
-		}
-		public myGBC(int gridx, int gridy, int gridwidth, double weightx){
-			this(gridx,gridy);
-			this.gridwidth = gridwidth;
-			this.weightx = weightx;
-		}
-	}
+	
 	private class myJButton extends JButton{
 		myJButton(String label){
 			super(label);
@@ -151,7 +138,8 @@ public class Main extends JFrame implements ActionListener{
 		this.addKeyListener(controller);
 				
 		//Neues Layout, Map (ueber Game-stat)
-		cp.setLayout(new BoxLayout(cp, BoxLayout.Y_AXIS));
+		//cp.setLayout(new BoxLayout(cp, BoxLayout.Y_AXIS));
+		cp.setLayout(new GridBagLayout());
 		
 		//Erzeugt neues Spiel und startet es
 		myGame=new Game(this.cp, this);

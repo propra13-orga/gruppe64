@@ -6,17 +6,14 @@ import java.awt.Toolkit;
 
 
 @SuppressWarnings({ "serial" })
-public class Player extends Sprite {
+public class Player extends Moveable {
 	//der bei der Bewegung bachtenswerter Offset zum (x,y)
 	//int x_off, y_off;
-	/**
-	 * @uml.property  name="map"
-	 * @uml.associationEnd  readOnly="true"
-	 */
 
+	
 	private Map map;
 	//Test Konstruktor
-	public Player(int x, int y, Map map){
+	public Player(int x, int y){
 		//Groesse des Spielers 
 		super(x,y,30,30);
 		this.map = map;
@@ -24,41 +21,10 @@ public class Player extends Sprite {
 	}
 	
 	public boolean putOnMap(int x, int y, Map map){
-		//TODO ist die Stelle �berhaupt sinnvoll -> map.isCrossable
+		//TODO ist die Stelle ueberhaupt sinnvoll -> map.isCrossable
 		return true;
 	}
-	public void setMot(int i) {
-		switch (i){
-			case 0: vy= 1; break;
-			case 1: vx= 1; break;
-			case 2: vy=-1; break;
-			case 3: vx=-1; break;
-		}
-		
-	}
 	
-	public void updMot(){
-		x=this.getX();
-		y=this.getY();
-
-
-		//if(map.wouldTouch(x+(vx-1)/2,y-(vy+1)/2,xDim,yDim)!='x')
-		if(map.wouldTouch(x+vx,y-vy,xDim,yDim)!='x'){
-
-			x = x+vx;
-			y = y-vy;
-			
-			this.setLocation(x,y); 
-		}
-		map.updateState();
-	}
-
-	public void unsetMot(int i){
-		switch (i){
-			case 0: vy= 0; break;
-			case 1: vx= 0; break;
-		}
-	}
 
 	public void paintComponent(Graphics g){
 		//Zeichnet jenach Typ

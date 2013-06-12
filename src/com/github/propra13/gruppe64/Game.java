@@ -3,6 +3,7 @@ package com.github.propra13.gruppe64;
 
 import java.awt.Color;
 import java.awt.Container;
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.JPanel;
@@ -27,6 +28,8 @@ public class Game extends JPanel implements Runnable{
 	private int aLevel=1;
 	//Maximales Level
 	private int mLevel=3;
+	private JPanel mapArea;
+	private ArrayList<String> levelPaths;
 	
 	/**
 	 * cp ist content-pane von unserem JFrame
@@ -35,16 +38,20 @@ public class Game extends JPanel implements Runnable{
 	
 		this.cp=cp;
 		this.main =main;
+		levelPaths = new ArrayList<String>();
+		levelPaths.add("somePath");
 		
 	}	
 
 	public void run(){
-
+		cp.setBackground(Color.WHITE);
+		cp.removeAll();
 		startLevel();
 		// setzt den Timer der den Spieler aktualisiert
 		TimerTask action = new TimerTask() {
 			public void run() {
 				player.updMot();
+				//aLevel.getaRoom().updateMotion();
 			}
 		};
 
@@ -52,25 +59,27 @@ public class Game extends JPanel implements Runnable{
 		caretaker.schedule(action, 0, 5);
 		
 		
+		
 
 	}
 	private void startLevel(){
 		//kein Layoutmanager
 		
-		cp.setBackground(Color.WHITE);
-		cp.removeAll();
+		
+		
+		
 		
 		//load maparray
 		map = new Map(50,50, aLevel, this);
 		
-		player = new Player(0,150,map);
+		player = new Player(0,150);
 		map.add(player);
 		
 		//Reihenfolge ist wichtig, das das repaint die Child auf einem Stack sieht
 		main.controller.setPlayer(player);
 		map.drawMap();
 		//fuege die Map in das Grund-Panel
-		cp.add(map);
+		cp.add(map, new myGBC(0, 0));
 		//main.pack();
 		//zeichne die Map alle 100 millisec
 		map.repaint(100);
@@ -96,7 +105,7 @@ public class Game extends JPanel implements Runnable{
 	public void nextLevel() {
 		//setzte naechstes Level
 		aLevel++;
-		map.removeAll();
+		//map.removeAll();
 		cp.remove(map);
 		map=null;
 		if(aLevel>mLevel){

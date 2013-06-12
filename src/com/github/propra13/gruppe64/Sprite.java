@@ -3,6 +3,7 @@ package com.github.propra13.gruppe64;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 
 import javax.swing.JComponent;
@@ -25,13 +26,13 @@ public class Sprite extends JComponent {
 	 * Ausmasse
 	 */
 	int xDim,yDim ;
-
+	private Rectangle rectangle; 
 	/**
 	 * Sprite name
 	 */
 	char name;
 	
-	//Wird meist fuer Gelaende verwendet
+	/*//Wird meist fuer Gelaende verwendet
 	public Sprite(char name) {
 		//nur gerade  Werte
 		xDim=50;
@@ -45,16 +46,17 @@ public class Sprite extends JComponent {
 		this.x=x;
 		this.y=y;
 		this.setLocation( 100, 100);
-	}
+	}*/
 	// Konstruktor Namenloser 
 		public Sprite(int x, int y, int xDim, int yDim){
 			this.xDim = xDim;
 			this.yDim = yDim;
 			this.x=x;
 			this.y=y;
+			this.rectangle = new Rectangle(x,y,xDim,yDim);
 			this.setBounds( x, y, xDim, yDim);
 	}
-	//leerer Konstruktor fuer z.B. Spieler, der ja immer am Eingang startet
+	/*//leerer Konstruktor fuer z.B. Spieler, der ja immer am Eingang startet
 	public Sprite(){
 	}
 	//Konstruktor der auch Laenge und Breite festlegt
@@ -65,16 +67,19 @@ public class Sprite extends JComponent {
 		this.xDim=xDim;
 		this.yDim=yDim;
 		this.setBounds(x,y,xDim,yDim);
-	}
+	}*/
 	
 	public Sprite(int xDim, int yDim, char name){
 		this.name=name;
 		this.xDim=xDim;
 		this.yDim=yDim;
+		this.rectangle = new Rectangle(x,y,xDim,yDim);
 		this.setBounds(0,0,xDim,yDim);
 	}
 			
-	
+	public Rectangle getRectangle(){
+		return new Rectangle(x,y,xDim, yDim);
+	}
 	public void paintComponent(Graphics g){
 		//Zeichnet jenach Typ
 		switch (this.name){
