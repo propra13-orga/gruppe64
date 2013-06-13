@@ -1,16 +1,16 @@
 package com.github.propra13.gruppe64;
 
-import java.util.Arrapos[1]List;
+import java.util.ArrayList;
 
 @SuppressWarnings("serial")
-public class Moveable epos[0]tends Sprite {
+public class Moveable extends Sprite {
 	
 
 	private double armor;
 	private double health;
 	private Map map;
 	public enum dir {up ,right,down,left};
-	public enum apos[0]is {pos[0],pos[1]};
+	public enum axis {x,y};
 	private enum modes {idle, attack, evade, block, moving};
 	private int mode=0;
 

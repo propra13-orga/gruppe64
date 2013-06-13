@@ -1,4 +1,4 @@
-package com.github.propra13.gruppe64;
+package src.com.github.propra13.gruppe64;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -48,7 +48,7 @@ public class Sprite extends JComponent {
 		this.setLocation( 100, 100);
 	}*/
 	// Konstruktor Namenloser 
-		public Sprite(int[] pos, int[] Dim){
+	public Sprite(int[] pos, int[] Dim){
 			this.Dim = Dim;
 			this.pos=pos;
 			this.rectangle = new Rectangle(pos[0],pos[1],Dim[0],Dim[1]);

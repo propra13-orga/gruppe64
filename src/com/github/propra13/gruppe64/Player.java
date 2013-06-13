@@ -15,7 +15,7 @@ public class Player extends Moveable {
 	//Test Konstruktor
 	public Player(int x, int y){
 		//Groesse des Spielers 
-		super(x,y,30,30);
+		super(new int[]{x,y},new int[]{30,30});
 		this.map = map;
 		
 	}
