@@ -1,12 +1,12 @@
+
+file 9 lines (8 sloc) 0.467 kb
+1 2 3 4 5 6 7 8 	
+
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/Users/vad/src/jdk/macosx-port/build/macosx-universal/classes">
-		<attributes>
-			<attribute name="javadoc_location" value="jar:file:/Users/vad/src/jdk/macosx-port/build/jdk-7u21-apidocs.zip!/docs/api"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="output" path="bin"/>
+<classpathentry kind="src" path="src"/>
+<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+<classpathentry exported="true" kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+<classpathentry kind="con" path="com.soyatec.uml.CONTAINER"/>
+<classpathentry kind="output" path="bin"/>
 </classpath>
