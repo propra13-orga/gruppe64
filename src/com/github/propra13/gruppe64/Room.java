@@ -1,9 +1,11 @@
 package com.github.propra13.gruppe64;
 
 public class Room extends Map{
+	//default WallSize
+	
 	private static int wallSize= 50;
 	public Room(char[][] mapArray) {
-		super (wallSize, wallSize)
+		super (wallSize, wallSize);
 		this.mapArray = mapArray;
 	}
 	@Override 

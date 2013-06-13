@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
@@ -19,15 +20,16 @@ public class Map extends JPanel {
 	 * - ?Siehe WIKI?
 	 */
 	
-	//Grose der Map
 
-	/**
-	 * @uml.property  name="mapwidth"
-	 */
 	protected int spritewidth;
 	protected int spriteheight;
+	protected char[][] mapArray;
+	protected ArrayList<Moveable> moveables;
+	
+	
 	private int mapwidth=10;
 	private int mapheight=7;
+	
 	
 	/*  Beispiel: x_max = mapwidth = 4 und y_max = mapheight = 3:
 	 * 
@@ -199,26 +201,9 @@ public class Map extends JPanel {
 	}
 	
 	
-	public Component add(Player player){
-		Component component=super.add(player);
-		//player.set
-		this.player=player;
-		player.setMap();
-		return component;
-	}
-	public Component addComponent(Sprite sprite){
-		Component component = super.add(sprite);
-		//TODO
-		return component;
-	}
-	public void remove(Player player){
-		super.remove(player);
-		//SPAETER suche aus PlayerArray
-	}
-	public void remove(Sprite sprite){
-		super.remove(sprite);
-	}
-
+	
+	
+	
 	public void updateState(Moveable character) {
 		char touchedSprite = wouldTouch(player.getRectangle());	
 		//System.out.println(player.getVisibleRect().toString());
@@ -249,11 +234,39 @@ public class Map extends JPanel {
 		// TODO Auto-generated method stub
 		
 	}
-
 	
-	/*public void paint(Graphics g){
-		this.paintChildren(g);
-	}*/
+	
+	/*
+	 * JPanel overwrites for add/remove
+	 */
+	
+	public Component add(Player player){
+		Component component=super.add(player);
+		//player.set
+		this.player=player;
+		player.setMap();
+		return component;
+	}
+	public Component addComponent(Sprite sprite){
+		Component component = super.add(sprite);
+		//TODO
+		return component;
+	}
+	public void remove(Player player){
+		super.remove(player);
+		//suche aus PlayerArray
+		moveables.remove(player);
+		super.revalidate();
+	}
+	public void remove(Sprite sprite){
+		super.remove(sprite);
+		super.revalidate();
+	}
+	public void remove(Moveable mov){
+		super.remove(mov);
+		super.revalidate();
+		moveables.remove(mov);
+	}
 }
 
 

@@ -2,6 +2,7 @@ package com.github.propra13.gruppe64;
 
 import java.awt.Container;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.JPanel;
 
@@ -34,10 +35,15 @@ char map3[][]={	{'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'},
 			{'x', 'x', ' ', ' ', ' ', ' ', 'x', 'x', 'x', 'x'},
 			{'x', 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
 			{'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'}};
+
+
 private Map aMap;
 private Container cp;
 private Player player;
+// mapArray's for all Rooms
 private ArrayList<char[][]> roomArrayL;
+private Iterator<char[][]> roomIterator;
+//current Room
 private Room aRoom;
 	
 	/**
@@ -53,15 +59,16 @@ private Room aRoom;
 		this.player = player;
 		roomArrayL = new ArrayList<char[][]>();
 		roomArrayL.add(map);
+		roomIterator = roomArrayL.iterator();
 		
 	}
-	public void start(){
+	public void nextRoom(){
 		//create first Level
-		for (char[][] aRoomArray: roomArrayL){
-			aRoom = new Room(aRoomArray);
-			//aRoom.setWallSize();
+		if (roomIterator.hasNext()){
+			aRoom = new Room(roomIterator.next());
 			setMap(aRoom);
 		}
+		
 	}
 	/**
 	 * called by Game, iterates about all Movables and move them according to the actual Room
@@ -79,7 +86,10 @@ private Room aRoom;
 		
 	}
 	public void setMap(Map map){
-		cp.remove(aMap);
+		if(aMap!=null){
+			aMap.remove(player);
+			cp.remove(aMap);
+		}
 		cp.add(map, new myGBC(0, 0));
 		map.add(player);
 		aMap=map;
