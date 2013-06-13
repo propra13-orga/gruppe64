@@ -1,6 +1,7 @@
 package com.github.propra13.gruppe64;
 
 
+import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -33,7 +34,7 @@ public class Main extends JFrame implements ActionListener{
 	private Game myGame;
 	public  Controller controller;
 	private JPanel pWeiter;
-	
+	private Clip clip;
 	private Container cp;
 	
 	
@@ -117,12 +118,13 @@ public class Main extends JFrame implements ActionListener{
 		    AudioInputStream stream;
 		    AudioFormat format;
 		    DataLine.Info info;
-		    Clip clip;
+		    
 
 		    stream = AudioSystem.getAudioInputStream(wavFile);
 		    format = stream.getFormat();
 		    info = new DataLine.Info(Clip.class, format);
 		    clip = (Clip) AudioSystem.getLine(info);
+		    clip.stop();
 		    clip.open(stream);
 		    clip.start();   
 		}
@@ -140,7 +142,8 @@ public class Main extends JFrame implements ActionListener{
 		//Neues Layout, Map (ueber Game-stat)
 		//cp.setLayout(new BoxLayout(cp, BoxLayout.Y_AXIS));
 		//cp.setLayout(new GridBagLayout());
-		cp.setLayout(null);
+		
+		cp.removeAll();
 		//Erzeugt neues Spiel und startet es
 		myGame=new Game(this.cp, this);
 		gameThread = new Thread(myGame);
@@ -181,7 +184,7 @@ public class Main extends JFrame implements ActionListener{
 		
 		// Weiter-Menu
 		pWeiter = new JPanel();
-		pWeiter.setBounds(0, 0, 600, 600);
+		pWeiter.setBounds(0, 0, 300, 300);
 		pWeiter.setLayout(new GridBagLayout());
 		JLabel msg = new JLabel("",SwingConstants.CENTER);
 		if(b){

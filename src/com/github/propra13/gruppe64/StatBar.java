@@ -2,6 +2,7 @@ package com.github.propra13.gruppe64;
 
 import java.awt.Color;
 
+import javax.swing.JButton;
 import javax.swing.JPanel;
 /**
  * Under all Maps (Room, Shop) the StatBar shows the current State of the Player
@@ -22,9 +23,11 @@ public class StatBar extends JPanel{
 		super();
 		//Ueberschneidung mit map
 		this.setBounds(0, 400, panelW, panelH);
+		//this.setSize(panelW,panelH);
 		this.setBackground(Color.RED);
 		this.setLayout(null);
 		this.setVisible(true);
+		this.add(new JButton("Fuck"));
 	}
 
 }

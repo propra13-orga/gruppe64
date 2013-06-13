@@ -1,6 +1,7 @@
 package com.github.propra13.gruppe64;
 
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.GridBagLayout;
@@ -42,13 +43,15 @@ public class Game extends JPanel implements Runnable{
 		this.main =main;
 		levelPaths = new ArrayList<String>();
 		levelPaths.add("somePath");
-		statBar = new StatBar();
+		
 	}	
 
 	public void run(){
 		
 		cp.setBackground(Color.WHITE);
-		cp.removeAll();
+		cp.setLayout(new BorderLayout());
+		
+		statBar = new StatBar();
 		cp.add(statBar);
 		startLevel();
 		//main.pack();
@@ -70,8 +73,7 @@ public class Game extends JPanel implements Runnable{
 	private void startLevel(){
 		//kein Layoutmanager
 		
-		
-		
+		cp.repaint(100);
 		
 		
 		//load maparray
@@ -85,9 +87,7 @@ public class Game extends JPanel implements Runnable{
 		map.drawMap();
 		//fuege die Map in das Grund-Panel
 		cp.add(map);
-		//main.pack();
-		//zeichne die Map alle 100 millisec
-		map.repaint(100);
+
 		
 	}
 	
@@ -98,7 +98,7 @@ public class Game extends JPanel implements Runnable{
 	public void gameOver() {
 		caretaker.cancel();
 		caretaker.purge();
-		cp.remove(map);
+		cp.removeAll();
 		map=null;
 		main.win(false);
 		
