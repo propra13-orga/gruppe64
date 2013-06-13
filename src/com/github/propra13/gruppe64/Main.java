@@ -140,7 +140,7 @@ public class Main extends JFrame implements ActionListener{
 		//Neues Layout, Map (ueber Game-stat)
 		//cp.setLayout(new BoxLayout(cp, BoxLayout.Y_AXIS));
 		//cp.setLayout(new GridBagLayout());
-		
+		cp.setLayout(null);
 		//Erzeugt neues Spiel und startet es
 		myGame=new Game(this.cp, this);
 		gameThread = new Thread(myGame);
