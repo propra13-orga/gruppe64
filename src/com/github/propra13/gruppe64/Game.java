@@ -73,7 +73,7 @@ public class Game extends JPanel implements Runnable{
 	private void startLevel(){
 		//kein Layoutmanager
 		
-		cp.repaint(100);
+		
 		
 		
 		//load maparray
@@ -87,7 +87,8 @@ public class Game extends JPanel implements Runnable{
 		map.drawMap();
 		//fuege die Map in das Grund-Panel
 		cp.add(map);
-		map.repaint(100);
+		cp.repaint(100);
+
 		
 	}
 	
