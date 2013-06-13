@@ -15,17 +15,17 @@ public class Sprite extends JComponent {
 	/**
 	 * Aktuelle Position (px) linker obere Ecke
 	 */
-	int x,y;
+	protected int[] pos;
 
 	/**
 	 * aktuelle Geschwindigkeit
 	 */
-	int vx,vy;
+	protected int[] vel;
 
 	/**
 	 * Ausmasse
 	 */
-	int xDim,yDim ;
+	protected int[] Dim;
 	private Rectangle rectangle; 
 	/**
 	 * Sprite name
@@ -48,13 +48,11 @@ public class Sprite extends JComponent {
 		this.setLocation( 100, 100);
 	}*/
 	// Konstruktor Namenloser 
-		public Sprite(int x, int y, int xDim, int yDim){
-			this.xDim = xDim;
-			this.yDim = yDim;
-			this.x=x;
-			this.y=y;
-			this.rectangle = new Rectangle(x,y,xDim,yDim);
-			this.setBounds( x, y, xDim, yDim);
+		public Sprite(int[] pos, int[] Dim){
+			this.Dim = Dim;
+			this.pos=pos;
+			this.rectangle = new Rectangle(pos[0],pos[1],Dim[0],Dim[1]);
+			this.setBounds(pos[0],pos[1],Dim[0],Dim[1]);
 	}
 	/*//leerer Konstruktor fuer z.B. Spieler, der ja immer am Eingang startet
 	public Sprite(){
@@ -68,17 +66,29 @@ public class Sprite extends JComponent {
 		this.yDim=yDim;
 		this.setBounds(x,y,xDim,yDim);
 	}*/
+		
+	public int[] getPos(){
+		return pos;
+	}
 	
-	public Sprite(int xDim, int yDim, char name){
+	public int[] getDim(){
+		return Dim;
+	}
+	
+	public int[] getVel(){
+		return vel;
+	}
+	
+	
+	public Sprite(int[] Dim, char name){
 		this.name=name;
-		this.xDim=xDim;
-		this.yDim=yDim;
-		this.rectangle = new Rectangle(x,y,xDim,yDim);
-		this.setBounds(0,0,xDim,yDim);
+		this.Dim=Dim;
+		this.rectangle = new Rectangle(pos[0],pos[1],Dim[0],Dim[1]);
+		this.setBounds(0,0,Dim[0],Dim[1]);
 	}
 			
 	public Rectangle getRectangle(){
-		return new Rectangle(x,y,xDim, yDim);
+		return new Rectangle(pos[0],pos[1],Dim[0],Dim[1]);
 	}
 	public void paintComponent(Graphics g){
 		//Zeichnet jenach Typ
@@ -86,17 +96,17 @@ public class Sprite extends JComponent {
 			case 'x':
 			case 'X':	
 					g.setColor(Color.black); 
-					g.fillRect(0, 0, xDim, yDim);
+					g.fillRect(0, 0, Dim[0],Dim[1]);
 			break;
 			
 			case 'e':
 				g.setColor(Color.gray); 
-				g.fillRect(0, 0, xDim, yDim);
+				g.fillRect(0, 0,Dim[0],Dim[1]);
 			break;
 			
 			case 'a': 
 				g.setColor(Color.green); 
-				g.fillRect(0, 0, xDim, yDim);
+				g.fillRect(0, 0,Dim[0],Dim[1]);
 			break;
 			
 			case 'g':
