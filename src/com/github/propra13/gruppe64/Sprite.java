@@ -5,11 +5,14 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 
 @SuppressWarnings("serial")
-public class Sprite extends JComponent {
+public class Sprite extends JComponent implements MouseListener{
 
 	
 	/**
@@ -26,6 +29,7 @@ public class Sprite extends JComponent {
 	 * Ausmasse
 	 */
 	int xDim,yDim ;
+	
 	private Rectangle rectangle; 
 	/**
 	 * Sprite name
@@ -49,6 +53,7 @@ public class Sprite extends JComponent {
 	}*/
 	// Konstruktor Namenloser 
 		public Sprite(int x, int y, int xDim, int yDim){
+			this();
 			this.xDim = xDim;
 			this.yDim = yDim;
 			this.x=x;
@@ -56,9 +61,13 @@ public class Sprite extends JComponent {
 			this.rectangle = new Rectangle(x,y,xDim,yDim);
 			this.setBounds( x, y, xDim, yDim);
 	}
-	/*//leerer Konstruktor fuer z.B. Spieler, der ja immer am Eingang startet
+	//leerer Konstruktor fuer z.B. Spieler, der ja immer am Eingang startet
 	public Sprite(){
+		this.addMouseListener(this);
+	         
 	}
+
+	/*
 	//Konstruktor der auch Laenge und Breite festlegt
 	public Sprite(char name, int x, int y, int xDim, int yDim){
 		this.name=name;
@@ -70,11 +79,13 @@ public class Sprite extends JComponent {
 	}*/
 	
 	public Sprite(int xDim, int yDim, char name){
+		this();
 		this.name=name;
 		this.xDim=xDim;
 		this.yDim=yDim;
 		this.rectangle = new Rectangle(x,y,xDim,yDim);
 		this.setBounds(0,0,xDim,yDim);
+		
 	}
 			
 	public Rectangle getRectangle(){
@@ -118,6 +129,31 @@ public class Sprite extends JComponent {
 			
 			
 		}
+		
+	}
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		Sprite.this.setBorder(BorderFactory.createLineBorder(Color.GRAY)); 
+		
+	}
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
 		
 	}
 	

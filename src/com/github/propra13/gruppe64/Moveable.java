@@ -33,6 +33,9 @@ public class Moveable extends Sprite {
 	public void setMap(){
 		map = (Map)this.getParent();
 	}
+	/**
+	 * Ist die beabsichtigte Bewegung moeglich
+	 */
 	public void updMot(){
 		x=this.getX();
 		y=this.getY();
@@ -51,6 +54,7 @@ public class Moveable extends Sprite {
 		}
 		map.updateState(this);
 	}
+	
 	public void updateMot(){
 		
 	}

@@ -30,5 +30,9 @@ public class StatBar extends JPanel{
 		this.add(new JButton("Fuck"));
 		
 	}
+	
+	void setLevel(int levelNr){
+		
+	}
 
 }

@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.GridBagLayout;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.JPanel;
@@ -27,11 +28,12 @@ public class Game extends JPanel implements Runnable{
 	private Timer caretaker;
 
 	//Aktuelles Level
-	private int aLevel=1;
+	private int levelNr;
 	//Maximales Level
-	private int mLevel=3;
+	private int lastLevelNr=3;
+	
 	private JPanel mapArea;
-	private ArrayList<String> levelPaths;
+	private Level aLevel;
 	private StatBar statBar;
 	
 	/**
@@ -41,8 +43,14 @@ public class Game extends JPanel implements Runnable{
 	
 		this.cp=cp;
 		this.main =main;
-		levelPaths = new ArrayList<String>();
-		levelPaths.add("somePath");
+		
+		player = new Player(0,150);
+		
+		player.addStatBar(statBar);
+		
+		statBar = new StatBar();
+		levelNr =1;
+		statBar.setLevel(levelNr);
 		
 	}	
 
@@ -51,7 +59,7 @@ public class Game extends JPanel implements Runnable{
 		cp.setBackground(Color.WHITE);
 		cp.setLayout(new BorderLayout());
 		
-		statBar = new StatBar();
+		
 		cp.add(statBar);
 		startLevel();
 		//main.pack();
@@ -77,9 +85,12 @@ public class Game extends JPanel implements Runnable{
 		
 		
 		//load maparray
-		map = new Map(50,50, aLevel, this);
+		map = new Map(50,50, levelNr, this);
 		
-		player = new Player(0,150);
+		
+		aLevel = new Level(player, cp, levelNr);
+		
+		
 		map.add(player);
 		
 		//Reihenfolge ist wichtig, das das repaint die Child auf einem Stack sieht
@@ -110,11 +121,12 @@ public class Game extends JPanel implements Runnable{
 	 */
 	public void nextLevel() {
 		//setzte naechstes Level
-		aLevel++;
-		//map.removeAll();
+		levelNr++;
+		//aLevel.purge();
+		
 		cp.remove(map);
 		map=null;
-		if(aLevel>mLevel){
+		if(levelNr>lastLevelNr){
 			caretaker.cancel();
 			caretaker.purge();
 			main.win(true);

@@ -54,7 +54,7 @@ private Room aRoom;
 	 * @param levelPath
 	 * the Path to the Level-Description File
 	 */
-	public Level(Player player, Container cp, String levelPath) {
+	public Level(Player player, Container cp, int leveNr) {
 		this.cp = cp;
 		this.player = player;
 		roomArrayL = new ArrayList<char[][]>();
