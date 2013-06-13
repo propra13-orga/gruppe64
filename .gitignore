@@ -1,6 +1,7 @@
 bin/
 .settings/
-.project
+#.project
 .metadata
 .euml2
 .umlproject
+.classpath

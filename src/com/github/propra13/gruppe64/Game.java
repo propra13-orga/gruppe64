@@ -30,6 +30,7 @@ public class Game extends JPanel implements Runnable{
 	private int mLevel=3;
 	private JPanel mapArea;
 	private ArrayList<String> levelPaths;
+	private StatBar statBar;
 	
 	/**
 	 * cp ist content-pane von unserem JFrame
@@ -40,12 +41,14 @@ public class Game extends JPanel implements Runnable{
 		this.main =main;
 		levelPaths = new ArrayList<String>();
 		levelPaths.add("somePath");
-		
+		statBar = new StatBar();
 	}	
 
 	public void run(){
+		
 		cp.setBackground(Color.WHITE);
 		cp.removeAll();
+		cp.add(statBar,new myGBC(0,1));
 		startLevel();
 		// setzt den Timer der den Spieler aktualisiert
 		TimerTask action = new TimerTask() {

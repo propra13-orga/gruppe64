@@ -43,7 +43,7 @@ private Player player;
 // mapArray's for all Rooms
 private ArrayList<char[][]> roomArrayL;
 private Iterator<char[][]> roomIterator;
-//current Room
+//current active Room
 private Room aRoom;
 	
 	/**
