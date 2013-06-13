@@ -116,6 +116,11 @@ public class Map extends JPanel {
 	public Map(char[][] mapArray){
 		
 	}
+	
+	public ArrayList<Moveable> getMovables(){
+		return moveables;
+	}
+	
 	//gibt Name des Feldes bei (x,y) zur��ck
 	public  String getField(int x, int y){
 		

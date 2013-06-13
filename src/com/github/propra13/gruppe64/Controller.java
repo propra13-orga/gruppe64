@@ -39,6 +39,7 @@ public class Controller extends KeyAdapter{									//brauche playerobject mit p
 	 */
 	public int keyr;
 	
+	public int attack;
 	
 	
 	public Controller(Player player){
@@ -47,6 +48,13 @@ public class Controller extends KeyAdapter{									//brauche playerobject mit p
 		runter	=	KeyEvent.VK_DOWN;	
 		rechts  =	KeyEvent.VK_RIGHT;
 		links	=	KeyEvent.VK_LEFT;
+		attack	=	KeyEvent.VK_SPACE;
+		
+		/* WASD
+		hoch	=	KeyEvent.VK_W;
+		runter	=	KeyEvent.VK_S;	
+		rechts  =	KeyEvent.VK_D;
+		links	=	KeyEvent.VK_A;*/
 		
 	}
 	public Controller(){
@@ -54,6 +62,14 @@ public class Controller extends KeyAdapter{									//brauche playerobject mit p
 		runter	=	KeyEvent.VK_DOWN;	
 		rechts  =	KeyEvent.VK_RIGHT;
 		links	=	KeyEvent.VK_LEFT;
+		attack	=	KeyEvent.VK_SPACE;
+		
+		/* WASD
+		hoch	=	KeyEvent.VK_W;
+		runter	=	KeyEvent.VK_S;	
+		rechts  =	KeyEvent.VK_D;
+		links	=	KeyEvent.VK_A;*/
+		
 	}
 	//welcher Spieler soll kontrolliert werden
 	public void setPlayer(Player player){
@@ -68,6 +84,7 @@ public class Controller extends KeyAdapter{									//brauche playerobject mit p
 				if(keyp== rechts && player.vx != -1)player.setMot(dir.right);		//		3---+---1		0		-1	---0---   1
 				if(keyp== runter && player.vy !=  1)player.setMot(dir.down);		//			|			|
 				if(keyp== links && player.vx !=  1)player.setMot(dir.left);		//			2		   -1
+				if(keyp== attack)player.attemptAttack();
 			}
 	}
 	public void keyReleased(KeyEvent e){

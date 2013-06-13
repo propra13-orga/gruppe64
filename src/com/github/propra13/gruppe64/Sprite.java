@@ -18,18 +18,22 @@ public class Sprite extends JComponent implements MouseListener{
 	/**
 	 * Aktuelle Position (px) linker obere Ecke
 	 */
-	int x,y;
+	protected int[] pos;
 
 	/**
 	 * aktuelle Geschwindigkeit
 	 */
-	int vx,vy;
+	protected int[] vel;
 
 	/**
 	 * Ausmasse
 	 */
+<<<<<<< HEAD
 	int xDim,yDim ;
 	
+=======
+	protected int[] Dim;
+>>>>>>> 479162d7a4a82e4159a5b54aba6787a3900afde6
 	private Rectangle rectangle; 
 	/**
 	 * Sprite name
@@ -52,6 +56,7 @@ public class Sprite extends JComponent implements MouseListener{
 		this.setLocation( 100, 100);
 	}*/
 	// Konstruktor Namenloser 
+<<<<<<< HEAD
 		public Sprite(int x, int y, int xDim, int yDim){
 			this();
 			this.xDim = xDim;
@@ -60,6 +65,13 @@ public class Sprite extends JComponent implements MouseListener{
 			this.y=y;
 			this.rectangle = new Rectangle(x,y,xDim,yDim);
 			this.setBounds( x, y, xDim, yDim);
+=======
+		public Sprite(int[] pos, int[] Dim){
+			this.Dim = Dim;
+			this.pos=pos;
+			this.rectangle = new Rectangle(pos[0],pos[1],Dim[0],Dim[1]);
+			this.setBounds(pos[0],pos[1],Dim[0],Dim[1]);
+>>>>>>> 479162d7a4a82e4159a5b54aba6787a3900afde6
 	}
 	//leerer Konstruktor fuer z.B. Spieler, der ja immer am Eingang startet
 	public Sprite(){
@@ -77,7 +89,21 @@ public class Sprite extends JComponent implements MouseListener{
 		this.yDim=yDim;
 		this.setBounds(x,y,xDim,yDim);
 	}*/
+		
+	public int[] getPos(){
+		return pos;
+	}
 	
+	public int[] getDim(){
+		return Dim;
+	}
+	
+	public int[] getVel(){
+		return vel;
+	}
+	
+	
+<<<<<<< HEAD
 	public Sprite(int xDim, int yDim, char name){
 		this();
 		this.name=name;
@@ -86,10 +112,17 @@ public class Sprite extends JComponent implements MouseListener{
 		this.rectangle = new Rectangle(x,y,xDim,yDim);
 		this.setBounds(0,0,xDim,yDim);
 		
+=======
+	public Sprite(int[] Dim, char name){
+		this.name=name;
+		this.Dim=Dim;
+		this.rectangle = new Rectangle(pos[0],pos[1],Dim[0],Dim[1]);
+		this.setBounds(0,0,Dim[0],Dim[1]);
+>>>>>>> 479162d7a4a82e4159a5b54aba6787a3900afde6
 	}
 			
 	public Rectangle getRectangle(){
-		return new Rectangle(x,y,xDim, yDim);
+		return new Rectangle(pos[0],pos[1],Dim[0],Dim[1]);
 	}
 	public void paintComponent(Graphics g){
 		//Zeichnet jenach Typ
@@ -97,17 +130,17 @@ public class Sprite extends JComponent implements MouseListener{
 			case 'x':
 			case 'X':	
 					g.setColor(Color.black); 
-					g.fillRect(0, 0, xDim, yDim);
+					g.fillRect(0, 0, Dim[0],Dim[1]);
 			break;
 			
 			case 'e':
 				g.setColor(Color.gray); 
-				g.fillRect(0, 0, xDim, yDim);
+				g.fillRect(0, 0,Dim[0],Dim[1]);
 			break;
 			
 			case 'a': 
 				g.setColor(Color.green); 
-				g.fillRect(0, 0, xDim, yDim);
+				g.fillRect(0, 0,Dim[0],Dim[1]);
 			break;
 			
 			case 'g':
