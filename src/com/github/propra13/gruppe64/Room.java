@@ -1,12 +1,15 @@
 package com.github.propra13.gruppe64;
 
-public class Room extends Map{
+import java.util.ArrayList;
+
+public class Room extends Map {
 	//default WallSize
 	
 	private static int wallSize= 50;
 	public Room(char[][] mapArray) {
 		super (wallSize, wallSize);
 		this.mapArray = mapArray;
+		this.moveables = new ArrayList<Moveable>();
 	}
 	@Override 
 	void influence(Moveable character){

@@ -58,8 +58,15 @@ private Room aRoom;
 		this.cp = cp;
 		this.player = player;
 		roomArrayL = new ArrayList<char[][]>();
-		roomArrayL.add(map);
+	
+		readRoomsFromPath("path");
 		roomIterator = roomArrayL.iterator();
+	}
+	private void readRoomsFromPath(String levelPath) {
+		
+		roomArrayL.add(map);
+		roomArrayL.add(map2);
+		roomArrayL.add(map3);
 		
 	}
 	public void nextRoom(){

@@ -65,7 +65,7 @@ public class Main extends JFrame implements ActionListener{
 
 
 	private int xFrame=500;
-	private int yFrame=400;
+	private int yFrame=600;
 	
 	
 	private void initMain(){//TODO in Menu-Klasse auslagern
@@ -139,7 +139,7 @@ public class Main extends JFrame implements ActionListener{
 				
 		//Neues Layout, Map (ueber Game-stat)
 		//cp.setLayout(new BoxLayout(cp, BoxLayout.Y_AXIS));
-		cp.setLayout(new GridBagLayout());
+		//cp.setLayout(new GridBagLayout());
 		
 		//Erzeugt neues Spiel und startet es
 		myGame=new Game(this.cp, this);

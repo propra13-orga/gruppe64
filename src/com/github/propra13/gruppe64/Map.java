@@ -68,6 +68,7 @@ public class Map extends JPanel {
 					{'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'}};
 	private Player player;
 	private Game game;
+	private Level aLevel;
 	/**
 	 * Erzeuge neues JPanel und ordne es an, hier kann auch das auslesen aus Datei gestartet werden
 	 */
@@ -76,6 +77,19 @@ public class Map extends JPanel {
 		this.spritewidth= spritewidth;
 		this.spriteheight= spriteheight;
 		this.setBounds(0, 0, 600, 600);
+		//System.out.print("ThreadGesammt" +Thread.activeCount());
+		this.setBackground(Color.WHITE);
+		this.setLayout(null);
+		this.setVisible(true);
+	}
+	
+	public Map(Level aLevel, int mapW, int mapH, int spritewidth, int spriteheight){
+		super();
+		this.aLevel = aLevel;
+		this.spritewidth= spritewidth;
+		this.spriteheight= spriteheight;
+		//put at 0,0 
+		this.setBounds(0, 0, mapW, mapH);
 		//System.out.print("ThreadGesammt" +Thread.activeCount());
 		this.setBackground(Color.WHITE);
 		this.setLayout(null);

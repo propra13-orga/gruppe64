@@ -3,6 +3,7 @@ package com.github.propra13.gruppe64;
 
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.GridBagLayout;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -48,8 +49,9 @@ public class Game extends JPanel implements Runnable{
 		
 		cp.setBackground(Color.WHITE);
 		cp.removeAll();
-		cp.add(statBar,new myGBC(0,1));
+		cp.add(statBar);
 		startLevel();
+		//main.pack();
 		// setzt den Timer der den Spieler aktualisiert
 		TimerTask action = new TimerTask() {
 			public void run() {
@@ -82,7 +84,7 @@ public class Game extends JPanel implements Runnable{
 		main.controller.setPlayer(player);
 		map.drawMap();
 		//fuege die Map in das Grund-Panel
-		cp.add(map, new myGBC(0, 0));
+		cp.add(map);
 		//main.pack();
 		//zeichne die Map alle 100 millisec
 		map.repaint(100);
