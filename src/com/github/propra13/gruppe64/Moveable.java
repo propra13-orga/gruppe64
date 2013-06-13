@@ -6,7 +6,8 @@ public class Moveable extends Sprite {
 	private double armor;
 	private double health;
 	private Map map;
-	
+	public enum dir {up ,right,down,left};
+	public enum axis {x,y};
 
 
 	public Moveable(int x, int y, int xDim, int yDim) {
@@ -20,12 +21,12 @@ public class Moveable extends Sprite {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public void setMot(int i) {
+	public void setMot(dir i) {
 		switch (i){
-			case 0: vy= 1; break;
-			case 1: vx= 1; break;
-			case 2: vy=-1; break;
-			case 3: vx=-1; break;
+			case up: vy= 1; break;
+			case right: vx= 1; break;
+			case down: vy=-1; break;
+			case left: vx=-1; break;
 		}
 		
 	}
@@ -53,10 +54,10 @@ public class Moveable extends Sprite {
 	public void updateMot(){
 		
 	}
-	public void unsetMot(int i){
+	public void unsetMot(axis i){
 		switch (i){
-			case 0: vy= 0; break;
-			case 1: vx= 0; break;
+			case y: vy= 0; break;
+			case x: vx= 0; break;
 		}
 	}
 }

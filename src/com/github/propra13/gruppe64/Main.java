@@ -50,7 +50,7 @@ public class Main extends JFrame implements ActionListener{
 	 * Gibt Titel an JFrame
 	 */
 	public Main(){
-		super("-=PBJT=-");
+		super("Toast mit Katzengsicht - Game Of The Year Edition");
 		
 	}
 	
@@ -111,11 +111,12 @@ public class Main extends JFrame implements ActionListener{
 	/**
 	 * Started das Spiel
 	 */
+	AudioInputStream stream;
 	private void startGame(){
 		//TODO mit music Thread ersetzten, der nicht aus dem RAM abspielt
+		if(stream == null)
 		try {
 		    File wavFile=new File("res/nerv.wav");
-		    AudioInputStream stream;
 		    AudioFormat format;
 		    DataLine.Info info;
 		    
