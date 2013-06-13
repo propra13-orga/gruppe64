@@ -3,6 +3,9 @@ package com.github.propra13.gruppe64;										// # 0002
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import com.github.propra13.gruppe64.Moveable.axis;
+import com.github.propra13.gruppe64.Moveable.dir;
+
 
 
 public class Controller extends KeyAdapter{									//brauche playerobject mit public x,y
@@ -61,18 +64,18 @@ public class Controller extends KeyAdapter{									//brauche playerobject mit p
 			//System.out.print("kp");
 			keyp=e.getKeyCode();											
 			if(player!=null){												//			0			1	         wird die letzte Eingabe ignoriert.
-				if(keyp== hoch && player.vy != -1)player.setMot(0);			//			|			|
-				if(keyp== rechts && player.vx != -1)player.setMot(1);		//		3---+---1		0		-1	---0---   1
-				if(keyp== runter && player.vy !=  1)player.setMot(2);		//			|			|
-				if(keyp== links && player.vx !=  1)player.setMot(3);		//			2		   -1
+				if(keyp== hoch && player.vy != -1)player.setMot(dir.up);			//			|			|
+				if(keyp== rechts && player.vx != -1)player.setMot(dir.right);		//		3---+---1		0		-1	---0---   1
+				if(keyp== runter && player.vy !=  1)player.setMot(dir.down);		//			|			|
+				if(keyp== links && player.vx !=  1)player.setMot(dir.left);		//			2		   -1
 			}
 	}
 	public void keyReleased(KeyEvent e){
 		keyr=e.getKeyCode();
 		if(player!=null){
-			if(keyr==hoch || keyr==runter)	player.unsetMot(0);				//			0
-			if(keyr==rechts || keyr==links)	player.unsetMot(1);				//			|
-		}																	//			+---1	
+			if(keyr==hoch || keyr==runter)	player.unsetMot(axis.y);				//			0
+			if(keyr==rechts || keyr==links)	player.unsetMot(axis.x);				//			|
+		}																			//			+---1	
 		
 	}
 	
