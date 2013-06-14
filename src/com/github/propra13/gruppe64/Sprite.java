@@ -1,4 +1,4 @@
-package com.github.propra13.gruppe64;
+package src.com.github.propra13.gruppe64;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -28,12 +28,8 @@ public class Sprite extends JComponent implements MouseListener{
 	/**
 	 * Ausmasse
 	 */
-<<<<<<< HEAD
-	int xDim,yDim ;
-	
-=======
+
 	protected int[] Dim;
->>>>>>> 479162d7a4a82e4159a5b54aba6787a3900afde6
 	private Rectangle rectangle; 
 	/**
 	 * Sprite name
@@ -56,22 +52,14 @@ public class Sprite extends JComponent implements MouseListener{
 		this.setLocation( 100, 100);
 	}*/
 	// Konstruktor Namenloser 
-<<<<<<< HEAD
-		public Sprite(int x, int y, int xDim, int yDim){
-			this();
-			this.xDim = xDim;
-			this.yDim = yDim;
-			this.x=x;
-			this.y=y;
-			this.rectangle = new Rectangle(x,y,xDim,yDim);
-			this.setBounds( x, y, xDim, yDim);
-=======
-		public Sprite(int[] pos, int[] Dim){
+
+	public Sprite(int[] pos, int[] Dim){
+
 			this.Dim = Dim;
 			this.pos=pos;
 			this.rectangle = new Rectangle(pos[0],pos[1],Dim[0],Dim[1]);
 			this.setBounds(pos[0],pos[1],Dim[0],Dim[1]);
->>>>>>> 479162d7a4a82e4159a5b54aba6787a3900afde6
+
 	}
 	//leerer Konstruktor fuer z.B. Spieler, der ja immer am Eingang startet
 	public Sprite(){
@@ -103,22 +91,12 @@ public class Sprite extends JComponent implements MouseListener{
 	}
 	
 	
-<<<<<<< HEAD
-	public Sprite(int xDim, int yDim, char name){
-		this();
-		this.name=name;
-		this.xDim=xDim;
-		this.yDim=yDim;
-		this.rectangle = new Rectangle(x,y,xDim,yDim);
-		this.setBounds(0,0,xDim,yDim);
-		
-=======
+
 	public Sprite(int[] Dim, char name){
 		this.name=name;
 		this.Dim=Dim;
 		this.rectangle = new Rectangle(pos[0],pos[1],Dim[0],Dim[1]);
 		this.setBounds(0,0,Dim[0],Dim[1]);
->>>>>>> 479162d7a4a82e4159a5b54aba6787a3900afde6
 	}
 			
 	public Rectangle getRectangle(){
