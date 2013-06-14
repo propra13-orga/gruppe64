@@ -4,4 +4,4 @@ bin/
 .metadata
 .euml2
 .umlproject
-.classpath
+#.classpath
