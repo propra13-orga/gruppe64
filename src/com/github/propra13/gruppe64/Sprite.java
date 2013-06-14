@@ -1,4 +1,4 @@
-package src.com.github.propra13.gruppe64;
+package com.github.propra13.gruppe64;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -67,9 +67,6 @@ public class Sprite extends JComponent {
 		this.setBounds(x,y,xDim,yDim);
 	}*/
 		
-	public int[] getPos(){
-		return pos;
-	}
 	
 	public int[] getDim(){
 		return Dim;

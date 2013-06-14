@@ -80,10 +80,10 @@ public class Controller extends KeyAdapter{									//brauche playerobject mit p
 			//System.out.print("kp");
 			keyp=e.getKeyCode();											
 			if(player!=null){												//			0			1	         wird die letzte Eingabe ignoriert.
-				if(keyp== hoch && player.vy != -1)player.setMot(dir.up);			//			|			|
-				if(keyp== rechts && player.vx != -1)player.setMot(dir.right);		//		3---+---1		0		-1	---0---   1
-				if(keyp== runter && player.vy !=  1)player.setMot(dir.down);		//			|			|
-				if(keyp== links && player.vx !=  1)player.setMot(dir.left);		//			2		   -1
+				if(keyp== hoch && player.getVel()[1] != -1)player.setMot(dir.up);			//			|			|
+				if(keyp== rechts && player.getVel()[0] != -1)player.setMot(dir.right);		//		3---+---1		0		-1	---0---   1
+				if(keyp== runter && player.getVel()[1] !=  1)player.setMot(dir.down);		//			|			|
+				if(keyp== links && player.getVel()[0] !=  1)player.setMot(dir.left);		//			2		   -1
 				if(keyp== attack)player.attemptAttack();
 			}
 	}
