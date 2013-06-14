@@ -2,6 +2,8 @@ package com.github.propra13.gruppe64;
 
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 @SuppressWarnings("serial")
 public class Moveable extends Sprite {
 	
@@ -27,9 +29,10 @@ public class Moveable extends Sprite {
 	}
 	public void attemptAttack(){
 		if(this.mode==0){
-			//Arrapos[1]List<Moveable> movables=map.getMovables();
 			for(Moveable movables:map.getMovables()){
-				if(!this.equals(movables) && 10000>Math.pow(pos[0]-movables.,2)+Math.pow(pos[1]-,2))
+				if(!this.equals(movables) && 10000>Math.pow(pos[0]+Dim[0]/2-movables.pos[0]+movables.Dim[0]/2,2)+Math.pow(pos[1]+Dim[1]/2-movables.pos[1]+movables.Dim[1]/2,2))
+					JOptionPane.showMessageDialog(null, "baem!", "baem!", JOptionPane.OK_CANCEL_OPTION);
+				
 			}
 	
 		}
@@ -51,17 +54,17 @@ public class Moveable extends Sprite {
 	 * Ist die beabsichtigte Bewegung moeglich
 	 */
 	public void updMot(){
-		pos[0]=this.getpos[0]();
-		pos[1]=this.getpos[1]();
+		pos[0]=this.getX();
+		pos[1]=this.getY();
 
 
 		//if(map.wouldTouch(pos[0]+(vel[0]-1)/2,pos[1]-(vel[1]+1)/2,Dim[0],Dim[1])!='pos[0]')
-		if(map.wouldTouch(pos[0]+vel[0],pos[1],Dim)!='pos[0]'){
+		if(map.wouldTouch(pos[0]+vel[0],pos[1],Dim[0],Dim[1])!='x'){
 
 			pos[0] = pos[0]+vel[0];
 			this.setLocation(pos[0],pos[1]);
 		}
-		if(map.wouldTouch(pos[0],pos[1]-vel[1],Dim[0],Dim[1])!='pos[0]'){
+		if(map.wouldTouch(pos[0],pos[1]-vel[1],Dim[0],Dim[1])!='x'){
 			pos[1] = pos[1]-vel[1];
 			this.setLocation(pos[0],pos[1]);
 			 
@@ -72,10 +75,10 @@ public class Moveable extends Sprite {
 	public void updateMot(){
 		
 	}
-	public void unsetMot(apos[0]is i){
+	public void unsetMot(axis i){
 		switch (i){
-			case pos[1]: vel[1]= 0; break;
-			case pos[0]: vel[0]= 0; break;
+			case x: vel[1]= 0; break;
+			case y: vel[0]= 0; break;
 		}
 	}
 }

@@ -1,18 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
-<<<<<<< HEAD
-	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="con" path="com.soyatec.uml.CONTAINER"/>
+	<classpathentry kind="src" path=""/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/Users/vad/src/jdk/macosx-port/build/macosx-universal/classes" sourcepath="/Users/vad/src/jdk/macosx-port/jdk/src/macosx/native">
-		<attributes>
-			<attribute name="javadoc_location" value="file:/Users/vad/src/jdk/macosx-port/build/macosx-universal/docs/api/"/>
-			<attribute name="source_encoding" value="UTF-8"/>
-		</attributes>
-	</classpathentry>
-=======
-	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
->>>>>>> 3df2ed6987151fff6d5818a3111aeab11f26447f
+	<classpathentry kind="lib" path="/Users/vad/src/jdk/macosx-port/build/macosx-universal/classes"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
