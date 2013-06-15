@@ -12,20 +12,16 @@ import javax.swing.JComponent;
 public class Sprite extends JComponent {
 
 	
-	/**
-	 * Aktuelle Position (px) linker obere Ecke
-	 */
-	protected int[] pos;
 
 	/**
 	 * aktuelle Geschwindigkeit
 	 */
-	protected int[] vel;
+	protected int[] vel=new int[2];
 
 	/**
 	 * Ausmasse
 	 */
-	protected int[] Dim;
+	protected int[] Dim=new int[2];
 	private Rectangle rectangle; 
 	/**
 	 * Sprite name
@@ -48,11 +44,9 @@ public class Sprite extends JComponent {
 		this.setLocation( 100, 100);
 	}*/
 	// Konstruktor Namenloser 
-	public Sprite(int[] pos, int[] Dim){
-			this.Dim = Dim;
-			this.pos=pos;
-			this.rectangle = new Rectangle(pos[0],pos[1],Dim[0],Dim[1]);
-			this.setBounds(pos[0],pos[1],Dim[0],Dim[1]);
+	public Sprite(int x, int y, int xDim, int yDim){
+		this.rectangle = new Rectangle(x,y,xDim,yDim);
+		this.setBounds( x, y, xDim, yDim);
 	}
 	/*//leerer Konstruktor fuer z.B. Spieler, der ja immer am Eingang startet
 	public Sprite(){
@@ -72,20 +66,30 @@ public class Sprite extends JComponent {
 		return Dim;
 	}
 	
+	public void setDim(int xDim,int yDim){
+		this.Dim[0] = xDim;
+		this.Dim[1] = yDim;
+	}
+	
 	public int[] getVel(){
 		return vel;
 	}
 	
+	public void setVel(int vx, int vy){
+		this.vel[0]=vx;
+		this.vel[1]=vy;
+	}
 	
-	public Sprite(int[] Dim, char name){
+	
+	public Sprite(int xDim, int yDim, char name){
 		this.name=name;
-		this.Dim=Dim;
-		this.rectangle = new Rectangle(pos[0],pos[1],Dim[0],Dim[1]);
-		this.setBounds(0,0,Dim[0],Dim[1]);
+		this.setDim(xDim,yDim);
+		this.rectangle = new Rectangle(0,0,xDim,yDim);
+		this.setBounds(0,0,xDim,yDim);
 	}
 			
 	public Rectangle getRectangle(){
-		return new Rectangle(pos[0],pos[1],Dim[0],Dim[1]);
+		return new Rectangle(this.getX(),this.getY(),Dim[0],Dim[1]);
 	}
 	public void paintComponent(Graphics g){
 		//Zeichnet jenach Typ

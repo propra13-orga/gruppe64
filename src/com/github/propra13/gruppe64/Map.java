@@ -157,7 +157,7 @@ public class Map extends JPanel {
 			case 'g':
 			case 'r':	
 
-			case 'G': return new Sprite (new int[]{this.spritewidth, this.spriteheight}, field);
+			case 'G': return new Sprite (this.spritewidth, this.spriteheight, field);
 			default: return null;
 		}
 	}

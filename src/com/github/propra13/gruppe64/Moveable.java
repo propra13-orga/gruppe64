@@ -17,20 +17,22 @@ public class Moveable extends Sprite {
 	private int mode=0;
 
 
-	public Moveable(int[] pos, int[] Dim) {
-		super(pos, Dim);
+	public Moveable(int posx, int posy,int Dimx, int Dimy) {
+		super(posx, posy, Dimx, Dimy);
 		// TODO Auto-generated constructor stub
 	}
 
 
-	public Moveable(int[] Dim, char name) {
-		super(Dim, name);
+	public Moveable(int Dimx, int Dimy, char name) {
+		super(Dimx, Dimy, name);
 		// TODO Auto-generated constructor stub
 	}
 	public void attemptAttack(){
 		if(this.mode==0){
+			int x=this.getX();
+			int y=this.getY();
 			for(Moveable movables:map.getMovables()){
-				if(!this.equals(movables) && 10000>Math.pow(pos[0]+Dim[0]/2-movables.pos[0]+movables.Dim[0]/2,2)+Math.pow(pos[1]+Dim[1]/2-movables.pos[1]+movables.Dim[1]/2,2))
+				if(!this.equals(movables) && 10000>Math.pow(x+Dim[0]/2-movables.getX()+movables.Dim[0]/2,2)+Math.pow(y+Dim[1]/2-movables.getY()+movables.Dim[1]/2,2))
 					JOptionPane.showMessageDialog(null, "baem!", "baem!", JOptionPane.OK_CANCEL_OPTION);
 				
 			}
@@ -51,19 +53,16 @@ public class Moveable extends Sprite {
 		map = (Map)this.getParent();
 	}
 	public void updMot(){
-		pos[0]=this.getX();
-		pos[1]=this.getY();
-
+		int x=this.getX();
+		int y=this.getY();
 
 		//if(map.wouldTouch(pos[0]+(vel[0]-1)/2,pos[1]-(vel[1]+1)/2,Dim[0],Dim[1])!='pos[0]')
-		if(map.wouldTouch(pos[0]+vel[0],pos[1],Dim[0],Dim[1])!='x'){
-
-			pos[0] = pos[0]+vel[0];
-			this.setLocation(pos[0],pos[1]);
+		if(map.wouldTouch(x+vel[0],y,Dim[0],Dim[1])!='x'){
+			
+			this.setLocation(x+vel[0],y);
 		}
-		if(map.wouldTouch(pos[0],pos[1]-vel[1],Dim[0],Dim[1])!='x'){
-			pos[1] = pos[1]-vel[1];
-			this.setLocation(pos[0],pos[1]);
+		if(map.wouldTouch(x,y-vel[1],Dim[0],Dim[1])!='x'){
+			this.setLocation(x,y-vel[1]);
 			 
 		}
 		map.updateState(this);
@@ -73,8 +72,8 @@ public class Moveable extends Sprite {
 	}
 	public void unsetMot(axis i){
 		switch (i){
-			case x: vel[1]= 0; break;
-			case y: vel[0]= 0; break;
+			case x: this.setVel(0, this.getVel()[1]); break;
+			case y: this.setVel(this.getVel()[0],0); break;
 		}
 	}
 }
