@@ -5,12 +5,17 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
+import java.util.logging.Logger;
 //import java.util.Timer;
 //import java.util.TimerTask;
 
+import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -51,7 +56,11 @@ public class Main extends JFrame implements ActionListener{
 	 */
 	public Main(){
 		super("Toast mit Katzengsicht - Game Of The Year Edition");
-		
+		java.net.URL url = this.getClass().getClassLoader().getResource("../res/nyan2.png");
+				//ClassLoader.getSystemResource("res/nyan2.png");
+//		Toolkit kit = Toolkit.getDefaultToolkit();
+//		Image img = kit.createImage(url);
+//		this.setIconImage(img);
 	}
 	
 	/**
