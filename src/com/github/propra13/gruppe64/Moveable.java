@@ -59,14 +59,9 @@ public class Moveable extends Sprite {
 		int x=this.getX();
 		int y=this.getY();
 
-		//if(map.wouldTouch(pos[0]+(vel[0]-1)/2,pos[1]-(vel[1]+1)/2,Dim[0],Dim[1])!='pos[0]')
-		if(map.wouldTouch(x+vel[0],y,Dim[0],Dim[1])!='x'){
+		if(map.wouldTouch(x+vel[0],y-vel[1],Dim[0],Dim[1])!='x'){
 			
-			this.setLocation(x+vel[0],y);
-		}
-		if(map.wouldTouch(x,y-vel[1],Dim[0],Dim[1])!='x'){
-			this.setLocation(x,y-vel[1]);
-			 
+			this.setLocation(x+vel[0],y-vel[1]);
 		}
 		map.updateState(this);
 	}
