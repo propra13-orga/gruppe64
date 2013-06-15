@@ -36,7 +36,7 @@ public class Main extends JFrame implements ActionListener{
 	private JPanel pWeiter;
 	private Clip clip;
 	private Container cp;
-	
+	public static boolean debug=true;
 	
 	
 	private class myJButton extends JButton{

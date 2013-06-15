@@ -28,6 +28,11 @@ public class StatBar extends JPanel{
 		this.setLayout(null);
 		this.setVisible(true);
 		this.add(new JButton("Fuck"));
+		
+	}
+	
+	void setLevel(int levelNr){
+		
 	}
 
 }
