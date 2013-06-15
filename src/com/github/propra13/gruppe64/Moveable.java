@@ -58,10 +58,15 @@ public class Moveable extends Sprite {
 	public void updMot(){
 		int x=this.getX();
 		int y=this.getY();
-
-		if(map.wouldTouch(x+vel[0],y-vel[1],Dim[0],Dim[1])!='x'){
+		if(map.wouldTouch(x+vel[0],y,Dim[0],Dim[1])!='x'){
 			
-			this.setLocation(x+vel[0],y-vel[1]);
+			this.setLocation(x+vel[0],y);
+		}
+		x=this.getX();
+		y=this.getY();
+		if(map.wouldTouch(x,y-vel[1],Dim[0],Dim[1])!='x'){
+			
+			this.setLocation(x,y-vel[1]);
 		}
 		map.updateState(this);
 	}
