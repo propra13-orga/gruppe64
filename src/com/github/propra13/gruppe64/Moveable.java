@@ -108,6 +108,9 @@ public class Moveable extends Sprite {
 	}
 	public void damage(int dmg){
 		this.health -= dmg;
-		map.remove(this);
+		if(this.health<=0)		map.remove(this);
+	}
+	public ArrayList<Item> getSlots(){
+		return slotarr;
 	}
 }
