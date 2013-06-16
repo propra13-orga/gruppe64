@@ -113,7 +113,7 @@ public class Main extends JFrame implements ActionListener{
 		
 		this.setSize(xFrame, yFrame);
 		
-		this.setResizable(false);
+		//this.setResizable(false);
 		
 		this.setVisible(true);
 	}

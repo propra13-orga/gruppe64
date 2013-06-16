@@ -88,7 +88,7 @@ public class Game extends JPanel implements Runnable{
 		map = new Map(50,50, levelNr, this);
 		
 		player.setLocation(0, 150);
-		aLevel = new Level(player, cp, levelNr);
+		//aLevel = new Level(player, cp, levelNr);
 		
 		
 		map.add(player);

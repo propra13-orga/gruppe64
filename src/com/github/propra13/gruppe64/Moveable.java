@@ -27,8 +27,10 @@ public class Moveable extends Sprite {
 
 	public Moveable(int posx, int posy,int Dimx, int Dimy) {
 		super(posx, posy, Dimx, Dimy);
-		itemarr.add(new Item('s'));
-		slotarr.add(itemarr.get(0));
+//		itemarr = new ArrayList<Item>();
+//		slotarr = new ArrayList<Item>();
+//		itemarr.add(new Item('S'));
+//		slotarr.add(itemarr.get(0));
 		// TODO Auto-generated constructor stub
 	}
 

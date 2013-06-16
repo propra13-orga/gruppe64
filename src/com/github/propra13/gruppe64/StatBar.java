@@ -36,7 +36,7 @@ public class StatBar extends JPanel{
 	*/
 		
 
-		this.add(new JButton("Fuck"));
+		
 		
 	}
 	

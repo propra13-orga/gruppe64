@@ -13,12 +13,12 @@ public class Item extends Sprite {
 
 	String displayedName;
 	//Größe des Items
-	int xd,yd;
+	int xd=50,yd=50;
 	private boolean isWeapon=false;
 	private int Dmg;
 	private int Range;
 	
-	public Item(int xd,int yd, char name)// Name des Items
+	public Item(int xd, int yd, char name)// Name des Items
 	
 	{	
 		super(xd,yd,name);
