@@ -3,6 +3,7 @@ package com.github.propra13.gruppe64;								// # 0001
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.util.ArrayList;
 
 
 @SuppressWarnings({ "serial" })
@@ -17,6 +18,10 @@ public class Player extends Moveable {
 	public Player(int x, int y){
 		//Groesse des Spielers 
 		super(x,y,30,30);
+		itemarr = new ArrayList<Item>();
+		slotarr = new ArrayList<Item>();
+		itemarr.add(new Item('S'));
+		slotarr.add(itemarr.get(0));
 		this.map = map;
 		
 	}

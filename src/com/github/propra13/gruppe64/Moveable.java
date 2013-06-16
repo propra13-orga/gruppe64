@@ -27,10 +27,6 @@ public class Moveable extends Sprite {
 
 	public Moveable(int posx, int posy,int Dimx, int Dimy) {
 		super(posx, posy, Dimx, Dimy);
-//		itemarr = new ArrayList<Item>();
-//		slotarr = new ArrayList<Item>();
-//		itemarr.add(new Item('S'));
-//		slotarr.add(itemarr.get(0));
 		// TODO Auto-generated constructor stub
 	}
 
@@ -59,7 +55,7 @@ public class Moveable extends Sprite {
 			timer.purge();
 			CopyOnWriteArrayList<Moveable> movarr=new CopyOnWriteArrayList<Moveable>(map.getMovables());
 			for(Moveable mov:movarr){
-				if(!this.equals(mov) && 10000>Math.pow(x+Dim[0]/2-mov.getX()+mov.Dim[0]/2,2)+Math.pow(y+Dim[1]/2-mov.getY()+mov.Dim[1]/2,2))
+				if(!this.equals(mov) && this.slotarr.get(0).getRange()>Math.pow(x+Dim[0]/2-mov.getX()+mov.Dim[0]/2,2)+Math.pow(y+Dim[1]/2-mov.getY()+mov.Dim[1]/2,2))
 				{	System.out.println("treffer");
 					System.out.println(map.getMovables().size());
 					mov.damage(this.slotarr.get(0).getDmg());
