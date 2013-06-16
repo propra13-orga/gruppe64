@@ -45,10 +45,10 @@ public class Game extends JPanel implements Runnable{
 		this.main =main;
 		
 		player = new Player(0,150);
-		
+		statBar = new StatBar();
 		player.addStatBar(statBar);
 		
-		statBar = new StatBar();
+		
 		levelNr =1;
 		statBar.setLevel(levelNr);
 		
@@ -69,6 +69,11 @@ public class Game extends JPanel implements Runnable{
 				
 				for (Moveable mov: map.getMovables()){
 					mov.updateMot();
+					if(map.getMovables().size()>1)
+						if(mov.equals(map.getMovables().get(1))){
+							mov.attemptAttack();
+							statBar.repaint();
+						}	
 				}
 				//aLevel.getaRoom().updateMotion();
 			}

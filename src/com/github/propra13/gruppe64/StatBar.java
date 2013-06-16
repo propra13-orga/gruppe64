@@ -21,8 +21,8 @@ import javax.swing.JPanel;
 public class StatBar extends JPanel{
 	static private  int panelH =200;
 	static private int panelW =500;
-	static private int health=200;
-	static private int manahealth=200;
+	private int health=200;
+	private int manahealth=200;
 	private JButton Inventar;
 	public StatBar() {
 		super();
@@ -68,8 +68,7 @@ public class StatBar extends JPanel{
   			slots.get(i).setLocation(220+i*60, 10);
   		}
   	}
-  	public void updateHealth(int health){
-  		this.health=health;
-  		
+  	public void updateHealth(int hp){
+  		this.health=2*hp;
   	}
 }

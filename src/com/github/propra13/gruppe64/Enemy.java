@@ -3,16 +3,25 @@ package com.github.propra13.gruppe64;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.util.ArrayList;
 
 public class Enemy extends Moveable {
 
 	public Enemy(int x, int y, int xDim, int yDim) {
 		super(x,y, xDim,yDim);
 		vel[0]=1;vel[1]=1;
+		itemarr = new ArrayList<Item>();
+		slotarr = new ArrayList<Item>();
+		itemarr.add(new Item('p'));
+		slotarr.add(itemarr.get(0));
 	}
 
 	public Enemy(int xDim, int yDim, char name) {
 		super(xDim,yDim, name);
+		itemarr = new ArrayList<Item>();
+		slotarr = new ArrayList<Item>();
+		itemarr.add(new Item('p'));
+		slotarr.add(itemarr.get(0));
 		
 	}
 	public void paintComponent(Graphics g){

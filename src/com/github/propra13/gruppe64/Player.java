@@ -20,9 +20,8 @@ public class Player extends Moveable {
 		super(x,y,30,30);
 		itemarr = new ArrayList<Item>();
 		slotarr = new ArrayList<Item>();
-		itemarr.add(new Item('s'));
+		itemarr.add(new Item('S'));
 		slotarr.add(itemarr.get(0));
-		this.map = map;
 		
 	}
 	
@@ -49,7 +48,7 @@ public class Player extends Moveable {
 	}
 	public void damage(int dmg){
 		this.health -= dmg;
-		statBar.getStateFrom(this);
+		statBar.updateHealth(this.health);
 		if(this.health<=0)		map.remove(this);
 	}
 	
