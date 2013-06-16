@@ -51,6 +51,7 @@ public class Sprite extends JComponent implements MouseListener{
 	// Konstruktor Namenloser 
 
 	public Sprite(int x, int y, int xDim, int yDim){
+		this();
 		this.setDim(xDim, yDim);
 		this.rectangle = new Rectangle(x,y,xDim,yDim);
 		this.setBounds( x, y, xDim, yDim);

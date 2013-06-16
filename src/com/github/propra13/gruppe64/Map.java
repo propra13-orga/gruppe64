@@ -73,7 +73,7 @@ public class Map extends JPanel {
 	 * Erzeuge neues JPanel und ordne es an, hier kann auch das auslesen aus Datei gestartet werden
 	 */
 	public Map(int spritewidth, int spriteheight){
-		super();
+		this();
 		this.spritewidth= spritewidth;
 		this.spriteheight= spriteheight;
 		this.setBounds(0, 0, 600, 600);
@@ -84,7 +84,7 @@ public class Map extends JPanel {
 	}
 	
 	public Map(Level aLevel, int mapW, int mapH, int spritewidth, int spriteheight){
-		super();
+		this();
 		this.aLevel = aLevel;
 		this.spritewidth= spritewidth;
 		this.spriteheight= spriteheight;
@@ -97,7 +97,7 @@ public class Map extends JPanel {
 	}
 	
 	public Map(int spritewidth, int spriteheight, int level, Game game){
-		super();
+		this();
 		this.spritewidth= spritewidth;
 		this.spriteheight= spriteheight;
 		this.setBounds(0, 0, 600, 600);
@@ -116,12 +116,14 @@ public class Map extends JPanel {
 	public Map(char[][] mapArray){
 		
 	}
-	
+	public Map(){
+		this.moveables = new ArrayList<Moveable>();
+	}
 	public ArrayList<Moveable> getMovables(){
 		return moveables;
 	}
 	
-	//gibt Name des Feldes bei (x,y) zur��ck
+	//gibt Name des Feldes bei (x,y) zurueck
 	public  String getField(int x, int y){
 		
 		if (x>=mapwidth || x<0 || y>=mapheight || y<0) return "Auserhalb Spielfeld";
@@ -264,7 +266,14 @@ public class Map extends JPanel {
 		//player.set
 		this.player=player;
 		player.setMap();
+		moveables.add(player);
 		return component;
+	}
+	public Component add(Moveable mov){
+		Component c=super.add(mov);
+		mov.setMap();
+		moveables.add(mov);
+		return c;
 	}
 	public Component addComponent(Sprite sprite){
 		Component component = super.add(sprite);
