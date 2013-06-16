@@ -1,6 +1,10 @@
 package com.github.propra13.gruppe64;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.swing.JOptionPane;
 
@@ -15,10 +19,16 @@ public class Moveable extends Sprite {
 	public enum axis {x,y};
 	private enum modes {idle, attack, evade, block, moving};
 	private int mode=0;
+	private Timer timer;
+	protected ArrayList<Item> itemarr;
+	protected ArrayList<Item> slotarr;
+	
 
 
 	public Moveable(int posx, int posy,int Dimx, int Dimy) {
 		super(posx, posy, Dimx, Dimy);
+		itemarr.add(new Item('s'));
+		slotarr.add(itemarr.get(0));
 		// TODO Auto-generated constructor stub
 	}
 
@@ -27,14 +37,32 @@ public class Moveable extends Sprite {
 		super(Dimx, Dimy, name);
 		// TODO Auto-generated constructor stub
 	}
+	
 	public void attemptAttack(){
+		
 		if(this.mode==0){
+			System.out.print("schlag ");
 			int x=this.getX();
 			int y=this.getY();
-			for(Moveable movables:map.getMovables()){
-				if(!this.equals(movables) && 10000>Math.pow(x+Dim[0]/2-movables.getX()+movables.Dim[0]/2,2)+Math.pow(y+Dim[1]/2-movables.getY()+movables.Dim[1]/2,2))
-					JOptionPane.showMessageDialog(null, "baem!", "baem!", JOptionPane.OK_CANCEL_OPTION);
-				
+			
+			this.mode=1;
+			TimerTask action = new TimerTask() {
+				public void run() {
+					mode=0;
+				}
+			};
+
+			timer = new Timer();
+			timer.schedule(action, 1000, 5000);
+			timer.purge();
+			CopyOnWriteArrayList<Moveable> movarr=new CopyOnWriteArrayList<Moveable>(map.getMovables());
+			for(Moveable mov:movarr){
+				if(!this.equals(mov) && 10000>Math.pow(x+Dim[0]/2-mov.getX()+mov.Dim[0]/2,2)+Math.pow(y+Dim[1]/2-mov.getY()+mov.Dim[1]/2,2))
+				{	System.out.println("treffer");
+					System.out.println(map.getMovables().size());
+					mov.damage(this.slotarr.get(0).getDmg());
+					System.out.println(map.getMovables().size());
+				}
 			}
 	
 		}
@@ -79,5 +107,9 @@ public class Moveable extends Sprite {
 			case x: this.setVel(0, this.getVel()[1]); break;
 			case y: this.setVel(this.getVel()[0],0); break;
 		}
+	}
+	public void damage(int dmg){
+		this.health -= dmg;
+		map.remove(this);
 	}
 }
