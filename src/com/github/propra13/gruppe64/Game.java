@@ -50,7 +50,7 @@ public class Game extends JPanel implements Runnable{
 		
 		statBar = new StatBar();
 		levelNr =1;
-		//statBar.setLevel(levelNr);
+		statBar.setLevel(levelNr);
 		
 	}	
 
@@ -87,7 +87,7 @@ public class Game extends JPanel implements Runnable{
 		//load maparray
 		map = new Map(50,50, levelNr, this);
 		
-		
+		player.setLocation(0, 150);
 		aLevel = new Level(player, cp, levelNr);
 		
 		
