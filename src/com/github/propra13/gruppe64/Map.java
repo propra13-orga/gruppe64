@@ -108,25 +108,7 @@ public class Map extends JPanel {
 		return moveables;
 	}
 	
-	//gibt Name des Feldes bei (x,y) zurueck
-	public  String getField(int x, int y){
-		
-		if (x>=mapwidth || x<0 || y>=mapheight || y<0) return "Auserhalb Spielfeld";
-		
-		switch (map[y][x]){
-			case ' ': return "frei";
-			case 'x': 
-			case 'X': return "versperrt";
-			case 'e':
-			case 'E': return "eingang";
-			case 'a':
-			case 'A': return "ausgang";
-			case 'g':
-			case 'G': return "gegener";
-			default: return "undefiniertes Terrain";
-		}
-		
-	}
+	
 	
 	
 	public Sprite getSprite(int X, int Y){
@@ -145,6 +127,13 @@ public class Map extends JPanel {
 			case 'r': return new Sprite (this.spritewidth, this.spriteheight, field);	
 			case 'g':	
 			case 'G': return new Enemy(0, 0, 50, 50);
+			//ITEMS
+			case 'S': 
+			case 'Y':
+			case 'M':
+			case 'H': 
+				return new Item (50,50,field);
+			
 			default: return null;
 		}
 	}
