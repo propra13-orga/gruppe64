@@ -18,17 +18,17 @@ public class Item extends Sprite {
 	private int Dmg;
 	private int Range;
 	
-	public Item(int xd, int yd, char name)// Name des Items
+	public Item( char name)// Name des Items
 	
 	{	
-		super(xd,yd,name);
+		super();
 		//int xd,yd;
 		
 		switch(name){
 		
 		case 'S': this.displayedName="Sword"; //Schwert 
 		Dmg=20;
-		Range=80;
+		Range=6400;
 		isWeapon=true;
 		
 		break;
@@ -47,7 +47,7 @@ public class Item extends Sprite {
 		
 		case 's':this.displayedName="Schlagring"; //schlagring
 		Dmg=5;
-		Range=30;
+		Range=900;
 		isWeapon=true;
 		break;
 		

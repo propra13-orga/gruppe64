@@ -133,7 +133,7 @@ public class Map extends JPanel {
 			case 'Y':
 			case 'M':
 			case 'H': 
-				return new Item (50,50,field);
+				return new Item (field);
 			
 			default: return null;
 		}
