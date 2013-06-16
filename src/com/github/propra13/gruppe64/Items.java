@@ -11,4 +11,9 @@ public class Items extends Sprite {
 		this.displayedName=displayedName;
 	}
 	
+	public void paintComponent(java.awt.Graphics g){
+		
+		
+	}
+	
 }
