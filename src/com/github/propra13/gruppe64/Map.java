@@ -134,17 +134,17 @@ public class Map extends JPanel {
 		//if (x>=mapwidth || x<0 || y>=mapheight || y<0) return "Auserhalb Spielfeld";
 		char field=map[Y][X];
 		switch (field){
-			
+			case 'e':
+			case 'E':  
+				
 			case 'x': 
 			case 'X': 
-			case 'e':
-			case 'E': 
 			case 'a':
 			case 'A': 
-			case 'g':
-			case 'r':	
-
-			case 'G': return new Sprite (this.spritewidth, this.spriteheight, field);
+			
+			case 'r': return new Sprite (this.spritewidth, this.spriteheight, field);	
+			case 'g':	
+			case 'G': return new Enemy(0, 0, 50, 50);
 			default: return null;
 		}
 	}
@@ -245,26 +245,24 @@ public class Map extends JPanel {
 	/*
 	 * JPanel overwrites for add/remove
 	 */
-	
-	public Component add(Player player){
-		Component component=super.add(player);
+	public Component add(Sprite sp){
+		Component component=super.add(sp);
 		//player.set
-		this.player=player;
-		player.setMap();
-		moveables.add(player);
+		Class<? extends Sprite> cClass = sp.getClass();
+		if(cClass.equals(Enemy.class)){
+			((Enemy)sp).setMap();
+			moveables.add((Moveable) sp);
+		}
+		if(cClass.equals(Player.class)){
+			//player.set
+			this.player=(Player)sp;
+			((Player)sp).setMap();
+			moveables.add((Moveable) sp);
+		}
+		//moveables.add(player);
 		return component;
 	}
-	public Component add(Moveable mov){
-		Component c=super.add(mov);
-		mov.setMap();
-		moveables.add(mov);
-		return c;
-	}
-	public Component addComponent(Sprite sprite){
-		Component component = super.add(sprite);
-		//TODO
-		return component;
-	}
+	
 	public void remove(Player player){
 		super.remove(player);
 		//suche aus PlayerArray
