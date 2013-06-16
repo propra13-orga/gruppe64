@@ -3,8 +3,8 @@ package com.github.propra13.gruppe64;
 public class Moveable extends Sprite {
 	
 
-	private double armor;
-	private double health;
+	protected double armor;
+	protected int health=100;
 	private Map map;
 	
 
