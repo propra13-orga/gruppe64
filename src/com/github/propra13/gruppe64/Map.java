@@ -23,15 +23,16 @@ public class Map extends JPanel {
 	 * - ?Siehe WIKI?
 	 */
 	
+	protected int mapwidth=10;
+	protected int mapheight=7;
 
-	protected int spritewidth;
-	protected int spriteheight;
+	protected int spritewidth=50;
+	protected int spriteheight=50;
 	protected char[][] mapArray;
 	protected ArrayList<Moveable> moveables;
 	
 	
-	private int mapwidth=10;
-	private int mapheight=7;
+	
 	
 	
 	/*  Beispiel: x_max = mapwidth = 4 und y_max = mapheight = 3:
@@ -382,6 +383,23 @@ public class Map extends JPanel {
 		char[][] map = readFile( mapwidth, mapheight, lvl, room);
 		return map;
 	}
+	
+	public int[] getPosOf(char c){
+		
+		int[] pos = new int[2];
+		
+		for (int i=0; i<mapheight; i++){
+			for (int j=0; j<mapwidth; j++){
+				
+				if (mapArray[i][j]==c){
+					pos[0]=j; pos[1]=i;
+					return pos;
+				}
+			}
+		}
+		return null;
+	}
+	
 }
 
 

@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 public class Level extends JPanel{
 	int spriteWidth=50;
 	int spriteHeight=50;
-	ArrayList<Room> rooms;
+	ArrayList<Room> roomList;
 	ArrayList<Moveable> moveable;
 	
 	char map[][]={	{'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'},
@@ -41,8 +41,9 @@ private Map aMap;
 private Container cp;
 private Player player;
 // mapArray's for all Rooms
-private ArrayList<char[][]> roomArrayL;
-private Iterator<char[][]> roomIterator;
+
+/**private ArrayList<char[][]> roomArrayL;*/
+private Iterator<Room> roomIterator;
 //current active Room
 private Room aRoom;
 	
@@ -54,25 +55,28 @@ private Room aRoom;
 	 * @param levelPath
 	 * the Path to the Level-Description File
 	 */
-	public Level(Player player, Container cp, int leveNr) {
+	public Level(Player player, Container cp, int levelnr) {
 		this.cp = cp;
 		this.player = player;
-		roomArrayL = new ArrayList<char[][]>();
+		
+		roomList = new ArrayList<Room>();
+		readAllRooms(levelnr);
+		roomIterator = roomList.iterator();
+	}
 	
-		readRoomsFromPath("path");
-		roomIterator = roomArrayL.iterator();
-	}
-	private void readRoomsFromPath(String levelPath) {
+	public void readAllRooms(int lvl){
 		
-		roomArrayL.add(map);
-		roomArrayL.add(map2);
-		roomArrayL.add(map3);
-		
+		int i=1;
+		Room raum;
+		while( (raum=new Room(lvl,i)) != null){
+			roomList.add(raum);
+		}
 	}
+	
 	public void nextRoom(){
 		//create first Level
 		if (roomIterator.hasNext()){
-			aRoom = new Room(roomIterator.next());
+			aRoom = roomIterator.next();
 			setMap(aRoom);
 		}
 		
