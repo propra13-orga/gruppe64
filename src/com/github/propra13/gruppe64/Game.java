@@ -66,7 +66,10 @@ public class Game extends JPanel implements Runnable{
 		// setzt den Timer der den Spieler aktualisiert
 		TimerTask action = new TimerTask() {
 			public void run() {
-				player.updMot();
+				
+				for (Moveable mov: map.getMovables()){
+					mov.updateMot();
+				}
 				//aLevel.getaRoom().updateMotion();
 			}
 		};

@@ -50,7 +50,7 @@ public class Room extends Map {
 	public void moveMoveable(){
 		
 		for(Moveable mov : moveables){
-			mov.updMot();
+			mov.updateMot();
 		}
 		
 	}

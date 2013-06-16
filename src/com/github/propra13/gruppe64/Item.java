@@ -51,6 +51,12 @@ public class Item extends Sprite {
 		isWeapon=true;
 		break;
 		
+		case 'p':this.displayedName="Pfote";
+		Dmg=1;
+		Range=10;
+		isWeapon=true;
+		break;
+		
 		
 		
 		
@@ -101,7 +107,7 @@ public class Item extends Sprite {
 		case 's':
 			xd=50;
 			yd=50;
-			Image img6 = Toolkit.getDefaultToolkit().getImage("res/nyan_cat2.gif");
+			Image img6 = Toolkit.getDefaultToolkit().getImage("res/s.png");
 		    g.drawImage(img6, 0, 0, this);
 		    g.finalize();	
 		    break;

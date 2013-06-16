@@ -189,8 +189,7 @@ public class Map extends JPanel {
 		char UR = map[Y][X];
 		
 		//Wichtig ist die Reihenfolge, was wichtiger ist oben
-		if		(OL=='g' || OR=='g' || UL=='g' || UR=='g') return 'g';
-		else if	(OL=='x' || OR=='x' || UL=='x' || UR=='x') return 'x';
+		if	(OL=='x' || OR=='x' || UL=='x' || UR=='x') return 'x';
 		else if(OL=='a' || OR=='a' || UL=='a' || UR=='a') return 'a';
 		else if	(OL=='e' || OR=='e' || UL=='e' || UR=='e') return 'e';
 		else return' ';
@@ -265,7 +264,7 @@ public class Map extends JPanel {
 	}
 	public void remove(Moveable mov){
 		super.remove(mov);
-		super.revalidate();
+		repaint();
 		moveables.remove(mov);
 	}
 	
