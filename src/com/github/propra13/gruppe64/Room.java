@@ -1,6 +1,7 @@
 package com.github.propra13.gruppe64;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Room extends Map {
 	//default WallSize
@@ -25,6 +26,13 @@ public class Room extends Map {
 	public void setWallSize(int wallW, int wallH) {
 		spriteheight = wallH;
 		spritewidth = wallW;
+		
+	}
+	public void moveMoveable(){
+		
+		for(Moveable mov : moveables){
+			mov.updMot();
+		}
 		
 	}
 }

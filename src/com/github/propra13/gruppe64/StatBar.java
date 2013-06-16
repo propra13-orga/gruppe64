@@ -28,13 +28,20 @@ public class StatBar extends JPanel{
 		this.setBackground(Color.RED);
 		this.setLayout(null);
 		this.setVisible(true);
+
 	/*	Inventar=new JButton("Inventar");
 		Inventar.setBounds(10,10,150,20);
 		this.add(Inventar);
 		Inventar.setVisible(true);
 	*/
 		
+
+		this.add(new JButton("Fuck"));
 		
+	}
+	
+	void setLevel(int levelNr){
+
 	}
   	@Override public void paintComponent(java.awt.Graphics g){
 

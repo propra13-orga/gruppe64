@@ -3,6 +3,9 @@ package com.github.propra13.gruppe64;										// # 0002
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import com.github.propra13.gruppe64.Moveable.axis;
+import com.github.propra13.gruppe64.Moveable.dir;
+
 
 
 public class Controller extends KeyAdapter{									//brauche playerobject mit public x,y
@@ -36,6 +39,7 @@ public class Controller extends KeyAdapter{									//brauche playerobject mit p
 	 */
 	public int keyr;
 	
+	public int attack;
 	
 	
 	public Controller(Player player){
@@ -44,6 +48,13 @@ public class Controller extends KeyAdapter{									//brauche playerobject mit p
 		runter	=	KeyEvent.VK_DOWN;	
 		rechts  =	KeyEvent.VK_RIGHT;
 		links	=	KeyEvent.VK_LEFT;
+		attack	=	KeyEvent.VK_SPACE;
+		
+		/* WASD
+		hoch	=	KeyEvent.VK_W;
+		runter	=	KeyEvent.VK_S;	
+		rechts  =	KeyEvent.VK_D;
+		links	=	KeyEvent.VK_A;*/
 		
 	}
 	public Controller(){
@@ -51,6 +62,14 @@ public class Controller extends KeyAdapter{									//brauche playerobject mit p
 		runter	=	KeyEvent.VK_DOWN;	
 		rechts  =	KeyEvent.VK_RIGHT;
 		links	=	KeyEvent.VK_LEFT;
+		attack	=	KeyEvent.VK_SPACE;
+		
+		/* WASD
+		hoch	=	KeyEvent.VK_W;
+		runter	=	KeyEvent.VK_S;	
+		rechts  =	KeyEvent.VK_D;
+		links	=	KeyEvent.VK_A;*/
+		
 	}
 	//welcher Spieler soll kontrolliert werden
 	public void setPlayer(Player player){
@@ -60,19 +79,20 @@ public class Controller extends KeyAdapter{									//brauche playerobject mit p
 	public void keyPressed(KeyEvent e){										//	if(...&&___) -> Wenn der spieler in entgegengesetzte Richtungen drückt,
 			//System.out.print("kp");
 			keyp=e.getKeyCode();											
-			if(player!=null){												//			0			1	         wird die letzte Eingabe ignoriert.
-				if(keyp== hoch && player.vy != -1)player.setMot(0);			//			|			|
-				if(keyp== rechts && player.vx != -1)player.setMot(1);		//		3---+---1		0		-1	---0---   1
-				if(keyp== runter && player.vy !=  1)player.setMot(2);		//			|			|
-				if(keyp== links && player.vx !=  1)player.setMot(3);		//			2		   -1
+			if(player!=null){																//			0			1	         wird die letzte Eingabe ignoriert.
+				if(keyp== hoch && player.getVel()[1] != -1)player.setMot(dir.up);			//			|			|
+				if(keyp== rechts && player.getVel()[0] != -1)player.setMot(dir.right);		//		3---+---1		0		-1	---0---   1
+				if(keyp== runter && player.getVel()[1] !=  1)player.setMot(dir.down);		//			|			|
+				if(keyp== links && player.getVel()[0] !=  1)player.setMot(dir.left);		//			2		   -1
+				if(keyp== attack)player.attemptAttack();
 			}
 	}
 	public void keyReleased(KeyEvent e){
 		keyr=e.getKeyCode();
 		if(player!=null){
-			if(keyr==hoch || keyr==runter)	player.unsetMot(0);				//			0
-			if(keyr==rechts || keyr==links)	player.unsetMot(1);				//			|
-		}																	//			+---1	
+			if(keyr==hoch || keyr==runter)	player.unsetMot(axis.y);				//			1
+			if(keyr==rechts || keyr==links)	player.unsetMot(axis.x);				//			|
+		}																			//			+---0
 		
 	}
 	

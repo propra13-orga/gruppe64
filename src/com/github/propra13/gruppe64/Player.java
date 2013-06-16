@@ -10,6 +10,7 @@ public class Player extends Moveable {
 	//der bei der Bewegung bachtenswerter Offset zum (x,y)
 	//int x_off, y_off;
 
+	private StatBar statBar;
 	
 	private Map map;
 	//Test Konstruktor
@@ -35,6 +36,11 @@ public class Player extends Moveable {
 	    g.drawImage(img2, 0, 0, this);
 	    g.finalize();	
 		//System.out.print("playerDraw");
+	}
+
+	public void addStatBar(StatBar statBar) {
+		this.statBar = statBar;
+		
 	}
 	
 }

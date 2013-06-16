@@ -5,12 +5,17 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
+import java.util.logging.Logger;
 //import java.util.Timer;
 //import java.util.TimerTask;
 
+import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -36,7 +41,7 @@ public class Main extends JFrame implements ActionListener{
 	private JPanel pWeiter;
 	private Clip clip;
 	private Container cp;
-	
+	public static boolean debug=true;
 	
 	
 	private class myJButton extends JButton{
@@ -50,8 +55,12 @@ public class Main extends JFrame implements ActionListener{
 	 * Gibt Titel an JFrame
 	 */
 	public Main(){
-		super("-=PBJT=-");
-		
+		super("Toast mit Katzengsicht - Game Of The Year Edition");
+		java.net.URL url = this.getClass().getClassLoader().getResource("../res/nyan2.png");
+				//ClassLoader.getSystemResource("res/nyan2.png");
+//		Toolkit kit = Toolkit.getDefaultToolkit();
+//		Image img = kit.createImage(url);
+//		this.setIconImage(img);
 	}
 	
 	/**
@@ -111,11 +120,12 @@ public class Main extends JFrame implements ActionListener{
 	/**
 	 * Started das Spiel
 	 */
+	AudioInputStream stream;
 	private void startGame(){
 		//TODO mit music Thread ersetzten, der nicht aus dem RAM abspielt
+		if(stream == null)
 		try {
 		    File wavFile=new File("res/nerv.wav");
-		    AudioInputStream stream;
 		    AudioFormat format;
 		    DataLine.Info info;
 		    

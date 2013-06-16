@@ -5,27 +5,28 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 
 @SuppressWarnings("serial")
-public class Sprite extends JComponent {
+public class Sprite extends JComponent implements MouseListener{
 
 	
-	/**
-	 * Aktuelle Position (px) linker obere Ecke
-	 */
-	int x,y;
 
 	/**
 	 * aktuelle Geschwindigkeit
 	 */
-	int vx,vy;
+	protected int[] vel=new int[2];
 
 	/**
 	 * Ausmasse
 	 */
-	int xDim,yDim ;
+	
+	protected int[] Dim=new int[2];
+	
 	private Rectangle rectangle; 
 	/**
 	 * Sprite name
@@ -48,17 +49,19 @@ public class Sprite extends JComponent {
 		this.setLocation( 100, 100);
 	}*/
 	// Konstruktor Namenloser 
-		public Sprite(int x, int y, int xDim, int yDim){
-			this.xDim = xDim;
-			this.yDim = yDim;
-			this.x=x;
-			this.y=y;
-			this.rectangle = new Rectangle(x,y,xDim,yDim);
-			this.setBounds( x, y, xDim, yDim);
+
+	public Sprite(int x, int y, int xDim, int yDim){
+		this.setDim(xDim, yDim);
+		this.rectangle = new Rectangle(x,y,xDim,yDim);
+		this.setBounds( x, y, xDim, yDim);
 	}
-	/*//leerer Konstruktor fuer z.B. Spieler, der ja immer am Eingang startet
+	//leerer Konstruktor fuer z.B. Spieler, der ja immer am Eingang startet
 	public Sprite(){
+		this.addMouseListener(this);
+	         
 	}
+
+	/*
 	//Konstruktor der auch Laenge und Breite festlegt
 	public Sprite(char name, int x, int y, int xDim, int yDim){
 		this.name=name;
@@ -68,17 +71,36 @@ public class Sprite extends JComponent {
 		this.yDim=yDim;
 		this.setBounds(x,y,xDim,yDim);
 	}*/
+		
+	
+	public int[] getDim(){
+		return Dim;
+	}
+	
+	public void setDim(int xDim,int yDim){
+		this.Dim[0] = xDim;
+		this.Dim[1] = yDim;
+	}
+	
+	public int[] getVel(){
+		return vel;
+	}
+	
+	public void setVel(int vx, int vy){
+		this.vel[0]=vx;
+		this.vel[1]=vy;
+	}
+	
 	
 	public Sprite(int xDim, int yDim, char name){
 		this.name=name;
-		this.xDim=xDim;
-		this.yDim=yDim;
-		this.rectangle = new Rectangle(x,y,xDim,yDim);
+		this.setDim(xDim,yDim);
+		this.rectangle = new Rectangle(0,0,xDim,yDim);
 		this.setBounds(0,0,xDim,yDim);
 	}
 			
 	public Rectangle getRectangle(){
-		return new Rectangle(x,y,xDim, yDim);
+		return new Rectangle(this.getX(),this.getY(),Dim[0],Dim[1]);
 	}
 	public void paintComponent(Graphics g){
 		//Zeichnet jenach Typ
@@ -86,17 +108,17 @@ public class Sprite extends JComponent {
 			case 'x':
 			case 'X':	
 					g.setColor(Color.black); 
-					g.fillRect(0, 0, xDim, yDim);
+					g.fillRect(0, 0, Dim[0],Dim[1]);
 			break;
 			
 			case 'e':
 				g.setColor(Color.gray); 
-				g.fillRect(0, 0, xDim, yDim);
+				g.fillRect(0, 0,Dim[0],Dim[1]);
 			break;
 			
 			case 'a': 
 				g.setColor(Color.green); 
-				g.fillRect(0, 0, xDim, yDim);
+				g.fillRect(0, 0,Dim[0],Dim[1]);
 			break;
 			
 			case 'g':
@@ -118,6 +140,31 @@ public class Sprite extends JComponent {
 			
 			
 		}
+		
+	}
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		Sprite.this.setBorder(BorderFactory.createLineBorder(Color.GRAY)); 
+		
+	}
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
 		
 	}
 	
