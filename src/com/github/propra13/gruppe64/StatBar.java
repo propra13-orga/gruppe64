@@ -47,7 +47,8 @@ public class StatBar extends JPanel{
 	void setLevel(int levelNr){
 
 	}
-  	@Override public void paintComponent(java.awt.Graphics g){
+  	@Override
+  	public void paintComponent(java.awt.Graphics g){
 
 		g.setColor(Color.green);
   		g.fillRect(10, 10,health, 30);
