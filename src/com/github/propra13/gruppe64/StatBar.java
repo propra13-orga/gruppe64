@@ -1,6 +1,8 @@
 package com.github.propra13.gruppe64;
 
 import java.awt.Color;
+import java.awt.Image;
+import java.awt.Toolkit;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -53,9 +55,16 @@ public class StatBar extends JPanel{
   		
   		g.setColor(Color.blue);
   		g.fillRect(10,50,manahealth,30);
+  		
+  		
+  		Image img1 = Toolkit.getDefaultToolkit().getImage("res/s.png");
+	    g.drawImage(img1, 10, 80, this);
+	    g.finalize();	
 	}
   	
   	public void getStateFrom(Player p){
+  		
+  		
   		
   	}
   	public void updateHealth(int health){
