@@ -33,21 +33,7 @@ public class Sprite extends JComponent implements MouseListener{
 	 */
 	char name;
 	
-	/*//Wird meist fuer Gelaende verwendet
-	public Sprite(char name) {
-		//nur gerade  Werte
-		xDim=50;
-		yDim=50;
-		this.name=name;		
-		this.setBounds(0,0,xDim,yDim);
-	}
-	// Konstruktor mit Position
-	public Sprite(char name, int x, int y){
-		this.name=name;
-		this.x=x;
-		this.y=y;
-		this.setLocation( 100, 100);
-	}*/
+	
 	// Konstruktor Namenloser 
 
 	public Sprite(int x, int y, int xDim, int yDim){
@@ -61,17 +47,15 @@ public class Sprite extends JComponent implements MouseListener{
 		this.addMouseListener(this);
 	         
 	}
-
-	/*
-	//Konstruktor der auch Laenge und Breite festlegt
-	public Sprite(char name, int x, int y, int xDim, int yDim){
+	public Sprite(int xDim, int yDim, char name){
+		this();
 		this.name=name;
-		this.x=x;
-		this.y=y;
-		this.xDim=xDim;
-		this.yDim=yDim;
-		this.setBounds(x,y,xDim,yDim);
-	}*/
+		this.setDim(xDim,yDim);
+		this.rectangle = new Rectangle(0,0,xDim,yDim);
+		this.setBounds(0,0,xDim,yDim);
+	}
+	
+
 		
 	
 	public int[] getDim(){
@@ -93,12 +77,7 @@ public class Sprite extends JComponent implements MouseListener{
 	}
 	
 	
-	public Sprite(int xDim, int yDim, char name){
-		this.name=name;
-		this.setDim(xDim,yDim);
-		this.rectangle = new Rectangle(0,0,xDim,yDim);
-		this.setBounds(0,0,xDim,yDim);
-	}
+	
 			
 	public Rectangle getRectangle(){
 		return new Rectangle(this.getX(),this.getY(),Dim[0],Dim[1]);
@@ -145,8 +124,11 @@ public class Sprite extends JComponent implements MouseListener{
 	}
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
-		Sprite.this.setBorder(BorderFactory.createLineBorder(Color.GRAY)); 
-		
+		if (arg0.getClickCount()>1){
+			Sprite.this.setBorder(BorderFactory.createLineBorder(Color.blue)); 
+		}else{
+			Sprite.this.setBorder(BorderFactory.createLineBorder(Color.GRAY)); 
+		}
 	}
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
