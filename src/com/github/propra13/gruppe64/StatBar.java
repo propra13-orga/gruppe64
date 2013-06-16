@@ -18,7 +18,7 @@ import javax.swing.JPanel;
 public class StatBar extends JPanel{
 	static private  int panelH =200;
 	static private int panelW =500;
-	static private int health=100;
+	static private int health=200;
 	private JButton Inventar;
 	public StatBar() {
 		super();
@@ -45,7 +45,7 @@ public class StatBar extends JPanel{
 	}
   	@Override public void paintComponent(java.awt.Graphics g){
 
-		g.drawRect(10, 10,100, 30);
+		g.drawRect(10, 10,health, 30);
 	//	g.drawRect(10,50,90,30);
 	}
   	
