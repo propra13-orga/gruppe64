@@ -51,6 +51,12 @@ public class Item extends Sprite {
 		isWeapon=true;
 		break;
 		
+		case 'p':this.displayedName="Pfote";
+		Dmg=1;
+		Range=10;
+		isWeapon=true;
+		break;
+		
 		
 		
 		

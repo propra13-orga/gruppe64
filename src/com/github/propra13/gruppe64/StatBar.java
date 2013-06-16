@@ -61,7 +61,7 @@ public class StatBar extends JPanel{
 	}
   	
   	public void getStateFrom(Player p){
-  		ArrayList<Item> slots=(ArrayList<Item>) p.getSlots().clone();
+  		ArrayList<Item> slots= p.getSlots();
   		for(int i=0;i<slots.size();i++){
   			this.add(slots.get(i));
   			slots.get(i).setLocation(220+i*60, 10);
