@@ -3,6 +3,7 @@ package com.github.propra13.gruppe64;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -56,16 +57,15 @@ public class StatBar extends JPanel{
   		g.setColor(Color.blue);
   		g.fillRect(10,50,manahealth,30);
   		
-  		
-  		Image img1 = Toolkit.getDefaultToolkit().getImage("res/s.png");
-	    g.drawImage(img1, 10, 80, this);
-	    g.finalize();	
+  			
 	}
   	
   	public void getStateFrom(Player p){
-  		
-  		
-  		
+  		ArrayList<Item> slots=(ArrayList<Item>) p.getSlots().clone();
+  		for(int i=0;i<slots.size();i++){
+  			this.add(slots.get(i));
+  			slots.get(i).setLocation(220+i*60, 10);
+  		}
   	}
   	public void updateHealth(int health){
   		this.health=health;

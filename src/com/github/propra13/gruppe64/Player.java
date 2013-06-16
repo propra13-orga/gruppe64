@@ -20,7 +20,7 @@ public class Player extends Moveable {
 		super(x,y,30,30);
 		itemarr = new ArrayList<Item>();
 		slotarr = new ArrayList<Item>();
-		itemarr.add(new Item('S'));
+		itemarr.add(new Item('s'));
 		slotarr.add(itemarr.get(0));
 		this.map = map;
 		
