@@ -106,7 +106,7 @@ public class Game extends JPanel implements Runnable{
 		//fuege die Map in das Grund-Panel
 		cp.add(map);
 		//cp.revalidate();
-		cp.repaint(100);
+		cp.repaint(16);
 
 		
 	}

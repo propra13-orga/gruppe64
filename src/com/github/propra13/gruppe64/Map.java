@@ -87,7 +87,7 @@ public class Map extends JPanel {
 		this.spritewidth= spritewidth;
 		this.spriteheight= spriteheight;
 		this.setBounds(0, 0, 600, 350);
-		this.setBackground(Color.lightGray);
+		this.setBackground(Color.WHITE);
 		this.setLayout(null);
 		this.setVisible(true);
 		

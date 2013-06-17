@@ -47,13 +47,13 @@ public class Item extends Sprite {
 		
 		case 's':this.displayedName="Schlagring"; //schlagring
 		Dmg=5;
-		Range=900;
+		Range=1600;
 		isWeapon=true;
 		break;
 		
 		case 'p':this.displayedName="Pfote";
 		Dmg=1;
-		Range=3600;
+		Range=800;
 		isWeapon=true;
 		break;
 		
