@@ -56,7 +56,7 @@ public class Game extends JPanel implements Runnable{
 
 	public void run(){
 		
-		cp.setBackground(Color.WHITE);
+		cp.setBackground(Color.RED);
 		cp.setLayout(new BorderLayout());
 		
 		
@@ -72,7 +72,6 @@ public class Game extends JPanel implements Runnable{
 					if(map.getMovables().size()>1)
 						if(mov.equals(map.getMovables().get(1))){
 							mov.attemptAttack();
-							statBar.repaint();
 						}	
 				}
 				//aLevel.getaRoom().updateMotion();
@@ -106,6 +105,7 @@ public class Game extends JPanel implements Runnable{
 		map.drawMap();
 		//fuege die Map in das Grund-Panel
 		cp.add(map);
+		//cp.revalidate();
 		cp.repaint(100);
 
 		

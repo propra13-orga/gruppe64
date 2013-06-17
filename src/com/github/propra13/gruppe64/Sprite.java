@@ -16,10 +16,6 @@ public class Sprite extends JComponent implements MouseListener{
 
 	
 
-	/**
-	 * aktuelle Geschwindigkeit
-	 */
-	protected int[] vel=new int[2];
 
 	/**
 	 * Ausmasse
@@ -67,14 +63,7 @@ public class Sprite extends JComponent implements MouseListener{
 		this.Dim[1] = yDim;
 	}
 	
-	public int[] getVel(){
-		return vel;
-	}
 	
-	public void setVel(int vx, int vy){
-		this.vel[0]=vx;
-		this.vel[1]=vy;
-	}
 	
 	
 	
