@@ -117,10 +117,11 @@ public class Main extends JFrame implements ActionListener{
 		
 		this.setVisible(true);
 	}
+	
 	/**
 	 * Started das Spiel
 	 */
-	AudioInputStream stream;
+	private AudioInputStream stream;
 	private void startGame(){
 		//TODO mit music Thread ersetzten, der nicht aus dem RAM abspielt
 		if(stream == null)
@@ -184,6 +185,9 @@ public class Main extends JFrame implements ActionListener{
 		//javax.swing.SwingUtilities.invokeLater(myGame);
 		
 	}
+	public void onResize(){
+		
+	}
 	/**
 	 * hat man Gewonnen oder Verloren? TODO
 	 */
@@ -219,5 +223,6 @@ public class Main extends JFrame implements ActionListener{
 		
 		
 	}
+	
 }
 

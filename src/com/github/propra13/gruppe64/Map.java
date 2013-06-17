@@ -43,9 +43,7 @@ public class Map extends JPanel {
 	 */
 	//char map[][]=new char [mapwidth][mapheight];
 	
-	/**
-	 * @uml.property  name="map" multiplicity="(0 -1)" dimension="2"
-	 */
+
 	
 	char map[][]  = readRoom(1,1);
 	char map2[][] = readRoom(1,2);
@@ -198,7 +196,6 @@ public class Map extends JPanel {
 	
 	
 	
-	
 	public void updateState(Moveable character) {
 		char touchedSprite = wouldTouch(player.getRectangle());	
 		//System.out.println(player.getVisibleRect().toString());
@@ -270,7 +267,7 @@ public class Map extends JPanel {
 	
 	
 	/* 
-	 * Ruft res/Karten/Level[lvl]_Raum[room].txt auf und bestimmt seine Groeße
+	 * Ruft res/Karten/Level[lvl]_Raum[room].txt auf und bestimmt seine Groe��e
 	 * 
 	 * AUSGABE:
 	 * - int[] {Zeilenanzahl des Files, max. Zeilenlaenge im File}

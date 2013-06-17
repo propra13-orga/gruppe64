@@ -26,12 +26,15 @@ public class StatBar extends JPanel{
 	private JButton Inventar;
 	public StatBar() {
 		super();
+		
+		//this.setSize(panelW,panelH);
+		
+		this.setLayout(null);
 		//Ueberschneidung mit map
 		this.setBounds(0, 400, panelW, panelH);
-		//this.setSize(panelW,panelH);
 		this.setBackground(Color.RED);
-		this.setLayout(null);
 		this.setVisible(true);
+
 
 	/*	Inventar=new JButton("Inventar");
 		Inventar.setBounds(10,10,150,20);
@@ -49,7 +52,7 @@ public class StatBar extends JPanel{
 	}
   	@Override
   	public void paintComponent(java.awt.Graphics g){
-
+  		super.paintComponent(g);
 		g.setColor(Color.green);
   		g.fillRect(10, 10,health, 30);
 	//	g.drawRect(10,50,90,30);
@@ -63,6 +66,7 @@ public class StatBar extends JPanel{
   	
   	public void getStateFrom(Player p){
   		ArrayList<Item> slots= p.getSlots();
+  		System.out.print(slots.toString());
   		for(int i=0;i<slots.size();i++){
   			this.add(slots.get(i));
   			slots.get(i).setLocation(220+i*60, 10);
