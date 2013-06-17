@@ -74,8 +74,9 @@ public class Game extends JPanel implements Runnable, Action{
 
 	public void run(){
 		
-		cp.setBackground(Color.WHITE);
-		//cp.setLayout(new FlowLayout());
+
+		cp.setBackground(Color.RED);
+		cp.setLayout(new BorderLayout());
 		
 		//show initial world
 		
@@ -93,8 +94,8 @@ public class Game extends JPanel implements Runnable, Action{
 					if(map.getMovables().size()>1)
 						if(mov.equals(map.getMovables().get(1))){
 							mov.attemptAttack();
-							statBar.repaint();
-							map.repaint();
+							cp.repaint();
+
 						}	
 				}
 				//aLevel.getaRoom().updateMotion();
@@ -116,20 +117,21 @@ public class Game extends JPanel implements Runnable, Action{
 		
 		//load maparray
 		map = new Map(50,50, levelNr, this);
-		
+		//TODO set Player at Entrance
 		player.setLocation(0, 150);
 		//aLevel = new Level(player, cp, levelNr);
 		
-	
+		//add player to map
 		map.add(player);
 		statBar.getStateFrom(player);
+		
 		//Reihenfolge ist wichtig, das das repaint die Child auf einem Stack sieht
 		main.controller.setPlayer(player);
 		map.drawMap();
 		//fuege die Map in das Grund-Panel
 		cp.add(map);
-		//cp.repaint(100);
-		
+		map.repaint();
+
 
 		
 	}

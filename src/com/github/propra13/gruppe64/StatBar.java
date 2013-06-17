@@ -5,6 +5,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 /**
@@ -31,10 +32,12 @@ public class StatBar extends JPanel{
 		
 		this.setLayout(null);
 		//Ueberschneidung mit map
-		this.setBounds(0, 400, panelW, panelH);
+
+		this.setBounds(0, 360, panelW, panelH);
+		//this.setSize(panelW,panelH);
+
 		this.setBackground(Color.RED);
 		this.setVisible(true);
-
 
 	/*	Inventar=new JButton("Inventar");
 		Inventar.setBounds(10,10,150,20);
@@ -60,7 +63,6 @@ public class StatBar extends JPanel{
   		
   		g.setColor(Color.blue);
   		g.fillRect(10,50,manahealth,30);
-  		
   			
 	}
   	
@@ -68,8 +70,10 @@ public class StatBar extends JPanel{
   		ArrayList<Item> slots= p.getSlots();
   		System.out.print(slots.toString());
   		for(int i=0;i<slots.size();i++){
-  			this.add(slots.get(i));
+  			
   			slots.get(i).setLocation(220+i*60, 10);
+  			slots.get(i).setBorder(BorderFactory.createLineBorder(Color.black));
+  			this.add(slots.get(i));
   		}
   	}
   	public void updateHealth(int hp){

@@ -20,6 +20,7 @@ public class Room extends Map {
 	public Room(char[][] mapArray) {
 		super (wallSize, wallSize);
 		this.mapArray = mapArray;
+		this.pos_eingang 	= getPosOf('e');
 		this.moveables = new ArrayList<Moveable>();
 	}
 	
@@ -76,6 +77,11 @@ public class Room extends Map {
 		
 		char[][] map = readFile( mapwidth, mapheight, lvl, room);
 		return map;
+	}
+
+	public boolean hasArray() {
+		if(this.mapArray==null) return false;
+		return true;
 	}
 }
 

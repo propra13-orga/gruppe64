@@ -23,6 +23,12 @@ public class Moveable extends Sprite {
 	protected ArrayList<Item> itemarr;
 	protected ArrayList<Item> slotarr;
 	
+	/**
+	 * aktuelle Geschwindigkeit
+	 */
+	protected int[] vel=new int[2];
+
+	
 
 
 	public Moveable(int posx, int posy,int Dimx, int Dimy) {
@@ -38,7 +44,14 @@ public class Moveable extends Sprite {
 		// TODO Auto-generated constructor stub
 	}
 	
+	public int[] getVel(){
+		return vel;
+	}
 	
+	public void setVel(int vx, int vy){
+		this.vel[0]=vx;
+		this.vel[1]=vy;
+	}
 	
 	public void attemptAttack(){
 		
