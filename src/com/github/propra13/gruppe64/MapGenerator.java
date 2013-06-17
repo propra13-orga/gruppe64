@@ -21,7 +21,7 @@ public class MapGenerator {
 	 * the generic filepath
 	 */
 	public MapGenerator(String gFilePath) {
-		pathToken = gFilePath.split("%s");
+		pathToken = gFilePath.split("%i");
 		
 	
 	}
@@ -55,7 +55,9 @@ public class MapGenerator {
 		String current_line="";
 		
 		FileReader f;
+		System.out.print(this.pathString(lvl,room));
 		try {
+			
 			f = new FileReader(this.pathString(lvl,room));
 
 			BufferedReader buffer = new BufferedReader(f);

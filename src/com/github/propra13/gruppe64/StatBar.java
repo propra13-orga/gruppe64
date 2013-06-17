@@ -65,7 +65,6 @@ public class StatBar extends JPanel{
   		g.fillRect(10,50,manahealth,30);
   			
 	}
-  	
   	public void getStateFrom(Player p){
   		ArrayList<Item> slots= p.getSlots();
   		System.out.print(slots.toString());
@@ -75,6 +74,7 @@ public class StatBar extends JPanel{
   			slots.get(i).setBorder(BorderFactory.createLineBorder(Color.black));
   			this.add(slots.get(i));
   		}
+
   		ArrayList<Item> items= p.getItems();
   		for(int i=0;i<slots.size();i++){
   			

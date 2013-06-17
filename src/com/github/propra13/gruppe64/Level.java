@@ -47,9 +47,11 @@ public class Level extends JPanel{
 		Room raum;
 		char[][] tmpArray;
 		MapGenerator mg= new MapGenerator("res/Karten/Level%i_Raum%i.txt");
-		while((tmpArray=mg.readRoom(lvl, i))!=null){
+		tmpArray=mg.readRoom(lvl, i);
+		while(tmpArray!=null){
 			raum=new Room(tmpArray);
 			roomList.add(raum);
+			tmpArray=mg.readRoom(lvl, ++i);
 		}
 	}
 	

@@ -39,7 +39,7 @@ public class Game extends JPanel implements Runnable, Action{
 	private Timer caretaker;
 	
 	/** active Level **/
-	private int alevelNr;
+	private int aLevelNr;
 	/**highest open Level **/
 	private int levelNr;
 	/**last Level**/
@@ -63,10 +63,10 @@ public class Game extends JPanel implements Runnable, Action{
 		cp.setLayout(new BorderLayout());
 		//which level is reachable
 		levelNr =1;
-		alevelNr=1;
+		aLevelNr=1;
 		
-		statBar.setLevel(alevelNr);
-		world = new World(50,50,alevelNr,this);
+		statBar.setLevel(aLevelNr);
+		world = new World(50,50,aLevelNr,this);
 		lastLevelNr=world.getMaxLevel();
 		
 		
@@ -83,7 +83,7 @@ public class Game extends JPanel implements Runnable, Action{
 		//show initial world
 		
 		cp.add(statBar);
-
+		statBar.repaint();
 		//cp.validate();
 		startLevel();
 		//main.pack();
@@ -96,10 +96,11 @@ public class Game extends JPanel implements Runnable, Action{
 					if(map.getMovables().size()>1)
 						if(mov.equals(map.getMovables().get(1))){
 							mov.attemptAttack();
-							cp.repaint();
+							
 
 						}	
 				}
+
 				//aLevel.getaRoom().updateMotion();
 			}
 		};
@@ -112,7 +113,8 @@ public class Game extends JPanel implements Runnable, Action{
 
 	}
 	private void startLevel(){
-		//kein Layoutmanager
+		//MapGenerator
+		aLevel = new Level(player, cp, aLevelNr);
 		
 		
 		
@@ -134,7 +136,7 @@ public class Game extends JPanel implements Runnable, Action{
 		cp.add(map);
 
 		map.repaint();
-
+		cp.repaint(16);
 
 		
 	}
