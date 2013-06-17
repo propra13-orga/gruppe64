@@ -83,7 +83,7 @@ public class Game extends JPanel implements Runnable, Action{
 		//show initial world
 		
 		cp.add(statBar);
-
+		statBar.repaint();
 		//cp.validate();
 		startLevel();
 		//main.pack();

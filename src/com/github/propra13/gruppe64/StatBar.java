@@ -68,22 +68,25 @@ public class StatBar extends JPanel{
   	
   	public void getStateFrom(Player p){
   		ArrayList<Item> slots= p.getSlots();
-  		System.out.print(slots.toString());
+  		System.out.print(slots.get(0).displayedName);
   		for(int i=0;i<slots.size();i++){
   			
   			slots.get(i).setLocation(220+i*60, 10);
   			slots.get(i).setBorder(BorderFactory.createLineBorder(Color.black));
   			this.add(slots.get(i));
   		}
+  		repaint();
   		ArrayList<Item> items= p.getItems();
-  		for(int i=0;i<slots.size();i++){
+  		for(int i=0;i<items.size();i++){
   			
-  			items.get(i).setLocation(220+i*60, 60);
+  			items.get(i).setLocation(220+i*60, 70);
   			items.get(i).setBorder(BorderFactory.createLineBorder(Color.black));
   			this.add(items.get(i));
   		}
+  		repaint();
   	}
   	public void updateHealth(int hp){
   		this.health=2*hp;
+  		repaint();
   	}
 }

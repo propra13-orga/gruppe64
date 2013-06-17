@@ -29,7 +29,7 @@ public class Player extends Moveable {
 		itemarr = new ArrayList<Item>();
 		slotarr = new ArrayList<Item>();
 		itemarr.add(new Item('s'));
-		slotarr.add(itemarr.get(0));
+		slotarr.add(new Item('s'));
 		
 	}
 	
@@ -117,13 +117,13 @@ public class Player extends Moveable {
 			if(++w>=itemarr.size())	w=0;
 		}while(!itemarr.get(w).isWeapon());
 		slotarr.set(0, itemarr.get(w));
-		System.out.println(w);
-		System.out.println(slotarr.get(0).displayedName);
+		statBar.getStateFrom(this);
 	}
 	
 	public void pickup(Item item){
 		itemarr.add(item);
 		map.remove(item);
+		statBar.getStateFrom(this);
 	}
 	public void setMap(){
 		map = (Map)this.getParent();
