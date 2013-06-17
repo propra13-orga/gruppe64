@@ -23,13 +23,13 @@ public class Item extends Sprite {
 	{	
 		super();
 		//int xd,yd;
-		
+		lootable=true;
 		switch(name){
 		
 		case 'S': this.displayedName="Sword"; //Schwert 
 		Dmg=20;
 		Range=6400;
-		isWeapon=true;
+		setWeapon(true);
 		
 		break;
 		
@@ -47,20 +47,21 @@ public class Item extends Sprite {
 		
 		case 's':this.displayedName="Schlagring"; //schlagring
 		Dmg=5;
-		Range=900;
-		isWeapon=true;
+		Range=1600;
+		setWeapon(true);
 		break;
 		
 		case 'p':this.displayedName="Pfote";
 		Dmg=1;
-		Range=3600;
-		isWeapon=true;
+		Range=800;
+		setWeapon(true);
 		break;
 		
-		
-		
-		
+		default:
+		lootable=false;
+		break;
 		}
+		
 		this.name=name;
 		//this.rectangle = new Rectangle(0,0,xd,yd);
 		this.setVisible(true);
@@ -121,6 +122,14 @@ public class Item extends Sprite {
 		
 	}
 	
+	public boolean isLootable(){
+		return lootable;
+	}
+	
+	public void setLootable(boolean l){
+		lootable=l;
+	}
+	
 	//Methoden
 	public int getDmg(){
 		return Dmg;
@@ -129,5 +138,13 @@ public class Item extends Sprite {
 
 	public int getRange(){
 		return Range;
+	}
+
+	public boolean isWeapon() {
+		return isWeapon;
+	}
+
+	public void setWeapon(boolean isWeapon) {
+		this.isWeapon = isWeapon;
 	}
 }

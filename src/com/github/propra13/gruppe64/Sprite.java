@@ -28,6 +28,7 @@ public class Sprite extends JComponent implements MouseListener{
 	 * Sprite name
 	 */
 	char name;
+	protected boolean lootable=false;
 	
 	
 	// Konstruktor Namenloser 

@@ -71,7 +71,7 @@ public class Moveable extends Sprite {
 
 			CopyOnWriteArrayList<Moveable> movarr=new CopyOnWriteArrayList<Moveable>(map.getMovables());
 			for(Moveable mov:movarr){
-				if(!this.equals(mov) && this.slotarr.get(0).getRange()>Math.pow(x+Dim[0]/2-mov.getX()+mov.Dim[0]/2,2)+Math.pow(y+Dim[1]/2-mov.getY()+mov.Dim[1]/2,2))
+				if(!this.equals(mov) && this.slotarr.get(0).getRange()>Math.pow(x+Dim[0]/2-mov.getX()-mov.Dim[0]/2,2)+Math.pow(y+Dim[1]/2-mov.getY()-mov.Dim[1]/2,2))
 				{	System.out.println("treffer");
 					System.out.println(map.getMovables().size());
 					mov.damage(this.slotarr.get(0).getDmg());
@@ -126,5 +126,8 @@ public class Moveable extends Sprite {
 	}
 	public ArrayList<Item> getSlots(){
 		return slotarr;
+	}
+	public ArrayList<Item> getItems(){
+		return itemarr;
 	}
 }

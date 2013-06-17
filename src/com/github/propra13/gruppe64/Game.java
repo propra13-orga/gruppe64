@@ -75,7 +75,9 @@ public class Game extends JPanel implements Runnable, Action{
 	public void run(){
 		
 
+
 		cp.setBackground(Color.RED);
+
 		cp.setLayout(new BorderLayout());
 		
 		//show initial world
@@ -130,6 +132,7 @@ public class Game extends JPanel implements Runnable, Action{
 		map.drawMap();
 		//fuege die Map in das Grund-Panel
 		cp.add(map);
+
 		map.repaint();
 
 
