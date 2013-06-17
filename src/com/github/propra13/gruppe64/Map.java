@@ -30,7 +30,7 @@ public class Map extends JPanel {
 	protected int spriteheight=50;
 	protected char[][] mapArray;
 	protected ArrayList<Moveable> moveables;
-	
+	protected ArrayList<Item> items; 
 	
 	
 	
@@ -104,12 +104,15 @@ public class Map extends JPanel {
 	}
 	public Map(){
 		this.moveables = new ArrayList<Moveable>();
+		this.items = new ArrayList<Item>();
 	}
 	public ArrayList<Moveable> getMovables(){
 		return moveables;
 	}
 	
-	
+	public ArrayList<Item> getItems(){
+		return items;
+	}
 	
 	
 	public Sprite getSprite(int X, int Y){
@@ -192,6 +195,10 @@ public class Map extends JPanel {
 		if	(OL=='x' || OR=='x' || UL=='x' || UR=='x') return 'x';
 		else if(OL=='a' || OR=='a' || UL=='a' || UR=='a') return 'a';
 		else if	(OL=='e' || OR=='e' || UL=='e' || UR=='e') return 'e';
+		else if (OL=='S' || OR=='S' || UL=='S' || UR=='S') return 'S';
+		else if (OL=='M' || OR=='M' || UL=='M' || UR=='M') return 'M';
+		else if (OL=='Y' || OR=='Y' || UL=='Y' || UR=='Y') return 'Y';
+		else if (OL=='H' || OR=='H' || UL=='H' || UR=='H') return 'H';
 		else return' ';
 	}
 	
@@ -248,6 +255,9 @@ public class Map extends JPanel {
 			((Player)sp).setMap();
 			moveables.add((Moveable) sp);
 		}
+		if(cClass.equals(Item.class)){
+			items.add((Item) sp);
+		}
 		//moveables.add(player);
 		return component;
 	}
@@ -261,6 +271,12 @@ public class Map extends JPanel {
 	public void remove(Sprite sprite){
 		super.remove(sprite);
 		super.revalidate();
+	}
+	public void remove(Item it){
+		super.remove(it);
+		//suche aus PlayerArray
+		items.remove(it);
+		repaint();
 	}
 	public void remove(Moveable mov){
 		super.remove(mov);

@@ -68,6 +68,13 @@ public class StatBar extends JPanel{
   			slots.get(i).setBorder(BorderFactory.createLineBorder(Color.black));
   			this.add(slots.get(i));
   		}
+  		ArrayList<Item> items= p.getItems();
+  		for(int i=0;i<slots.size();i++){
+  			
+  			items.get(i).setLocation(220+i*60, 60);
+  			items.get(i).setBorder(BorderFactory.createLineBorder(Color.black));
+  			this.add(items.get(i));
+  		}
   	}
   	public void updateHealth(int hp){
   		this.health=2*hp;

@@ -127,4 +127,7 @@ public class Moveable extends Sprite {
 	public ArrayList<Item> getSlots(){
 		return slotarr;
 	}
+	public ArrayList<Item> getItems(){
+		return itemarr;
+	}
 }

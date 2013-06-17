@@ -56,7 +56,7 @@ public class Game extends JPanel implements Runnable{
 
 	public void run(){
 		
-		cp.setBackground(Color.RED);
+		cp.setBackground(Color.WHITE);
 		cp.setLayout(new BorderLayout());
 		
 		
