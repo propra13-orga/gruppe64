@@ -12,7 +12,7 @@ public class Item extends Sprite {
 	public int gold;
 
 	String displayedName;
-	//Größe des Items
+	//Gr����e des Items
 	int xd=50,yd=50;
 	private boolean isWeapon=false;
 	private int Dmg;
@@ -69,7 +69,13 @@ public class Item extends Sprite {
 		
 		
 	}
-	
+	/**
+	 * For cloning the logical param
+	 */
+	public Item(Item old){
+		this(old.getSpriteName());
+		//this.setLootable(old.isLootable());	
+	}
 	public void paintComponent(Graphics g){
 		
 		switch(this.name){

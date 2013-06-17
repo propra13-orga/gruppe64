@@ -72,6 +72,9 @@ public class Sprite extends JComponent implements MouseListener{
 	public Rectangle getRectangle(){
 		return new Rectangle(this.getX(),this.getY(),Dim[0],Dim[1]);
 	}
+	public char getSpriteName(){
+		return name;
+	}
 	public void paintComponent(Graphics g){
 		//Zeichnet jenach Typ
 		switch (this.name){
