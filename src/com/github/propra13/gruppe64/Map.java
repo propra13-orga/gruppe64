@@ -274,7 +274,7 @@ public class Map extends JPanel {
 	}
 	public void remove(Item it){
 		super.remove(it);
-		//suche aus PlayerArray
+		//suche aus ItemArray
 		items.remove(it);
 		repaint();
 	}

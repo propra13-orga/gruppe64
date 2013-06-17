@@ -62,12 +62,13 @@ public class Player extends Moveable {
 			
 			this.setLocation(x,y-vel[1]);
 		}
+		map.updateState(this);
 		x=this.getX();
 		y=this.getY();
 		//Items aufnehmen
 		CopyOnWriteArrayList<Item> items=new CopyOnWriteArrayList<Item>(map.getItems());
 		for(Item it:items){
-			if(it.isLootable() && Math.pow(it.getHeight()+it.getWidth(), 2)/16>Math.pow(x+Dim[0]/2-it.getX()+it.getWidth()/2,2)+Math.pow(y+Dim[1]/2-it.getY()+it.getHeight()/2,2))	
+			if(it.isLootable() && Math.pow(it.getHeight()+it.getWidth(), 2)/16>Math.pow(x+Dim[0]/2-it.getX()-it.getWidth()/2,2)+Math.pow(y+Dim[1]/2-it.getY()-it.getHeight()/2,2))	
 				pickup(it);
 		}
 		map.updateState(this);
@@ -94,7 +95,7 @@ public class Player extends Moveable {
 
 			CopyOnWriteArrayList<Moveable> movarr=new CopyOnWriteArrayList<Moveable>(map.getMovables());
 			for(Moveable mov:movarr){
-				if(!this.equals(mov) && this.slotarr.get(0).getRange()>Math.pow(x+Dim[0]/2-mov.getX()+mov.Dim[0]/2,2)+Math.pow(y+Dim[1]/2-mov.getY()+mov.Dim[1]/2,2))
+				if(!this.equals(mov) && this.slotarr.get(0).getRange()>Math.pow(x+Dim[0]/2-mov.getX()-mov.Dim[0]/2,2)+Math.pow(y+Dim[1]/2-mov.getY()-mov.Dim[1]/2,2))
 				{	System.out.println("treffer");
 					System.out.println(map.getMovables().size());
 					mov.damage(this.slotarr.get(0).getDmg());
