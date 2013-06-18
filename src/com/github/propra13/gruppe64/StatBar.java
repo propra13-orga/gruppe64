@@ -63,9 +63,11 @@ public class StatBar extends JPanel{
   		
   		g.setColor(Color.blue);
   		g.fillRect(10,50,manahealth,30);
+
   			
 	}
   	public void getStateFrom(Player p){
+
   		this.removeAll();
   		ArrayList<Item> slots= p.getSlots();
   		System.out.print(slots.get(0).displayedName);
@@ -86,10 +88,15 @@ public class StatBar extends JPanel{
   			this.add(items.get(i));
   		}
   		repaint();
+
   	}
   	public void updateHealth(int hp){
   		this.health=2*hp;
   		repaint();
+  	}
+
+  	public void updateMana(int mn){
+  		this.manahealth=2*mn;
   	}
 
 }

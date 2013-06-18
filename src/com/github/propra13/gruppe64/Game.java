@@ -127,7 +127,7 @@ public class Game extends JPanel implements Runnable{
 		//add player to map
 		map.add(player);
 		statBar.getStateFrom(player);
-		
+
 		//Reihenfolge ist wichtig, das das repaint die Child auf einem Stack sieht
 		main.controller.setPlayer(player);
 		map.drawMap();

@@ -45,6 +45,9 @@ public class Controller extends KeyAdapter{									//brauche playerobject mit p
 	
 	public int swichT;
 	
+	public int hCast;
+	
+	
 	
 	public Controller(Player player){
 		this.player = player;
@@ -55,6 +58,7 @@ public class Controller extends KeyAdapter{									//brauche playerobject mit p
 		attack	=	KeyEvent.VK_SPACE;
 		switchW =	KeyEvent.VK_C;
 		swichT =	KeyEvent.VK_X;
+		hCast = KeyEvent.VK_H;
 		
 		/* WASD
 		hoch	=	KeyEvent.VK_W;
@@ -71,6 +75,7 @@ public class Controller extends KeyAdapter{									//brauche playerobject mit p
 		attack	=	KeyEvent.VK_SPACE;
 		switchW =	KeyEvent.VK_C;
 		swichT =	KeyEvent.VK_X;
+		hCast = KeyEvent.VK_H;
 		
 		/* WASD
 		hoch	=	KeyEvent.VK_W;
@@ -101,8 +106,10 @@ public class Controller extends KeyAdapter{									//brauche playerobject mit p
 			if(keyr==hoch || keyr==runter)	player.unsetMot(axis.y);				//			1
 			if(keyr==rechts || keyr==links)	player.unsetMot(axis.x);				//			|
 			if(keyr==switchW) player.switchweapon();																		//			+---0
+			if(keyr==hCast) player.healthCast();
 		}
 	}
+	
 	
 	
 	

@@ -17,6 +17,7 @@ public class Item extends Sprite {
 	private boolean isWeapon=false;
 	private int Dmg;
 	private int Range;
+	private Player player;
 
 	
 	public Item( char name)// Name des Items
@@ -54,9 +55,11 @@ public class Item extends Sprite {
 		
 		case 'p':this.displayedName="Pfote";
 		Dmg=1;
+
 		Range=800;
 		setWeapon(true);
 		break;
+
 		
 		default:
 		lootable=false;
@@ -156,8 +159,14 @@ public class Item extends Sprite {
 	}
 	public void mouseClicked(MouseEvent arg0) {
 		if (arg0.getClickCount()>1){
-			StatBar statBar = (StatBar) this.getParent();
+			if(player!=null){
+				player.use(this);
+			}
 			
 		}
+	}
+	public void setOwner(Player mov) {
+		this.player = mov;
+		
 	}
 }

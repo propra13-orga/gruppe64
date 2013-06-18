@@ -39,8 +39,11 @@ public class Player extends Moveable {
 		itemarr = new ArrayList<Item>();
 		slotarr = new ArrayList<Item>();
 		itemarr.add(new Item('s'));
+
 		slotarr.add(new Item('s'));
+
 		level=1;
+
 		
 	}
 	
@@ -142,19 +145,51 @@ public class Player extends Moveable {
 	}
 	
 	public void pickup(Item item){
-		itemarr.add(item);
+		
+		//TODO gold soll geadded werden, nicht angezeigt
+		boolean notRedundant = true;
+		if(item.isWeapon()){
+			for(Item itemIt: itemarr){
+				if(itemIt.getSpriteName()==item.getSpriteName()){
+					notRedundant=false;
+				}	
+			}
+		}
+		if(notRedundant){
+			itemarr.add(item);
+			item.setOwner(this);
+		}
 		map.remove(item);
+		
 		statBar.getStateFrom(this);
 	}
+	public void use(Item item){
+		//wenn Gold, dann prüfe ob man im shop ist
+		
+	}
+	
 	public void setMap(){
 		map = (Map)this.getParent();
 	}
+
 
 	public void setLevel(int i) {
 		if(i>level){
 			level= i;
 		}
-			
+	}
+	
+
+	public void healthCast() {
+		// TODO Auto-generated method stub
+		mana = mana-50;
+		statBar.updateMana(this.mana);
+		if(health<90){
+			health=health+10;
+		}
+		else health=100;
+		statBar.updateHealth(this.health);
+
 	}
 	
 }
