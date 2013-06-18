@@ -400,6 +400,11 @@ public class Map extends JPanel {
 		}
 		return null;
 	}
+
+	public void leaveMap(Player player) {
+		remove(player);
+		
+	}
 	
 }
 

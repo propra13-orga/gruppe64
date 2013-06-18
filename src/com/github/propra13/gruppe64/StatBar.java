@@ -91,4 +91,5 @@ public class StatBar extends JPanel{
   		this.health=2*hp;
   		repaint();
   	}
+
 }

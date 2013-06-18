@@ -20,16 +20,27 @@ public class Player extends Moveable {
 	private Map map;
 	private int w;						//waffen Nr im Waffenslot
 	private Timer timer;
+	//attacke moeglich
 	private int mode=0;
+	// leben übrig
+	private int life;
+
+	private Game game;
+
+	private int level;
+	
+	
 	//Test Konstruktor
 	public Player(int x, int y){
 		//Groesse des Spielers 
 		super(x,y,30,30);
 		timer = new Timer();
+		this.life=3;
 		itemarr = new ArrayList<Item>();
 		slotarr = new ArrayList<Item>();
 		itemarr.add(new Item('s'));
 		slotarr.add(new Item('s'));
+		level=1;
 		
 	}
 	
@@ -109,7 +120,17 @@ public class Player extends Moveable {
 	public void damage(int dmg){
 		this.health -= dmg;
 		statBar.updateHealth(this.health);
-		if(this.health<=0)		map.remove(this);
+		if(this.health<=0){
+			die();
+		}
+	}
+	private void die(){
+		life--;
+		if(life<=0){
+			game.gameOver();
+		} else {
+			//game.showWorld();
+		}
 	}
 	public void switchweapon(){
 		
@@ -127,6 +148,13 @@ public class Player extends Moveable {
 	}
 	public void setMap(){
 		map = (Map)this.getParent();
+	}
+
+	public void setLevel(int i) {
+		if(i>level){
+			level= i;
+		}
+			
 	}
 	
 }

@@ -19,7 +19,7 @@ import javax.swing.JPanel;
 
 
 @SuppressWarnings("serial")
-public class Game extends JPanel implements Runnable, Action{
+public class Game extends JPanel implements Runnable{
 	
 
 	
@@ -64,6 +64,7 @@ public class Game extends JPanel implements Runnable, Action{
 		//which level is reachable
 		levelNr =1;
 		aLevelNr=1;
+	
 		
 		statBar.setLevel(aLevelNr);
 		world = new World(50,50,aLevelNr,this);
@@ -74,8 +75,6 @@ public class Game extends JPanel implements Runnable, Action{
 
 	public void run(){
 		
-
-
 		cp.setBackground(Color.RED);
 
 		cp.setLayout(new BorderLayout());
@@ -114,7 +113,7 @@ public class Game extends JPanel implements Runnable, Action{
 	}
 	private void startLevel(){
 		//MapGenerator
-		aLevel = new Level(player, cp, aLevelNr);
+		aLevel = new Level(this, aLevelNr);
 		
 		
 		
@@ -175,22 +174,17 @@ public class Game extends JPanel implements Runnable, Action{
 
 	
 
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-		
+
+	public Container getCP() {
+		return cp;
 	}
 
-	@Override
-	public Object getValue(String key) {
-		// TODO Auto-generated method stub
-		return null;
+	public Player getPlayer() {
+		return player;
 	}
 
-	@Override
-	public void putValue(String key, Object value) {
-		// TODO Auto-generated method stub
-		
+	public void showWorld() {
+		//this.levelNr = levelNr;
 	}
 	
 }

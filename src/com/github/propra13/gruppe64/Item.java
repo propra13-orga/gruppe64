@@ -1,9 +1,9 @@
 package com.github.propra13.gruppe64;
 
-import java.awt.Image;
-import java.awt.Rectangle;
-import java.awt.Toolkit;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+
+import javax.swing.BorderFactory;
 
 public class Item extends Sprite {
 	public int plushealth;
@@ -12,11 +12,12 @@ public class Item extends Sprite {
 	public int gold;
 
 	String displayedName;
-	//Gr����e des Items
+	//Groesse des Items
 	int xd=50,yd=50;
 	private boolean isWeapon=false;
 	private int Dmg;
 	private int Range;
+
 	
 	public Item( char name)// Name des Items
 	
@@ -152,5 +153,11 @@ public class Item extends Sprite {
 
 	public void setWeapon(boolean isWeapon) {
 		this.isWeapon = isWeapon;
+	}
+	public void mouseClicked(MouseEvent arg0) {
+		if (arg0.getClickCount()>1){
+			StatBar statBar = (StatBar) this.getParent();
+			
+		}
 	}
 }
