@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.ArrayList;
+import javax.swing.*;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -45,10 +46,17 @@ public class StatBar extends JPanel{
 		Inventar.setVisible(true);
 	*/
 		
-
+	/*	JTextArea jt = new JTextArea("Hallo");
+		jt.setBackground(Color.YELLOW);
+		jt.setBounds(0, 100, 50, 50);
+		this.add(jt);
+		jt.setVisible(true);*/
 		
 		
 	}
+	
+	
+	
 	
 	void setLevel(int levelNr){
 

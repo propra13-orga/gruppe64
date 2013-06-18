@@ -199,6 +199,8 @@ public class Map extends JPanel {
 		else if (OL=='M' || OR=='M' || UL=='M' || UR=='M') return 'M';
 		else if (OL=='Y' || OR=='Y' || UL=='Y' || UR=='Y') return 'Y';
 		else if (OL=='H' || OR=='H' || UL=='H' || UR=='H') return 'H';
+	//	else if (OL=='O' || OR=='O' || UL=='O' || UR=='O') return 'O'; 
+
 		else return' ';
 	}
 	

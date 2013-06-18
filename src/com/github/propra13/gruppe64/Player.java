@@ -133,13 +133,17 @@ public class Player extends Moveable {
 
 	public void healthCast() {
 		// TODO Auto-generated method stub
-		mana = mana-50;
-		statBar.updateMana(this.mana);
-		if(health<90){
-			health=health+10;
+		int mtemp=this.mana;
+		mtemp=mtemp-50;
+		if(mtemp>=0){
+			mana = mana-50;
+			statBar.updateMana(this.mana);
+			if(health<90){
+				health=health+10;
+			}
+			else health=100;
+			statBar.updateHealth(this.health);
 		}
-		else health=100;
-		statBar.updateHealth(this.health);
 	}
 	
 }
