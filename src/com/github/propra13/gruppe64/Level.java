@@ -7,22 +7,25 @@ import java.util.Iterator;
 import javax.swing.JPanel;
 
 public class Level extends JPanel{
+	private static final long serialVersionUID = -4648599488509978586L;
+	
 	int spriteWidth=50;
 	int spriteHeight=50;
 	ArrayList<Room> roomList;
 	ArrayList<Moveable> moveable;
 	
-	
-
-	private Map aMap;
+	private Game game;
 	private Container cp;
 	private Player player;
-	// mapArray's for all Rooms
 	
-
+	private Map aMap;
+	private int levelNr;
+	
+	// mapArray's for all Rooms
 	private Iterator<Room> roomIterator;
 	//current active Room
 	private Room aRoom;
+	
 	
 	/**
 	 * 
@@ -32,9 +35,11 @@ public class Level extends JPanel{
 	 * @param levelPath
 	 * the Path to the Level-Description File
 	 */
-	public Level(Player player, Container cp, int levelnr) {
-		this.cp = cp;
-		this.player = player;
+	public Level(Game game, int levelnr) {
+		this.game =game;
+		this.cp = game.getCP();
+		this.player = game.getPlayer();
+		
 		
 		roomList = new ArrayList<Room>();
 		readAllRooms(levelnr);
@@ -49,10 +54,11 @@ public class Level extends JPanel{
 		MapGenerator mg= new MapGenerator("res/Karten/Level%i_Raum%i.txt");
 		tmpArray=mg.readRoom(lvl, i);
 		while(tmpArray!=null){
-			raum=new Room(tmpArray);
+			raum=new Room(this,tmpArray);
 			roomList.add(raum);
 			tmpArray=mg.readRoom(lvl, ++i);
 		}
+		System.out.println("Level "+lvl+ " hat "+roomList.size());
 	}
 	
 	public void nextRoom(){
@@ -60,6 +66,10 @@ public class Level extends JPanel{
 		if (roomIterator.hasNext()){
 			aRoom = roomIterator.next();
 			setMap(aRoom);
+		} else {
+			//exit last Room, next Level accessible
+			cp.remove(aMap);
+			player.setLevel(levelNr+1);
 		}
 		
 	}
@@ -75,15 +85,20 @@ public class Level extends JPanel{
 	/**
 	 * gets called by Game, update the Levelchange if some thing happened
 	 */
-	public void updateState(){
-		
+	public Map getMap(){
+		return aMap;
 	}
-	public void setMap(Map map){
+	/**
+	 * Setzte aktuellen Raum
+	 * @param map
+	 */
+	public void setMap(Room map){
 		if(aMap!=null){
 			aMap.remove(player);
 			cp.remove(aMap);
 		}
-		cp.add(map, new myGBC(0, 0));
+		cp.add(map);
+		map.repaint();
 		map.add(player);
 		aMap=map;
 	}

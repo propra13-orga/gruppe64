@@ -128,6 +128,7 @@ public class Map extends JPanel {
 			case 'X': 
 			case 'a':
 			case 'A': 
+			case 'O':	
 			
 			case 'r': return new Sprite (this.spritewidth, this.spriteheight, field);	
 			case 'g':	
@@ -137,6 +138,7 @@ public class Map extends JPanel {
 			case 'Y':
 			case 'M':
 			case 'H': 
+			case 's':	
 				return new Item (field);
 			
 			default: return null;
@@ -416,6 +418,11 @@ public class Map extends JPanel {
 			}
 		}
 		return null;
+	}
+
+	public void leaveMap(Player player) {
+		remove(player);
+		
 	}
 	
 }

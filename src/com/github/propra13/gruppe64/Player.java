@@ -19,19 +19,36 @@ public class Player extends Moveable {
 	
 	private Map map;
 	private int w;						//waffen Nr im Waffenslot
+
 	private Timer timer_pl;
 	private int mode=0;
 	TimerTask action;
+
+	// leben übrig
+	private int life;
+
+	private Game game;
+
+	private int level;
+	
 	
 	//Test Konstruktor
 	public Player(int x, int y){
 		//Groesse des Spielers 
 		super(x,y,30,30);
+
 		timer_pl = new Timer();
+
+		this.life=3;
+
 		itemarr = new ArrayList<Item>();
 		slotarr = new ArrayList<Item>();
 		itemarr.add(new Item('s'));
+
 		slotarr.add(new Item('s'));
+
+		level=1;
+
 		
 		 
 	}
@@ -111,7 +128,17 @@ public class Player extends Moveable {
 	public void damage(int dmg){
 		this.health -= dmg;
 		statBar.updateHealth(this.health);
-		if(this.health<=0)		map.remove(this);
+		if(this.health<=0){
+			die();
+		}
+	}
+	private void die(){
+		life--;
+		if(life<=0){
+			game.gameOver();
+		} else {
+			//game.showWorld();
+		}
 	}
 	public void switchweapon(){
 		
@@ -123,15 +150,57 @@ public class Player extends Moveable {
 	}
 	
 	public void pickup(Item item){
-		itemarr.add(item);
+		
+		//TODO gold soll geadded werden, nicht angezeigt
+		boolean notRedundant = true;
+		if(item.isWeapon()){
+			for(Item itemIt: itemarr){
+				if(itemIt.getSpriteName()==item.getSpriteName()){
+					notRedundant=false;
+				}	
+			}
+		}
+		if(notRedundant){
+			itemarr.add(item);
+			item.setOwner(this);
+		}
 		map.remove(item);
+		
 		statBar.getStateFrom(this);
 	}
+	public void use(Item item){
+		//wenn Gold, dann prüfe ob man im shop ist
+		
+	}
+	
 	public void setMap(){
 		map = (Map)this.getParent();
 	}
+
 	public void abortTimer(){
 		timer_pl.cancel();
 		timer_pl.purge();
 	}
+
+
+
+	public void setLevel(int i) {
+		if(i>level){
+			level= i;
+		}
+	}
+	
+
+	public void healthCast() {
+		// TODO Auto-generated method stub
+		mana = mana-50;
+		statBar.updateMana(this.mana);
+		if(health<90){
+			health=health+10;
+		}
+		else health=100;
+		statBar.updateHealth(this.health);
+
+	}
+
 }

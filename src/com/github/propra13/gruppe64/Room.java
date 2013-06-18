@@ -16,11 +16,14 @@ public class Room extends Map {
 	
 	public int[] pos_eingang;
 	
+	private Level level;
+	
 	private static int wallSize= 50;
-	public Room(char[][] mapArray) {
+	public Room(Level aLevel, char[][] mapArray) {
 		super (wallSize, wallSize);
 		this.mapArray = mapArray;
-		this.pos_eingang 	= getPosOf('e');
+		this.level = aLevel;
+		//this.pos_eingang 	= getPosOf('e');
 		this.moveables = new ArrayList<Moveable>();
 	}
 	
@@ -55,33 +58,21 @@ public class Room extends Map {
 		}
 		
 	}
-	
+	@Override
+	public void updateState(Moveable character) {
+		char touchedSprite = wouldTouch(character.getRectangle());	
+		//System.out.println(player.getVisibleRect().toString());
+		
+		switch(touchedSprite){
 
-	/*
-	 * Kopiert res/Karten/Level[lvl]_Raum[room].txt in char[][]
-	 * 
-	 * AUSGABE:
-	 * - char[][] = Map[y][x], wobei x,y die Koordinaten des
-	 * 		JPanel-Koordinatensystems sind
-	 * 	ODER
-	 * - null, wenn res/Karten/Level[lvl]_Raum[room].txt nicht existiert
-	 */
-	public char[][] readRoom(int lvl, int room){
+		case 'a':case 'A':
+			level.nextRoom();
+		break;
+		default:
+		break;
+		}
 		
-		int mapwidth, mapheight;
-		int[] mapsize = getMapSize(lvl, room);
 		
-		if(mapsize==null){return null;}
-		mapheight= mapsize[0];
-		mapwidth = mapsize[1];
-		
-		char[][] map = readFile( mapwidth, mapheight, lvl, room);
-		return map;
-	}
-
-	public boolean hasArray() {
-		if(this.mapArray==null) return false;
-		return true;
 	}
 }
 

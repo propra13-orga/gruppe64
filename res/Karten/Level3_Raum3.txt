@@ -1,9 +1,7 @@
-xxxxxxxxxxxxxxxxxxxx
-E       G  x       x
-xGxxx   xx x       xxxxx
-xxxxx                  A
-xxxxx                  x
-xxxxx                  x
-x                      x
-xxxxxxxxxxx    xxxxxxxxx
-          xxxxxx
+xxxxxxxxxx
+x x      x
+x x ggg  x
+e x ggg  a
+x   ggg  x
+x x      x
+xxxxxxxxxx

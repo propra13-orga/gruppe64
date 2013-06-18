@@ -93,6 +93,7 @@ public class StatBar extends JPanel{
         this.removeAll();
 
         ArrayList<Item> slots= p.getSlots();
+
   		for(int i=0;i<slots.size();i++){
  
   			slots.get(i).setLocation(220+i*60, 10);
@@ -110,9 +111,15 @@ public class StatBar extends JPanel{
   			this.add(items.get(i));
   		}
   		repaint();
+
   	}
   	public void updateHealth(int hp){
   		this.health=2*hp;
   		repaint();
   	}
+
+  	public void updateMana(int mn){
+  		this.manahealth=2*mn;
+  	}
+
 }

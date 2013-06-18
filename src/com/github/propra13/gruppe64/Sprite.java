@@ -103,6 +103,13 @@ public class Sprite extends JComponent implements MouseListener{
 		//		g.fillRect(0, 0, xDim, yDim);
 			break;	
 			
+			case 'O':
+				
+				Image img9 = Toolkit.getDefaultToolkit().getImage("res/oldman.png");
+			    g.drawImage(img9, 0, 0, this);
+			    g.finalize();	
+			break;
+			
 	//		case 'r':
 				
 		/*		g.setColor(Color.cyan);

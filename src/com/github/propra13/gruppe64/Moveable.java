@@ -14,6 +14,7 @@ public class Moveable extends Sprite {
 
 	protected double armor;
 	protected int health=100;
+	protected int mana=100;
 	protected Map map;
 	public enum dir {up ,right,down,left};
 	public enum axis {x,y};
