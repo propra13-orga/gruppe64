@@ -71,9 +71,9 @@ public class Map extends JPanel {
 		this();
 		this.aLevel = aLevel;
 		this.spritewidth= spritewidth;
-			this.spriteheight= spriteheight;
+		this.spriteheight= spriteheight;
 			//put at 0,0 
-			this.setBounds(0, 0, mapW, mapH);
+		this.setBounds(0, 0, mapW, mapH);
 		//System.out.print("ThreadGesammt" +Thread.activeCount());
 		this.setBackground(Color.WHITE);
 		this.setLayout(null);

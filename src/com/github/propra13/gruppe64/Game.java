@@ -90,15 +90,15 @@ public class Game extends JPanel implements Runnable{
 		TimerTask action = new TimerTask() {
 			public void run() {
 				
-				for (Moveable mov: map.getMovables()){
-					mov.updateMot();
-					if(map.getMovables().size()>1)
-						if(mov.equals(map.getMovables().get(1))){
-							mov.attemptAttack();
-							
-
-						}	
-				}
+//				for (Moveable mov: map.getMovables()){
+//					mov.updateMot();
+//					if(map.getMovables().size()>1)
+//						if(mov.equals(map.getMovables().get(1))){
+//							mov.attemptAttack();
+//							
+//
+//						}	
+//				}
 
 				//aLevel.getaRoom().updateMotion();
 			}
@@ -114,27 +114,30 @@ public class Game extends JPanel implements Runnable{
 	private void startLevel(){
 		//MapGenerator
 		aLevel = new Level(this, aLevelNr);
+		aLevel.nextRoom();
 		
-		
-		
-		
-		//load maparray
-		map = new Map(50,50, levelNr, this);
-		//TODO set Player at Entrance
-		player.setLocation(0, 150);
-		//aLevel = new Level(player, cp, levelNr);
-		
-		//add player to map
-		map.add(player);
+
 		statBar.getStateFrom(player);
-
-		//Reihenfolge ist wichtig, das das repaint die Child auf einem Stack sieht
-		main.controller.setPlayer(player);
-		map.drawMap();
-		//fuege die Map in das Grund-Panel
-		cp.add(map);
-
-		map.repaint();
+//		
+//		//load maparray
+//		map = new Map(50,50, levelNr, this);
+//		//TODO set Player at Entrance
+//		player.setLocation(0, 150);
+//		//aLevel = new Level(player, cp, levelNr);
+//		
+//		//add player to map
+//		map.add(player);
+//		statBar.getStateFrom(player);
+//
+//		//Reihenfolge ist wichtig, das das repaint die Child auf einem Stack sieht
+//		main.controller.setPlayer(player);
+//		map.drawMap();
+//		//fuege die Map in das Grund-Panel
+//		cp.add(map);
+//
+//		map.repaint();
+		
+		
 		cp.repaint(16);
 
 		

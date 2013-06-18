@@ -70,6 +70,7 @@ public class Item extends Sprite {
 		//this.rectangle = new Rectangle(0,0,xd,yd);
 		this.setVisible(true);
 		this.setBounds(0,0,xd,yd);
+		this.setToolTipText(displayedName);
 		
 		
 	}

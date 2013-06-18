@@ -97,9 +97,16 @@ public class Level extends JPanel{
 			aMap.remove(player);
 			cp.remove(aMap);
 		}
-		cp.add(map);
-		map.repaint();
+		//add map with content
+		map.removeAll();
 		map.add(player);
+		map.drawMap();
+		cp.add(map);
+		
+		//TODO set player position
+		player.setLocation(0, 150);
+
+		map.repaint();
 		aMap=map;
 	}
 

@@ -55,7 +55,7 @@ public class MapGenerator {
 		String current_line="";
 		
 		FileReader f;
-		System.out.print(this.pathString(lvl,room));
+		//System.out.print(this.pathString(lvl,room));
 		try {
 			
 			f = new FileReader(this.pathString(lvl,room));
