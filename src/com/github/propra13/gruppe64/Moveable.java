@@ -19,7 +19,6 @@ public class Moveable extends Sprite {
 	public enum axis {x,y};
 	private enum modes {idle, attack, evade, block, moving};
 	private int mode=0;
-	private Timer timer;
 	protected ArrayList<Item> itemarr;
 	protected ArrayList<Item> slotarr;
 	
@@ -33,14 +32,12 @@ public class Moveable extends Sprite {
 
 	public Moveable(int posx, int posy,int Dimx, int Dimy) {
 		super(posx, posy, Dimx, Dimy);
-		timer = new Timer();
 		// TODO Auto-generated constructor stub
 	}
 
 
 	public Moveable(int Dimx, int Dimy, char name) {
 		super(Dimx, Dimy, name);
-		timer = new Timer();
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -55,19 +52,10 @@ public class Moveable extends Sprite {
 	
 	public void attemptAttack(){
 		
-		if(this.mode==0){
 			System.out.print("schlag ");
 			int x=this.getX();
 			int y=this.getY();
 			
-			this.mode=1;
-
-			TimerTask action = new TimerTask() {
-				public void run() {
-					mode=0;
-				}
-			};
-			timer.schedule(action, 1000);
 
 			CopyOnWriteArrayList<Moveable> movarr=new CopyOnWriteArrayList<Moveable>(map.getMovables());
 			for(Moveable mov:movarr){
@@ -79,7 +67,6 @@ public class Moveable extends Sprite {
 				}
 			}
 	
-		}
 	}
 	
 	public void setMot(dir i) {
