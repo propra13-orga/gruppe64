@@ -9,6 +9,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.JPanel;
 
@@ -30,11 +32,10 @@ public class Map extends JPanel {
 	protected int spriteheight=50;
 	protected char[][] mapArray;
 	protected ArrayList<Moveable> moveables;
-	protected ArrayList<Item> items; 
+	protected ArrayList<Item> items;
+	private Timer hauTimer;
 	
-	
-	
-	
+
 	/*  Beispiel: x_max = mapwidth = 4 und y_max = mapheight = 3:
 	 * 
 	 *  [0][0]   [0][1]   [0][2]  [0][3]
@@ -42,14 +43,7 @@ public class Map extends JPanel {
 	 *  [2][0]   [2][1]   [2][2]  [2][3]
 	 */
 	//char map[][]=new char [mapwidth][mapheight];
-	
 
-	
-	char map[][]  = readRoom(1,1);
-	char map2[][] = readRoom(1,2);
-	char map3[][] = readRoom(1,3);
-	
-	
 	private Player player;
 	private Game game;
 	private Level aLevel;
@@ -72,7 +66,7 @@ public class Map extends JPanel {
 		this.aLevel = aLevel;
 		this.spritewidth= spritewidth;
 		this.spriteheight= spriteheight;
-			//put at 0,0 
+		//put at 0,0 
 		this.setBounds(0, 0, mapW, mapH);
 		//System.out.print("ThreadGesammt" +Thread.activeCount());
 		this.setBackground(Color.WHITE);
@@ -80,24 +74,26 @@ public class Map extends JPanel {
 		this.setVisible(true);
 	}
 	
-	public Map(int spritewidth, int spriteheight, int level, Game game){
-		this();
-		this.spritewidth= spritewidth;
-		this.spriteheight= spriteheight;
-		this.setBounds(0, 0, 600, 350);
-		this.setBackground(Color.WHITE);
-		this.setLayout(null);
-		this.setVisible(true);
-		
-		this.game=game;
-		
-		switch(level){
-		case 1: break;
-		case 2: this.map=this.map2; break;
-		case 3: this.map=this.map3; break;
-		}
-	}
+//	public Map(int spritewidth, int spriteheight, int level, Game game){
+//		this();
+//		this.spritewidth= spritewidth;
+//		this.spriteheight= spriteheight;
+//		this.setBounds(0, 0, 600, 350);
+//		this.setBackground(Color.WHITE);
+//		this.setLayout(null);
+//		this.setVisible(true);
+//		
+//		this.game=game;
+//		
+//		switch(level){
+//		case 1: break;
+//		case 2: this.map=this.map2; break;
+//		case 3: this.map=this.map3; break;
+//		}
+//	}
 	public Map(char[][] mapArray){
+		this();
+		this.mapArray = mapArray;
 		
 	}
 	public Map(){
@@ -116,7 +112,7 @@ public class Map extends JPanel {
 	public Sprite getSprite(int X, int Y){
 		
 		//if (x>=mapwidth || x<0 || y>=mapheight || y<0) return "Auserhalb Spielfeld";
-		char field=map[Y][X];
+		char field=mapArray[Y][X];
 		switch (field){
 			case 'e':
 			case 'E':  
@@ -161,6 +157,20 @@ public class Map extends JPanel {
 			//System.out.print("\n");
 			}
 		}
+		
+		TimerTask hau = new TimerTask() {
+			public void run() {
+				if(moveables.size()>1){
+					for(Moveable mov:moveables){		
+						mov.attemptAttack();
+					}
+				}
+			}
+		};
+		hauTimer=new Timer();
+		hauTimer.schedule(hau, 1000, 1000);
+		
+		
 	}
 
 	public char wouldTouch(Rectangle rect){
@@ -177,19 +187,19 @@ public class Map extends JPanel {
 		//Oben-Links
 		X= (int) (x/this.spritewidth);
 		Y= (int) (y/this.spriteheight);
-		char OL = map[Y][X];
+		char OL = mapArray[Y][X];
 		//Oben-Rechts
 		X=(int)	((x+playersizex-1)/this.spritewidth);
 		Y=(int)(y/this.spriteheight);
-		char OR = map[Y][X];
+		char OR = mapArray[Y][X];
 		//Unten-Links
 		X= (int) (x/this.spritewidth);
 		Y= (int) ((y+playersizey-1)/this.spriteheight);
-		char UL = map[Y][X];
+		char UL = mapArray[Y][X];
 		//Unten-Rechts
 		X= (int) ((x+playersizex-1)/this.spritewidth);
 		Y= (int) ((y+playersizey-1)/this.spriteheight);
-		char UR = map[Y][X];
+		char UR = mapArray[Y][X];
 		
 		//Wichtig ist die Reihenfolge, was wichtiger ist oben
 		if	(OL=='x' || OR=='x' || UL=='x' || UR=='x') return 'x';
@@ -283,109 +293,7 @@ public class Map extends JPanel {
 		moveables.remove(mov);
 	}
 	
-	
-	/* 
-	 * Ruft res/Karten/Level[lvl]_Raum[room].txt auf und bestimmt seine Groe��e
-	 * 
-	 * AUSGABE:
-	 * - int[] {Zeilenanzahl des Files, max. Zeilenlaenge im File}
-	 * 	ODER
-	 * - null wenn res/Karten/Level[lvl]_Raum[room].txt nicht existiert
-	 */
-	public int[] getMapSize(int lvl, int room){
-		
-		int linelength = 0;
-		int linenumber = 0;
-		String current_line="";
-		
-		FileReader f;
-		try {
-			f = new FileReader("res/Karten/Level" +lvl+ "_Raum" +room+ ".txt");
 
-			BufferedReader buffer = new BufferedReader(f);
-		
-			while( (current_line= buffer.readLine())!= null){
-				
-				linenumber++;
-				
-				int currentlength = current_line.length();
-				if (linelength < currentlength) linelength = currentlength;
-			}
-			buffer.close();
-		}
-		catch (IOException e) {
-			return null;
-		}
-		
-		int[] size= {0,0};
-		size[0] = linenumber; 
-		size[1] = linelength; 
-		
-		return size;
-	}
-	
-	/*
-	 * Ruft res/Karten/Level[lvl]_Raum[room].txt auf und kopiert Inhalt in char[][]
-	 * 
-	 * AUSGABE:
-	 * - char[mapheight][mapheight]
-	 * 	ODER
-	 * - null, wenn res/Karten/Level[lvl]_Raum[room].txt nicht existiert
-	 */
-	public char[][] readFile(int mapwidth, int mapheight, int lvl, int room){
-		
-		char[][] map = new char[mapheight][mapwidth];
-		
-		FileReader f;
-		String currentline;
-		try {
-			f = new FileReader("res/Karten/Level"+lvl+"_Raum"+room+".txt");
-			BufferedReader buffer = new BufferedReader(f);
-			
-			for( int j=0; j<mapheight; j++){
-				currentline = buffer.readLine();
-			
-				for( int i=0; i< currentline.length(); i++){
-					map[j][i]= currentline.charAt(i);
-				}
-			}
-			buffer.close();
-		}
-		catch (IOException e) {
-			return null;
-		}
-		catch (NullPointerException e){
-			/* 
-			 * Durch diese catch-Abfrage wird der Fall abgefanden, dass im txt-File
-			 * weniger Zeilen sind als angegeben. Somit terminiert die NullPointerException
-			 * nicht den kompletten Prozess, sondern bricht nur das beschreiben des Arrays map
-			 * ab und dieses ist ja dann schon fertig...
-			 */
-		}
-		return map;
-	}
-	
-	/*
-	 * Kopiert res/Karten/Level[lvl]_Raum[room].txt in char[][]
-	 * 
-	 * AUSGABE:
-	 * - char[][] = Map[y][x], wobei x,y die Koordinaten des
-	 * 		JPanel-Koordinatensystems sind
-	 * 	ODER
-	 * - null, wenn res/Karten/Level[lvl]_Raum[room].txt nicht existiert
-	 */
-	public char[][] readRoom(int lvl, int room){
-		
-		int mapwidth, mapheight;
-		int[] mapsize = getMapSize(lvl, room);
-		
-		if(mapsize==null){return null;}
-		mapheight= mapsize[0];
-		mapwidth = mapsize[1];
-		
-		char[][] map = readFile( mapwidth, mapheight, lvl, room);
-		return map;
-	}
 	
 	public int[] getPosOf(char c){
 		

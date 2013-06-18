@@ -56,6 +56,7 @@ public class Main extends JFrame implements ActionListener{
 	 */
 	public Main(){
 		super("Toast mit Katzengsicht - Game Of The Year Edition");
+		
 		java.net.URL url = this.getClass().getClassLoader().getResource("../res/nyan2.png");
 				//ClassLoader.getSystemResource("res/nyan2.png");
 //		Toolkit kit = Toolkit.getDefaultToolkit();
@@ -75,7 +76,7 @@ public class Main extends JFrame implements ActionListener{
 
 
 	private int xFrame=500;
-	private int yFrame=600;
+	private int yFrame=660;
 	
 	
 	private void initMain(){//TODO in Menu-Klasse auslagern
@@ -113,7 +114,7 @@ public class Main extends JFrame implements ActionListener{
 		
 		this.setSize(xFrame, yFrame);
 		
-		//this.setResizable(false);
+		this.setResizable(false);
 		
 		this.setVisible(true);
 	}
@@ -137,7 +138,7 @@ public class Main extends JFrame implements ActionListener{
 		    clip = (Clip) AudioSystem.getLine(info);
 		    clip.stop();
 		    clip.open(stream);
-		    clip.start();   
+		   // clip.start();   
 		}
 		catch (Exception e) {
 		    System.err.print("Sound-Fehler:\n");

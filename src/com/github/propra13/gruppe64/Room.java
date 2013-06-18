@@ -5,6 +5,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Room extends Map {
 	
@@ -15,7 +17,7 @@ public class Room extends Map {
 	public int levelnr;
 	
 	public int[] pos_eingang;
-	
+	Timer caretaker;
 	private Level level;
 	
 	private static int wallSize= 50;
@@ -24,17 +26,17 @@ public class Room extends Map {
 		this.mapArray = mapArray;
 		this.level = aLevel;
 		//this.pos_eingang 	= getPosOf('e');
-		this.moveables = new ArrayList<Moveable>();
+		//this.moveables = new ArrayList<Moveable>();
 	}
 	
-	public Room(int lvl, int room){
-		this.levelnr 		= lvl;
-		this.raumnr 		= room;
-		super.mapArray 		= readRoom(levelnr, raumnr);
-		this.pos_eingang 	= getPosOf('e');
-		super.moveables 	= new ArrayList<Moveable>();
-		
-	}
+//	public Room(int lvl, int room){
+//		this.levelnr 		= lvl;
+//		this.raumnr 		= room;
+//		super.mapArray 		= readRoom(levelnr, raumnr);
+//		this.pos_eingang 	= getPosOf('e');
+//		//super.moveables 	= new ArrayList<Moveable>();
+//		
+//	}
 	@Override 
 	void influence(Moveable character){
 		
@@ -66,13 +68,58 @@ public class Room extends Map {
 		switch(touchedSprite){
 
 		case 'a':case 'A':
-			level.nextRoom();
+			if(level.isLastRoom()){
+				if(moveables.size()==1){
+					level.nextRoom();
+				}
+			} else {
+				level.nextRoom();
+			}
 		break;
 		default:
 		break;
 		}
 		
 		
+	}
+	public void startMotion(){
+		
+		TimerTask action = new TimerTask() {
+			public void run() {
+				
+				for (Moveable mov: Room.this.getMovables()){
+					mov.updateMot();
+					
+				}
+			}
+		};
+		caretaker = new Timer();
+		caretaker.schedule(action, 0, 5);
+	}
+	public void stopMotion(){
+		caretaker.cancel();
+		caretaker.purge();
+	}
+
+	public static String charString(char[][] m){
+		String tmp="";
+		for (int i=0;  i< 7; i++){
+			for(int j=0; j< 10;j++){
+				tmp+=m[i][j];
+			}
+			tmp+="\n";
+		}
+		return tmp;
+	}
+	public String toString(){
+		String tmp="";
+		for (int i=0;  i< mapheight; i++){
+			for(int j=0; j< mapwidth;j++){
+				tmp+=mapArray[i][j];
+			}
+			tmp+="\n";
+		}
+		return tmp;
 	}
 }
 

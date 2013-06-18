@@ -3,6 +3,8 @@ package com.github.propra13.gruppe64;
 import java.awt.Container;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.JPanel;
 
@@ -18,14 +20,19 @@ public class Level extends JPanel{
 	private Container cp;
 	private Player player;
 	
-	private Map aMap;
+	private int lRoomNr;
+	private int aRoomNr=0;
+	
+	
 	private int levelNr;
 	
 	// mapArray's for all Rooms
 	private Iterator<Room> roomIterator;
 	//current active Room
 	private Room aRoom;
-	
+
+	private Timer caretaker;
+	private TimerTask action;
 	
 	/**
 	 * 
@@ -45,33 +52,47 @@ public class Level extends JPanel{
 		readAllRooms(levelnr);
 		roomIterator = roomList.iterator();
 	}
-	
+	public void initLevel(){
+		
+		
+		this.nextRoom();
+		
+		
+		
+	}
 	public void readAllRooms(int lvl){
 		
-		int i=1;
-		Room raum;
+		lRoomNr=1;
 		char[][] tmpArray;
 		MapGenerator mg= new MapGenerator("res/Karten/Level%i_Raum%i.txt");
-		tmpArray=mg.readRoom(lvl, i);
+		tmpArray=mg.readRoom(lvl, lRoomNr);
 		while(tmpArray!=null){
-			raum=new Room(this,tmpArray);
+			System.out.println(Room.charString(tmpArray));
+			Room raum=new Room(this,tmpArray);
 			roomList.add(raum);
-			tmpArray=mg.readRoom(lvl, ++i);
-		}
-		System.out.println("Level "+lvl+ " hat "+roomList.size());
-	}
-	
-	public void nextRoom(){
-		//create first Level
-		if (roomIterator.hasNext()){
-			aRoom = roomIterator.next();
-			setMap(aRoom);
-		} else {
-			//exit last Room, next Level accessible
-			cp.remove(aMap);
-			player.setLevel(levelNr+1);
+			tmpArray=mg.readRoom(lvl, ++lRoomNr);
 		}
 		
+		System.out.println("Level "+lvl+ " hat "+roomList.size());
+	}
+	/**
+	 * next Room
+	 */
+	public void nextRoom(){
+		Room tmpRoom;
+		if(roomIterator.hasNext()){
+			tmpRoom = roomIterator.next();
+			setMap(tmpRoom);
+		} else {
+			System.out.print("nextLevel");
+			if(aRoom!=null){
+				aRoom.stopMotion();
+				cp.remove(aRoom);
+				
+				cp.repaint();
+			}
+			game.nextLevel();
+		}	
 	}
 	/**
 	 * called by Game, iterates about all Movables and move them according to the actual Room
@@ -86,33 +107,44 @@ public class Level extends JPanel{
 	 * gets called by Game, update the Levelchange if some thing happened
 	 */
 	public Map getMap(){
-		return aMap;
+		return (Map) aRoom;
 	}
 	/**
 	 * Setzte aktuellen Raum
 	 * @param map
 	 */
 	public void setMap(Room map){
-		if(aMap!=null){
-			aMap.remove(player);
-			cp.remove(aMap);
+		if(aRoom!=null){
+			aRoom.stopMotion();
+			cp.remove(aRoom);
+			
+			cp.repaint();
 		}
-		//add map with content
-		map.removeAll();
-		map.add(player);
-		map.drawMap();
-		cp.add(map);
+		//next aRoom
 		
+		aRoom = map;
+		
+		aRoom.add(player);
+		player.setMap();
 		//TODO set player position
 		player.setLocation(0, 150);
-
-		map.repaint();
-		aMap=map;
+		aRoom.drawMap();
+		System.out.print("Set\n"+aRoom.toString());
+		cp.add(aRoom);
+		
+		
+		aRoom.startMotion();
+		aRoom.repaint();
 	}
 
 	public void purge(){
-		cp.remove(aMap);
+		cp.remove(aRoom);
 		//game.showWorld();
+	}
+	public boolean isLastRoom() {
+		if(roomList.indexOf(aRoom)<roomList.size()-1)
+			return false;
+		return true;
 	}
 	
 }

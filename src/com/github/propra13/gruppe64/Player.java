@@ -19,9 +19,11 @@ public class Player extends Moveable {
 	
 	private Map map;
 	private int w;						//waffen Nr im Waffenslot
-	private Timer timer;
-	//attacke moeglich
+
+	private Timer timer_pl;
 	private int mode=0;
+	TimerTask action;
+
 	// leben übrig
 	private int life;
 
@@ -34,8 +36,11 @@ public class Player extends Moveable {
 	public Player(int x, int y){
 		//Groesse des Spielers 
 		super(x,y,30,30);
-		timer = new Timer();
+
+		timer_pl = new Timer();
+
 		this.life=3;
+
 		itemarr = new ArrayList<Item>();
 		slotarr = new ArrayList<Item>();
 		itemarr.add(new Item('s'));
@@ -45,6 +50,7 @@ public class Player extends Moveable {
 		level=1;
 
 		
+		 
 	}
 	
 	public boolean putOnMap(int x, int y, Map map){
@@ -99,13 +105,12 @@ public class Player extends Moveable {
 			int y=this.getY();
 			
 			this.mode=1;
-
-			TimerTask action = new TimerTask() {
+			action= new TimerTask() {
 				public void run() {
 					mode=0;
 				}
 			};
-			timer.schedule(action, 1000);
+			timer_pl.schedule(action, 1000);
 
 			CopyOnWriteArrayList<Moveable> movarr=new CopyOnWriteArrayList<Moveable>(map.getMovables());
 			for(Moveable mov:movarr){
@@ -172,6 +177,12 @@ public class Player extends Moveable {
 		map = (Map)this.getParent();
 	}
 
+	public void abortTimer(){
+		timer_pl.cancel();
+		timer_pl.purge();
+	}
+
+
 
 	public void setLevel(int i) {
 		if(i>level){
@@ -191,5 +202,5 @@ public class Player extends Moveable {
 		statBar.updateHealth(this.health);
 
 	}
-	
+
 }

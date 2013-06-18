@@ -40,7 +40,7 @@ public class Game extends JPanel implements Runnable{
 	
 	/** active Level **/
 	private int aLevelNr;
-	/**highest open Level **/
+	/**highest acessible Level **/
 	private int levelNr;
 	/**last Level**/
 	private int lastLevelNr;
@@ -76,71 +76,30 @@ public class Game extends JPanel implements Runnable{
 	public void run(){
 		
 		cp.setBackground(Color.RED);
-
 		cp.setLayout(new BorderLayout());
+		
+		//make Player ready
+		main.controller.setPlayer(player);
+		cp.add(statBar);
+		statBar.repaint();
 		
 		//show initial world
 		
-		cp.add(statBar);
-		statBar.repaint();
-		//cp.validate();
+		
+		//start first level
 		startLevel();
-		//main.pack();
-		// setzt den Timer der den Spieler aktualisiert
-		TimerTask action = new TimerTask() {
-			public void run() {
-				
-//				for (Moveable mov: map.getMovables()){
-//					mov.updateMot();
-//					if(map.getMovables().size()>1)
-//						if(mov.equals(map.getMovables().get(1))){
-//							mov.attemptAttack();
-//							
-//
-//						}	
-//				}
-
-				//aLevel.getaRoom().updateMotion();
-			}
-		};
-
-		caretaker = new Timer();
-		caretaker.schedule(action, 0, 5);
 		
 		
 		
 
 	}
 	private void startLevel(){
-		//MapGenerator
 		aLevel = new Level(this, aLevelNr);
 		aLevel.nextRoom();
-		
 
 		statBar.getStateFrom(player);
-//		
-//		//load maparray
-//		map = new Map(50,50, levelNr, this);
-//		//TODO set Player at Entrance
-//		player.setLocation(0, 150);
-//		//aLevel = new Level(player, cp, levelNr);
-//		
-//		//add player to map
-//		map.add(player);
-//		statBar.getStateFrom(player);
-//
-//		//Reihenfolge ist wichtig, das das repaint die Child auf einem Stack sieht
-//		main.controller.setPlayer(player);
-//		map.drawMap();
-//		//fuege die Map in das Grund-Panel
-//		cp.add(map);
-//
-//		map.repaint();
-		
-		
 		cp.repaint(16);
 
-		
 	}
 	
 	/**
@@ -151,7 +110,7 @@ public class Game extends JPanel implements Runnable{
 		caretaker.cancel();
 		caretaker.purge();
 		cp.removeAll();
-		map=null;
+		cp.repaint();
 		main.win(false);
 		
 	}
@@ -162,13 +121,8 @@ public class Game extends JPanel implements Runnable{
 	public void nextLevel() {
 		//setzte naechstes Level
 		levelNr++;
-		//aLevel.purge();
-		
-		cp.remove(map);
-		map=null;
 		if(levelNr>lastLevelNr){
-			caretaker.cancel();
-			caretaker.purge();
+			cp.removeAll();
 			main.win(true);
 		}else {
 			startLevel();
