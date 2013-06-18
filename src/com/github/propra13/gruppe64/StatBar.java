@@ -48,14 +48,14 @@ public class StatBar extends JPanel{
 		this.setVisible(true);
 		
 		textWidth=70;
-		
-		str="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.";
+		str="Hallo, frag den Alten.";
 		sb= new StringBuilder(str);
 		int i = 0;
 		while (i + textWidth < sb.length() && (i = sb.lastIndexOf(" ", i + textWidth)) != -1) {
 		    sb.replace(i, i + 1, "\n");
 		}
 		strarr=sb.toString().split("\n");
+		
 
 	/*	Inventar=new JButton("Inventar");
 		Inventar.setBounds(10,10,150,20);
@@ -128,6 +128,19 @@ public class StatBar extends JPanel{
 
   	public void updateMana(int mn){
   		this.manahealth=2*mn;
+  	}
+  	
+  	public void printSaga(){
+  		
+  		str="Hallo mein Freund!Die Welt wird von Katzen terrorisiert. Benutze space um auf die Katzen einzuschlagen und benutze c um deine Waffen zu wechseln. Wenn du genügend Mana hast kannst du mit h dein Leben regenerieren.Mit einem Doppelklick kannst du Lebens- und Manatränke verwenden ";
+		sb= new StringBuilder(str);
+		int i = 0;
+		while (i + textWidth < sb.length() && (i = sb.lastIndexOf(" ", i + textWidth)) != -1) {
+		    sb.replace(i, i + 1, "\n");
+		}
+		strarr=sb.toString().split("\n");
+		repaint();
+  		
   	}
 
 }

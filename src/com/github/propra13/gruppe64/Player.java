@@ -93,6 +93,7 @@ public class Player extends Moveable {
 				pickup(it);
 		}
 		map.updateState(this);
+		if(map.wouldTouch(x,y,Dim[0],Dim[1])=='O') statBar.printSaga() ;
 	}
 	public void addStatBar(StatBar statBar) {
 		this.statBar = statBar;
