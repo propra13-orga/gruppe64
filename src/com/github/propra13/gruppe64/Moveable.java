@@ -1,5 +1,6 @@
 package com.github.propra13.gruppe64;
 
+import java.awt.Container;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Timer;
@@ -53,7 +54,7 @@ public class Moveable extends Sprite {
 	
 	public void attemptAttack(){
 		
-			System.out.print("schlag ");
+			//System.out.print("schlag ");
 			int x=this.getX();
 			int y=this.getY();
 			
@@ -61,10 +62,10 @@ public class Moveable extends Sprite {
 			CopyOnWriteArrayList<Moveable> movarr=new CopyOnWriteArrayList<Moveable>(map.getMovables());
 			for(Moveable mov:movarr){
 				if(!this.equals(mov) && this.slotarr.get(0).getRange()>Math.pow(x+Dim[0]/2-mov.getX()-mov.Dim[0]/2,2)+Math.pow(y+Dim[1]/2-mov.getY()-mov.Dim[1]/2,2))
-				{	System.out.println("treffer");
-					System.out.println(map.getMovables().size());
+				{	//System.out.println("treffer");
+					//System.out.println(map.getMovables().size());
 					mov.damage(this.slotarr.get(0).getDmg());
-					System.out.println(map.getMovables().size());
+					//System.out.println(map.getMovables().size());
 				}
 			}
 	
@@ -80,7 +81,15 @@ public class Moveable extends Sprite {
 		
 	}
 	public void setMap(){
-		map = (Map)this.getParent();
+		Class<? extends Container> cClass = this.getParent().getClass();
+		if(cClass.equals(Room.class)){
+			map = (Room)this.getParent();
+		} else if(cClass.equals(Shop.class)){
+			map = (Shop)this.getParent();
+		} else {
+			map = (Map)this.getParent();
+		}
+		
 	}
 	/**
 	 * Ist die beabsichtigte Bewegung moeglich

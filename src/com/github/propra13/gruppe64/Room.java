@@ -37,17 +37,7 @@ public class Room extends Map {
 //		//super.moveables 	= new ArrayList<Moveable>();
 //		
 //	}
-	@Override 
-	void influence(Moveable character){
-		
-	}
-	/**
-	 * Updates the state of the Room, eg. the containing Characters
-	 */
-	@Override
-	void updateState(){
 	
-	}
 	public void setWallSize(int wallW, int wallH) {
 		spriteheight = wallH;
 		spritewidth = wallW;
@@ -69,9 +59,9 @@ public class Room extends Map {
 
 		case 'a':case 'A':
 			if(level.isLastRoom()){
-				if(moveables.size()==1){
+				//if(moveables.size()==1){
 					level.nextRoom();
-				}
+				//}
 			} else {
 				level.nextRoom();
 			}
@@ -82,24 +72,7 @@ public class Room extends Map {
 		
 		
 	}
-	public void startMotion(){
-		
-		TimerTask action = new TimerTask() {
-			public void run() {
-				
-				for (Moveable mov: Room.this.getMovables()){
-					mov.updateMot();
-					
-				}
-			}
-		};
-		caretaker = new Timer();
-		caretaker.schedule(action, 0, 5);
-	}
-	public void stopMotion(){
-		caretaker.cancel();
-		caretaker.purge();
-	}
+	
 
 	public static String charString(char[][] m){
 		String tmp="";

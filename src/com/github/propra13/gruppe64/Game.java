@@ -56,7 +56,7 @@ public class Game extends JPanel implements Runnable{
 		
 		//player and his statBar
 		player = new Player(0,150);
-		statBar = new StatBar();
+		statBar = new StatBar(player);
 		player.addStatBar(statBar);
 		
 		cp.setBackground(Color.WHITE);
@@ -93,12 +93,43 @@ public class Game extends JPanel implements Runnable{
 		
 
 	}
-	private void startLevel(){
+	public void startLevel(){
+		//entferne von Game verwaltete map
+		if(map!=null){
+			map.stopMotion();
+			map.removeAll();
+			map.remove(player);
+			cp.remove(map);
+			
+			map=null;
+		}
 		aLevel = new Level(this, aLevelNr);
+//<<<<<<< HEAD
 		aLevel.nextRoom();
+//=======
 
-		statBar.getStateFrom(player);
-		cp.repaint(16);
+//		//load maparray
+//		if(levelNr!=2 && levelNr != 4)
+//			map = new Map(50,50, levelNr, this);
+//		else
+//			map=new Shop(50,50,this);
+//		//TODO set Player at Entrance
+//		player.setLocation(0, 150);
+//		//aLevel = new Level(player, cp, levelNr);
+//		
+//		//add player to map
+//		map.add(player);
+//		statBar.getStateFrom();
+//
+//		//Reihenfolge ist wichtig, das das repaint die Child auf einem Stack sieht
+//		main.controller.setPlayer(player);
+//		map.drawMap();
+//		//fuege die Map in das Grund-Panel
+//		cp.add(map);
+//>>>>>>> 5be603d894af9ce92abca4ee5042a17c8966a7d1
+
+		statBar.getStateFrom();
+		statBar.repaint(60);
 
 	}
 	
@@ -109,6 +140,7 @@ public class Game extends JPanel implements Runnable{
 	public void gameOver() {
 		caretaker.cancel();
 		caretaker.purge();
+
 		cp.removeAll();
 		cp.repaint();
 		main.win(false);
@@ -120,16 +152,27 @@ public class Game extends JPanel implements Runnable{
 	 */
 	public void nextLevel() {
 		//setzte naechstes Level
-		levelNr++;
-		if(levelNr>lastLevelNr){
+		aLevelNr++;
+		if(aLevelNr>lastLevelNr){
 			cp.removeAll();
 			main.win(true);
 		}else {
-			startLevel();
+			//startLevel();
+			showShop();
 		}
 	}
 
-	
+	public void showShop(){
+		map = new Shop(50,50,this);
+		map.add(player);
+		
+		statBar.getStateFrom();
+		map.drawMap();
+		cp.add(map);
+		map.startMotion();
+		map.repaint();
+		
+	}
 
 
 	public Container getCP() {

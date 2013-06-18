@@ -33,7 +33,12 @@ public class Map extends JPanel {
 	protected char[][] mapArray;
 	protected ArrayList<Moveable> moveables;
 	protected ArrayList<Item> items;
-	private Timer hauTimer;
+	
+	// TODO sortiern nach Room etc.
+	protected Timer hauTimer;
+	protected TimerTask hau;
+	protected Timer moveTimer;
+	protected TimerTask move;
 	
 
 	/*  Beispiel: x_max = mapwidth = 4 und y_max = mapheight = 3:
@@ -44,8 +49,8 @@ public class Map extends JPanel {
 	 */
 	//char map[][]=new char [mapwidth][mapheight];
 
-	private Player player;
-	private Game game;
+	protected Player player;
+	protected Game game;
 	private Level aLevel;
 	/**
 	 * Erzeuge neues JPanel und ordne es an, hier kann auch das auslesen aus Datei gestartet werden
@@ -158,7 +163,7 @@ public class Map extends JPanel {
 			}
 		}
 		
-		TimerTask hau = new TimerTask() {
+		hau = new TimerTask() {
 			public void run() {
 				if(moveables.size()>1){
 					for(Moveable mov:moveables){		
@@ -209,7 +214,10 @@ public class Map extends JPanel {
 		else if (OL=='M' || OR=='M' || UL=='M' || UR=='M') return 'M';
 		else if (OL=='Y' || OR=='Y' || UL=='Y' || UR=='Y') return 'Y';
 		else if (OL=='H' || OR=='H' || UL=='H' || UR=='H') return 'H';
+		else if (OL=='O' || OR=='O' || UL=='O' || UR=='O') return 'O'; 
+
 		else return' ';
+
 	}
 	
 	
@@ -220,32 +228,23 @@ public class Map extends JPanel {
 		//System.out.println(player.getVisibleRect().toString());
 		
 		switch(touchedSprite){
+	
 		case 'g': case 'G':
 			game.gameOver();
 		break;
 		case 'a':case 'A':
 			game.nextLevel();
 		break;
+		
+	
+			
 		default:
 		break;
 		}
 		
 		
 	}
-	/**
-	 * Changes the State of the Character, 
-	 * @param character
-	 */
-	void influence(Moveable character) {
-		// TODO Auto-generated method stub
-		
-	}
 
-	void updateState() {
-		// TODO Auto-generated method stub
-		
-	}
-	
 	
 	/*
 	 * JPanel overwrites for add/remove
@@ -259,7 +258,8 @@ public class Map extends JPanel {
 			moveables.add((Moveable) sp);
 		}
 		if(cClass.equals(Player.class)){
-			//player.set
+			//TODO generic
+			sp.setLocation(0,150);
 			this.player=(Player)sp;
 			((Player)sp).setMap();
 			moveables.add((Moveable) sp);
@@ -314,6 +314,33 @@ public class Map extends JPanel {
 	public void leaveMap(Player player) {
 		remove(player);
 		
+	}
+	public void startMotion(){
+		
+		move = new TimerTask() {
+			public void run() {
+				try{
+					for (Moveable mov: Map.this.getMovables()){
+						mov.updateMot();
+					
+					}
+				}catch (Exception e){
+					
+				}
+			}
+		};
+		moveTimer = new Timer();
+		moveTimer.schedule(move, 0, 5);
+	}
+	public void stopMotion(){
+		moveTimer.cancel();
+		moveTimer.purge();
+		if(hau!=null){
+			hau.cancel();
+		}
+		if(hauTimer!=null){
+			hauTimer.cancel();
+		}
 	}
 	
 }

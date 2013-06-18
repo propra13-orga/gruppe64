@@ -13,6 +13,6 @@ public class World extends Map{
 		// TODO Auto-generated constructor stub
 	}
 	public int getMaxLevel(){
-		return 3;
+		return 5;
 	}
 }

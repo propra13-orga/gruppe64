@@ -9,6 +9,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import javax.swing.JPanel;
+
 
 @SuppressWarnings({ "serial" })
 public class Player extends Moveable {
@@ -16,8 +18,10 @@ public class Player extends Moveable {
 	//int x_off, y_off;
 
 	private StatBar statBar;
-	
+	private int goldmoney;
+
 	private Map map;
+
 	private int w;						//waffen Nr im Waffenslot
 
 	private Timer timer_pl;
@@ -30,8 +34,11 @@ public class Player extends Moveable {
 	private Game game;
 
 	private int level;
+	private int gold=0;
+	private Level aLevel;
 	
 	
+
 	//Test Konstruktor
 	public Player(int x, int y){
 		//Groesse des Spielers 
@@ -92,6 +99,7 @@ public class Player extends Moveable {
 				pickup(it);
 		}
 		map.updateState(this);
+		if(map.wouldTouch(x,y,Dim[0],Dim[1])=='O') statBar.printSaga() ;
 	}
 	public void addStatBar(StatBar statBar) {
 		this.statBar = statBar;
@@ -115,7 +123,7 @@ public class Player extends Moveable {
 			CopyOnWriteArrayList<Moveable> movarr=new CopyOnWriteArrayList<Moveable>(map.getMovables());
 			for(Moveable mov:movarr){
 				if(!this.equals(mov) && this.slotarr.get(0).getRange()>Math.pow(x+Dim[0]/2-mov.getX()-mov.Dim[0]/2,2)+Math.pow(y+Dim[1]/2-mov.getY()-mov.Dim[1]/2,2))
-				{	System.out.println("treffer");
+				{	System.out.println("Spieler trifft");
 					System.out.println(map.getMovables().size());
 					mov.damage(this.slotarr.get(0).getDmg());
 					System.out.println(map.getMovables().size());
@@ -135,9 +143,9 @@ public class Player extends Moveable {
 	private void die(){
 		life--;
 		if(life<=0){
-			game.gameOver();
+			aLevel.reset();
 		} else {
-			//game.showWorld();
+			aLevel.restart();
 		}
 	}
 	public void switchweapon(){
@@ -146,7 +154,7 @@ public class Player extends Moveable {
 			if(++w>=itemarr.size())	w=0;
 		}while(!itemarr.get(w).isWeapon());
 		slotarr.set(0, new Item(itemarr.get(w)));
-		statBar.getStateFrom(this);
+		statBar.getStateFrom();
 	}
 	
 	public void pickup(Item item){
@@ -163,20 +171,46 @@ public class Player extends Moveable {
 		if(notRedundant){
 			itemarr.add(item);
 			item.setOwner(this);
+			if(item.getSpriteName()=='Y')	setGold(getGold() + 50);
+			Class<? extends JPanel> cClass = map.getClass();
+			if(cClass.equals(Shop.class) && gold>=item.getPrice()){
+				setGold(getGold() - item.getPrice());
+			}
 		}
 		map.remove(item);
 		
-		statBar.getStateFrom(this);
+		statBar.getStateFrom();
 	}
 	public void use(Item item){
+	
+		
+		if(item.plushealth!=0) {
+			this.health=100;
+			statBar.updateHealth(this.health);
+			itemarr.remove(item);
+			statBar.getStateFrom();
+			
+		}
+		if(item.plusmana !=0){
+			this.mana=100;	
+			statBar.updateMana(this.mana);
+			itemarr.remove(item);
+			statBar.getStateFrom();
+		}
+		
+	
+		 
+		
+		
+		
 		//wenn Gold, dann prüfe ob man im shop ist
 		
 	}
 	
-	public void setMap(){
-		map = (Map)this.getParent();
+	
+	public void setaLevel(Level aLevel) {
+		this.aLevel = aLevel;
 	}
-
 	public void abortTimer(){
 		timer_pl.cancel();
 		timer_pl.purge();
@@ -193,14 +227,28 @@ public class Player extends Moveable {
 
 	public void healthCast() {
 		// TODO Auto-generated method stub
-		mana = mana-50;
-		statBar.updateMana(this.mana);
-		if(health<90){
-			health=health+10;
+		int mtemp=this.mana;
+		mtemp=mtemp-50;
+		if(mtemp>=0){
+			mana = mana-50;
+			statBar.updateMana(this.mana);
+			if(health<90){
+				health=health+10;
+			}
+			else health=100;
+			statBar.updateHealth(this.health);
 		}
-		else health=100;
-		statBar.updateHealth(this.health);
 
+
+		
+	}
+
+	public int getGold() {
+		return gold;
+	}
+
+	public void setGold(int gold) {
+		this.gold = gold;
 	}
 
 }

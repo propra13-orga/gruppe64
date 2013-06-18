@@ -116,8 +116,8 @@ public class Level extends JPanel{
 	public void setMap(Room map){
 		if(aRoom!=null){
 			aRoom.stopMotion();
+			aRoom.remove(player);
 			cp.remove(aRoom);
-			
 			cp.repaint();
 		}
 		//next aRoom
@@ -125,9 +125,7 @@ public class Level extends JPanel{
 		aRoom = map;
 		
 		aRoom.add(player);
-		player.setMap();
-		//TODO set player position
-		player.setLocation(0, 150);
+		
 		aRoom.drawMap();
 		System.out.print("Set\n"+aRoom.toString());
 		cp.add(aRoom);

@@ -25,12 +25,14 @@ public class MapGenerator {
 		
 	
 	}
+	//Array
 	private String pathString(int i, int j){
 		if (pathToken.length>2){
 			return pathToken[0]+i+pathToken[1]+j+pathToken[2];
 		}
 		return null;
 	}
+
 	/**
 	 * @param args
 	 */
