@@ -16,10 +16,6 @@ public class Sprite extends JComponent implements MouseListener{
 
 	
 
-	/**
-	 * aktuelle Geschwindigkeit
-	 */
-	protected int[] vel=new int[2];
 
 	/**
 	 * Ausmasse
@@ -32,6 +28,7 @@ public class Sprite extends JComponent implements MouseListener{
 	 * Sprite name
 	 */
 	char name;
+	protected boolean lootable=false;
 	
 	
 	// Konstruktor Namenloser 
@@ -67,20 +64,16 @@ public class Sprite extends JComponent implements MouseListener{
 		this.Dim[1] = yDim;
 	}
 	
-	public int[] getVel(){
-		return vel;
-	}
 	
-	public void setVel(int vx, int vy){
-		this.vel[0]=vx;
-		this.vel[1]=vy;
-	}
 	
 	
 	
 			
 	public Rectangle getRectangle(){
 		return new Rectangle(this.getX(),this.getY(),Dim[0],Dim[1]);
+	}
+	public char getSpriteName(){
+		return name;
 	}
 	public void paintComponent(Graphics g){
 		//Zeichnet jenach Typ

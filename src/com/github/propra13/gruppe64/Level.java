@@ -12,40 +12,17 @@ public class Level extends JPanel{
 	ArrayList<Room> roomList;
 	ArrayList<Moveable> moveable;
 	
-	char map[][]={	{'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'},
-			{'x', 'x', ' ', ' ', ' ', ' ', 'x', ' ', 'x', 'x'},
-			{'x', 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
-			{'e', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'a'},
-			{'x', 'x', ' ', ' ', ' ', ' ', 'x', ' ', 'x', 'x'},
-			{'x', 'x', ' ', 'g', ' ', ' ', ' ', ' ', ' ', 'x'},
-			{'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'}};
+	
 
-char map2[][]={	{'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'},
-			{'x', ' ', ' ', 'g', ' ', ' ', ' ', ' ', ' ', 'x'},
-			{'x', ' ', ' ', ' ', ' ', ' ', 'x', ' ', ' ', 'x'},
-			{'e', ' ', ' ', 'g', 'x', ' ', 'x', 'g', ' ', 'a'},
-			{'x', 'x', ' ', 'x', 'x', ' ', 'x', 'x', 'x', 'x'},
-			{'x', 'x', ' ', ' ', 'x', ' ', ' ', ' ', ' ', 'x'},
-			{'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'}};
+	private Map aMap;
+	private Container cp;
+	private Player player;
+	// mapArray's for all Rooms
+	
 
-char map3[][]={	{'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'},
-			{'x', 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
-			{'x', 'x', ' ', ' ', 'g', ' ', 'x', 'x', 'x', 'x'},
-			{'e', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'a'},
-			{'x', 'x', ' ', ' ', ' ', ' ', 'x', 'x', 'x', 'x'},
-			{'x', 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
-			{'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'}};
-
-
-private Map aMap;
-private Container cp;
-private Player player;
-// mapArray's for all Rooms
-
-/**private ArrayList<char[][]> roomArrayL;*/
-private Iterator<Room> roomIterator;
-//current active Room
-private Room aRoom;
+	private Iterator<Room> roomIterator;
+	//current active Room
+	private Room aRoom;
 	
 	/**
 	 * 
@@ -68,8 +45,13 @@ private Room aRoom;
 		
 		int i=1;
 		Room raum;
-		while( (raum=new Room(lvl,i)) != null){
+		char[][] tmpArray;
+		MapGenerator mg= new MapGenerator("res/Karten/Level%i_Raum%i.txt");
+		tmpArray=mg.readRoom(lvl, i);
+		while(tmpArray!=null){
+			raum=new Room(tmpArray);
 			roomList.add(raum);
+			tmpArray=mg.readRoom(lvl, ++i);
 		}
 	}
 	

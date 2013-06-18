@@ -30,7 +30,7 @@ public class Map extends JPanel {
 	protected int spriteheight=50;
 	protected char[][] mapArray;
 	protected ArrayList<Moveable> moveables;
-	
+	protected ArrayList<Item> items; 
 	
 	
 	
@@ -43,9 +43,7 @@ public class Map extends JPanel {
 	 */
 	//char map[][]=new char [mapwidth][mapheight];
 	
-	/**
-	 * @uml.property  name="map" multiplicity="(0 -1)" dimension="2"
-	 */
+
 	
 	char map[][]  = readRoom(1,1);
 	char map2[][] = readRoom(1,2);
@@ -73,9 +71,9 @@ public class Map extends JPanel {
 		this();
 		this.aLevel = aLevel;
 		this.spritewidth= spritewidth;
-		this.spriteheight= spriteheight;
-		//put at 0,0 
-		this.setBounds(0, 0, mapW, mapH);
+			this.spriteheight= spriteheight;
+			//put at 0,0 
+			this.setBounds(0, 0, mapW, mapH);
 		//System.out.print("ThreadGesammt" +Thread.activeCount());
 		this.setBackground(Color.WHITE);
 		this.setLayout(null);
@@ -86,7 +84,7 @@ public class Map extends JPanel {
 		this();
 		this.spritewidth= spritewidth;
 		this.spriteheight= spriteheight;
-		this.setBounds(0, 0, 600, 600);
+		this.setBounds(0, 0, 600, 350);
 		this.setBackground(Color.WHITE);
 		this.setLayout(null);
 		this.setVisible(true);
@@ -104,12 +102,15 @@ public class Map extends JPanel {
 	}
 	public Map(){
 		this.moveables = new ArrayList<Moveable>();
+		this.items = new ArrayList<Item>();
 	}
 	public ArrayList<Moveable> getMovables(){
 		return moveables;
 	}
 	
-	
+	public ArrayList<Item> getItems(){
+		return items;
+	}
 	
 	
 	public Sprite getSprite(int X, int Y){
@@ -190,13 +191,15 @@ public class Map extends JPanel {
 		char UR = map[Y][X];
 		
 		//Wichtig ist die Reihenfolge, was wichtiger ist oben
-		if		(OL=='g' || OR=='g' || UL=='g' || UR=='g') return 'g';
-		else if	(OL=='x' || OR=='x' || UL=='x' || UR=='x') return 'x';
+		if	(OL=='x' || OR=='x' || UL=='x' || UR=='x') return 'x';
 		else if(OL=='a' || OR=='a' || UL=='a' || UR=='a') return 'a';
 		else if	(OL=='e' || OR=='e' || UL=='e' || UR=='e') return 'e';
+		else if (OL=='S' || OR=='S' || UL=='S' || UR=='S') return 'S';
+		else if (OL=='M' || OR=='M' || UL=='M' || UR=='M') return 'M';
+		else if (OL=='Y' || OR=='Y' || UL=='Y' || UR=='Y') return 'Y';
+		else if (OL=='H' || OR=='H' || UL=='H' || UR=='H') return 'H';
 		else return' ';
 	}
-	
 	
 	
 	
@@ -250,6 +253,9 @@ public class Map extends JPanel {
 			((Player)sp).setMap();
 			moveables.add((Moveable) sp);
 		}
+		if(cClass.equals(Item.class)){
+			items.add((Item) sp);
+		}
 		//moveables.add(player);
 		return component;
 	}
@@ -264,15 +270,21 @@ public class Map extends JPanel {
 		super.remove(sprite);
 		super.revalidate();
 	}
+	public void remove(Item it){
+		super.remove(it);
+		//suche aus ItemArray
+		items.remove(it);
+		repaint();
+	}
 	public void remove(Moveable mov){
 		super.remove(mov);
-		super.revalidate();
+		repaint();
 		moveables.remove(mov);
 	}
 	
 	
 	/* 
-	 * Ruft res/Karten/Level[lvl]_Raum[room].txt auf und bestimmt seine Groeße
+	 * Ruft res/Karten/Level[lvl]_Raum[room].txt auf und bestimmt seine Groe��e
 	 * 
 	 * AUSGABE:
 	 * - int[] {Zeilenanzahl des Files, max. Zeilenlaenge im File}
