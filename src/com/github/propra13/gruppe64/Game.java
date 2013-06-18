@@ -92,12 +92,7 @@ public class Game extends JPanel implements Runnable{
 				
 				for (Moveable mov: map.getMovables()){
 					mov.updateMot();
-					if(map.getMovables().size()>1)
-						if(mov.equals(map.getMovables().get(1))){
-							mov.attemptAttack();
-							
-
-						}	
+						
 				}
 
 				//aLevel.getaRoom().updateMotion();
@@ -145,6 +140,7 @@ public class Game extends JPanel implements Runnable{
 	 * TODO 
 	 */
 	public void gameOver() {
+		abortPlTimers();
 		caretaker.cancel();
 		caretaker.purge();
 		cp.removeAll();
@@ -161,17 +157,24 @@ public class Game extends JPanel implements Runnable{
 		levelNr++;
 		//aLevel.purge();
 		
-		cp.remove(map);
-		map=null;
+		
 		if(levelNr>lastLevelNr){
+			abortPlTimers();
 			caretaker.cancel();
 			caretaker.purge();
+			cp.remove(map);
+			map=null;
 			main.win(true);
-		}else {
+		}else {			
+			cp.remove(map);
+			map=null;
 			startLevel();
 		}
 	}
 
+	private void abortPlTimers(){
+		player.abortTimer();
+	}
 	
 
 

@@ -9,6 +9,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.JPanel;
 
@@ -30,7 +32,8 @@ public class Map extends JPanel {
 	protected int spriteheight=50;
 	protected char[][] mapArray;
 	protected ArrayList<Moveable> moveables;
-	protected ArrayList<Item> items; 
+	protected ArrayList<Item> items;
+	private Timer hauTimer;
 	
 	
 	
@@ -161,6 +164,20 @@ public class Map extends JPanel {
 			//System.out.print("\n");
 			}
 		}
+		
+		TimerTask hau = new TimerTask() {
+			public void run() {
+				if(moveables.size()>1){
+					for(Moveable mov:moveables){		
+						mov.attemptAttack();
+					}
+				}
+			}
+		};
+		hauTimer=new Timer();
+		hauTimer.schedule(hau, 1000, 1000);
+		
+		
 	}
 
 	public char wouldTouch(Rectangle rect){
