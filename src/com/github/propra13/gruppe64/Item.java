@@ -1,22 +1,26 @@
 package com.github.propra13.gruppe64;
 
-import java.awt.Image;
-import java.awt.Rectangle;
-import java.awt.Toolkit;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+
+import javax.swing.BorderFactory;
 
 public class Item extends Sprite {
 	public int plushealth;
+	
 	//Schwert
-	public int mana;
+	public int plusmana;
 	public int gold;
+	
 
 	String displayedName;
-	//Gr����e des Items
+	//Groesse des Items
 	int xd=50,yd=50;
 	private boolean isWeapon=false;
 	private int Dmg;
 	private int Range;
+	private Player player;
+
 	
 	public Item( char name)// Name des Items
 	
@@ -34,7 +38,7 @@ public class Item extends Sprite {
 		break;
 		
 		case 'M': this.displayedName="Mana";//MANA
-		mana=10;
+		plusmana=10;
 		break;
 		
 		case 'Y': this.displayedName="Gold";//Gold
@@ -154,5 +158,17 @@ public class Item extends Sprite {
 
 	public void setWeapon(boolean isWeapon) {
 		this.isWeapon = isWeapon;
+	}
+	public void mouseClicked(MouseEvent arg0) {
+		if (arg0.getClickCount()>1){
+			if(player!=null){
+				player.use(this);
+			}
+			
+		}
+	}
+	public void setOwner(Player mov) {
+		this.player = mov;
+		
 	}
 }

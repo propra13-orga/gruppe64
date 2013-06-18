@@ -102,7 +102,9 @@ public class StatBar extends JPanel{
   		this.health=2*hp;
   		repaint();
   	}
+
   	public void updateMana(int mn){
   		this.manahealth=2*mn;
   	}
+
 }
