@@ -18,7 +18,7 @@ public class Item extends Sprite {
 	private int Dmg;
 	private int Range;
 	private Player player;
-
+	private int price=0;
 	
 	public Item( char name)// Name des Items
 	
@@ -40,10 +40,11 @@ public class Item extends Sprite {
 		break;
 		
 		case 'Y': this.displayedName="Gold";//Gold
-		gold=10;
+		gold=50;
 		break;
 		
 		case 'H': this.displayedName="Health";//Leben
+		setPrice(50);
 		plushealth=10;
 		break;
 		
@@ -55,7 +56,6 @@ public class Item extends Sprite {
 		
 		case 'p':this.displayedName="Pfote";
 		Dmg=1;
-
 		Range=800;
 		setWeapon(true);
 		break;
@@ -168,5 +168,11 @@ public class Item extends Sprite {
 	public void setOwner(Player mov) {
 		this.player = mov;
 		
+	}
+	public int getPrice() {
+		return price;
+	}
+	public void setPrice(int price) {
+		this.price = price;
 	}
 }

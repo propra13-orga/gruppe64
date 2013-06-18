@@ -54,7 +54,7 @@ public class Map extends JPanel {
 	
 	
 	private Player player;
-	private Game game;
+	protected Game game;
 	private Level aLevel;
 	/**
 	 * Erzeuge neues JPanel und ordne es an, hier kann auch das auslesen aus Datei gestartet werden
@@ -216,7 +216,7 @@ public class Map extends JPanel {
 		else if (OL=='M' || OR=='M' || UL=='M' || UR=='M') return 'M';
 		else if (OL=='Y' || OR=='Y' || UL=='Y' || UR=='Y') return 'Y';
 		else if (OL=='H' || OR=='H' || UL=='H' || UR=='H') return 'H';
-		else return' ';
+		else return ' ';
 	}
 	
 	

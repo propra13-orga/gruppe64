@@ -9,6 +9,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import javax.swing.JPanel;
+
 
 @SuppressWarnings({ "serial" })
 public class Player extends Moveable {
@@ -18,6 +20,7 @@ public class Player extends Moveable {
 	private StatBar statBar;
 	
 	private Map map;
+
 	private int w;						//waffen Nr im Waffenslot
 
 	private Timer timer_pl;
@@ -30,7 +33,7 @@ public class Player extends Moveable {
 	private Game game;
 
 	private int level;
-	
+	private int gold=0;
 	
 	//Test Konstruktor
 	public Player(int x, int y){
@@ -146,7 +149,7 @@ public class Player extends Moveable {
 			if(++w>=itemarr.size())	w=0;
 		}while(!itemarr.get(w).isWeapon());
 		slotarr.set(0, new Item(itemarr.get(w)));
-		statBar.getStateFrom(this);
+		statBar.getStateFrom();
 	}
 	
 	public void pickup(Item item){
@@ -163,10 +166,15 @@ public class Player extends Moveable {
 		if(notRedundant){
 			itemarr.add(item);
 			item.setOwner(this);
+			if(item.getSpriteName()=='Y')	setGold(getGold() + 50);
+			Class<? extends JPanel> cClass = map.getClass();
+			if(cClass.equals(Shop.class) && gold>=item.getPrice()){
+				setGold(getGold() - item.getPrice());
+			}
 		}
 		map.remove(item);
 		
-		statBar.getStateFrom(this);
+		statBar.getStateFrom();
 	}
 	public void use(Item item){
 		//wenn Gold, dann prüfe ob man im shop ist
@@ -201,6 +209,14 @@ public class Player extends Moveable {
 		else health=100;
 		statBar.updateHealth(this.health);
 
+	}
+
+	public int getGold() {
+		return gold;
+	}
+
+	public void setGold(int gold) {
+		this.gold = gold;
 	}
 
 }

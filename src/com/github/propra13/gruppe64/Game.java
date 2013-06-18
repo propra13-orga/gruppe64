@@ -56,7 +56,7 @@ public class Game extends JPanel implements Runnable{
 		
 		//player and his statBar
 		player = new Player(0,150);
-		statBar = new StatBar();
+		statBar = new StatBar(player);
 		player.addStatBar(statBar);
 		
 		cp.setBackground(Color.WHITE);
@@ -114,14 +114,17 @@ public class Game extends JPanel implements Runnable{
 		
 		
 		//load maparray
-		map = new Map(50,50, levelNr, this);
+		if(levelNr!=2 && levelNr != 4)
+			map = new Map(50,50, levelNr, this);
+		else
+			map=new Shop(50,50,this);
 		//TODO set Player at Entrance
 		player.setLocation(0, 150);
 		//aLevel = new Level(player, cp, levelNr);
 		
 		//add player to map
 		map.add(player);
-		statBar.getStateFrom(player);
+		statBar.getStateFrom();
 
 		//Reihenfolge ist wichtig, das das repaint die Child auf einem Stack sieht
 		main.controller.setPlayer(player);
