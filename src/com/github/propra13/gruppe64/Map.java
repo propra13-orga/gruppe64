@@ -216,7 +216,10 @@ public class Map extends JPanel {
 		else if (OL=='M' || OR=='M' || UL=='M' || UR=='M') return 'M';
 		else if (OL=='Y' || OR=='Y' || UL=='Y' || UR=='Y') return 'Y';
 		else if (OL=='H' || OR=='H' || UL=='H' || UR=='H') return 'H';
-		else return ' ';
+		else if (OL=='O' || OR=='O' || UL=='O' || UR=='O') return 'O'; 
+
+		else return' ';
+
 	}
 	
 	
@@ -227,12 +230,16 @@ public class Map extends JPanel {
 		//System.out.println(player.getVisibleRect().toString());
 		
 		switch(touchedSprite){
+	
 		case 'g': case 'G':
 			game.gameOver();
 		break;
 		case 'a':case 'A':
 			game.nextLevel();
 		break;
+		
+	
+			
 		default:
 		break;
 		}

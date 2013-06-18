@@ -54,8 +54,7 @@ public class Shop extends Map{
 			 */
 		}
 		return map;
+
 	}
 	
-	
-
 }

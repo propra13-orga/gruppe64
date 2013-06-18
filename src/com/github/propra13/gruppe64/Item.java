@@ -7,9 +7,11 @@ import javax.swing.BorderFactory;
 
 public class Item extends Sprite {
 	public int plushealth;
+	
 	//Schwert
-	public int mana;
+	public int plusmana;
 	public int gold;
+	
 
 	String displayedName;
 	//Groesse des Items
@@ -36,7 +38,7 @@ public class Item extends Sprite {
 		break;
 		
 		case 'M': this.displayedName="Mana";//MANA
-		mana=10;
+		plusmana=10;
 		break;
 		
 		case 'Y': this.displayedName="Gold";//Gold
@@ -55,7 +57,8 @@ public class Item extends Sprite {
 		break;
 		
 		case 'p':this.displayedName="Pfote";
-		Dmg=1;
+		Dmg=20;
+
 		Range=800;
 		setWeapon(true);
 		break;

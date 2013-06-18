@@ -18,7 +18,8 @@ public class Player extends Moveable {
 	//int x_off, y_off;
 
 	private StatBar statBar;
-	
+	private int goldmoney;
+
 	private Map map;
 
 	private int w;						//waffen Nr im Waffenslot
@@ -95,6 +96,7 @@ public class Player extends Moveable {
 				pickup(it);
 		}
 		map.updateState(this);
+		if(map.wouldTouch(x,y,Dim[0],Dim[1])=='O') statBar.printSaga() ;
 	}
 	public void addStatBar(StatBar statBar) {
 		this.statBar = statBar;
@@ -177,6 +179,27 @@ public class Player extends Moveable {
 		statBar.getStateFrom();
 	}
 	public void use(Item item){
+	
+		
+		if(item.plushealth!=0) {
+			this.health=100;
+			statBar.updateHealth(this.health);
+			itemarr.remove(item);
+			statBar.getStateFrom();
+			
+		}
+		if(item.plusmana !=0){
+			this.mana=100;	
+			statBar.updateMana(this.mana);
+			itemarr.remove(item);
+			statBar.getStateFrom();
+		}
+		
+	
+		 
+		
+		
+		
 		//wenn Gold, dann prüfe ob man im shop ist
 		
 	}
@@ -201,14 +224,20 @@ public class Player extends Moveable {
 
 	public void healthCast() {
 		// TODO Auto-generated method stub
-		mana = mana-50;
-		statBar.updateMana(this.mana);
-		if(health<90){
-			health=health+10;
+		int mtemp=this.mana;
+		mtemp=mtemp-50;
+		if(mtemp>=0){
+			mana = mana-50;
+			statBar.updateMana(this.mana);
+			if(health<90){
+				health=health+10;
+			}
+			else health=100;
+			statBar.updateHealth(this.health);
 		}
-		else health=100;
-		statBar.updateHealth(this.health);
 
+
+		
 	}
 
 	public int getGold() {
