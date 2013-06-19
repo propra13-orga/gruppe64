@@ -149,8 +149,9 @@ public class Player extends Moveable {
 	 */
 	private void die(){
 		life--;
-		if(life<=0){
-			aLevel.initLevel();
+		if(life>0){
+			aLevel.reset();
+			health=100;
 		} else {
 
 			aLevel.gameOver();
@@ -232,9 +233,7 @@ public class Player extends Moveable {
 		this.map = (Map)this.getParent();
 	}
 	
-	public void setaLevel(Level aLevel) {
-		this.aLevel = aLevel;
-	}
+	
 	public void abortTimer(){
 		timer_pl.cancel();
 		timer_pl.purge();

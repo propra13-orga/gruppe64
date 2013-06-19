@@ -85,12 +85,7 @@ public class Level extends JPanel{
 			setMap(tmpRoom);
 		} else {
 			System.out.print("nextLevel");
-			if(aRoom!=null){
-				aRoom.stopMotion();
-				cp.remove(aRoom);
-				
-				cp.repaint();
-			}
+			purge();
 			player.setLevel(null);
 			game.nextLevel();
 		}	
@@ -115,12 +110,7 @@ public class Level extends JPanel{
 	 * @param map
 	 */
 	public void setMap(Room map){
-		if(aRoom!=null){
-			aRoom.stopMotion();
-			aRoom.remove(player);
-			cp.remove(aRoom);
-			cp.repaint();
-		}
+		purge();
 		//next aRoom
 		
 		aRoom = map;
@@ -137,8 +127,12 @@ public class Level extends JPanel{
 	}
 
 	public void purge(){
-		cp.remove(aRoom);
-		//game.showWorld();
+		if(aRoom!=null){
+			aRoom.stopMotion();
+			aRoom.remove(player);
+			cp.remove(aRoom);
+			cp.repaint();
+		}
 	}
 	public boolean isLastRoom() {
 		if(roomList.indexOf(aRoom)<roomList.size()-1)
@@ -149,6 +143,12 @@ public class Level extends JPanel{
 	public void gameOver() {
 		game.gameOver();
 		
+	}
+	public void reset() {
+		roomList.clear();
+		//TODO sparsamer
+		this.readAllRooms(levelNr);		
+		this.initLevel();
 	}
 	
 }
