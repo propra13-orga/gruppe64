@@ -62,6 +62,9 @@ public class Item extends Sprite {
 		Range=800;
 		setWeapon(true);
 		break;
+		case 'R':this.displayedName="Armor";
+		price=10;
+		break;
 
 		
 		default:
@@ -124,6 +127,13 @@ public class Item extends Sprite {
 			yd=50;
 			Image img6 = Toolkit.getDefaultToolkit().getImage("res/s.png");
 		    g.drawImage(img6, 0, 0, this);
+		    g.finalize();	
+		    break;
+		case 'R':
+			xd=50;
+			yd=50;
+			Image img7 = Toolkit.getDefaultToolkit().getImage("res/armor.png");
+		    g.drawImage(img7, 0, 0, this);
 		    g.finalize();	
 		    break;
 			

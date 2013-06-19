@@ -59,7 +59,7 @@ public class Map extends JPanel {
 		this();
 		this.spritewidth= spritewidth;
 		this.spriteheight= spriteheight;
-		this.setBounds(0, 0, 600, 600);
+		this.setBounds(0, 0, 500, 350);
 		//System.out.print("ThreadGesammt" +Thread.activeCount());
 		this.setBackground(Color.WHITE);
 		this.setLayout(null);
@@ -136,7 +136,8 @@ public class Map extends JPanel {
 			case 'Y':
 			case 'M':
 			case 'H': 
-			case 's':	
+			case 's':
+			case 'R':
 				return new Item (field);
 			
 			default: return null;
@@ -163,7 +164,7 @@ public class Map extends JPanel {
 			}
 		}
 		
-		
+
 		
 		
 	}
@@ -205,7 +206,6 @@ public class Map extends JPanel {
 		else if (OL=='Y' || OR=='Y' || UL=='Y' || UR=='Y') return 'Y';
 		else if (OL=='H' || OR=='H' || UL=='H' || UR=='H') return 'H';
 		else if (OL=='O' || OR=='O' || UL=='O' || UR=='O') return 'O'; 
-
 		else return' ';
 
 	}

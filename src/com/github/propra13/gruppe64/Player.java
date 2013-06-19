@@ -36,6 +36,7 @@ public class Player extends Moveable {
 	private int level;
 	private int gold=0;
 	private Level aLevel;
+	private boolean hasArmor=false;
 	
 	
 
@@ -134,7 +135,10 @@ public class Player extends Moveable {
 	}
 	
 	public void damage(int dmg){
-		this.health -= dmg;
+		if(hasArmor)
+			this.health -= Math.ceil(dmg/2);
+		else
+			this.health -=dmg;
 		statBar.updateHealth(this.health);
 		if(this.health<=0){
 			die();
@@ -148,8 +152,10 @@ public class Player extends Moveable {
 		if(life<=0){
 			aLevel.initLevel();
 		} else {
+
 			aLevel.gameOver();
 		}
+
 	}
 	public void switchweapon(){
 		
@@ -171,18 +177,31 @@ public class Player extends Moveable {
 				}	
 			}
 		}
+		Class<? extends JPanel> cClass = map.getClass();
 		if(notRedundant){
-			itemarr.add(item);
-			item.setOwner(this);
+
 			if(item.getSpriteName()=='Y')	setGold(getGold() + 50);
-			Class<? extends JPanel> cClass = map.getClass();
 			if(cClass.equals(Shop.class) && gold>=item.getPrice()){
+				if(item.getSpriteName()=='R')	hasArmor=true;
 				setGold(getGold() - item.getPrice());
+				itemarr.add(item);
+				item.setOwner(this);
+				map.remove(item);
+				statBar.getStateFrom();
+			}else if(!cClass.equals(Shop.class)){
+				if(item.getSpriteName()=='R')	hasArmor=true;
+				itemarr.add(item);
+				item.setOwner(this);
+				map.remove(item);
+				statBar.getStateFrom();
+			}
+		}else{
+			if(!cClass.equals(Shop.class)){
+				map.remove(item);
+				statBar.getStateFrom();
 			}
 		}
-		map.remove(item);
 		
-		statBar.getStateFrom();
 	}
 	public void use(Item item){
 	

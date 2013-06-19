@@ -75,7 +75,7 @@ public class Main extends JFrame implements ActionListener{
 	private JButton bClose;
 
 
-	private int xFrame=500;
+	private int xFrame=800;
 	private int yFrame=660;
 	
 	

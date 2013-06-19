@@ -24,7 +24,7 @@ import javax.swing.JTextArea;
 
 public class StatBar extends JPanel{
 	static private  int panelH =300;
-	static private int panelW =500;
+	static private int panelW =800;
 	private int health=200;
 	private int manahealth=200;
 	private JButton Inventar;
@@ -43,7 +43,7 @@ public class StatBar extends JPanel{
 		this.setLayout(null);
 		//Ueberschneidung mit map
 
-		this.setBounds(0, 360, panelW, panelH);
+		this.setBounds(0, 350, panelW, panelH);
 		//this.setSize(panelW,panelH);
 
 		this.setBackground(Color.RED);
