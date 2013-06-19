@@ -136,7 +136,8 @@ public class Map extends JPanel {
 			case 'Y':
 			case 'M':
 			case 'H': 
-			case 's':	
+			case 's':
+			case 'R':
 				return new Item (field);
 			
 			default: return null;
@@ -166,8 +167,9 @@ public class Map extends JPanel {
 		hau = new TimerTask() {
 			public void run() {
 				if(moveables.size()>1){
-					for(Moveable mov:moveables){		
-						mov.attemptAttack();
+					for(Moveable mov:moveables){
+						if(!mov.getClass().equals(Player.class))
+							mov.attemptAttack();
 					}
 				}
 			}
@@ -215,7 +217,6 @@ public class Map extends JPanel {
 		else if (OL=='Y' || OR=='Y' || UL=='Y' || UR=='Y') return 'Y';
 		else if (OL=='H' || OR=='H' || UL=='H' || UR=='H') return 'H';
 		else if (OL=='O' || OR=='O' || UL=='O' || UR=='O') return 'O'; 
-
 		else return' ';
 
 	}

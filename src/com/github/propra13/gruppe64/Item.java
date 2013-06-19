@@ -129,6 +129,13 @@ public class Item extends Sprite {
 		    g.drawImage(img6, 0, 0, this);
 		    g.finalize();	
 		    break;
+		case 'R':
+			xd=50;
+			yd=50;
+			Image img7 = Toolkit.getDefaultToolkit().getImage("res/armor.png");
+		    g.drawImage(img7, 0, 0, this);
+		    g.finalize();	
+		    break;
 			
 	
 		}
