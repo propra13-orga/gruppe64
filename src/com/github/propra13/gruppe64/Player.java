@@ -143,7 +143,7 @@ public class Player extends Moveable {
 	private void die(){
 		/*life--;
 		if(life<=0){
-			aLevel.reset();
+			aLevel.initLevel();
 		} else {
 			aLevel.restart();
 		}*/
@@ -206,7 +206,9 @@ public class Player extends Moveable {
 		//wenn Gold, dann prüfe ob man im shop ist
 		
 	}
-	
+	public void setMap(){
+		this.map = (Map)this.getParent();
+	}
 	
 	public void setaLevel(Level aLevel) {
 		this.aLevel = aLevel;
@@ -216,14 +218,22 @@ public class Player extends Moveable {
 		timer_pl.purge();
 	}
 
-
-
+	/**
+	 * Setze vom Spieler erreichbares Level
+	 * @param i
+	 */
 	public void setLevel(int i) {
 		if(i>level){
 			level= i;
 		}
 	}
-	
+	/**
+	 * setzte aktives Level
+	 * @param aLevel
+	 */
+	public void setLevel(Level aLevel){
+		this.aLevel= aLevel;
+	}
 
 	public void healthCast() {
 		// TODO Auto-generated method stub
