@@ -62,10 +62,10 @@ public class Room extends Map {
 		
 		case 'a':case 'A':
 			if(level.isLastRoom()){
-				//if(moveables.size()==1){
+				if(moveables.size()==1){
 					level.nextRoom();
 					active=false;
-				//}
+				}
 			} else {
 				level.nextRoom();
 				active=false;

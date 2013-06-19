@@ -72,7 +72,7 @@ public class Level extends JPanel{
 			roomList.add(raum);
 			tmpArray=mg.readRoom(lvl, ++lRoomNr);
 		}
-		
+
 		System.out.println("Level "+lvl+ " hat "+roomList.size());
 	}
 	/**
@@ -90,15 +90,7 @@ public class Level extends JPanel{
 			game.nextLevel();
 		}	
 	}
-	/**
-	 * called by Game, iterates about all Movables and move them according to the actual Room
-	 */
-	public void letThemMove(){
-		//for ech movable Object (enemy, player, etc.)
-		for(Moveable mov : moveable){
-			mov.updateMot();
-		}
-	}
+
 	/**
 	 * gets called by Game, update the Levelchange if some thing happened
 	 */
@@ -114,7 +106,7 @@ public class Level extends JPanel{
 		//next aRoom
 		
 		aRoom = map;
-		
+		aRoom.removeAll();
 		aRoom.add(player);
 		
 		aRoom.drawMap();
@@ -145,9 +137,7 @@ public class Level extends JPanel{
 		
 	}
 	public void reset() {
-		roomList.clear();
-		//TODO sparsamer
-		this.readAllRooms(levelNr);		
+	
 		this.initLevel();
 	}
 	
