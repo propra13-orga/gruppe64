@@ -141,12 +141,12 @@ public class Player extends Moveable {
 		}
 	}
 	private void die(){
-		life--;
+		/*life--;
 		if(life<=0){
 			aLevel.reset();
 		} else {
 			aLevel.restart();
-		}
+		}*/
 	}
 	public void switchweapon(){
 		

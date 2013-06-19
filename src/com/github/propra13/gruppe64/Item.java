@@ -62,6 +62,9 @@ public class Item extends Sprite {
 		Range=800;
 		setWeapon(true);
 		break;
+		case 'R':this.displayedName="Armor";
+		price=10;
+		break;
 
 		
 		default:

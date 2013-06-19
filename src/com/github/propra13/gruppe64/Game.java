@@ -127,7 +127,6 @@ public class Game extends JPanel implements Runnable{
 //		//fuege die Map in das Grund-Panel
 //		cp.add(map);
 //>>>>>>> 5be603d894af9ce92abca4ee5042a17c8966a7d1
-
 		statBar.getStateFrom();
 		statBar.repaint(60);
 
