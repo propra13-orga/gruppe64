@@ -145,4 +145,9 @@ public class Level extends JPanel{
 		return true;
 	}
 	
+	public void restart() {
+		game.gameOver();
+		
+	}
+	
 }
