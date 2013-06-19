@@ -309,9 +309,11 @@ public class Map extends JPanel {
 		hau = new TimerTask() {
 			public void run() {
 				if(moveables.size()>1){
-					for(Moveable mov:moveables){		
-						mov.attemptAttack();
-					}
+					try{
+						for(Moveable mov:moveables){		
+							mov.attemptAttack();
+						}
+					}finally{}
 				}
 			}
 		};
