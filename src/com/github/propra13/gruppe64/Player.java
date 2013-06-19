@@ -140,12 +140,15 @@ public class Player extends Moveable {
 			die();
 		}
 	}
+	/**
+	 * man kann nur in einem Level sterben, also 
+	 */
 	private void die(){
 		life--;
 		if(life<=0){
 			aLevel.initLevel();
 		} else {
-			aLevel.restart();
+			aLevel.gameOver();
 		}
 	}
 	public void switchweapon(){

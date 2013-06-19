@@ -104,6 +104,7 @@ public class Game extends JPanel implements Runnable{
 			map=null;
 		}
 		aLevel = new Level(this, aLevelNr);
+		player.setLevel(aLevel);
 //<<<<<<< HEAD
 		aLevel.nextRoom();
 //=======
@@ -138,8 +139,6 @@ public class Game extends JPanel implements Runnable{
 	 * TODO 
 	 */
 	public void gameOver() {
-		caretaker.cancel();
-		caretaker.purge();
 
 		cp.removeAll();
 		cp.repaint();

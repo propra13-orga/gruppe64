@@ -163,17 +163,7 @@ public class Map extends JPanel {
 			}
 		}
 		
-		hau = new TimerTask() {
-			public void run() {
-				if(moveables.size()>1){
-					for(Moveable mov:moveables){		
-						mov.attemptAttack();
-					}
-				}
-			}
-		};
-		hauTimer=new Timer();
-		hauTimer.schedule(hau, 1000, 1000);
+		
 		
 		
 	}
@@ -316,6 +306,17 @@ public class Map extends JPanel {
 		
 	}
 	public void startMotion(){
+		hau = new TimerTask() {
+			public void run() {
+				if(moveables.size()>1){
+					for(Moveable mov:moveables){		
+						mov.attemptAttack();
+					}
+				}
+			}
+		};
+		hauTimer=new Timer();
+		hauTimer.schedule(hau, 1000, 1000);
 		
 		move = new TimerTask() {
 			public void run() {

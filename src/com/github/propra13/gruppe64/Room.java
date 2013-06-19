@@ -19,6 +19,9 @@ public class Room extends Map {
 	public int[] pos_eingang;
 	Timer caretaker;
 	private Level level;
+
+
+	private boolean active=true;
 	
 	private static int wallSize= 50;
 	public Room(Level aLevel, char[][] mapArray) {
@@ -54,22 +57,24 @@ public class Room extends Map {
 	public void updateState(Moveable character) {
 		char touchedSprite = wouldTouch(character.getRectangle());	
 		//System.out.println(player.getVisibleRect().toString());
-		
+		if(character.getClass().equals(Player.class)){
 		switch(touchedSprite){
-
+		
 		case 'a':case 'A':
 			if(level.isLastRoom()){
 				//if(moveables.size()==1){
 					level.nextRoom();
+					active=false;
 				//}
 			} else {
 				level.nextRoom();
+				active=false;
 			}
 		break;
 		default:
 		break;
 		}
-		
+		}
 		
 	}
 	

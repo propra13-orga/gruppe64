@@ -53,7 +53,7 @@ public class Level extends JPanel{
 		roomIterator = roomList.iterator();
 	}
 	public void initLevel(){
-		
+		roomIterator = roomList.iterator();
 		
 		this.nextRoom();
 		
@@ -91,6 +91,7 @@ public class Level extends JPanel{
 				
 				cp.repaint();
 			}
+			player.setLevel(null);
 			game.nextLevel();
 		}	
 	}
@@ -145,7 +146,7 @@ public class Level extends JPanel{
 		return true;
 	}
 	
-	public void restart() {
+	public void gameOver() {
 		game.gameOver();
 		
 	}
