@@ -95,7 +95,7 @@ public class StatBar extends JPanel{
   		g.setColor(Color.black);
   		if(strarr.length >0)
   			for(int i=0;i<strarr.length;i++)
-  				g.drawString(strarr[i], 10, 130+i*20);
+  				g.drawString(strarr[i], 10, 180+i*20);
   		g.setColor(Color.white);
   		if(player.getGold()>0){
   			g.drawString("$ "+player.getGold(),gposx,gposy);
@@ -125,7 +125,7 @@ public class StatBar extends JPanel{
   			if(items.get(i).name=='Y'){
   				if(player.getGold()>0) this.add(items.get(i));
   				gposx=items.get(i).getX()+5;
-  				gposy=items.get(i).getY()-10;
+  				gposy=items.get(i).getY()+65;
   			}else{
   				this.add(items.get(i));
   			}				
