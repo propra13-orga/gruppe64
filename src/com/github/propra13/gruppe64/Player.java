@@ -152,6 +152,7 @@ public class Player extends Moveable {
 		if(life>0){
 			aLevel.reset();
 			health=100;
+			statBar.updateHealth(health);
 		} else {
 
 			aLevel.gameOver();

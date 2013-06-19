@@ -59,7 +59,7 @@ public class Map extends JPanel {
 		this();
 		this.spritewidth= spritewidth;
 		this.spriteheight= spriteheight;
-		this.setBounds(0, 0, 500, 350);
+		this.setBounds(0, 0, mapwidth*spritewidth, mapheight*spriteheight);
 		//System.out.print("ThreadGesammt" +Thread.activeCount());
 		this.setBackground(Color.WHITE);
 		this.setLayout(null);
@@ -313,7 +313,9 @@ public class Map extends JPanel {
 						for(Moveable mov:moveables){		
 							mov.attemptAttack();
 						}
-					}finally{}
+					}catch (Exception e){
+						
+					}
 				}
 			}
 		};
