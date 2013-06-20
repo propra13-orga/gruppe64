@@ -92,12 +92,14 @@ public class Controller extends KeyAdapter{									//brauche playerobject mit p
 	public void keyPressed(KeyEvent e){										//	if(...&&___) -> Wenn der spieler in entgegengesetzte Richtungen drückt,
 			//System.out.print("kp");
 			keyp=e.getKeyCode();											
-			if(player!=null){																//			0			1	         wird die letzte Eingabe ignoriert.
-				if(keyp== hoch && player.getVel()[1] != -1)player.setMot(dir.up);			//			|			|
-				if(keyp== rechts && player.getVel()[0] != -1)player.setMot(dir.right);		//		3---+---1		0		-1	---0---   1
-				if(keyp== runter && player.getVel()[1] !=  1)player.setMot(dir.down);		//			|			|
-				if(keyp== links && player.getVel()[0] !=  1)player.setMot(dir.left);		//			2		   -1
-				if(keyp== attack)player.attemptAttack();
+			if(player!=null){																	//			0			1	         wird die letzte Eingabe ignoriert.
+				if(!player.getChatInput().isFocusOwner()){
+					if(keyp== hoch && player.getVel()[1] != -1)player.setMot(dir.up);			//			|			|
+					if(keyp== rechts && player.getVel()[0] != -1)player.setMot(dir.right);		//		3---+---1		0		-1	---0---   1
+					if(keyp== runter && player.getVel()[1] !=  1)player.setMot(dir.down);		//			|			|
+					if(keyp== links && player.getVel()[0] !=  1)player.setMot(dir.left);		//			2		   -1
+					if(keyp== attack)player.attemptAttack();
+				}
 			}
 	}
 	public void keyReleased(KeyEvent e){
@@ -107,7 +109,10 @@ public class Controller extends KeyAdapter{									//brauche playerobject mit p
 			if(keyr==rechts || keyr==links)	player.unsetMot(axis.x);				//			|
 			if(keyr==switchW) player.switchweapon();																		//			+---0
 			if(keyr==hCast) player.healthCast();			
-			if(keyr==KeyEvent.VK_ENTER && player.getChatInput().isFocusOwner()) player.getChatPane().append(player.getName(), player.getChatInput().getText());
+			if(keyr==KeyEvent.VK_ENTER && player.getChatInput().isFocusOwner()){
+				player.getChatPane().append(player.getNick(), player.getChatInput().getText());
+				player.getChatInput().setText("");
+			}
 		}
 	}
 	

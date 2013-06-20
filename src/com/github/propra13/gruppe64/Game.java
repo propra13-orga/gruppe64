@@ -52,7 +52,7 @@ public class Game extends JPanel implements Runnable{
 	/**
 	 * cp ist content-pane von unserem JFrame
 	 */
-	public Game(Container cp, Main main) {
+	public Game(Container cp, Main main, Controller controller) {
 		this.cp=cp;
 		this.main =main;
 		
@@ -63,6 +63,7 @@ public class Game extends JPanel implements Runnable{
 		chatinput = new JTextField();
 		chatinput.setBounds(0, 600, 700, 20);
 		chatinput.setToolTipText("chatinput");
+		chatinput.addKeyListener(controller);
 		player.addStatBar(statBar);
 		player.addChatPane(chatp);
 		player.addChatInput(chatinput);

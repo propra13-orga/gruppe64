@@ -157,7 +157,7 @@ public class Main extends JFrame implements ActionListener{
 		
 		cp.removeAll();
 		//Erzeugt neues Spiel und startet es
-		myGame=new Game(this.cp, this);
+		myGame=new Game(this.cp, this, controller);
 		gameThread = new Thread(myGame);
 		gameThread.start();	
 		
