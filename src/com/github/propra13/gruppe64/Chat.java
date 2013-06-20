@@ -10,7 +10,7 @@ import javax.swing.JTextArea;
 @SuppressWarnings("serial")
 public class Chat extends JScrollPane{
 	private Player player;
-	private JTextArea textArea=new JTextArea("Chat initialized...\n");
+	private JTextArea textArea=new JTextArea("Chat initialized...\n",10,50);
 
 	public Chat(Player pl) {
 		super();
@@ -18,14 +18,16 @@ public class Chat extends JScrollPane{
 		textArea.setWrapStyleWord(true);
 		//textArea.setLayout(null);
 		textArea.setBounds(5,5,650,90);
-		textArea.setEditable(false);
+		textArea.setEditable(true);
 		textArea.setVisible(true);
+		textArea.setEnabled(true);
 		player=pl;
 		this.setLayout(null);
-		this.setPreferredSize(new Dimension(680,90));
-		this.setBounds(0, 500,700,100);
+		this.setPreferredSize(new Dimension(665,90));
+		this.setBounds(0, 500,680,100);
 		this.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		this.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		this.setEnabled(true);
 		this.setVisible(true);
 		this.add(textArea);
 		revalidate();
