@@ -106,7 +106,8 @@ public class Controller extends KeyAdapter{									//brauche playerobject mit p
 			if(keyr==hoch || keyr==runter)	player.unsetMot(axis.y);				//			1
 			if(keyr==rechts || keyr==links)	player.unsetMot(axis.x);				//			|
 			if(keyr==switchW) player.switchweapon();																		//			+---0
-			if(keyr==hCast) player.healthCast();
+			if(keyr==hCast) player.healthCast();			
+			if(keyr==KeyEvent.VK_ENTER && player.getChatInput().isFocusOwner()) player.getChatPane().append(player.getName(), player.getChatInput().getText());
 		}
 	}
 	

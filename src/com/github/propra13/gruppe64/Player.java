@@ -10,6 +10,7 @@ import java.util.TimerTask;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 
 @SuppressWarnings({ "serial" })
@@ -32,11 +33,20 @@ public class Player extends Moveable {
 	private int life;
 
 	private Game game;
-
 	private int level;
+	/**
+	 * 	freigeschaltenes Level des jeweiligen Spielers
+	 * 
+	 * @author sepp
+	 */
+	private int lvlUnl;
 	private int gold=0;
 	private Level aLevel;
 	private boolean hasArmor=false;
+	private Chat chatPane;
+	private boolean saga=true;
+	private String nick="player";
+	private JTextField chatInput;
 	
 	
 
@@ -55,7 +65,7 @@ public class Player extends Moveable {
 
 		slotarr.add(new Item('s'));
 
-		level=1;
+		lvlUnl=1;
 
 		
 		 
@@ -100,10 +110,18 @@ public class Player extends Moveable {
 				pickup(it);
 		}
 		map.updateState(this);
-		if(map.wouldTouch(x,y,Dim[0],Dim[1])=='O') statBar.printSaga() ;
+		if(map.wouldTouch(x,y,Dim[0],Dim[1])=='O'&&saga){
+			String text="Hallo mein Freund!Die Welt wird von Katzen terrorisiert. Benutze space um auf die Katzen einzuschlagen und benutze c um deine Waffen zu wechseln. Wenn du genügend Mana hast kannst du mit h dein Leben regenerieren.Mit einem Doppelklick kannst du Lebens- und Manatränke verwenden ";
+			chatPane.append("Zenmeister Ikkyu Sojun", text);
+			saga=false;			
+		}
 	}
 	public void addStatBar(StatBar statBar) {
 		this.statBar = statBar;
+		
+	}
+	public void addChatPane(Chat chatp) {
+		this.chatPane = chatp;
 		
 	}
 	public void attemptAttack(){
@@ -281,6 +299,35 @@ public class Player extends Moveable {
 
 	public void setGold(int gold) {
 		this.gold = gold;
+	}
+
+	public int getLvlUnl() {
+		return lvlUnl;
+	}
+
+	public void setLvlUnl(int lvlUnl) {
+		this.lvlUnl = lvlUnl;
+	}
+
+	public String getNick() {
+		return nick;
+	}
+
+	public void setNick(String nick) {
+		this.nick = nick;
+	}
+
+	public void addChatInput(JTextField chatinput) {
+		// TODO Auto-generated method stub
+		chatInput = chatinput;
+	}
+
+	public JTextField getChatInput() {
+		return chatInput;
+	}
+	
+	public Chat getChatPane(){
+		return chatPane;
 	}
 
 }

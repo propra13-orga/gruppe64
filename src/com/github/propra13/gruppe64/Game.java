@@ -16,6 +16,7 @@ import java.util.TimerTask;
 
 import javax.swing.Action;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 
 @SuppressWarnings("serial")
@@ -32,6 +33,8 @@ public class Game extends JPanel implements Runnable{
 	
 	private Player player;
 	private StatBar statBar;
+	private Chat chatp;
+	private JTextField chatinput;
 	private World world;
 	//active  Level
 	private Level aLevel;
@@ -46,7 +49,6 @@ public class Game extends JPanel implements Runnable{
 	private int lastLevelNr;
 	
 	
-	
 	/**
 	 * cp ist content-pane von unserem JFrame
 	 */
@@ -57,7 +59,14 @@ public class Game extends JPanel implements Runnable{
 		//player and his statBar
 		player = new Player(0,150);
 		statBar = new StatBar(player);
+		chatp = new Chat(player);
+		chatinput = new JTextField();
+		chatinput.setBounds(0, 600, 700, 20);
+		chatinput.setToolTipText("chatinput");
 		player.addStatBar(statBar);
+		player.addChatPane(chatp);
+		player.addChatInput(chatinput);
+		
 		
 		cp.setBackground(Color.WHITE);
 		cp.setLayout(new BorderLayout());
@@ -82,7 +91,10 @@ public class Game extends JPanel implements Runnable{
 		main.controller.setPlayer(player);
 		cp.add(statBar);
 		statBar.repaint();
-		
+		cp.add(chatp);
+		chatp.repaint();
+		cp.add(chatinput);
+		chatinput.repaint();
 		//show initial world
 		
 		
