@@ -9,6 +9,7 @@ public class Enemy extends Moveable {
 
 	public Enemy(int x, int y, int xDim, int yDim) {
 		super(x,y, xDim,yDim);
+		name='e';
 		vel[0]=1;vel[1]=1;
 		itemarr = new ArrayList<Item>();
 		slotarr = new ArrayList<Item>();
@@ -18,6 +19,7 @@ public class Enemy extends Moveable {
 
 	public Enemy(int xDim, int yDim, char name) {
 		super(xDim,yDim, name);
+		name='e';
 		itemarr = new ArrayList<Item>();
 		slotarr = new ArrayList<Item>();
 		itemarr.add(new Item('p'));

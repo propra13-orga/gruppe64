@@ -54,7 +54,7 @@ public class Player extends Moveable {
 	public Player(int x, int y){
 		//Groesse des Spielers 
 		super(x,y,30,30);
-
+		name='p';
 		timer_pl = new Timer();
 
 		this.life=3;
@@ -223,30 +223,26 @@ public class Player extends Moveable {
 		}
 		
 	}
+	public void use(char c){
+		Item item = null;
+		for(Item it:itemarr){
+			if(it.name==c)item=it;
+		}
+		if(item!=null)	use(item);		
+	}
 	public void use(Item item){
 	
 		
 		if(item.plushealth!=0) {
-			this.health=100;
-			statBar.updateHealth(this.health);
+			this.healthCast();
 			itemarr.remove(item);
-			statBar.getStateFrom();
-			
 		}
 		if(item.plusmana !=0){
 			this.mana=100;	
 			statBar.updateMana(this.mana);
 			itemarr.remove(item);
-			statBar.getStateFrom();
-		}
-		
-	
-		 
-		
-		
-		
-		//wenn Gold, dann prüfe ob man im shop ist
-		
+		}	
+		statBar.getStateFrom();
 	}
 	public void setMap(){
 		this.map = (Map)this.getParent();
@@ -282,8 +278,8 @@ public class Player extends Moveable {
 		if(mtemp>=0){
 			mana = mana-50;
 			statBar.updateMana(this.mana);
-			if(health<90){
-				health=health+10;
+			if(health<50){
+				health=health+50;
 			}
 			else health=100;
 			statBar.updateHealth(this.health);

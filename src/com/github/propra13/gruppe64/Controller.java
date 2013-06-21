@@ -90,7 +90,6 @@ public class Controller extends KeyAdapter{									//brauche playerobject mit p
 	}
 	
 	public void keyPressed(KeyEvent e){										//	if(...&&___) -> Wenn der spieler in entgegengesetzte Richtungen drückt,
-			//System.out.print("kp");
 			keyp=e.getKeyCode();											
 			if(player!=null){																	//			0			1	         wird die letzte Eingabe ignoriert.
 				if(!player.getChatInput().isFocusOwner()){
@@ -107,8 +106,8 @@ public class Controller extends KeyAdapter{									//brauche playerobject mit p
 		if(player!=null){
 			if(keyr==hoch || keyr==runter)	player.unsetMot(axis.y);				//			1
 			if(keyr==rechts || keyr==links)	player.unsetMot(axis.x);				//			|
-			if(keyr==switchW) player.switchweapon();																		//			+---0
-			if(keyr==hCast) player.healthCast();			
+			if(keyr==switchW && !player.getChatInput().isFocusOwner()) player.switchweapon();																		//			+---0
+			if(keyr==hCast && !player.getChatInput().isFocusOwner()) player.use('H');			
 			if(keyr==KeyEvent.VK_ENTER && player.getChatInput().isFocusOwner()){
 				player.getChatPane().append(player.getNick(), player.getChatInput().getText());
 				player.getChatInput().setText("");

@@ -92,7 +92,7 @@ public class Game extends JPanel implements Runnable{
 		main.controller.setPlayer(player);
 		cp.add(statBar);
 		statBar.repaint();
-		cp.add(chatp);
+		cp.add(chatp,BorderLayout.CENTER);
 		chatp.repaint();
 		cp.add(chatinput);
 		chatinput.repaint();
