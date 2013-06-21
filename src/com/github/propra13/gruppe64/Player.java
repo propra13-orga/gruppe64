@@ -54,7 +54,6 @@ public class Player extends Moveable {
 	public Player(int x, int y){
 		//Groesse des Spielers 
 		super(x,y,30,30);
-		name='p';
 		timer_pl = new Timer();
 
 		this.life=3;

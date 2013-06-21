@@ -311,7 +311,7 @@ public class Map extends JPanel {
 				if(moveables.size()>1){
 					try{
 						for(Moveable mov:moveables){		
-							if(mov.name=='e')	mov.attemptAttack();
+							if(mov.getClass().equals(Enemy.class))	mov.attemptAttack();
 						}
 					}catch (Exception e){
 						
