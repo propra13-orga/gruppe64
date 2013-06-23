@@ -1,5 +1,6 @@
 package com.github.propra13.gruppe64;								// # 0001
 
+import java.awt.Container;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -21,7 +22,7 @@ public class Player extends Moveable {
 	private StatBar statBar;
 	private int goldmoney;
 
-	private Map map;
+
 
 	private int w;						//waffen Nr im Waffenslot
 
@@ -243,9 +244,7 @@ public class Player extends Moveable {
 		}	
 		statBar.getStateFrom();
 	}
-	public void setMap(){
-		this.map = (Map)this.getParent();
-	}
+	
 	
 	
 	public void abortTimer(){
@@ -323,6 +322,19 @@ public class Player extends Moveable {
 	
 	public Chat getChatPane(){
 		return chatPane;
+	}
+
+	public void enterRoom() {
+		System.out.print("trYopenDoor");
+		if(map.getClass().equals(Room.class)){
+			Room targetRoom = (Room) map.isOnOpenDoor(this);
+			if(targetRoom!=null){
+				System.out.print("openDoor");
+				aLevel.nextRoom();
+			}
+		}
+			//map.leaveMap(this);
+		
 	}
 
 }

@@ -1,7 +1,10 @@
 xxxxxxxxxx
 x x    x x
 x x  H x x
-eOx S  x a
-x S S xS x
-x M s Y xx
+eOx S  x a; @a leadsTo room 1 2; @e leadsTo world 1 1	
+x S S xS x;
+x M s Y xx;
 xxxxxxxxxx
+;// Note: ";" must follow the last map column immediately
+;// the text after token ";" describes the behaviour     ;// of the specific srite in order of the occcurrence    ;// this syntax, may even be helpful for network-messages
+                                                        

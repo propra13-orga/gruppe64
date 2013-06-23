@@ -46,25 +46,14 @@ public class Controller extends KeyAdapter{									//brauche playerobject mit p
 	public int swichT;
 	
 	public int hCast;
+	private int enterRoom;
 	
 	
 	
 	public Controller(Player player){
+		this();
 		this.player = player;
-		hoch	=	KeyEvent.VK_UP;
-		runter	=	KeyEvent.VK_DOWN;	
-		rechts  =	KeyEvent.VK_RIGHT;
-		links	=	KeyEvent.VK_LEFT;
-		attack	=	KeyEvent.VK_SPACE;
-		switchW =	KeyEvent.VK_C;
-		swichT =	KeyEvent.VK_X;
-		hCast = KeyEvent.VK_H;
 		
-		/* WASD
-		hoch	=	KeyEvent.VK_W;
-		runter	=	KeyEvent.VK_S;	
-		rechts  =	KeyEvent.VK_D;
-		links	=	KeyEvent.VK_A;*/
 		
 	}
 	public Controller(){
@@ -76,6 +65,7 @@ public class Controller extends KeyAdapter{									//brauche playerobject mit p
 		switchW =	KeyEvent.VK_C;
 		swichT =	KeyEvent.VK_X;
 		hCast = KeyEvent.VK_H;
+		enterRoom = KeyEvent.VK_E;
 		
 		/* WASD
 		hoch	=	KeyEvent.VK_W;
@@ -89,7 +79,7 @@ public class Controller extends KeyAdapter{									//brauche playerobject mit p
 		this.player=player;
 	}
 	
-	public void keyPressed(KeyEvent e){										//	if(...&&___) -> Wenn der spieler in entgegengesetzte Richtungen drückt,
+	public void keyPressed(KeyEvent e){										//	if(...&&___) -> Wenn der spieler in entgegengesetzte Richtungen dr��ckt,
 			keyp=e.getKeyCode();											
 			if(player!=null){																	//			0			1	         wird die letzte Eingabe ignoriert.
 				if(!player.getChatInput().isFocusOwner()){
@@ -98,6 +88,7 @@ public class Controller extends KeyAdapter{									//brauche playerobject mit p
 					if(keyp== runter && player.getVel()[1] !=  1)player.setMot(dir.down);		//			|			|
 					if(keyp== links && player.getVel()[0] !=  1)player.setMot(dir.left);		//			2		   -1
 					if(keyp== attack)player.attemptAttack();
+					if(keyp== enterRoom)player.enterRoom();
 				}
 			}
 	}

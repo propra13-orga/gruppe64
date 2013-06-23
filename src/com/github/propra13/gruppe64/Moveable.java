@@ -80,17 +80,15 @@ public class Moveable extends Sprite {
 		}
 		
 	}
+	/**
+	 * Gets called at add(Moveable) from map
+	 */
 	public void setMap(){
-		Class<? extends Container> cClass = this.getParent().getClass();
-		if(cClass.equals(Room.class)){
-			map = (Room)this.getParent();
-		} else if(cClass.equals(Shop.class)){
-			map = (Shop)this.getParent();
-		} else {
-			map = (Map)this.getParent();
-		}
-		
+		Map preCast = (Map) getParent();
+		Class<? extends Map> cClass =   preCast.getClass();
+		this.map = cClass.cast(this.getParent());
 	}
+	
 	/**
 	 * Ist die beabsichtigte Bewegung moeglich
 	 */

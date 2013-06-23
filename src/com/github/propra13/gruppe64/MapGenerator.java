@@ -5,6 +5,9 @@ package com.github.propra13.gruppe64;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+
+
 
 
 
@@ -16,6 +19,7 @@ import java.io.IOException;
 public class MapGenerator {
 	/** contains the path tokens, between integers**/
 	String[] pathToken;
+	String[][] lineDesc;
 	/** 
 	 * @param gFilePath 
 	 * the generic filepath
@@ -65,13 +69,13 @@ public class MapGenerator {
 			BufferedReader buffer = new BufferedReader(f);
 		
 			while( (current_line= buffer.readLine())!= null){
-				
+				current_line = current_line.split(";")[0]; if (current_line.length()<1) break; else
 				linenumber++;
 				
 				int currentlength = current_line.length();
 				if (linelength < currentlength) linelength = currentlength;
 			}
-			buffer.close();
+			lineDesc = new String[linenumber][];buffer.close();
 		}
 		catch (IOException e) {
 			return null;
@@ -105,7 +109,7 @@ public class MapGenerator {
 			
 			for( int j=0; j<mapheight; j++){
 				currentline = buffer.readLine();
-			
+				lineDesc[j]=(currentline.split(";"));currentline=lineDesc[j][0];
 				for( int i=0; i< currentline.length(); i++){
 					map[j][i]= currentline.charAt(i);
 				}
@@ -146,5 +150,25 @@ public class MapGenerator {
 		
 		char[][] map = readFile( mapwidth, mapheight, lvl, room);
 		return map;
+	}
+	public  ArrayList<Room> generateRoomList(Level level){
+		ArrayList<Room> roomList = new ArrayList<Room>();
+		char[][] tmpArray;
+		int lRoomNr=1, lvl = level.getLevelNr();
+		tmpArray=this.readRoom(lvl, lRoomNr);
+		while(tmpArray!=null){
+			System.out.println(Room.charString(tmpArray));
+			
+			Room raum = new Room(level,tmpArray);
+			roomList.add(raum);
+			tmpArray=this.readRoom(lvl, ++lRoomNr);
+		}
+		for(Room map: roomList ){
+			postgenerateMap(map, roomList);
+		}
+		return roomList;
+	}
+	private <T extends Map> void postgenerateMap(T map, ArrayList<T> mapList){
+		
 	}
 }

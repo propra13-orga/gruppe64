@@ -5,17 +5,15 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Graphics;
 import java.awt.Rectangle;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 
-@SuppressWarnings({ "serial", "unused" })
+@SuppressWarnings({ "serial"})
 public class Map extends JPanel {
 
 	/*
@@ -51,7 +49,7 @@ public class Map extends JPanel {
 
 	protected Player player;
 	protected Game game;
-	private Level aLevel;
+	protected ArrayList<Door> doorList;
 	/**
 	 * Erzeuge neues JPanel und ordne es an, hier kann auch das auslesen aus Datei gestartet werden
 	 */
@@ -59,51 +57,35 @@ public class Map extends JPanel {
 		this();
 		this.spritewidth= spritewidth;
 		this.spriteheight= spriteheight;
-		this.setBounds(0, 0, mapwidth*spritewidth, mapheight*spriteheight);
-		//System.out.print("ThreadGesammt" +Thread.activeCount());
-		this.setBackground(Color.WHITE);
-		this.setLayout(null);
-		this.setVisible(true);
+		this.setBounds(0, 0, 500, 350);//this.setBounds(0, 0, mapwidth*spritewidth, mapheight*spriteheight);
+		
+		this.setBorder(BorderFactory.createLineBorder(Color.blue)); 
 	}
 	
-	public Map(Level aLevel, int mapW, int mapH, int spritewidth, int spriteheight){
-		this();
-		this.aLevel = aLevel;
-		this.spritewidth= spritewidth;
-		this.spriteheight= spriteheight;
-		//put at 0,0 
-		this.setBounds(0, 0, mapW, mapH);
-		//System.out.print("ThreadGesammt" +Thread.activeCount());
-		this.setBackground(Color.WHITE);
-		this.setLayout(null);
-		this.setVisible(true);
-	}
-	
-//	public Map(int spritewidth, int spriteheight, int level, Game game){
+//	public Map(Level aLevel, int mapW, int mapH, int spritewidth, int spriteheight){
 //		this();
+//
 //		this.spritewidth= spritewidth;
 //		this.spriteheight= spriteheight;
-//		this.setBounds(0, 0, 600, 350);
-//		this.setBackground(Color.WHITE);
-//		this.setLayout(null);
-//		this.setVisible(true);
-//		
-//		this.game=game;
-//		
-//		switch(level){
-//		case 1: break;
-//		case 2: this.map=this.map2; break;
-//		case 3: this.map=this.map3; break;
-//		}
+//		//put at 0,0 
+//		this.setBounds(0, 0, mapW, mapH);
+//
+//	
 //	}
+
 	public Map(char[][] mapArray){
 		this();
 		this.mapArray = mapArray;
 		
 	}
 	public Map(){
+
 		this.moveables = new ArrayList<Moveable>();
 		this.items = new ArrayList<Item>();
+		this.setBackground(Color.GREEN);
+		this.setLayout(null);
+		this.setVisible(true);
+		//System.out.print("ThreadGesammt" +Thread.activeCount());
 	}
 	public ArrayList<Moveable> getMovables(){
 		return moveables;
@@ -236,28 +218,27 @@ public class Map extends JPanel {
 	}
 
 	
-	/*
-	 * JPanel overwrites for add/remove
+	/**
+	 *  extends the  add method from JPanel, to do specific tasks for e.g. Movables or Doors
 	 */
 	public Component add(Sprite sp){
 		Component component=super.add(sp);
 		//player.set
 		Class<? extends Sprite> cClass = sp.getClass();
-		if(cClass.equals(Enemy.class)){
-			((Enemy)sp).setMap();
+		if(Moveable.class.isAssignableFrom(cClass)){
+			((Moveable)sp).setMap();
 			moveables.add((Moveable) sp);
 		}
+	
 		if(cClass.equals(Player.class)){
 			//TODO generic
 			sp.setLocation(0,150);
 			this.player=(Player)sp;
-			((Player)sp).setMap();
-			moveables.add((Moveable) sp);
 		}
 		if(cClass.equals(Item.class)){
 			items.add((Item) sp);
 		}
-		//moveables.add(player);
+
 		return component;
 	}
 	
@@ -347,6 +328,15 @@ public class Map extends JPanel {
 			hauTimer.cancel();
 		}
 	}
+
+	public Map isOnOpenDoor(Player pl) {
+		if (wouldTouch(pl.getRectangle())=='a'){
+			return this;
+		}
+		return null;
+	}
+
+	
 	
 }
 

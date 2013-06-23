@@ -46,7 +46,7 @@ public class Level extends JPanel{
 		this.game =game;
 		this.cp = game.getCP();
 		this.player = game.getPlayer();
-		
+		this.levelNr=levelnr;
 		
 		roomList = new ArrayList<Room>();
 		readAllRooms(levelnr);
@@ -65,13 +65,7 @@ public class Level extends JPanel{
 		lRoomNr=1;
 		char[][] tmpArray;
 		MapGenerator mg= new MapGenerator("res/Karten/Level%i_Raum%i.txt");
-		tmpArray=mg.readRoom(lvl, lRoomNr);
-		while(tmpArray!=null){
-			System.out.println(Room.charString(tmpArray));
-			Room raum=new Room(this,tmpArray);
-			roomList.add(raum);
-			tmpArray=mg.readRoom(lvl, ++lRoomNr);
-		}
+		roomList=mg.generateRoomList(this);
 
 		System.out.println("Level "+lvl+ " hat "+roomList.size());
 	}
@@ -108,11 +102,11 @@ public class Level extends JPanel{
 		aRoom = map;
 		aRoom.removeAll();
 		aRoom.add(player);
-		
+
 		aRoom.drawMap();
-		System.out.print("Set\n"+aRoom.toString());
+		System.out.print("\nw"+map.getWidth()+"h"+map.getHeight()+"\n"+aRoom.toString());
 		cp.add(aRoom);
-		
+		//aRoom.setBounds(0, 0, 500, 350); //Quick and dirty 
 		
 		aRoom.startMotion();
 		aRoom.repaint();
@@ -140,5 +134,9 @@ public class Level extends JPanel{
 	
 		this.initLevel();
 	}
+	public int getLevelNr() {
+		return levelNr;
+	}
+
 	
 }

@@ -1,5 +1,6 @@
 package com.github.propra13.gruppe64;
 
+import java.awt.Component;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -17,12 +18,16 @@ public class Room extends Map {
 	public int levelnr;
 	
 	public int[] pos_eingang;
+	protected ArrayList<Door> doorList;
+
+
 	Timer caretaker;
 	private Level level;
 
 
 	private boolean active=true;
-	
+
+
 	private static int wallSize= 50;
 	public Room(Level aLevel, char[][] mapArray) {
 		super (wallSize, wallSize);
@@ -53,6 +58,24 @@ public class Room extends Map {
 		}
 		
 	}
+	/**
+	 *  extends the  add method from Map, to do Room specific tasks for e.g. Movables or Doors
+	 */
+	@Override
+	public Component add(Sprite sp){
+		//Do map and Container things
+		Component component=super.add(sp);
+
+		Class<? extends Sprite> cClass = sp.getClass();
+		
+		if(cClass.equals(Door.class)){
+			doorList.add((Door)sp);
+		}
+
+
+		return component;
+	}
+	
 	@Override
 	public void updateState(Moveable character) {
 		char touchedSprite = wouldTouch(character.getRectangle());	
@@ -61,15 +84,7 @@ public class Room extends Map {
 		switch(touchedSprite){
 		
 		case 'a':case 'A':
-			if(level.isLastRoom()){
-				if(moveables.size()==1){
-					level.nextRoom();
-					active=false;
-				}
-			} else {
-				level.nextRoom();
-				active=false;
-			}
+			// leve.nextRoom();
 		break;
 		default:
 		break;
