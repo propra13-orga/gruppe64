@@ -1,5 +1,6 @@
 package com.github.propra13.gruppe64;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -35,6 +36,10 @@ public class Room extends Map {
 		this.level = aLevel;
 		//this.pos_eingang 	= getPosOf('e');
 		//this.moveables = new ArrayList<Moveable>();
+		this.setBounds(0, 0, 500, 350);
+		this.setBackground(Color.WHITE);
+		this.setLayout(null);
+		this.setVisible(true);
 	}
 	
 //	public Room(int lvl, int room){

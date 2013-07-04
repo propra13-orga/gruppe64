@@ -20,6 +20,11 @@ public class MapGenerator {
 	/** contains the path tokens, between integers**/
 	String[] pathToken;
 	String[][] lineDesc;
+	static String[] processAbleSprites = {
+				"D:Door:leadsTo(%i,%i),onTouch(%a),onAction(%a...)",
+				"S:Switch"
+			};
+	
 	/** 
 	 * @param gFilePath 
 	 * the generic filepath
@@ -164,11 +169,18 @@ public class MapGenerator {
 			tmpArray=this.readRoom(lvl, ++lRoomNr);
 		}
 		for(Room map: roomList ){
-			postgenerateMap(map, roomList);
+			postProcessMap(map, roomList);
 		}
 		return roomList;
 	}
-	private <T extends Map> void postgenerateMap(T map, ArrayList<T> mapList){
-		
+	private <T extends Map> void postProcessMap(T map, ArrayList<T> mapList){
+		//TODO parse lineDec
+		String spriteClassName="Door";
+		try {
+			Class cClass = Class.forName(spriteClassName);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

@@ -57,7 +57,7 @@ public class Map extends JPanel {
 		this();
 		this.spritewidth= spritewidth;
 		this.spriteheight= spriteheight;
-		this.setBounds(0, 0, 500, 350);//this.setBounds(0, 0, mapwidth*spritewidth, mapheight*spriteheight);
+		//this.setBounds(0, 0, 500, 350);//this.setBounds(0, 0, mapwidth*spritewidth, mapheight*spriteheight);
 		
 		this.setBorder(BorderFactory.createLineBorder(Color.blue)); 
 	}

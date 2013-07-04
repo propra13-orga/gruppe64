@@ -1,7 +1,7 @@
 xxxxxxxxxx
 x x    x x
 x x  H x x
-eOx S  x a; @a leadsTo room 1 2; @e leadsTo world 1 1	
+eOx S  x a; @a leadsTo(Room,1,1) onTouche(enter) onAction(open,enter); @e leadsTo world 1 1	
 x S S xS x;
 x M s Y xx;
 xxxxxxxxxx

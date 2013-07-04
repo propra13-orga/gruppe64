@@ -71,7 +71,7 @@ public class Main extends JFrame implements ActionListener{
 	private JButton bIGame;
 	private JButton bRandom;
 	private JButton bRead;
-	private JButton bRestart;
+	private JButton bCreate;
 	private JButton bClose;
 
 
@@ -178,17 +178,19 @@ public class Main extends JFrame implements ActionListener{
 		if(ae.getSource()==this.bClose){
 			System.exit(0);
 		}
-		if(ae.getSource()==this.bRestart){
+		if(ae.getSource()==this.bCreate){
 			this.remove(pWeiter);
 			this.initMain();
+		}
+		if(ae.getSource()==this.bCreate){
+			MapEditor me = new MapEditor(cp);
+			me.init();
 		}
 		//netGame=new NetworkGame(myself);
 		//javax.swing.SwingUtilities.invokeLater(myGame);
 		
 	}
-	public void onResize(){
-		
-	}
+	
 	/**
 	 * hat man Gewonnen oder Verloren? TODO
 	 */
@@ -207,10 +209,10 @@ public class Main extends JFrame implements ActionListener{
 		} else{
 			msg.setText("Loser!");
 		}
-		bRestart = new myJButton("Weiter zum Haupmenue");
-		bRestart.setDefaultCapable(true);
+		bCreate = new myJButton("Weiter zum Haupmenue");
+		bCreate.setDefaultCapable(true);
 		pWeiter.add(msg, new myGBC(0,0,1,1));
-		pWeiter.add(bRestart,new myGBC(0,1,1,1));
+		pWeiter.add(bCreate,new myGBC(0,1,1,1));
 		
 		pWeiter.setVisible(true);
 		

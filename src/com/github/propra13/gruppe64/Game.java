@@ -70,7 +70,7 @@ public class Game extends JPanel implements Runnable{
 		
 		
 		cp.setBackground(Color.WHITE);
-		cp.setLayout(new BorderLayout());
+		cp.setLayout(null);//cp.setLayout(new BorderLayout());
 		//which level is reachable
 		levelNr =1;
 		aLevelNr=1;
@@ -86,7 +86,7 @@ public class Game extends JPanel implements Runnable{
 	public void run(){
 		
 		cp.setBackground(Color.RED);
-		cp.setLayout(new BorderLayout());
+		//cp.setLayout(new BorderLayout());
 		
 		//make Player ready
 		main.controller.setPlayer(player);
@@ -94,7 +94,7 @@ public class Game extends JPanel implements Runnable{
 		statBar.repaint();
 		cp.add(chatp,BorderLayout.CENTER);
 		chatp.repaint();
-		cp.add(chatinput);
+		cp.add(chatinput,BorderLayout.CENTER);
 		chatinput.repaint();
 		//show initial world
 		
@@ -118,29 +118,9 @@ public class Game extends JPanel implements Runnable{
 		}
 		aLevel = new Level(this, aLevelNr);
 		player.setLevel(aLevel);
-//<<<<<<< HEAD
-		aLevel.nextRoom();
-//=======
-
-//		//load maparray
-//		if(levelNr!=2 && levelNr != 4)
-//			map = new Map(50,50, levelNr, this);
-//		else
-//			map=new Shop(50,50,this);
-//		//TODO set Player at Entrance
-//		player.setLocation(0, 150);
-//		//aLevel = new Level(player, cp, levelNr);
-//		
-//		//add player to map
-//		map.add(player);
-//		statBar.getStateFrom();
-//
-//		//Reihenfolge ist wichtig, das das repaint die Child auf einem Stack sieht
-//		main.controller.setPlayer(player);
-//		map.drawMap();
-//		//fuege die Map in das Grund-Panel
-//		cp.add(map);
-//>>>>>>> 5be603d894af9ce92abca4ee5042a17c8966a7d1
+ 
+		//aLevel.nextRoom();
+		aLevel.initLevel();
 		statBar.getStateFrom();
 		statBar.repaint(60);
 
@@ -179,7 +159,7 @@ public class Game extends JPanel implements Runnable{
 		
 		statBar.getStateFrom();
 		map.drawMap();
-		cp.add(map);
+		cp.add(map,BorderLayout.CENTER);
 		map.startMotion();
 		map.repaint();
 		

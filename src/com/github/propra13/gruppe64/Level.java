@@ -1,5 +1,6 @@
 package com.github.propra13.gruppe64;
 
+import java.awt.BorderLayout;
 import java.awt.Container;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -49,16 +50,14 @@ public class Level extends JPanel{
 		this.levelNr=levelnr;
 		
 		roomList = new ArrayList<Room>();
-		readAllRooms(levelnr);
-		roomIterator = roomList.iterator();
+
 	}
 	public void initLevel(){
+		readAllRooms(levelNr);
 		roomIterator = roomList.iterator();
 		
 		this.nextRoom();
-		
-		
-		
+	
 	}
 	public void readAllRooms(int lvl){
 		
@@ -102,10 +101,10 @@ public class Level extends JPanel{
 		aRoom = map;
 		aRoom.removeAll();
 		aRoom.add(player);
-
+		//cp.setLayout(null);
 		aRoom.drawMap();
 		System.out.print("\nw"+map.getWidth()+"h"+map.getHeight()+"\n"+aRoom.toString());
-		cp.add(aRoom);
+		cp.add(aRoom,BorderLayout.CENTER);
 		//aRoom.setBounds(0, 0, 500, 350); //Quick and dirty 
 		
 		aRoom.startMotion();
@@ -117,6 +116,7 @@ public class Level extends JPanel{
 			aRoom.stopMotion();
 			aRoom.remove(player);
 			cp.remove(aRoom);
+			cp.revalidate();
 			cp.repaint();
 		}
 	}
