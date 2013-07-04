@@ -37,6 +37,7 @@ public class Main extends JFrame implements ActionListener{
 	//private Thread musicThread;
 
 	private Game myGame;
+	private NWBrowser browser;
 	public  Controller controller;
 	private JPanel pWeiter;
 	private Clip clip;
@@ -79,13 +80,13 @@ public class Main extends JFrame implements ActionListener{
 	private int yFrame=660;
 	
 	
-	private void initMain(){//TODO in Menu-Klasse auslagern
+	public void initMain(){//TODO in Menu-Klasse auslagern
 		//was passiert, wenn man das Fenster schliesst TODO Schliessen-Dialog
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		// das ContetnPane auf das gezeichnet werden soll
 		cp = this.getContentPane();
-		
+		cp.removeAll();
 		/* 
 		 * First Menu-Buttons
 		 */
@@ -123,6 +124,7 @@ public class Main extends JFrame implements ActionListener{
 	 * Started das Spiel
 	 */
 	private AudioInputStream stream;
+	
 	private void startGame(){
 		//TODO mit music Thread ersetzten, der nicht aus dem RAM abspielt
 		if(stream == null)
@@ -186,11 +188,20 @@ public class Main extends JFrame implements ActionListener{
 			MapEditor me = new MapEditor(cp);
 			me.init();
 		}
+		if(ae.getSource()==this.bIGame){
+			this.showNW();
+		}
 		//netGame=new NetworkGame(myself);
 		//javax.swing.SwingUtilities.invokeLater(myGame);
 		
 	}
 	
+	private void showNW() {
+		this.setFocusable(true);
+		cp.removeAll();
+		//Erzeugt neues Spiel und startet es
+		browser=new NWBrowser(this.cp, this);	
+	}
 	/**
 	 * hat man Gewonnen oder Verloren? TODO
 	 */
