@@ -327,11 +327,17 @@ public class Player extends Moveable {
 	public void enterRoom() {
 		System.out.print("trYopenDoor");
 		//if(map.getClass().equals(Room.class)){
-			Room targetRoom = (Room) map.isOnOpenDoor(this);
+		Sprite activeSprite = map.isOnActiveArea(this);
+		if(activeSprite!=null){
+			if(activeSprite.getClass().equals(Door.class)){
+				aLevel.setOnDoor(((Door)activeSprite));
+			}
+		}
+			/*Room targetRoom = (Room) map.isOnOpenDoor(this);
 			if(targetRoom!=null){
 				System.out.print("openDoor");
 				aLevel.nextRoom();
-			}
+			}*/
 		//}
 			//map.leaveMap(this);
 		

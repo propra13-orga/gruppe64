@@ -31,25 +31,14 @@ public class Room extends Map {
 
 	private static int wallSize= 50;
 	public Room(Level aLevel, char[][] mapArray) {
-		super (wallSize, wallSize);
-		this.mapArray = mapArray;
+		super(mapArray);
+
 		this.level = aLevel;
 		//this.pos_eingang 	= getPosOf('e');
-		//this.moveables = new ArrayList<Moveable>();
-		this.setBounds(0, 0, 500, 350);
-		this.setBackground(Color.WHITE);
-		this.setLayout(null);
-		this.setVisible(true);
+		
 	}
 	
-//	public Room(int lvl, int room){
-//		this.levelnr 		= lvl;
-//		this.raumnr 		= room;
-//		super.mapArray 		= readRoom(levelnr, raumnr);
-//		this.pos_eingang 	= getPosOf('e');
-//		//super.moveables 	= new ArrayList<Moveable>();
-//		
-//	}
+
 	
 	public void setWallSize(int wallW, int wallH) {
 		spriteheight = wallH;
@@ -73,10 +62,7 @@ public class Room extends Map {
 
 		Class<? extends Sprite> cClass = sp.getClass();
 		
-		if(cClass.equals(Door.class)){
-			doorList.add((Door)sp);
-		}
-
+	
 
 		return component;
 	}

@@ -8,6 +8,7 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -23,14 +24,22 @@ public class Map extends JPanel {
 	 * - ?Siehe WIKI?
 	 */
 	
+	public int getSpritewidth() {
+		return spritewidth;
+	}
+	public int getSpriteheight() {
+		return spriteheight;
+	}
+	
 	protected int mapwidth=10;
 	protected int mapheight=7;
 
-	protected int spritewidth=50;
-	protected int spriteheight=50;
+	static protected int spritewidth=50;
+	static protected int spriteheight=50;
 	protected char[][] mapArray;
 	protected ArrayList<Moveable> moveables;
 	protected ArrayList<Item> items;
+	protected ArrayList<Door> activeAreas;
 	
 	// TODO sortiern nach Room etc.
 	protected Timer hauTimer;
@@ -49,18 +58,18 @@ public class Map extends JPanel {
 
 	protected ArrayList<Player> playerList;
 	protected Game game;
-	protected ArrayList<Door> doorList;
+	protected CopyOnWriteArrayList<Door> doorList;
 	/**
 	 * Erzeuge neues JPanel und ordne es an, hier kann auch das auslesen aus Datei gestartet werden
 	 */
-	public Map(int spritewidth, int spriteheight){
+/*	public Map(int spritewidth, int spriteheight){
 		this();
 		this.spritewidth= spritewidth;
 		this.spriteheight= spriteheight;
 		//this.setBounds(0, 0, 500, 350);//this.setBounds(0, 0, mapwidth*spritewidth, mapheight*spriteheight);
 		
 		this.setBorder(BorderFactory.createLineBorder(Color.blue)); 
-	}
+	}*/
 	
 //	public Map(Level aLevel, int mapW, int mapH, int spritewidth, int spriteheight){
 //		this();
@@ -76,13 +85,18 @@ public class Map extends JPanel {
 	public Map(char[][] mapArray){
 		this();
 		this.mapArray = mapArray;
-		
+		//groessen 
+		mapheight = mapArray.length;
+		mapwidth = mapArray[0].length;
+		this.setBounds(0, 0, mapwidth*spritewidth, mapheight*spriteheight);
 	}
 	public Map(){
-		playerList = new ArrayList();
+		playerList = new ArrayList<Player>();
 		this.moveables = new ArrayList<Moveable>();
+		activeAreas = new ArrayList<Door>();
 		this.items = new ArrayList<Item>();
-		this.setBackground(Color.GREEN);
+		
+		this.setBackground(Color.WHITE);
 		this.setLayout(null);
 		this.setVisible(true);
 		//System.out.print("ThreadGesammt" +Thread.activeCount());
@@ -232,11 +246,14 @@ public class Map extends JPanel {
 	
 		if(cClass.equals(Player.class)){
 			//TODO generic
-			sp.setLocation(0,150);
+			//sp.setLocation(0,150);
 			this.playerList.add((Player)sp);
 		}
 		if(cClass.equals(Item.class)){
 			items.add((Item) sp);
+		}
+		if(cClass.equals(Door.class)){
+			activeAreas.add((Door)sp);
 		}
 
 		return component;
@@ -335,7 +352,13 @@ public class Map extends JPanel {
 		}
 		return null;
 	}
-
+	public Door isOnActiveArea(Player pl){
+		for(Door iDoor: activeAreas){
+			if(pl.getRectangle().intersects(iDoor.getRectangle()))
+				return iDoor;
+		}
+		return null;
+	}
 	
 	
 }

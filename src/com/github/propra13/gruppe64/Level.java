@@ -30,7 +30,7 @@ public class Level extends JPanel{
 	// mapArray's for all Rooms
 	private Iterator<Room> roomIterator;
 	//current active Room
-	private Room aRoom;
+	private Map aMap;
 
 	private Timer caretaker;
 	private TimerTask action;
@@ -55,7 +55,11 @@ public class Level extends JPanel{
 	public void initLevel(){
 		readAllRooms(levelNr);
 		roomIterator = roomList.iterator();
-		
+		for(Room iRoom: roomList){
+			//iRoom.removeAll();
+			iRoom.drawMap();
+			iRoom.startMotion();
+		}
 		this.nextRoom();
 	
 	}
@@ -75,10 +79,11 @@ public class Level extends JPanel{
 		Room tmpRoom;
 		if(roomIterator.hasNext()){
 			tmpRoom = roomIterator.next();
+			tmpRoom.add(player);
 			setMap(tmpRoom);
 		} else {
 			System.out.print("nextLevel");
-			purge();
+			removeOldMap();
 			player.setLevel(null);
 			game.nextLevel();
 		}	
@@ -88,40 +93,42 @@ public class Level extends JPanel{
 	 * gets called by Game, update the Levelchange if some thing happened
 	 */
 	public Map getMap(){
-		return (Map) aRoom;
+		return (Map) aMap;
 	}
 	/**
 	 * Setzte aktuellen Raum
 	 * @param map
 	 */
-	public void setMap(Room map){
-		purge();
-		//next aRoom
+	public void setMap(Map map){
+		removeOldMap();
 		
-		aRoom = map;
-		aRoom.removeAll();
-		aRoom.add(player);
-		//cp.setLayout(null);
-		aRoom.drawMap();
-		System.out.print("\nw"+map.getWidth()+"h"+map.getHeight()+"\n"+aRoom.toString());
-		cp.add(aRoom,BorderLayout.CENTER);
-		//aRoom.setBounds(0, 0, 500, 350); //Quick and dirty 
 		
-		aRoom.startMotion();
-		aRoom.repaint();
+		aMap = map;
+
+		aMap.add(player);
+		
+
+		System.out.print("\nw"+map.getWidth()+"h"+map.getHeight()+"\n"+aMap.toString());
+		cp.add(aMap);
+		//put player on top
+		aMap.setComponentZOrder(player, 0);
+		//aMap.startMotion();
+		aMap.repaint();
 	}
 
-	public void purge(){
-		if(aRoom!=null){
-			aRoom.stopMotion();
-			aRoom.remove(player);
-			cp.remove(aRoom);
+	public void removeOldMap(){
+		if(aMap!=null){
+			if(aMap.playerList.size()<2){
+				//aMap.stopMotion();
+			}
+			aMap.remove(player);//
+			cp.remove(aMap);
 			cp.revalidate();
 			cp.repaint();
 		}
 	}
 	public boolean isLastRoom() {
-		if(roomList.indexOf(aRoom)<roomList.size()-1)
+		if(roomList.indexOf(aMap)<roomList.size()-1)
 			return false;
 		return true;
 	}
@@ -131,12 +138,27 @@ public class Level extends JPanel{
 		
 	}
 	public void reset() {
-	
+		
 		this.initLevel();
 	}
 	public int getLevelNr() {
 		return levelNr;
 	}
-
+	public void setOnDoor(Door door) {
+		// TODO if open Door
+		//target Door
+		if(door.getSpecial()!=null){
+			
+		}else{
+			Door tDoor=door.getTarget();
+			Map tMap = (Map)tDoor.getParent();
+			
+			//tMap.add(player);
+			player.setLocation(tDoor.getX(),tDoor.getY());
+			setMap(tMap);
+		}
+		
+	}
+	
 	
 }

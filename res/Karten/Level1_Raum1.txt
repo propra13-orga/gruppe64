@@ -1,5 +1,5 @@
 xxxxxxxxxx
-x x    x x
+x D    x x;D,1,2;
 x x  H x x
 eOx S  x a; @a leadsTo(Room,1,1) onTouche(enter) onAction(open,enter); @e leadsTo world 1 1	
 x S S xS x;

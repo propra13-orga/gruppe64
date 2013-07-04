@@ -7,19 +7,16 @@ import java.io.IOException;
 
 public class Shop extends Map{
 
-	char[][] shop = readFile();
+	static char[][] shop = readFile();
 	
 	public Shop(int spritewidth, int spriteheight, Game game){
-		super();
+		super(shop);
 		this.spritewidth= spritewidth;
 		this.spriteheight= spriteheight;
-		this.setBounds(0, 0, 600, 350);
-		this.setBackground(Color.WHITE);
-		this.setLayout(null);
-		this.setVisible(true);
+
 		
 		this.game=game;
-		this.mapArray=this.shop;
+
 	}
 	/*//@Override
 	public void updateState(Moveable character) {
@@ -38,8 +35,8 @@ public class Shop extends Map{
 		
 		
 	}*/
-	
-	public char[][] readFile(){
+	// TODO ersetzten durch mapgen
+	static public char[][] readFile(){
 		
 		char[][] map = new char[7][10];
 		
@@ -49,7 +46,7 @@ public class Shop extends Map{
 			f = new FileReader("res/Karten/shop.txt");
 			BufferedReader buffer = new BufferedReader(f);
 			
-			for( int j=0; j<mapheight; j++){
+			for( int j=0; j<7; j++){
 				currentline = buffer.readLine();
 			
 				for( int i=0; i< currentline.length(); i++){
