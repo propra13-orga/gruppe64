@@ -105,10 +105,13 @@ public class Moveable extends Sprite {
 			
 			this.setLocation(x,y-vel[1]);
 		}
-		map.updateState(this);
+		//map.updateState(this);
 	}
-	
-
+	@Override
+	public void setLocation(int x, int y){
+		super.setLocation(x,y);
+		
+	}
 	public void unsetMot(axis i){
 		switch (i){
 			case x: this.setVel(0, this.getVel()[1]); break;

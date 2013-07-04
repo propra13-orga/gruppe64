@@ -81,7 +81,7 @@ public class Room extends Map {
 		return component;
 	}
 	
-	@Override
+	/*@Override
 	public void updateState(Moveable character) {
 		char touchedSprite = wouldTouch(character.getRectangle());	
 		//System.out.println(player.getVisibleRect().toString());
@@ -96,7 +96,7 @@ public class Room extends Map {
 		}
 		}
 		
-	}
+	}*/
 	
 
 	public static String charString(char[][] m){

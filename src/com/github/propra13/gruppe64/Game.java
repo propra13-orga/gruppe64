@@ -64,9 +64,7 @@ public class Game extends JPanel implements Runnable{
 		chatinput.setBounds(0, 600, 700, 20);
 		chatinput.setToolTipText("chatinput");
 		chatinput.addKeyListener(controller);
-		player.addStatBar(statBar);
-		player.addChatPane(chatp);
-		player.addChatInput(chatinput);
+		
 		
 		
 		cp.setBackground(Color.WHITE);
@@ -84,18 +82,14 @@ public class Game extends JPanel implements Runnable{
 	}	
 
 	public void run(){
+		player.addStatBar(statBar);
+		player.addChatPane(chatp);
+		player.addChatInput(chatinput);
 		
-		cp.setBackground(Color.RED);
-		//cp.setLayout(new BorderLayout());
+
+		initPlayer();
 		
-		//make Player ready
-		main.controller.setPlayer(player);
-		cp.add(statBar);
-		statBar.repaint();
-		cp.add(chatp,BorderLayout.CENTER);
-		chatp.repaint();
-		cp.add(chatinput,BorderLayout.CENTER);
-		chatinput.repaint();
+		
 		//show initial world
 		
 		
@@ -105,6 +99,16 @@ public class Game extends JPanel implements Runnable{
 		
 		
 
+	}
+	public void initPlayer(){
+		//make Player ready
+		main.controller.setPlayer(player);
+		cp.add(statBar);
+		statBar.repaint();
+		cp.add(chatp,BorderLayout.CENTER);
+		chatp.repaint();
+		cp.add(chatinput,BorderLayout.CENTER);
+		chatinput.repaint();
 	}
 	public void startLevel(){
 		//entferne von Game verwaltete map

@@ -18,19 +18,24 @@ import java.util.ArrayList;
  */
 public class MapGenerator {
 	/** contains the path tokens, between integers**/
-	String[] pathToken;
-	String[][] lineDesc;
-	static String[] processAbleSprites = {
+	private String[] pathToken;
+	private String[][] lineDesc;
+	public static String[] processAbleSprites = {
 				"D:Door:leadsTo(%i,%i),onTouch(%a),onAction(%a...)",
 				"S:Switch"
 			};
-	
+	private String[][] proAbSpToken;
 	/** 
 	 * @param gFilePath 
 	 * the generic filepath
 	 */
 	public MapGenerator(String gFilePath) {
 		pathToken = gFilePath.split("%i");
+		proAbSpToken = new String[processAbleSprites.length][];
+		for(int i=0; i<processAbleSprites.length;i++){
+			//zerteilt die processAbleSprite Def
+			proAbSpToken[i]=processAbleSprites[i].split("[:;]");
+		}
 		
 	
 	}
@@ -169,12 +174,15 @@ public class MapGenerator {
 			tmpArray=this.readRoom(lvl, ++lRoomNr);
 		}
 		for(Room map: roomList ){
-			postProcessMap(map, roomList);
+			//postProcessMap(map, roomList);
 		}
 		return roomList;
 	}
 	private <T extends Map> void postProcessMap(T map, ArrayList<T> mapList){
 		//TODO parse lineDec
+		for(int x=0; x< lineDesc.length; x++){
+		//	lineDesc[x]
+		}
 		String spriteClassName="Door";
 		try {
 			Class cClass = Class.forName(spriteClassName);

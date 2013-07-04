@@ -47,7 +47,7 @@ public class Map extends JPanel {
 	 */
 	//char map[][]=new char [mapwidth][mapheight];
 
-	protected Player player;
+	protected ArrayList<Player> playerList;
 	protected Game game;
 	protected ArrayList<Door> doorList;
 	/**
@@ -79,7 +79,7 @@ public class Map extends JPanel {
 		
 	}
 	public Map(){
-
+		playerList = new ArrayList();
 		this.moveables = new ArrayList<Moveable>();
 		this.items = new ArrayList<Item>();
 		this.setBackground(Color.GREEN);
@@ -195,7 +195,7 @@ public class Map extends JPanel {
 	
 	
 	
-	public void updateState(Moveable character) {
+	/*public void updateState(Moveable character) {
 		char touchedSprite = wouldTouch(player.getRectangle());	
 		//System.out.println(player.getVisibleRect().toString());
 		
@@ -215,7 +215,7 @@ public class Map extends JPanel {
 		}
 		
 		
-	}
+	}*/
 
 	
 	/**
@@ -233,7 +233,7 @@ public class Map extends JPanel {
 		if(cClass.equals(Player.class)){
 			//TODO generic
 			sp.setLocation(0,150);
-			this.player=(Player)sp;
+			this.playerList.add((Player)sp);
 		}
 		if(cClass.equals(Item.class)){
 			items.add((Item) sp);

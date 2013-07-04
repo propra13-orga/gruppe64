@@ -48,6 +48,6 @@ public class Enemy extends Moveable {
 		} else{
 			vel[1]= -1* vel[1];
 		}
-		map.updateState(this);
+		//map.updateState(this);
 	}
 }

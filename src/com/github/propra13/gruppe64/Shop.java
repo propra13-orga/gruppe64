@@ -21,7 +21,7 @@ public class Shop extends Map{
 		this.game=game;
 		this.mapArray=this.shop;
 	}
-	@Override
+	/*//@Override
 	public void updateState(Moveable character) {
 
 		char touchedSprite = wouldTouch(player.getRectangle());	
@@ -37,7 +37,7 @@ public class Shop extends Map{
 		}
 		
 		
-	}
+	}*/
 	
 	public char[][] readFile(){
 		
