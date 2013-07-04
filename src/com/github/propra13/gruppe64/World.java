@@ -12,6 +12,10 @@ public class World extends Map{
 		//super(spritewidth, spriteheight, level, game);
 		// TODO Auto-generated constructor stub
 	}
+	public World(int spritewidth, int spriteheight, int level, NGame game) {
+		//super(spritewidth, spriteheight, level, game);
+		// TODO Auto-generated constructor stub
+	}
 	public int getMaxLevel(){
 		return 5;
 	}
