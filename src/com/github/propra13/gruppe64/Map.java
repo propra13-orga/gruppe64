@@ -115,11 +115,14 @@ public class Map extends JPanel {
 			case 'G': return new Enemy(0, 0, 50, 50);
 			//ITEMS
 			case 'S': 
+			case 'Q':
+			case 'W':
 			case 'Y':
 			case 'M':
 			case 'H': 
 			case 's':
 			case 'R':
+			case 'T':
 				return new Item (field);
 			
 			default: return null;
