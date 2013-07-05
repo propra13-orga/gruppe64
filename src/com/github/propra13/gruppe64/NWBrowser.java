@@ -13,11 +13,12 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
-public class NWBrowser extends JPanel implements ActionListener {
+public class NWBrowser implements ActionListener {
 	private Container cp;
 	private Main main;
 	JTextField nickname, svrname,ip;
 	JButton join,create,back;
+	Lobby lobby;
 	
 	private class myJButton extends JButton{
 		myJButton(String label){
@@ -85,10 +86,14 @@ public class NWBrowser extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getSource()==this.join){
-			System.exit(0);
+
+			cp.removeAll();
+			lobby=new Lobby(cp, main);
 		}
 		if(ae.getSource()==this.create){
-			System.exit(0);
+
+			cp.removeAll();
+			lobby=new Lobby(cp, main);
 		}
 		if(ae.getSource()==this.back){
 			main.initMain();
