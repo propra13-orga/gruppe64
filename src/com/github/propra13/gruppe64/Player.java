@@ -46,7 +46,7 @@ public class Player extends Moveable {
 	private boolean hasArmor=false;
 	private Chat chatPane;
 	private boolean saga=true;
-	private String nick="player";
+	private String nick;
 	private JTextField chatInput;
 	
 	
@@ -56,7 +56,7 @@ public class Player extends Moveable {
 		//Groesse des Spielers 
 		super(x,y,30,30);
 		timer_pl = new Timer();
-
+		nick="player";
 		this.life=3;
 
 		itemarr = new ArrayList<Item>();

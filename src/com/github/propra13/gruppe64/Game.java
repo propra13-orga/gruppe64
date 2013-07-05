@@ -20,7 +20,7 @@ import javax.swing.JTextField;
 
 
 @SuppressWarnings("serial")
-public class Game extends JPanel implements Runnable{
+public class Game implements Runnable{
 	
 
 	
