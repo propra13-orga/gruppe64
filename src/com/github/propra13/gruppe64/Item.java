@@ -74,7 +74,8 @@ public class Item extends Sprite {
 		break;
 		
 		case 'p':this.displayedName="Pfote";
-		Dmg=20;
+		elementtype=1;
+		Dmg=50;
 		Range=800;
 		setWeapon(true);
 		break;

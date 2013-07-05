@@ -223,6 +223,13 @@ public void switcharmor(){
 			slotarr.add(new Item(itemarr.get(w)));	
 		else
 			slotarr.set(1, new Item(itemarr.get(w)));
+		
+		if (itemarr.get(w).displayedName.equals("FireArmor")){
+			this.elementtype=1;
+		}
+		else if (itemarr.get(w).displayedName.equals("IceArmor")){
+			this.elementtype=2;
+		}
 		statBar.getStateFrom();
 	}
 	
