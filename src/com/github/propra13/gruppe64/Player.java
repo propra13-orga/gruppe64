@@ -24,7 +24,7 @@ public class Player extends Moveable {
 
 
 
-	private int w;						//waffen Nr im Waffenslot
+	private int w,a;						//waffen Nr im Waffenslot
 
 	private Timer timer_pl;
 	private int mode=0;
@@ -176,7 +176,7 @@ public class Player extends Moveable {
 		}
 	}
 	
-	//neue damage- Methode,die auch elementtype der Waffe bzw. des Gegners übergibgt
+	//neue damage- Methode,die auch elementtype der Waffe bzw. des Gegners berücksichtigt
 	
 	public void damage(int dmg, int elementwaffe){
 		if(elementwaffe==elementtype){ dmg=dmg/2;}
@@ -214,16 +214,17 @@ public class Player extends Moveable {
 		statBar.getStateFrom();
 	}
 	
-public void switcharmor(){
-		
-		do{
-			if(++w>=itemarr.size())	w=0;
-		}while(!itemarr.get(w).isArmor());
-		if(slotarr.size()<2)
-			slotarr.add(new Item(itemarr.get(w)));	
-		else
-			slotarr.set(1, new Item(itemarr.get(w)));
-		statBar.getStateFrom();
+	public void switcharmor(){
+		boolean b=false;
+		for(Item item:itemarr)		if(item.isArmor()) b=true;
+		if(b){
+			do{
+				if(++a>=itemarr.size())	a=0;
+			}while(!itemarr.get(a).isArmor());
+			if(slotarr.size()<2)	slotarr.add(new Item(itemarr.get(a)));	
+			else					slotarr.set(1, new Item(itemarr.get(a)));
+			statBar.getStateFrom();
+		}
 	}
 	
 	public void pickup(Item item){

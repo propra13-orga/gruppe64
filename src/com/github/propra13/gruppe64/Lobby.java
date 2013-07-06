@@ -48,12 +48,10 @@ public class Lobby implements ActionListener{
 		GridBagConstraints c = new GridBagConstraints();
 		for(int i=0;i<8;i++) {
 			addPl(new Player(5,150));
-		}
-		correctNicks();
-		for(int i=0;i<8;i++) {
 			data[i][0]=playerList.get(i).getNick();
 			data[i][1]="not ready";
 		}
+
 		player=playerList.get(0);
 
 
@@ -122,6 +120,7 @@ public class Lobby implements ActionListener{
 	
 	public void addPl(Player pl){
 		playerList.add(pl);	
+		correctNicks();
 	}
 	
 	public void correctNicks(){
@@ -131,8 +130,9 @@ public class Lobby implements ActionListener{
 			for(Player pls:playerList){
 				if(!pl.equals(pls))
 					if(pl.getNick().equals(pls.getNick())){
-						pls.setNick(pls.getNick()+"("+i.toString()+")");
-						i++;
+						for(Player pl2:playerList)
+							if(!pl.equals(pl2) && pl2.getNick().equals(pls.getNick()+"("+i.toString()+")"))i++;
+						pls.setNick(pls.getNick()+"("+(i++).toString()+")");
 					}	
 			}
 		}
@@ -141,10 +141,13 @@ public class Lobby implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getSource()==this.ready){
-			if(ready.getText().equals("ready"))
+			if(ready.getText().equals("ready")){				
 				ready.setText("unready");
-			else
+				table.setValueAt("ready", playerList.indexOf(player), 1);
+			}else{
 				ready.setText("ready");
+				table.setValueAt("not ready", playerList.indexOf(player), 1);
+			}
 		}
 		if(ae.getSource()==this.start){
 			System.exit(0);

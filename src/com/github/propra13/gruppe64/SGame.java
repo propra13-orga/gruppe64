@@ -44,11 +44,16 @@ public class SGame extends Game implements Runnable{
 		
 	}
 	public void correctNicks(){
+		
 		for(Player pl:playerList){
+			Integer i = new Integer(0);
 			for(Player pls:playerList){
-				int i=0;
 				if(!pl.equals(pls))
-					if(pl.getNick()==pls.getNick()) pls.setNick(pls.getNick()+"("+(i++)+")");
+					if(pl.getNick().equals(pls.getNick())){
+						for(Player pl2:playerList)
+							if(!pl.equals(pl2) && pl2.getNick().equals(pls.getNick()+"("+i.toString()+")"))i++;
+						pls.setNick(pls.getNick()+"("+(i++).toString()+")");
+					}	
 			}
 		}
 	}
