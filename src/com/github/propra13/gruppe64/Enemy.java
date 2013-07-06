@@ -8,11 +8,22 @@ import java.util.ArrayList;
 public class Enemy extends Moveable {
 	
 	private char name;
-	private int elementtype=0;
-
+	
+	
 	public Enemy(int x, int y, int xDim, int yDim,char name) {
 		super(x,y, xDim,yDim);
 		this.name=name;
+		vel[0]=1;vel[1]=1;
+		itemarr = new ArrayList<Item>();
+		slotarr = new ArrayList<Item>();
+		itemarr.add(new Item('p'));
+		slotarr.add(itemarr.get(0));
+	}
+	
+	public Enemy(int x, int y, int xDim, int yDim, char name, int elementtype) {
+		super(x,y, xDim,yDim);
+		this.name=name;
+		this.elementtype=elementtype;
 		vel[0]=1;vel[1]=1;
 		itemarr = new ArrayList<Item>();
 		slotarr = new ArrayList<Item>();

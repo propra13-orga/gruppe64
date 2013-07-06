@@ -179,11 +179,9 @@ public class Player extends Moveable {
 	//neue damage- Methode,die auch elementtype der Waffe bzw. des Gegners berücksichtigt
 	
 	public void damage(int dmg, int elementwaffe){
-		if(elementwaffe==elementtype){ dmg=dmg/2;}
-		else if(elementtype==0){dmg=dmg;}
-		else dmg=dmg*2;
 		
-		this.health -=dmg;
+		super.damage(dmg, elementwaffe);
+		
 		statBar.updateHealth(this.health);
 		if(this.health<=0){
 			die();

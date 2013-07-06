@@ -74,20 +74,18 @@ public class Item extends Sprite {
 		break;
 		
 		case 'p':this.displayedName="Pfote";
-		elementtype=1;
+		//elementtype=1;
 		Dmg=50;
-		Range=800;
+		Range=2000;
 		setWeapon(true);
 		break;
 		
 		case 'R':this.displayedName="FireArmor";
 		price=10;
-		//elementtype=1;
 		break;
 
 		case 'T':this.displayedName="IceArmor";
 		price=10;
-		//elementtype=2;
 		break;
 		
 		default:
