@@ -1,7 +1,7 @@
-xx1x2x3xxx
+xxxxxxxxxx
 x        x
 x        x
-e        a
+D D D D xx;D,-100,exit,0;  ;D,-10,level,1;D,-20,level,2;D,-30,level,3
 x        x
 x        x
 xxxx$xxxxx

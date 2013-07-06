@@ -22,6 +22,10 @@ public class Item extends Sprite {
 	private Player player;
 	private int price=0;
 	
+	// Feuer( elementtype=1)0/Wasser(elementtype=2)
+	public int elementtype=0; 	
+	
+	
 	public Item( char name)// Name des Items
 	
 	{	
@@ -34,7 +38,20 @@ public class Item extends Sprite {
 		Dmg=20;
 		Range=6400;
 		setWeapon(true);
+		break;
 		
+		case 'Q': this.displayedName="FireSword"; //Schwert 
+		elementtype=1;
+		Dmg=20;
+		Range=6400;
+		setWeapon(true);
+		break;
+		
+		case 'W': this.displayedName="IceSword"; //Schwert 
+		elementtype=2;
+		Dmg=20;
+		Range=6400;
+		setWeapon(true);
 		break;
 		
 		case 'M': this.displayedName="Mana";//MANA
@@ -57,15 +74,19 @@ public class Item extends Sprite {
 		break;
 		
 		case 'p':this.displayedName="Pfote";
-		Dmg=20;
-
-		Range=800;
+		//elementtype=1;
+		Dmg=50;
+		Range=2000;
 		setWeapon(true);
 		break;
-		case 'R':this.displayedName="Armor";
+		
+		case 'R':this.displayedName="FireArmor";
 		price=10;
 		break;
 
+		case 'T':this.displayedName="IceArmor";
+		price=10;
+		break;
 		
 		default:
 		lootable=false;
@@ -129,14 +150,40 @@ public class Item extends Sprite {
 		    g.drawImage(img6, 0, 0, this);
 		    g.finalize();	
 		    break;
+	//Rüstungen
 		case 'R':
 			xd=50;
 			yd=50;
-			Image img7 = Toolkit.getDefaultToolkit().getImage("res/armor.png");
+			Image img7 = Toolkit.getDefaultToolkit().getImage("res/firearmor.png");
 		    g.drawImage(img7, 0, 0, this);
 		    g.finalize();	
 		    break;
-			
+		    
+		case 'T':
+			xd=50;
+			yd=50;
+			Image img8 = Toolkit.getDefaultToolkit().getImage("res/icearmor.png");
+		    g.drawImage(img8, 0, 0, this);
+		    g.finalize();	
+		    break;
+		 
+		    
+		case 'Q':
+			xd=50;
+			yd=50;
+			Image img9 = Toolkit.getDefaultToolkit().getImage("res/firesword.png");
+		    g.drawImage(img9, 0, 0, this);
+		    g.finalize();	
+		    break;
+		    
+		    
+		case 'W':
+			xd=50;
+			yd=50;
+			Image img10 = Toolkit.getDefaultToolkit().getImage("res/icesword.png");
+		    g.drawImage(img10, 0, 0, this);
+		    g.finalize();	
+		    break;
 	
 		}
 		
@@ -164,9 +211,22 @@ public class Item extends Sprite {
 		return Range;
 	}
 
+	//prüfe Rüstung
+	
+	public boolean isArmor(){
+		if(displayedName.equals("FireArmor")||displayedName.equals("IceArmor")){
+			return true;
+		}
+		else return false;
+		
+	}
+	
 	public boolean isWeapon() {
+		
 		return isWeapon;
 	}
+	
+	
 
 	public void setWeapon(boolean isWeapon) {
 		this.isWeapon = isWeapon;

@@ -13,11 +13,12 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
-public class NWBrowser extends JPanel implements ActionListener {
+public class NWBrowser implements ActionListener {
 	private Container cp;
 	private Main main;
 	JTextField nickname, svrname,ip;
 	JButton join,create,back;
+	Lobby lobby;
 	
 	private class myJButton extends JButton{
 		myJButton(String label){
@@ -34,21 +35,21 @@ public class NWBrowser extends JPanel implements ActionListener {
 		GridBagConstraints c = new GridBagConstraints();
 
 
-		nickname = new JTextField("nickname");
+		nickname = new JTextField("nickname",12);
 
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 0;
 		cp.add(nickname, c);
 
-		ip = new JTextField("192.168.1.1");
+		ip = new JTextField("192.168.1.1",15);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = 0.5;
 		c.gridx = 0;
 		c.gridy = 1;
 		cp.add(ip, c);
 		
-		svrname = new JTextField("Hostname");
+		svrname = new JTextField("Hostname",20);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = 0.5;
 		c.gridx = 0;
@@ -85,10 +86,14 @@ public class NWBrowser extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getSource()==this.join){
-			System.exit(0);
+
+			cp.removeAll();
+			lobby=new Lobby(cp, main);
 		}
 		if(ae.getSource()==this.create){
-			System.exit(0);
+
+			cp.removeAll();
+			lobby=new Lobby(cp, main);
 		}
 		if(ae.getSource()==this.back){
 			main.initMain();

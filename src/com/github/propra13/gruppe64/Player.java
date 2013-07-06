@@ -24,7 +24,7 @@ public class Player extends Moveable {
 
 
 
-	private int w;						//waffen Nr im Waffenslot
+	private int w,a;						//waffen Nr im Waffenslot
 
 	private Timer timer_pl;
 	private int mode=0;
@@ -43,10 +43,12 @@ public class Player extends Moveable {
 	private int lvlUnl;
 	private int gold=0;
 	private Level aLevel;
-	private boolean hasArmor=false;
+	//private boolean hasArmor=false;
+	//private boolean hasArmorFire=false;
+	
 	private Chat chatPane;
 	private boolean saga=true;
-	private String nick="player";
+	private String nick;
 	private JTextField chatInput;
 	
 	
@@ -56,7 +58,7 @@ public class Player extends Moveable {
 		//Groesse des Spielers 
 		super(x,y,30,30);
 		timer_pl = new Timer();
-
+		nick="player";
 		this.life=3;
 
 		itemarr = new ArrayList<Item>();
@@ -144,7 +146,7 @@ public class Player extends Moveable {
 				if(!this.equals(mov) && this.slotarr.get(0).getRange()>Math.pow(x+Dim[0]/2-mov.getX()-mov.Dim[0]/2,2)+Math.pow(y+Dim[1]/2-mov.getY()-mov.Dim[1]/2,2))
 				{	System.out.println("Spieler trifft");
 					System.out.println(map.getMovables().size());
-					mov.damage(this.slotarr.get(0).getDmg());
+					mov.damage(this.slotarr.get(0).getDmg(),this.slotarr.get(0).elementtype);
 					System.out.println(map.getMovables().size());
 				}
 			}
@@ -152,7 +154,7 @@ public class Player extends Moveable {
 		}
 	}
 	
-	public void damage(int dmg){
+/*	public void damage(int dmg){
 		if(hasArmor)
 			this.health -= Math.ceil(dmg/2);
 		else
@@ -162,6 +164,30 @@ public class Player extends Moveable {
 			die();
 		}
 	}
+	*/
+	
+	public void damage(int dmg){
+		this.health -= dmg;
+		
+		statBar.updateHealth(this.health);
+		if(this.health<=0)
+		{
+			die();
+		}
+	}
+	
+	//neue damage- Methode,die auch elementtype der Waffe bzw. des Gegners berücksichtigt
+	
+	public void damage(int dmg, int elementwaffe){
+		
+		super.damage(dmg, elementwaffe);
+		
+		statBar.updateHealth(this.health);
+		if(this.health<=0){
+			die();
+	}
+	}
+	
 	/**
 	 * man kann nur in einem Level sterben, also 
 	 */
@@ -186,30 +212,49 @@ public class Player extends Moveable {
 		statBar.getStateFrom();
 	}
 	
+
+	public void switcharmor(){
+		boolean b=false;
+		for(Item item:itemarr)		if(item.isArmor()) b=true;
+		if(b){
+			do{
+				if(++a>=itemarr.size())	a=0;
+			}while(!itemarr.get(a).isArmor());
+			if(slotarr.size()<2)	slotarr.add(new Item(itemarr.get(a)));	
+			else					slotarr.set(1, new Item(itemarr.get(a)));
+			if (itemarr.get(a).displayedName.equals("FireArmor"))		this.elementtype=1;
+			else if (itemarr.get(a).displayedName.equals("IceArmor"))	this.elementtype=2;
+			statBar.getStateFrom();
+		}
+	}
+	
 	public void pickup(Item item){
 		
 		//TODO gold soll geadded werden, nicht angezeigt
 		boolean notRedundant = true;
-		if(item.isWeapon()){
+		if(item.isWeapon()||item.isArmor()){
 			for(Item itemIt: itemarr){
 				if(itemIt.getSpriteName()==item.getSpriteName()){
 					notRedundant=false;
 				}	
 			}
 		}
+	
+		
 		Class<? extends JPanel> cClass = map.getClass();
 		if(notRedundant){
 
 			if(item.getSpriteName()=='Y')	setGold(getGold() + 50);
 			if(cClass.equals(Shop.class) && gold>=item.getPrice()){
-				if(item.getSpriteName()=='R')	hasArmor=true;
+				
+				
 				setGold(getGold() - item.getPrice());
 				itemarr.add(item);
 				item.setOwner(this);
 				map.remove(item);
 				statBar.getStateFrom();
 			}else if(!cClass.equals(Shop.class)){
-				if(item.getSpriteName()=='R')	hasArmor=true;
+				
 				itemarr.add(item);
 				item.setOwner(this);
 				map.remove(item);

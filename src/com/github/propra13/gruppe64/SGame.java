@@ -20,7 +20,7 @@ import javax.swing.JTextField;
 
 
 @SuppressWarnings("serial")
-public class NGame extends Game implements Runnable{
+public class SGame extends Game implements Runnable{
 	
 
 	
@@ -34,24 +34,31 @@ public class NGame extends Game implements Runnable{
 	/**
 	 * cp ist content-pane von unserem JFrame
 	 */
-	public NGame(Container cp, Main main, Controller controller) {
+	public SGame(Container cp, Main main, Controller controller) {
 		super(cp,main,controller);
 		addPl(super.getPlayer());
 	}	
 	
 	public void addPl(Player pl){
 		playerList.add(pl);
-		correctNicks();
 		
 	}
 	public void correctNicks(){
+		
 		for(Player pl:playerList){
+			Integer i = new Integer(0);
 			for(Player pls:playerList){
-				int i=0;
 				if(!pl.equals(pls))
-					if(pl.getNick()==pls.getNick()) pls.setNick(pls.getNick()+"("+(i++)+")");
+					if(pl.getNick().equals(pls.getNick())){
+						for(Player pl2:playerList)
+							if(!pl.equals(pl2) && pl2.getNick().equals(pls.getNick()+"("+i.toString()+")"))i++;
+						pls.setNick(pls.getNick()+"("+(i++).toString()+")");
+					}	
 			}
 		}
+	}
+	public void run(){
+		//super.run();
 	}
 
 

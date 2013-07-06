@@ -38,6 +38,7 @@ public class Main extends JFrame implements ActionListener{
 
 	private Game myGame;
 	private NWBrowser browser;
+	Lobby lobby;
 	public  Controller controller;
 	private JPanel pWeiter;
 	private Clip clip;
@@ -197,9 +198,13 @@ public class Main extends JFrame implements ActionListener{
 	}
 	
 	private void showNW() {
+		//Controller
+		controller = new Controller();
 		this.setFocusable(true);
+		this.addKeyListener(controller);
+
 		cp.removeAll();
-		//Erzeugt neues Spiel und startet es
+		//Erzeugt neuen networkbrowser und zeigt ihn an
 		browser=new NWBrowser(this.cp, this);	
 	}
 	/**

@@ -24,6 +24,8 @@ public class Moveable extends Sprite {
 	protected ArrayList<Item> itemarr;
 	protected ArrayList<Item> slotarr;
 	
+	// Feuer(elementtype=1) oder Eis(elementtype=2 für bewegende Gegner und Player
+	protected int elementtype=0; 
 	/**
 	 * aktuelle Geschwindigkeit
 	 */
@@ -64,7 +66,7 @@ public class Moveable extends Sprite {
 				if(!mov.getClass().equals(this.getClass()) && !this.equals(mov) && this.slotarr.get(0).getRange()>Math.pow(x+Dim[0]/2-mov.getX()-mov.Dim[0]/2,2)+Math.pow(y+Dim[1]/2-mov.getY()-mov.Dim[1]/2,2))
 				{	//System.out.println("treffer");
 					//System.out.println(map.getMovables().size());
-					mov.damage(this.slotarr.get(0).getDmg());
+					mov.damage(this.slotarr.get(0).getDmg(),this.elementtype);
 					//System.out.println(map.getMovables().size());
 				}
 			}
@@ -118,10 +120,27 @@ public class Moveable extends Sprite {
 			case y: this.setVel(this.getVel()[0],0); break;
 		}
 	}
-	public void damage(int dmg){
+	
+	
+/*	public void damage(int dmg){
 		this.health -= dmg;
 		if(this.health<=0)		map.remove(this);
 	}
+*/	
+	//neue damage- Methode,die auch elementtype der Waffe bzw. des Gegners übergibgt
+	
+	public void damage(int dmg, int waffenelement){
+		
+		if (waffenelement==0){} //normaler Schaden, da Waffe neutral
+		else if (elementtype==0){}//normaler Schaden, da Charakter neutral ist
+		else if(waffenelement== elementtype) {dmg = dmg/2;} //halber Schaden, da gleiche Elemente von Charakter und Waffe
+		else {dmg = dmg*2;} // doppelter Schaden, da verschiedene Elemente von Charakter und Waffe
+		
+		this.health -=dmg;
+		if(this.health<=0)	{ map.remove(this);}
+		
+	}
+	
 	public ArrayList<Item> getSlots(){
 		return slotarr;
 	}

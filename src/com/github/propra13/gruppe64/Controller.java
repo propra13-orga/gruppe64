@@ -43,6 +43,8 @@ public class Controller extends KeyAdapter{									//brauche playerobject mit p
 	
 	public int switchW;
 	
+	public int switchA;
+	
 	public int swichT;
 	
 	public int hCast;
@@ -64,6 +66,7 @@ public class Controller extends KeyAdapter{									//brauche playerobject mit p
 		attack	=	KeyEvent.VK_SPACE;
 		switchW =	KeyEvent.VK_C;
 		swichT =	KeyEvent.VK_X;
+		switchA=	KeyEvent.VK_V;
 		hCast = KeyEvent.VK_H;
 		enterRoom = KeyEvent.VK_E;
 		
@@ -97,7 +100,8 @@ public class Controller extends KeyAdapter{									//brauche playerobject mit p
 		if(player!=null){
 			if(keyr==hoch || keyr==runter)	player.unsetMot(axis.y);				//			1
 			if(keyr==rechts || keyr==links)	player.unsetMot(axis.x);				//			|
-			if(keyr==switchW && !player.getChatInput().isFocusOwner()) player.switchweapon();																		//			+---0
+			if(keyr==switchW && !player.getChatInput().isFocusOwner()) player.switchweapon();//			+---0
+			if(keyr==switchA && !player.getChatInput().isFocusOwner()) player.switcharmor();
 			if(keyr==hCast && !player.getChatInput().isFocusOwner()) player.use('H');			
 			if(keyr==KeyEvent.VK_ENTER && player.getChatInput().isFocusOwner()){
 				player.getChatPane().append(player.getNick(), player.getChatInput().getText());

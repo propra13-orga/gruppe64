@@ -124,16 +124,24 @@ public class Map extends JPanel {
 			case 'A': 
 			case 'O':	
 			
+			
+			
 			case 'r': return new Sprite (this.spritewidth, this.spriteheight, field);	
+			 
+			case '(': return new Enemy(0, 0, 50, 50,field, 1);
+			case ')': return new Enemy(0, 0, 50, 50,field, 2);	
 			case 'g':	
-			case 'G': return new Enemy(0, 0, 50, 50);
+			case 'G': return new Enemy(0, 0, 50, 50,field, 0);
 			//ITEMS
 			case 'S': 
+			case 'Q':
+			case 'W':
 			case 'Y':
 			case 'M':
 			case 'H': 
 			case 's':
 			case 'R':
+			case 'T':
 				return new Item (field);
 			
 			default: return null;
