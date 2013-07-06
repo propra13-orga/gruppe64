@@ -110,9 +110,14 @@ public class Map extends JPanel {
 			case 'A': 
 			case 'O':	
 			
+			
+			
 			case 'r': return new Sprite (this.spritewidth, this.spriteheight, field);	
+			 
+			case '(': return new Enemy(0, 0, 50, 50,field);
+			case ')': return new Enemy(0, 0, 50, 50,field);	
 			case 'g':	
-			case 'G': return new Enemy(0, 0, 50, 50);
+			case 'G': return new Enemy(0, 0, 50, 50,field);
 			//ITEMS
 			case 'S': 
 			case 'Q':

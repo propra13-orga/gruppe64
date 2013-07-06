@@ -214,6 +214,7 @@ public class Player extends Moveable {
 		statBar.getStateFrom();
 	}
 	
+
 	public void switcharmor(){
 		boolean b=false;
 		for(Item item:itemarr)		if(item.isArmor()) b=true;
@@ -223,6 +224,8 @@ public class Player extends Moveable {
 			}while(!itemarr.get(a).isArmor());
 			if(slotarr.size()<2)	slotarr.add(new Item(itemarr.get(a)));	
 			else					slotarr.set(1, new Item(itemarr.get(a)));
+			if (itemarr.get(a).displayedName.equals("FireArmor"))		this.elementtype=1;
+			else if (itemarr.get(a).displayedName.equals("IceArmor"))	this.elementtype=2;
 			statBar.getStateFrom();
 		}
 	}

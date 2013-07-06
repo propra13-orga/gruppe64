@@ -1,6 +1,6 @@
 xxxxxxxxxx
 x x  HHH x
-x x  HHH x
+x x   H( x
 eOx QT x a; @a leadsTo(Room,1,1) onTouche(enter) onAction(open,enter); @e leadsTo world 1 1	
 x S W xR x;
 x M s Y xx;
