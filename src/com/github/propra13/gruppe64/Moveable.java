@@ -139,16 +139,6 @@ public class Moveable extends Sprite {
 		this.health -=dmg;
 		if(this.health<=0)	{ map.remove(this);}
 		
-		/*
-		if(elementwaffe==elementtype){ dmg=dmg/2;}
-		else if(elementtype==0){dmg=dmg;}
-		else {dmg=dmg*2;}
-		
-		this.health -= dmg;
-		if(this.health<=0)	{	map.remove(this);}
-		*/
-		
-		
 	}
 	
 	public ArrayList<Item> getSlots(){
