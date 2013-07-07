@@ -79,7 +79,7 @@ public class Level extends JPanel{
 		Room tmpRoom;
 		if(roomIterator.hasNext()){
 			tmpRoom = roomIterator.next();
-			tmpRoom.add(player);
+			//tmpRoom.add(player);
 			setMap(tmpRoom);
 		} else {
 			System.out.print("nextLevel");
@@ -153,9 +153,10 @@ public class Level extends JPanel{
 			Door tDoor=door.getTarget();
 			Map tMap = (Map)tDoor.getParent();
 			
-			//tMap.add(player);
-			player.setLocation(tDoor.getX(),tDoor.getY());
+			
+			
 			setMap(tMap);
+			player.setLocation(tDoor.getX(),tDoor.getY());
 		}
 		
 	}

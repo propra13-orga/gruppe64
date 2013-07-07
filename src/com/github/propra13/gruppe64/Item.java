@@ -22,8 +22,8 @@ public class Item extends Sprite {
 	private Player player;
 	private int price=0;
 	
-	// Feuer( elementtype=1)0/Wasser(elementtype=2)
-	public int elementtype=0; 	
+	static public int NORMAL=0,FIRE=1,ICE=2;
+	public int elementtype=NORMAL; 	
 	
 	
 	public Item( char name)// Name des Items
@@ -41,14 +41,14 @@ public class Item extends Sprite {
 		break;
 		
 		case 'Q': this.displayedName="FireSword"; //Schwert 
-		elementtype=1;
+		elementtype=FIRE;
 		Dmg=20;
 		Range=6400;
 		setWeapon(true);
 		break;
 		
 		case 'W': this.displayedName="IceSword"; //Schwert 
-		elementtype=2;
+		elementtype=ICE;
 		Dmg=20;
 		Range=6400;
 		setWeapon(true);

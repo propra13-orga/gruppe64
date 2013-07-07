@@ -1,7 +1,6 @@
 xxxxxxxxxx
+D D D D  x;D,-100,exit,0;  ;D,-10,level,1;D,-20,level,2;D,-30,level,3
+xxxxxxxx x
 x        x
 x        x
-D D D D xx;D,-100,exit,0;  ;D,-10,level,1;D,-20,level,2;D,-30,level,3
-x        x
-x        x
-xxxx$xxxxx
+xxxxxxxxxx

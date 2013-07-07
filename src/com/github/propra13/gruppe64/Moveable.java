@@ -24,8 +24,8 @@ public class Moveable extends Sprite {
 	protected ArrayList<Item> itemarr;
 	protected ArrayList<Item> slotarr;
 	
-	// Feuer(elementtype=1) oder Eis(elementtype=2 für bewegende Gegner und Player
-	protected int elementtype=0; 
+	// Feuer(elementtype=1) oder Eis(elementtype=2 f��r bewegende Gegner und Player
+	protected int elementtype=Item.NORMAL; 
 	/**
 	 * aktuelle Geschwindigkeit
 	 */
@@ -127,12 +127,12 @@ public class Moveable extends Sprite {
 		if(this.health<=0)		map.remove(this);
 	}
 */	
-	//neue damage- Methode,die auch elementtype der Waffe bzw. des Gegners übergibgt
+	//neue damage- Methode,die auch elementtype der Waffe bzw. des Gegners ��bergibgt
 	
 	public void damage(int dmg, int waffenelement){
 		
 		if (waffenelement==0){} //normaler Schaden, da Waffe neutral
-		else if (elementtype==0){}//normaler Schaden, da Charakter neutral ist
+		else if (elementtype==Item.NORMAL){}//normaler Schaden, da Charakter neutral ist
 		else if(waffenelement== elementtype) {dmg = dmg/2;} //halber Schaden, da gleiche Elemente von Charakter und Waffe
 		else {dmg = dmg*2;} // doppelter Schaden, da verschiedene Elemente von Charakter und Waffe
 		

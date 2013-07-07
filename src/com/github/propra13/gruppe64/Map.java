@@ -271,6 +271,7 @@ public class Map extends JPanel {
 		super.remove(player);
 		//suche aus PlayerArray
 		moveables.remove(player);
+		playerList.remove(player);
 		super.revalidate();
 	}
 	public void remove(Sprite sprite){

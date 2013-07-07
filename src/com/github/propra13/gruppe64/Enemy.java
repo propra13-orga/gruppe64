@@ -1,5 +1,6 @@
 package com.github.propra13.gruppe64;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -65,6 +66,11 @@ public class Enemy extends Moveable {
 			g.drawImage(img12, 0, 0, this);
 		    g.finalize();	
 		    break;
+		}
+		if(health<100){
+			g.drawRect(0, 0, Dim[0]-1, 10);
+			g.setColor(Color.RED);
+			g.fillRect(0, 0, health*Dim[0]/100, 10);
 		}
 	}
 	@Override

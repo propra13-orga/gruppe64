@@ -164,7 +164,7 @@ public class Game implements Runnable{
 		statBar.getStateFrom();
 		map.drawMap();
 		cp.add(map,BorderLayout.CENTER);
-		map.startMotion();
+		//map.startMotion();
 		map.repaint();
 		
 	}
