@@ -120,7 +120,7 @@ public class Lobby implements ActionListener{
 	public void addPl(NPlayer pl){
 		playerList.add(pl);	
 		tableModel.fireTableDataChanged();
-		//correctNicks();
+		correctNicks();
 	}
 	
 	public void addLocalPl(NPlayer pl){
@@ -130,7 +130,7 @@ public class Lobby implements ActionListener{
 			player.addChatInput(chatinput);
 			main.controller.setPlayer(player);
 			playerList.add(pl);	
-			//correctNicks();
+			correctNicks();
 			tableModel.fireTableDataChanged();
 		
 		}
@@ -153,7 +153,7 @@ public class Lobby implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getSource()==this.ready){
-			if(player.getReadyState()){				
+			if(player.isReady()){				
 				ready.setText("ready");
 				player.setReadyState(false); tableModel.fireTableDataChanged();
 			}else{
@@ -162,6 +162,11 @@ public class Lobby implements ActionListener{
 			}
 		}
 		if(ae.getSource()==this.start){
+			//TODO start new NGame or something
+			ArrayList<NPlayer> readyPlayer=new ArrayList<NPlayer>();
+			for (NPlayer pl: playerList){
+				if(pl.isReady())readyPlayer.add(pl);
+			}
 			System.exit(0);
 		}
 		if(ae.getSource()==this.back){

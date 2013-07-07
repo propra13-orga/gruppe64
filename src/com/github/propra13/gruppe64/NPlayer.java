@@ -4,7 +4,7 @@ package com.github.propra13.gruppe64;
  */
 public class NPlayer extends Player {
 	private boolean readyState=false;
-	public boolean getReadyState(){
+	public boolean isReady(){
 		return readyState;
 	}
 	
