@@ -1,7 +1,0 @@
-bin/
-.settings/
-#.project
-.metadata
-.euml2
-.umlproject
-.classpath

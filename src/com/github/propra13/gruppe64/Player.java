@@ -1,6 +1,7 @@
 package com.github.propra13.gruppe64;								// # 0001
 
 import java.awt.Container;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -87,7 +88,8 @@ public class Player extends Moveable {
 		Image img2 = Toolkit.getDefaultToolkit().getImage("res/banana.gif");
 	    g.drawImage(img2, 0, 0, this);
 	    g.finalize();	
-		//System.out.print("playerDraw");
+	    g.setFont(new Font ("Arial", Font.PLAIN , 11));
+		g.drawString(nick, 10, 10);
 	}
 	public void updateMot(){
 		int x=this.getX();

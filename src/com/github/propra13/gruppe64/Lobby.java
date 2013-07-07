@@ -27,9 +27,10 @@ public class Lobby implements ActionListener{
 	Chat chat;
 	JButton ready,start,back;
 	JTable table;
-	private ArrayList<Player> playerList;
-	Player player;
+	private ArrayList<NPlayer> playerList;
+	NPlayer player;
 	String[][] data = new String[8][2];
+	private PlayerTable tableModel;
 
 	
 	private class myJButton extends JButton{
@@ -42,29 +43,24 @@ public class Lobby implements ActionListener{
 	public Lobby(Container cp, Main main) {
 		this.cp=cp;
 		this.main =main;
-		playerList=new ArrayList<Player>();
+		playerList=new ArrayList<NPlayer>();
 		
 		cp.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
-		for(int i=0;i<8;i++) {
-			addPl(new Player(5,150));
-			data[i][0]=playerList.get(i).getNick();
-			data[i][1]="not ready";
-		}
-
-		player=playerList.get(0);
-
-
-		String[] columnNames = {"nickname","state"};
 		
-		table = new JTable( data, columnNames );
+		NPlayer tplayer=new NPlayer(5,150);tplayer.setNick("serverOwner");
+		
+
+
+		tableModel =new PlayerTable(playerList);
+		table = new JTable(tableModel);
 		c.fill = GridBagConstraints.VERTICAL;
 		c.gridheight = 3;
 		c.gridx = 0;
 		c.gridy = 0;
 		cp.add( new JScrollPane(table), c);
 		
-		chat = new Chat(player);
+		chat = new Chat(tplayer);
 		chat.setPreferredSize(new Dimension(700,500));
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridheight = 1;
@@ -110,19 +106,35 @@ public class Lobby implements ActionListener{
 		c.gridy = 3;       //third row
 		cp.add(back, c);
 		main.pack();
-		
-		
-		player.addChatPane(chat);
-		player.addChatInput(chatinput);
-		main.controller.setPlayer(player);
+		// normaly first one
+	
+		addLocalPl(tplayer);
+		//Testing !! Server Edition!!
+				for(int i=0;i<3;i++) {
+					addPl(new NPlayer(5,150));
+
+				}
 		
 	}
 	
-	public void addPl(Player pl){
+	public void addPl(NPlayer pl){
 		playerList.add(pl);	
-		correctNicks();
+		tableModel.fireTableDataChanged();
+		//correctNicks();
 	}
 	
+	public void addLocalPl(NPlayer pl){
+		if(player==null){
+			this.player=pl;
+			player.addChatPane(chat);
+			player.addChatInput(chatinput);
+			main.controller.setPlayer(player);
+			playerList.add(pl);	
+			//correctNicks();
+			tableModel.fireTableDataChanged();
+		
+		}
+	}
 	public void correctNicks(){
 		
 		for(Player pl:playerList){
@@ -141,12 +153,12 @@ public class Lobby implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getSource()==this.ready){
-			if(ready.getText().equals("ready")){				
-				ready.setText("unready");
-				table.setValueAt("ready", playerList.indexOf(player), 1);
-			}else{
+			if(player.getReadyState()){				
 				ready.setText("ready");
-				table.setValueAt("not ready", playerList.indexOf(player), 1);
+				player.setReadyState(false); tableModel.fireTableDataChanged();
+			}else{
+				ready.setText("unready");
+				player.setReadyState(true); tableModel.fireTableDataChanged();
 			}
 		}
 		if(ae.getSource()==this.start){
