@@ -3,7 +3,11 @@ package com.github.propra13.gruppe64;
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class Door extends Sprite {
+public class Door extends Sprite implements ActiveArea{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6013068930574390100L;
 	public static int NOKEY=0;
 	public static int REDKEY=1;
 	public static int BLUEKEY=2;
@@ -15,15 +19,11 @@ public class Door extends Sprite {
 	private int doorNr;
 	private String special;
 	
+	
 	private static int xDim = 50;
 	private static int yDim =50;
 	
 
-	public Door() {
-		// TODO Auto-generated constructor stub
-	}
-
-	
 	public Door(int x, int y, int doorNr, int leadsToNr) {
 		super(x,y,xDim, yDim);
 		this.doorNr=doorNr;
@@ -68,6 +68,30 @@ public class Door extends Sprite {
 	}
 	public boolean isOpen(){
 		return open;
+	}
+
+
+	@Override
+	public void onTouch(Moveable mv) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void onAction(Moveable mv) {
+		if(Player.class.isAssignableFrom(mv.getClass())){
+			((Player)mv).getLevel().enterDoor(this);
+		}
+
+	}
+	@Override
+	public boolean onTouchAction() {
+		return false;
+	}
+	@Override
+	public boolean onActionAction() {
+		return true;
 	}
 
 }

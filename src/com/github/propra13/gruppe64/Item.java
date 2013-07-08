@@ -3,9 +3,13 @@ package com.github.propra13.gruppe64;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
-import javax.swing.BorderFactory;
 
-public class Item extends Sprite {
+public class Item extends Sprite implements ActiveArea{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5927594103060083981L;
+
 	public int plushealth;
 	
 	//Schwert
@@ -248,5 +252,25 @@ public class Item extends Sprite {
 	}
 	public void setPrice(int price) {
 		this.price = price;
+	}
+	@Override
+	public void onTouch(Moveable mv) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void onAction(Moveable mv) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public boolean onTouchAction() {
+		//TODO map specific
+		return true;
+	}
+	@Override
+	public boolean onActionAction() {
+		//TODO map specific
+		return false;
 	}
 }

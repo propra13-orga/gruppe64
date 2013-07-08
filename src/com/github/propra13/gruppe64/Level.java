@@ -1,15 +1,13 @@
 package com.github.propra13.gruppe64;
 
-import java.awt.BorderLayout;
 import java.awt.Container;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import javax.swing.JPanel;
 
-public class Level extends JPanel{
+public class Level implements java.io.Serializable{
 	private static final long serialVersionUID = -4648599488509978586L;
 	
 	int spriteWidth=50;
@@ -19,11 +17,9 @@ public class Level extends JPanel{
 	
 	private Game game;
 	private Container cp;
-	private Player player;
-	
-	private int lRoomNr;
-	private int aRoomNr=0;
-	
+	private Player player; //networkf if NPlayer.class
+
+
 	
 	private int levelNr;
 	
@@ -32,8 +28,7 @@ public class Level extends JPanel{
 	//current active Room
 	private Map aMap;
 
-	private Timer caretaker;
-	private TimerTask action;
+
 	
 	/**
 	 * 
@@ -65,7 +60,7 @@ public class Level extends JPanel{
 	}
 	public void readAllRooms(int lvl){
 		
-		lRoomNr=1;
+
 		char[][] tmpArray;
 		MapGenerator mg= new MapGenerator("res/Karten/Level%i_Raum%i.txt");
 		roomList=mg.generateRoomList(this);
@@ -137,24 +132,25 @@ public class Level extends JPanel{
 		game.gameOver();
 		
 	}
-	public void reset() {
+	//TODO denke an network
+	public void reset(Player pl) {
 		
 		this.initLevel();
 	}
 	public int getLevelNr() {
 		return levelNr;
 	}
-	public void setOnDoor(Door door) {
+	public void enterDoor(Door door) {
 		// TODO if open Door
 		//target Door
 		if(door.getSpecial()!=null){
+			if(player.getClass().equals(NPlayer.class)){
+				
+			}
 			
-		}else{
+		}else{ //other Room from this
 			Door tDoor=door.getTarget();
 			Map tMap = (Map)tDoor.getParent();
-			
-			
-			
 			setMap(tMap);
 			player.setLocation(tDoor.getX(),tDoor.getY());
 		}

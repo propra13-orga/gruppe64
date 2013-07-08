@@ -91,7 +91,7 @@ public class Controller extends KeyAdapter{									//brauche playerobject mit p
 					if(keyp== runter && player.getVel()[1] !=  1)player.setMot(dir.down);		//			|			|
 					if(keyp== links && player.getVel()[0] !=  1)player.setMot(dir.left);		//			2		   -1
 					if(keyp== attack)player.attemptAttack();
-					if(keyp== enterRoom)player.enterRoom();
+					if(keyp== enterRoom)player.performAction();
 				}
 			}
 	}
@@ -104,7 +104,7 @@ public class Controller extends KeyAdapter{									//brauche playerobject mit p
 			if(keyr==switchA && !player.getChatInput().isFocusOwner()) player.switcharmor();
 			if(keyr==hCast && !player.getChatInput().isFocusOwner()) player.use('H');			
 			if(keyr==KeyEvent.VK_ENTER && player.getChatInput().isFocusOwner()){
-				player.getChatPane().append(player.getNick(), player.getChatInput().getText());
+				player.getChatPane().append(player, player.getChatInput().getText());
 				player.getChatInput().setText("");
 			}
 		}

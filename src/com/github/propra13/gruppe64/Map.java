@@ -2,15 +2,11 @@ package com.github.propra13.gruppe64;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Container;
-import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.CopyOnWriteArrayList;
-
-import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 
@@ -39,7 +35,7 @@ public class Map extends JPanel {
 	protected char[][] mapArray;
 	protected ArrayList<Moveable> moveables;
 	protected ArrayList<Item> items;
-	protected ArrayList<Door> activeAreas;
+	protected ArrayList<ActiveArea> activeAreas;
 	
 	// TODO sortiern nach Room etc.
 	protected Timer hauTimer;
@@ -62,25 +58,6 @@ public class Map extends JPanel {
 	/**
 	 * Erzeuge neues JPanel und ordne es an, hier kann auch das auslesen aus Datei gestartet werden
 	 */
-/*	public Map(int spritewidth, int spriteheight){
-		this();
-		this.spritewidth= spritewidth;
-		this.spriteheight= spriteheight;
-		//this.setBounds(0, 0, 500, 350);//this.setBounds(0, 0, mapwidth*spritewidth, mapheight*spriteheight);
-		
-		this.setBorder(BorderFactory.createLineBorder(Color.blue)); 
-	}*/
-	
-//	public Map(Level aLevel, int mapW, int mapH, int spritewidth, int spriteheight){
-//		this();
-//
-//		this.spritewidth= spritewidth;
-//		this.spriteheight= spriteheight;
-//		//put at 0,0 
-//		this.setBounds(0, 0, mapW, mapH);
-//
-//	
-//	}
 
 	public Map(char[][] mapArray){
 		this();
@@ -93,7 +70,7 @@ public class Map extends JPanel {
 	public Map(){
 		playerList = new ArrayList<Player>();
 		this.moveables = new ArrayList<Moveable>();
-		activeAreas = new ArrayList<Door>();
+		activeAreas = new ArrayList<ActiveArea>();
 		this.items = new ArrayList<Item>();
 		
 		this.setBackground(Color.WHITE);
@@ -115,6 +92,7 @@ public class Map extends JPanel {
 		//if (x>=mapwidth || x<0 || y>=mapheight || y<0) return "Auserhalb Spielfeld";
 		char field=mapArray[Y][X];
 		switch (field){
+			case 'O':	return new NPC(field);
 			case 'e':
 			case 'E':  
 				
@@ -122,16 +100,16 @@ public class Map extends JPanel {
 			case 'X': 
 			case 'a':
 			case 'A': 
-			case 'O':	
 			
 			
 			
-			case 'r': return new Sprite (this.spritewidth, this.spriteheight, field);	
+			
+			case 'r': return new Sprite (Map.spritewidth, Map.spriteheight, field);	
 			 
-			case '(': return new Enemy(0, 0, 50, 50,field, 1);
-			case ')': return new Enemy(0, 0, 50, 50,field, 2);	
+			case '(': return new Enemy(0, 0, 50, 50,field, Item.FIRE);
+			case ')': return new Enemy(0, 0, 50, 50,field, Item.ICE);	
 			case 'g':	
-			case 'G': return new Enemy(0, 0, 50, 50,field, 0);
+			case 'G': return new Enemy(0, 0, 50, 50,field, Item.NORMAL);
 			//ITEMS
 			case 'S': 
 			case 'Q':
@@ -153,9 +131,9 @@ public class Map extends JPanel {
 		
 		int x,y;
 		for(int i=0; i<mapwidth;i++){
-			x=i*this.spritewidth;
+			x=i*Map.spritewidth;
 			for(int j=0; j< mapheight; j++){
-				y=j*this.spriteheight;
+				y=j*Map.spriteheight;
 				Sprite sp1 = this.getSprite(i,j);
 				
 				if(sp1!=null){
@@ -185,31 +163,31 @@ public class Map extends JPanel {
 		if (x<0 || (x+playersizex) > ((mapwidth)*spritewidth)   ) return 'x';
 		if (y<0 || (y+playersizey) > (mapheight*spriteheight) ) return 'x';
 		//Oben-Links
-		X= (int) (x/this.spritewidth);
-		Y= (int) (y/this.spriteheight);
+		X= (int) (x/Map.spritewidth);
+		Y= (int) (y/Map.spriteheight);
 		char OL = mapArray[Y][X];
 		//Oben-Rechts
-		X=(int)	((x+playersizex-1)/this.spritewidth);
-		Y=(int)(y/this.spriteheight);
+		X=(int)	((x+playersizex-1)/Map.spritewidth);
+		Y=(int)(y/Map.spriteheight);
 		char OR = mapArray[Y][X];
 		//Unten-Links
-		X= (int) (x/this.spritewidth);
-		Y= (int) ((y+playersizey-1)/this.spriteheight);
+		X= (int) (x/Map.spritewidth);
+		Y= (int) ((y+playersizey-1)/Map.spriteheight);
 		char UL = mapArray[Y][X];
 		//Unten-Rechts
-		X= (int) ((x+playersizex-1)/this.spritewidth);
-		Y= (int) ((y+playersizey-1)/this.spriteheight);
+		X= (int) ((x+playersizex-1)/Map.spritewidth);
+		Y= (int) ((y+playersizey-1)/Map.spriteheight);
 		char UR = mapArray[Y][X];
 		
 		//Wichtig ist die Reihenfolge, was wichtiger ist oben
 		if	(OL=='x' || OR=='x' || UL=='x' || UR=='x') return 'x';
 		else if(OL=='a' || OR=='a' || UL=='a' || UR=='a') return 'a';
-		else if	(OL=='e' || OR=='e' || UL=='e' || UR=='e') return 'e';
+		/*else if	(OL=='e' || OR=='e' || UL=='e' || UR=='e') return 'e';
 		else if (OL=='S' || OR=='S' || UL=='S' || UR=='S') return 'S';
 		else if (OL=='M' || OR=='M' || UL=='M' || UR=='M') return 'M';
 		else if (OL=='Y' || OR=='Y' || UL=='Y' || UR=='Y') return 'Y';
 		else if (OL=='H' || OR=='H' || UL=='H' || UR=='H') return 'H';
-		else if (OL=='O' || OR=='O' || UL=='O' || UR=='O') return 'O';
+		else if (OL=='O' || OR=='O' || UL=='O' || UR=='O') return 'O';*/
 		else return' ';
 
 	}
@@ -243,52 +221,58 @@ public class Map extends JPanel {
 	/**
 	 *  extends the  add method from JPanel, to do specific tasks for e.g. Movables or Doors
 	 */
-	public Component add(Sprite sp){
+	@Override
+	public Component add(Component sp){
 		Component component=super.add(sp);
-		//player.set
-		Class<? extends Sprite> cClass = sp.getClass();
+		if(!Sprite.class.isAssignableFrom(sp.getClass()))
+			return component;
+		Class<? extends Sprite> cClass = ((Sprite)sp).getClass();
 		if(Moveable.class.isAssignableFrom(cClass)){
 			((Moveable)sp).setMap();
 			moveables.add((Moveable) sp);
 		}
 	
 		if(cClass.equals(Player.class)){
-			//TODO generic
-			//sp.setLocation(0,150);
 			this.playerList.add((Player)sp);
 		}
 		if(cClass.equals(Item.class)){
 			items.add((Item) sp);
 		}
-		if(cClass.equals(Door.class)){
-			activeAreas.add((Door)sp);
+		if(ActiveArea.class.isAssignableFrom(sp.getClass())){
+			if(((ActiveArea)sp).onTouchAction() || ((ActiveArea)sp).onActionAction())
+				activeAreas.add((ActiveArea)sp);
 		}
 
 		return component;
 	}
+
+
+	@Override
+	public void remove(Component sp){
+		super.remove(sp);
+		if(!Sprite.class.isAssignableFrom(sp.getClass()))
+			return;
+		Class<? extends Sprite> cClass = ((Sprite)sp).getClass();
+		
+		if(cClass.equals(Player.class)){
+			playerList.remove(sp);
+		}
+		if(cClass.equals(Item.class)){
+			items.remove((Item) sp);
+		}
+		if(Moveable.class.isAssignableFrom(cClass)){
+			((Moveable)sp).setMap();
+			moveables.remove((Moveable) sp);
+		}
+		if(ActiveArea.class.isAssignableFrom(sp.getClass())){
+			if(((ActiveArea)sp).onTouchAction() || ((ActiveArea)sp).onActionAction())
+				activeAreas.add((ActiveArea)sp);
+		}
+		
+		repaint();
+		super.revalidate();
+	}
 	
-	public void remove(Player player){
-		super.remove(player);
-		//suche aus PlayerArray
-		moveables.remove(player);
-		playerList.remove(player);
-		super.revalidate();
-	}
-	public void remove(Sprite sprite){
-		super.remove(sprite);
-		super.revalidate();
-	}
-	public void remove(Item it){
-		super.remove(it);
-		//suche aus ItemArray
-		items.remove(it);
-		repaint();
-	}
-	public void remove(Moveable mov){
-		super.remove(mov);
-		repaint();
-		moveables.remove(mov);
-	}
 	
 
 	
@@ -308,10 +292,7 @@ public class Map extends JPanel {
 		return null;
 	}
 
-	public void leaveMap(Player player) {
-		remove(player);
-		
-	}
+	
 	public void startMotion(){
 		hau = new TimerTask() {
 			public void run() {
@@ -355,18 +336,19 @@ public class Map extends JPanel {
 		}
 	}
 
-	public Map isOnOpenDoor(Player pl) {
-		if (wouldTouch(pl.getRectangle())=='a'){
-			return this;
+	
+	public ActiveArea isOnActiveArea(Player pl){
+		for(ActiveArea aArea: activeAreas){
+			if(pl.getRectangle().intersects(aArea.getRectangle()))
+				return aArea;
 		}
 		return null;
 	}
-	public Door isOnActiveArea(Player pl){
-		for(Door iDoor: activeAreas){
-			if(pl.getRectangle().intersects(iDoor.getRectangle()))
-				return iDoor;
+	public void tellAll(Moveable mv,String msg) {
+		for(Player pl: playerList){
+			pl.getChatPane().append(mv,msg);
 		}
-		return null;
+		
 	}
 	
 	

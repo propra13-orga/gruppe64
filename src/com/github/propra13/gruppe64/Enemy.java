@@ -8,6 +8,10 @@ import java.util.ArrayList;
 
 public class Enemy extends Moveable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2216301988921162914L;
 	private char name;
 	
 	
@@ -93,5 +97,11 @@ public class Enemy extends Moveable {
 			vel[1]= -1* vel[1];
 		}
 		//map.updateState(this);
+	}
+
+	@Override
+	public String getNick() {
+		// TODO Auto-generated method stub
+		return "Cat";
 	}
 }

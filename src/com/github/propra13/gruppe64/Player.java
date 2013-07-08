@@ -1,12 +1,11 @@
 package com.github.propra13.gruppe64;								// # 0001
 
-import java.awt.Container;
+
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -48,8 +47,6 @@ public class Player extends Moveable {
 	//private boolean hasArmorFire=false;
 	
 	private Chat chatPane;
-	private boolean saga=true;
-	private String nick;
 	private JTextField chatInput;
 	
 	
@@ -72,11 +69,6 @@ public class Player extends Moveable {
 
 		
 		 
-	}
-	
-	public boolean putOnMap(int x, int y, Map map){
-		//TODO ist die Stelle ueberhaupt sinnvoll -> map.isCrossable
-		return true;
 	}
 	
 
@@ -113,12 +105,11 @@ public class Player extends Moveable {
 			if(it.isLootable() && Math.pow(it.getHeight()+it.getWidth(), 2)/16>Math.pow(x+Dim[0]/2-it.getX()-it.getWidth()/2,2)+Math.pow(y+Dim[1]/2-it.getY()-it.getHeight()/2,2))	
 				pickup(it);
 		}
-		//map.updateState(this);
-		if(map.wouldTouch(x,y,Dim[0],Dim[1])=='O'&&saga){
-			String text="Hallo mein Freund!Die Welt wird von Katzen terrorisiert. Benutze space um auf die Katzen einzuschlagen und benutze c um deine Waffen zu wechseln. Wenn du genügend Mana hast kannst du mit h dein Leben regenerieren.Mit einem Doppelklick kannst du Lebens- und Manatränke verwenden AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
-			chatPane.append("Zenmeister Ikkyu Sojun", text);
-			saga=false;			
+		ActiveArea aActiveA=map.isOnActiveArea(this);
+		if(aActiveA!= null){
+			aActiveA.onTouch(this);
 		}
+		
 	}
 	public void addStatBar(StatBar statBar) {
 		this.statBar = statBar;
@@ -155,18 +146,7 @@ public class Player extends Moveable {
 	
 		}
 	}
-	
-/*	public void damage(int dmg){
-		if(hasArmor)
-			this.health -= Math.ceil(dmg/2);
-		else
-			this.health -=dmg;
-		statBar.updateHealth(this.health);
-		if(this.health<=0){
-			die();
-		}
-	}
-	*/
+
 	
 	public void damage(int dmg){
 		this.health -= dmg;
@@ -196,7 +176,7 @@ public class Player extends Moveable {
 	private void die(){
 		life--;
 		if(life>0){
-			aLevel.reset();
+			aLevel.reset(this);
 			health=100;
 			statBar.updateHealth(health);
 		} else {
@@ -246,11 +226,11 @@ public class Player extends Moveable {
 		Class<? extends JPanel> cClass = map.getClass();
 		if(notRedundant){
 
-			if(item.getSpriteName()=='Y')	setGold(getGold() + 50);
+			if(item.getSpriteName()=='Y')	gold+= 50;
 			if(cClass.equals(Shop.class) && gold>=item.getPrice()){
 				
 				
-				setGold(getGold() - item.getPrice());
+				gold-= item.getPrice();
 				itemarr.add(item);
 				item.setOwner(this);
 				map.remove(item);
@@ -315,6 +295,9 @@ public class Player extends Moveable {
 	public void setLevel(Level aLevel){
 		this.aLevel= aLevel;
 	}
+	public Level getLevel(){
+		return aLevel;
+	}
 
 	public void healthCast() {
 		// TODO Auto-generated method stub
@@ -342,11 +325,11 @@ public class Player extends Moveable {
 		this.gold = gold;
 	}
 
-	public int getLvlUnl() {
+	public int getLvlUnlocked() {
 		return lvlUnl;
 	}
 
-	public void setLvlUnl(int lvlUnl) {
+	public void setLvlUnlocked(int lvlUnl) {
 		this.lvlUnl = lvlUnl;
 	}
 
@@ -371,23 +354,13 @@ public class Player extends Moveable {
 		return chatPane;
 	}
 
-	public void enterRoom() {
+	public void performAction() {
 		System.out.print("trYopenDoor");
-		//if(map.getClass().equals(Room.class)){
-		Sprite activeSprite = map.isOnActiveArea(this);
+		ActiveArea activeSprite = map.isOnActiveArea(this);
 		if(activeSprite!=null){
-			if(activeSprite.getClass().equals(Door.class)){
-				aLevel.setOnDoor(((Door)activeSprite));
-			}
+			activeSprite.onAction(this);
 		}
-			/*Room targetRoom = (Room) map.isOnOpenDoor(this);
-			if(targetRoom!=null){
-				System.out.print("openDoor");
-				aLevel.nextRoom();
-			}*/
-		//}
-			//map.leaveMap(this);
-		
+				
 	}
 
 }

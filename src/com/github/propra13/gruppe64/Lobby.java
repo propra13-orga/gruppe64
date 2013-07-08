@@ -119,7 +119,6 @@ public class Lobby implements ActionListener{
 	
 	public void addPl(NPlayer pl){
 		playerList.add(pl);	
-		tableModel.fireTableDataChanged();
 		correctNicks();
 	}
 	
@@ -131,7 +130,6 @@ public class Lobby implements ActionListener{
 			main.controller.setPlayer(player);
 			playerList.add(pl);	
 			correctNicks();
-			tableModel.fireTableDataChanged();
 		
 		}
 	}

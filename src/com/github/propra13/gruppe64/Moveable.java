@@ -10,7 +10,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import javax.swing.JOptionPane;
 
 @SuppressWarnings("serial")
-public class Moveable extends Sprite {
+public abstract class Moveable extends Sprite {
 	
 
 	protected double armor;
@@ -23,6 +23,7 @@ public class Moveable extends Sprite {
 	private int mode=0;
 	protected ArrayList<Item> itemarr;
 	protected ArrayList<Item> slotarr;
+	protected String nick;
 	
 	// Feuer(elementtype=1) oder Eis(elementtype=2 f��r bewegende Gegner und Player
 	protected int elementtype=Item.NORMAL; 
@@ -57,13 +58,10 @@ public class Moveable extends Sprite {
 	public void attemptAttack(){
 		
 			//System.out.print("schlag ");
-			int x=this.getX();
-			int y=this.getY();
-			
 
 			CopyOnWriteArrayList<Moveable> movarr=new CopyOnWriteArrayList<Moveable>(map.getMovables());
 			for(Moveable mov:movarr){
-				if(!mov.getClass().equals(this.getClass()) && !this.equals(mov) && this.slotarr.get(0).getRange()>Math.pow(x+Dim[0]/2-mov.getX()-mov.Dim[0]/2,2)+Math.pow(y+Dim[1]/2-mov.getY()-mov.Dim[1]/2,2))
+				if(!mov.getClass().equals(this.getClass()) && !this.equals(mov) && this.slotarr.get(0).getRange()>sqDistance(this,mov))
 				{	//System.out.println("treffer");
 					//System.out.println(map.getMovables().size());
 					mov.damage(this.slotarr.get(0).getDmg(),this.elementtype);
@@ -87,6 +85,10 @@ public class Moveable extends Sprite {
 	 */
 	public void setMap(){
 		Map preCast = (Map) getParent();
+		if(preCast==null){
+			map=preCast;return;
+		}
+			
 		Class<? extends Map> cClass =   preCast.getClass();
 		this.map = cClass.cast(this.getParent());
 	}
@@ -147,4 +149,9 @@ public class Moveable extends Sprite {
 	public ArrayList<Item> getItems(){
 		return itemarr;
 	}
+	public static double sqDistance(Moveable a, Moveable b){
+		return Math.pow(a.getX()+a.Dim[0]/2-b.getX()-b.Dim[0]/2,2)+Math.pow(a.getY()+a.Dim[1]/2-b.getY()-b.Dim[1]/2,2);
+	}
+
+	abstract public String getNick();
 }

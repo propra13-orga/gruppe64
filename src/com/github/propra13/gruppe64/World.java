@@ -1,7 +1,9 @@
 package com.github.propra13.gruppe64;
 
+import java.awt.Container;
+
 public class World extends Map{
-	private static char EXIT=1;
+	private boolean network=false;
 
 	public World(int spritewidth, int spriteheight) {
 		super(spritewidth, spriteheight);
@@ -18,5 +20,8 @@ public class World extends Map{
 	}
 	public int getMaxLevel(){
 		return 5;
+	}
+	public Container getCP(){
+		return this.getParent();
 	}
 }

@@ -4,22 +4,10 @@ package com.github.propra13.gruppe64;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
-import java.awt.FlowLayout;
-import java.awt.GridBagLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import javax.swing.Action;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 
-@SuppressWarnings("serial")
+
 public class Game implements Runnable{
 	
 
@@ -39,7 +27,7 @@ public class Game implements Runnable{
 	//active  Level
 	private Level aLevel;
 	
-	private Timer caretaker;
+	//private Timer caretaker;
 	
 	/** active Level **/
 	private int aLevelNr;
