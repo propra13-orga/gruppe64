@@ -3,8 +3,11 @@ package com.github.propra13.gruppe64;
 import java.awt.Container;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Stack;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import com.github.propra13.gruppe64.Door.cd;
 
 
 public class Level implements java.io.Serializable{
@@ -18,7 +21,7 @@ public class Level implements java.io.Serializable{
 	private Game game;
 	private Container cp;
 	private Player player; //networkf if NPlayer.class
-
+	public Stack<Door> fallBackDoor;
 
 	
 	private int levelNr;
@@ -105,8 +108,6 @@ public class Level implements java.io.Serializable{
 
 		System.out.print("\nw"+map.getWidth()+"h"+map.getHeight()+"\n"+aMap.toString());
 		cp.add(aMap);
-		//put player on top
-		aMap.setComponentZOrder(player, 0);
 		//aMap.startMotion();
 		aMap.repaint();
 	}
@@ -140,6 +141,35 @@ public class Level implements java.io.Serializable{
 	public int getLevelNr() {
 		return levelNr;
 	}
+	public void swiftTo(final Map a, final Map b, final Door.cd carDir){
+		player.movMode=Moveable.modes.idle;
+		a.remove(player);b.add(player);
+		final int moveX,moveY;
+		if(carDir==cd.EAST){
+			moveX=-3;moveY=0;
+			b.setLocation(aMap.getWidth(),0);
+			cp.add(b);
+		}else{
+			moveX=0;moveY=0;return;
+		}
+		final Timer moveTimer=new Timer();
+		TimerTask move = new TimerTask() {
+			public void run() {
+				aMap.setLocation(aMap.getX()+moveX, aMap.getY()+moveY);
+				b.setLocation(b.getX()+moveX, b.getY()+moveY);
+				if(aMap.getX()+aMap.getWidth()<0||aMap.getX()>cp.getWidth()){
+					b.setLocation(0, 0);
+					cp.remove(aMap);
+					player.movMode=Moveable.modes.moving;
+					aMap=b;
+					moveTimer.cancel();
+				}	
+			}
+		};
+		
+		moveTimer.schedule(move, 0, 10);
+	}
+		
 	public void enterDoor(Door door) {
 		// TODO if open Door
 		//target Door
@@ -151,9 +181,14 @@ public class Level implements java.io.Serializable{
 		}else{ //other Room from this
 			Door tDoor=door.getTarget();
 			Map tMap = (Map)tDoor.getParent();
-			setMap(tMap);
-			player.setLocation(tDoor.getX(),tDoor.getY());
-		}
+			if(door.carDir==Door.cd.EAST){
+				swiftTo(aMap, tMap, door.carDir);
+				player.setLocation(tDoor.getX(),tDoor.getY());
+			}else{
+				setMap(tMap);
+				player.setLocation(tDoor.getX(),tDoor.getY());
+			}
+		}	
 		
 	}
 	

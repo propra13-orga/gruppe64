@@ -19,8 +19,8 @@ public abstract class Moveable extends Sprite {
 	protected Map map;
 	public enum dir {up ,right,down,left};
 	public enum axis {x,y};
-	private enum modes {idle, attack, evade, block, moving};
-	private int mode=0;
+	protected enum modes {idle, attack, evade, block, moving};
+	public modes movMode=modes.moving;
 	protected ArrayList<Item> itemarr;
 	protected ArrayList<Item> slotarr;
 	protected String nick;

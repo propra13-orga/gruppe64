@@ -234,6 +234,7 @@ public class Map extends JPanel {
 	
 		if(cClass.equals(Player.class)){
 			this.playerList.add((Player)sp);
+			this.setComponentZOrder(sp, 0);
 		}
 		if(cClass.equals(Item.class)){
 			items.add((Item) sp);

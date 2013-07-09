@@ -40,7 +40,7 @@ public class Lobby implements ActionListener{
 		}
 	}
 
-	public Lobby(Container cp, Main main) {
+	public Lobby(Container cp, Main main, NPlayer player) {
 		this.cp=cp;
 		this.main =main;
 		playerList=new ArrayList<NPlayer>();
@@ -48,7 +48,7 @@ public class Lobby implements ActionListener{
 		cp.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		
-		NPlayer tplayer=new NPlayer(5,150);tplayer.setNick("serverOwner");
+		
 		
 
 
@@ -60,7 +60,7 @@ public class Lobby implements ActionListener{
 		c.gridy = 0;
 		cp.add( new JScrollPane(table), c);
 		
-		chat = new Chat(tplayer);
+		chat = new Chat(player);
 		chat.setPreferredSize(new Dimension(700,500));
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridheight = 1;
@@ -108,7 +108,7 @@ public class Lobby implements ActionListener{
 		main.pack();
 		// normaly first one
 	
-		addLocalPl(tplayer);
+		addLocalPl(player);
 		//Testing !! Server Edition!!
 				for(int i=0;i<3;i++) {
 					addPl(new NPlayer(5,150));
@@ -120,6 +120,7 @@ public class Lobby implements ActionListener{
 	public void addPl(NPlayer pl){
 		playerList.add(pl);	
 		correctNicks();
+		tableModel.fireTableDataChanged();
 	}
 	
 	public void addLocalPl(NPlayer pl){
@@ -130,7 +131,7 @@ public class Lobby implements ActionListener{
 			main.controller.setPlayer(player);
 			playerList.add(pl);	
 			correctNicks();
-		
+			tableModel.fireTableDataChanged();
 		}
 	}
 	public void correctNicks(){

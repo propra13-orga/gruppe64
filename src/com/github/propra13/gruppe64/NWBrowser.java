@@ -88,12 +88,14 @@ public class NWBrowser implements ActionListener {
 		if(ae.getSource()==this.join){
 
 			cp.removeAll();
-			lobby=new Lobby(cp, main);
+			lobby=new Lobby(cp, main,new NPlayer(5,150));
 		}
 		if(ae.getSource()==this.create){
 
 			cp.removeAll();
-			lobby=new Lobby(cp, main);
+			NPlayer tplayer= new NPlayer(5,150);
+			tplayer.setNick(nickname.getText());
+			lobby=new Lobby(cp, main,tplayer);
 		}
 		if(ae.getSource()==this.back){
 			main.initMain();

@@ -1,6 +1,7 @@
 package com.github.propra13.gruppe64;
 
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Graphics;
 
 public class Door extends Sprite implements ActiveArea{
@@ -11,6 +12,9 @@ public class Door extends Sprite implements ActiveArea{
 	public static int NOKEY=0;
 	public static int REDKEY=1;
 	public static int BLUEKEY=2;
+	
+	public enum cd{NONE,NORTH,EAST,SOUTH,WEST};
+	public cd carDir=cd.NONE;
 	
 	private boolean open;
 	private Door tDoor;
@@ -70,6 +74,17 @@ public class Door extends Sprite implements ActiveArea{
 		return open;
 	}
 
+	public void setCarDir(){
+		Container parent;
+		if((parent=this.getParent())!=null){
+			if(getX()<this.getWidth()*2){
+				carDir=cd.WEST;
+			}
+			if(getX()>parent.getWidth()-2*this.getWidth()){
+				carDir=cd.EAST;
+			}
+		}
+	}
 
 	@Override
 	public void onTouch(Moveable mv) {
@@ -80,6 +95,7 @@ public class Door extends Sprite implements ActiveArea{
 
 	@Override
 	public void onAction(Moveable mv) {
+		setCarDir();
 		if(Player.class.isAssignableFrom(mv.getClass())){
 			((Player)mv).getLevel().enterDoor(this);
 		}

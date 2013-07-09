@@ -84,6 +84,7 @@ public class Player extends Moveable {
 		g.drawString(nick, 10, 10);
 	}
 	public void updateMot(){
+		if(movMode!=modes.moving)return;
 		int x=this.getX();
 		int y=this.getY();
 		if(map.wouldTouch(x+vel[0],y,Dim[0],Dim[1])!='x'){
@@ -355,7 +356,7 @@ public class Player extends Moveable {
 	}
 
 	public void performAction() {
-		System.out.print("trYopenDoor");
+		if(movMode!=Moveable.modes.moving)return;
 		ActiveArea activeSprite = map.isOnActiveArea(this);
 		if(activeSprite!=null){
 			activeSprite.onAction(this);
