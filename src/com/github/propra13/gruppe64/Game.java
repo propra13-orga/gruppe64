@@ -4,6 +4,10 @@ package com.github.propra13.gruppe64;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Dimension;
+
+import javax.swing.BoxLayout;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 
@@ -35,34 +39,31 @@ public class Game implements Runnable{
 	private int levelNr;
 	/**last Level**/
 	private int lastLevelNr;
+	private JPanel mapHandler;
 	
 	
 	/**
 	 * cp ist content-pane von unserem JFrame
 	 */
 	public Game(Container cp, Main main, Controller controller) {
-		this.cp=cp;
+		this.cp=cp;//new JPanel();this.cp.setLayout(null);cp.add(this.cp,BorderLayout.CENTER);
 		this.main =main;
 		
 		//player and his statBar
 		player = new Player(0,150);
-		statBar = new StatBar(player);
-		chatp = new Chat(player);
-		chatinput = new JTextField();
-		chatinput.setBounds(0, 600, 700, 20);
-		chatinput.setToolTipText("chatinput");
-		chatinput.addKeyListener(controller);
+		
+		
 		
 		
 		
 		cp.setBackground(Color.WHITE);
-		cp.setLayout(null);//cp.setLayout(new BorderLayout());
+		cp.setLayout(new BoxLayout(cp, BoxLayout.Y_AXIS));//cp.setLayout(new BorderLayout());
 		//which level is reachable
 		levelNr =1;
 		aLevelNr=1;
 	
 		
-		statBar.setLevel(aLevelNr);
+
 		world = new World(50,50,aLevelNr,this);
 		lastLevelNr=world.getMaxLevel();
 		
@@ -70,12 +71,10 @@ public class Game implements Runnable{
 	}	
 
 	public void run(){
-		player.addStatBar(statBar);
-		player.addChatPane(chatp);
-		player.addChatInput(chatinput);
+		
 		
 
-		initPlayer();
+		initGamefield();
 		
 		
 		//show initial world
@@ -88,15 +87,36 @@ public class Game implements Runnable{
 		
 
 	}
-	public void initPlayer(){
-		//make Player ready
+	public void initGamefield(){
 		main.controller.setPlayer(player);
-		cp.add(statBar);
+		
+		chatp = new Chat(player);
+		chatinput = new JTextField();
+		chatinput.setMaximumSize(new Dimension(2000,20));//chatinput.setBounds(0, 600, 700, 20);
+		chatinput.setToolTipText("chatinput");
+		chatinput.addKeyListener(main.controller);
+		
+		statBar = new StatBar(player);
+		player.addStatBar(statBar);
+		player.addChatPane(chatp);
+		player.addChatInput(chatinput);
+		
+		
+		cp.add(statBar,cp);
 		statBar.repaint();
-		cp.add(chatp,BorderLayout.CENTER);
+		statBar.setLevel(aLevelNr);
+		statBar.repaint(30);
+		
+		cp.add(mapHandler=new JPanel(),cp);
+		mapHandler.setPreferredSize(new Dimension(1200,500));
+		mapHandler.setMaximumSize(new Dimension(3000,500));mapHandler.setLayout(null);
+		mapHandler.setBackground(Color.DARK_GRAY);mapHandler.setVisible(true);mapHandler.repaint(16);
+		
+		cp.add(chatp,cp);
 		chatp.repaint();
-		cp.add(chatinput,BorderLayout.CENTER);
+		cp.add(chatinput,cp);
 		chatinput.repaint();
+		main.pack();
 	}
 	public void startLevel(){
 		//entferne von Game verwaltete map
@@ -104,7 +124,7 @@ public class Game implements Runnable{
 			map.stopMotion();
 			map.removeAll();
 			map.remove(player);
-			cp.remove(map);
+			mapHandler.remove(map);
 			
 			map=null;
 		}
@@ -114,7 +134,7 @@ public class Game implements Runnable{
 		//aLevel.nextRoom();
 		aLevel.initLevel();
 		statBar.getStateFrom();
-		statBar.repaint(60);
+		
 
 	}
 	
@@ -159,7 +179,7 @@ public class Game implements Runnable{
 
 
 	public Container getCP() {
-		return cp;
+		return mapHandler;
 	}
 
 	public Player getPlayer() {

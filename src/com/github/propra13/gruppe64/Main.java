@@ -77,8 +77,8 @@ public class Main extends JFrame implements ActionListener{
 	private JButton bClose;
 
 
-	private int xFrame=1200;
-	private int yFrame=800;
+	private int xFrame=300;
+	private int yFrame=500;
 	
 	
 	public void initMain(){//TODO in Menu-Klasse auslagern

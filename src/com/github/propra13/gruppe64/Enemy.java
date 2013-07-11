@@ -104,4 +104,7 @@ public class Enemy extends Moveable {
 		// TODO Auto-generated method stub
 		return "Cat";
 	}
+	protected void die(){
+		map.remove(this);
+	}
 }

@@ -1,6 +1,7 @@
 package com.github.propra13.gruppe64;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ import javax.swing.JTextArea;
 
 
 public class StatBar extends JPanel{
-	static private  int panelH =150;
+	static private  int panelH =120;
 	static private int panelW =800;
 	private int health=200;
 	private int manahealth=200;
@@ -38,7 +39,7 @@ public class StatBar extends JPanel{
 		this.setLayout(null);
 		//Ueberschneidung mit map
 
-		this.setBounds(0, 350, panelW, panelH);
+		this.setPreferredSize(new Dimension(1200,panelH));this.setMaximumSize(new Dimension(2000,panelH));
 		//this.setSize(panelW,panelH);
 
 		this.setBackground(Color.GRAY);
@@ -88,7 +89,7 @@ public class StatBar extends JPanel{
   		ArrayList<Item> items= player.getItems();
   		for(int i=0;i<items.size();i++){
   			
-  			items.get(i).setLocation(3+i*60, 70);
+  			items.get(i).setLocation(3+i*60, 60);
   			items.get(i).setBorder(BorderFactory.createLineBorder(Color.black));
   			
   			if(items.get(i).name=='Y'){

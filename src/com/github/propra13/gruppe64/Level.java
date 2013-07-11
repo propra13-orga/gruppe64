@@ -121,7 +121,7 @@ public class Level implements java.io.Serializable{
 			tmpRoom = roomIterator.next();
 			//tmpRoom.add(player);
 			setMap(tmpRoom);
-			aMap.setLocation(Player.prefPos[0]-player.getX(),Player.prefPos[1]-player.getY());
+			aMap.setLocation(aMap.getParent().getWidth()/2-player.getX(),aMap.getParent().getHeight()/2-player.getY());
 		} else {
 			System.out.print("nextLevel");
 			removeOldMap();
@@ -230,7 +230,7 @@ public class Level implements java.io.Serializable{
 			}else{*/
 				setMap(tMap);
 				player.setLocation(tDoor.getX(),tDoor.getY());
-				aMap.setLocation(Player.prefPos[0]-player.getX(),Player.prefPos[1]-player.getY());
+				aMap.setLocation(aMap.getParent().getWidth()/2-player.getX(),aMap.getParent().getHeight()/2-player.getY());
 			//}
 		}	
 		

@@ -25,7 +25,7 @@ public class Chat extends JScrollPane{
 		player=pl;
 		//this.setLayout(null);
 		this.setPreferredSize(new Dimension(700,90));
-		this.setBounds(0, 500,700,100);
+		//this.setBounds(0, 500,700,100);
 		//this.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		this.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		this.setEnabled(true);

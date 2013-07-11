@@ -24,7 +24,7 @@ public class NPC extends Moveable implements ActiveArea{
 		switch(this.name){
 		case 'O':
 			nick="Meister des Zen";
-			sentence.add("Hallo mein Freund!Die Welt wird von Katzen terrorisiert. Benutze space um auf die Katzen einzuschlagen und benutze c um deine Waffen zu wechseln. Wenn du genügend Mana hast kannst du mit h dein Leben regenerieren.Mit einem Doppelklick kannst du Lebens- und Manatränke verwenden");
+			sentence.add("Hallo mein Freund!Die Welt wird von Katzen terrorisiert. Benutze space um auf die Katzen einzuschlagen und benutze c um deine Waffen zu wechseln. Wenn du gen��gend Mana hast kannst du mit h dein Leben regenerieren.Mit einem Doppelklick kannst du Lebens- und Manatr��nke verwenden");
 			sentence.add("Du bist auf dich alleingestellt");
 		}
 	}
@@ -78,5 +78,8 @@ public class NPC extends Moveable implements ActiveArea{
 	public boolean onActionAction() {
 		// TODO Auto-generated method stub
 		return true;
+	}
+	protected void die(){
+		map.remove(this);
 	}
 }

@@ -142,9 +142,8 @@ public abstract class Moveable extends Sprite {
 		if(this.health<=0)	{ this.die();}
 		
 	}
-	protected void die(){
-		map.remove(this);
-	}
+	protected abstract void die();
+	
 	public ArrayList<Item> getSlots(){
 		return slotarr;
 	}
