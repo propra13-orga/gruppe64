@@ -1,6 +1,7 @@
 package com.github.propra13.gruppe64;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -69,5 +70,18 @@ public class Shop extends Map{
 		return map;
 
 	}
-	
+	public Component add(Player pl){
+		//Map is Super
+		super.add(pl);
+		for(ActiveArea aActive: activeAreas){
+			if(aActive.getClass().equals(Door.class)){
+				Door tDoor=(Door)aActive;
+				if(tDoor.getSpecial().equals("exit")){
+					//TODO
+				}
+			}
+			
+		}
+		return null;
+	}
 }

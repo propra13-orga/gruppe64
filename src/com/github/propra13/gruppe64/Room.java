@@ -52,40 +52,7 @@ public class Room extends Map {
 		}
 		
 	}
-	/**
-	 *  extends the  add method from Map, to do Room specific tasks for e.g. Movables or Doors
-	 */
-	@Override
-	public Component add(Sprite sp){
-		//Do map and Container things
-		Component component=super.add(sp);
-
-		Class<? extends Sprite> cClass = sp.getClass();
-		
-	
-
-		return component;
-	}
-	
-	/*@Override
-	public void updateState(Moveable character) {
-		char touchedSprite = wouldTouch(character.getRectangle());	
-		//System.out.println(player.getVisibleRect().toString());
-		if(character.getClass().equals(Player.class)){
-		switch(touchedSprite){
-		
-		case 'a':case 'A':
-			// leve.nextRoom();
-		break;
-		default:
-		break;
-		}
-		}
-		
-	}*/
-	
-
-	public static String charString(char[][] m){
+ static String charString(char[][] m){
 		String tmp="";
 		for (int i=0;  i< 7; i++){
 			for(int j=0; j< 10;j++){

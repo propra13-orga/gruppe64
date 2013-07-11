@@ -1,12 +1,20 @@
 package com.github.propra13.gruppe64;
 
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Graphics;
 
-public class Door extends Sprite {
+public class Door extends Sprite implements ActiveArea{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6013068930574390100L;
 	public static int NOKEY=0;
 	public static int REDKEY=1;
 	public static int BLUEKEY=2;
+	
+	public enum cd{NONE,NORTH,EAST,SOUTH,WEST};
+	public cd carDir=cd.NONE;
 	
 	private boolean open;
 	private Door tDoor;
@@ -15,15 +23,11 @@ public class Door extends Sprite {
 	private int doorNr;
 	private String special;
 	
+	
 	private static int xDim = 50;
 	private static int yDim =50;
 	
 
-	public Door() {
-		// TODO Auto-generated constructor stub
-	}
-
-	
 	public Door(int x, int y, int doorNr, int leadsToNr) {
 		super(x,y,xDim, yDim);
 		this.doorNr=doorNr;
@@ -68,6 +72,42 @@ public class Door extends Sprite {
 	}
 	public boolean isOpen(){
 		return open;
+	}
+
+	public void setCarDir(){
+		Container parent;
+		if((parent=this.getParent())!=null){
+			if(getX()<this.getWidth()*2){
+				carDir=cd.WEST;
+			}
+			if(getX()>parent.getWidth()-2*this.getWidth()){
+				carDir=cd.EAST;
+			}
+		}
+	}
+
+	@Override
+	public void onTouch(Moveable mv) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void onAction(Moveable mv) {
+		setCarDir();
+		if(Player.class.isAssignableFrom(mv.getClass())){
+			((Player)mv).getLevel().enterDoor(this);
+		}
+
+	}
+	@Override
+	public boolean onTouchAction() {
+		return false;
+	}
+	@Override
+	public boolean onActionAction() {
+		return true;
 	}
 
 }

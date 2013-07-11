@@ -1,12 +1,19 @@
 package com.github.propra13.gruppe64;
 
-public class World extends Map{
-	private static char EXIT=1;
+import java.awt.Container;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-	public World(int spritewidth, int spriteheight) {
-		super(spritewidth, spriteheight);
-		// TODO Auto-generated constructor stub
-	}
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
+
+public class World extends Map implements ActionListener{
+	private boolean network=false;
+	private JPanel msgBox;
+	private JButton okButton;
+	private JButton backButton;
+
 
 	public World(int spritewidth, int spriteheight, int level, Game game) {
 		//super(spritewidth, spriteheight, level, game);
@@ -19,4 +26,19 @@ public class World extends Map{
 	public int getMaxLevel(){
 		return 5;
 	}
+	public Container getCP(){
+		return this.getParent();
+	}
+	public void showMsg(){
+		msgBox = new JPanel();
+		msgBox.setLocation(this.getWidth()/2-msgBox.getWidth()/2, this.getHeight()/2-msgBox.getHeight()/2);
+		this.add(msgBox);
+	}
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 }

@@ -46,6 +46,10 @@ public class MapGenerator {
 		iLineDesc = lineDesc.iterator();
 		doorList = new ArrayList<Door>();
 	}
+	public MapGenerator(String gFilePath, ArrayList<Door> outsideDoors) {
+		this(gFilePath);
+		doorList.addAll(outsideDoors);
+	}
 	//Array
 	private String pathString(int i, int j){
 		if (pathToken.length>2){
@@ -54,14 +58,6 @@ public class MapGenerator {
 		return null;
 	}
 
-	/**
-	 * @param args
-	 */
-	private static void main(String[] args) {
-		MapGenerator mg = new MapGenerator("test%stest");
-		System.out.print(mg.pathString(1,2));
-	}
-	
 
 	/* 
 	 * Ruft res/Karten/Level[lvl]_Raum[room].txt auf und bestimmt seine Groe��e
@@ -71,7 +67,7 @@ public class MapGenerator {
 	 * 	ODER
 	 * - null wenn res/Karten/Level[lvl]_Raum[room].txt nicht existiert
 	 */
-	public int[] getMapSize(int lvl, int room){
+	public int[] getMapSize(String fPath){
 		
 		int linelength = 0;
 		int linenumber = 0;
@@ -81,7 +77,7 @@ public class MapGenerator {
 		//System.out.print(this.pathString(lvl,room));
 		try {
 			
-			f = new FileReader(this.pathString(lvl,room));
+			f = new FileReader(fPath);
 
 			BufferedReader buffer = new BufferedReader(f);
 		
@@ -114,7 +110,7 @@ public class MapGenerator {
 	 * 	ODER
 	 * - null, wenn res/Karten/Level[lvl]_Raum[room].txt nicht existiert
 	 */
-	public char[][] readFile(int mapwidth, int mapheight, int lvl, int room){
+	public char[][] readFile(int mapwidth, int mapheight, String fPath){
 		
 		char[][] map = new char[mapheight][mapwidth];
 		
@@ -122,7 +118,7 @@ public class MapGenerator {
 		String currentline;
 		try {
 			//"res/Karten/Level"+lvl+"_Raum"+room+".txt"
-			f = new FileReader(this.pathString(lvl,room));
+			f = new FileReader(fPath);
 			BufferedReader buffer = new BufferedReader(f);
 			
 			for( int j=0; j<mapheight; j++){
@@ -160,29 +156,29 @@ public class MapGenerator {
 	 * 	ODER
 	 * - null, wenn res/Karten/Level[lvl]_Raum[room].txt nicht existiert
 	 */
-	public char[][] readRoom(int lvl, int room){
+	public char[][] readRoom(String fPath){
 		
 		int mapwidth, mapheight;
-		int[] mapsize = getMapSize(lvl, room);
+		int[] mapsize = getMapSize(fPath);
 		
 		if(mapsize==null){return null;}
 		mapheight= mapsize[0];
 		mapwidth = mapsize[1];
 		
-		char[][] map = readFile( mapwidth, mapheight, lvl, room);
+		char[][] map = readFile( mapwidth, mapheight, fPath);
 		return map;
 	}
 	public  ArrayList<Room> generateRoomList(Level level){
 		ArrayList<Room> roomList = new ArrayList<Room>();
 		char[][] tmpArray;
 		int lRoomNr=1, lvl = level.getLevelNr();
-		tmpArray=this.readRoom(lvl, lRoomNr);
+		tmpArray=this.readRoom(this.pathString(lRoomNr, lvl));
 		while(tmpArray!=null){
 			System.out.println(Room.charString(tmpArray));
 			
 			Room raum = new Room(level,tmpArray);
 			roomList.add(raum);
-			tmpArray=this.readRoom(lvl, ++lRoomNr);
+			tmpArray=this.readRoom(this.pathString(lvl,++lRoomNr));
 		}
 		//procesprocess 
 		iLineDesc = lineDesc.iterator();
@@ -204,6 +200,10 @@ public class MapGenerator {
 			}
 		}
 		return roomList;
+	}
+	public World generateWorld(String worldFile, int lvlUnlocked){
+		World world = null;
+		return world;
 	}
 	private <T extends Map> void preProcessMap(T map, ArrayList<T> mapList){
 		// next LineDesc Set for the next map
@@ -247,7 +247,7 @@ public class MapGenerator {
 							Door tDoor=new Door(x*Map.spritewidth,y*Map.spriteheight,tDoorNr,tLeadsToNr);
 							doorList.add(tDoor);
 							map.add(tDoor);
-						}else if(protoDesc==3){
+						}else if(protoDesc==3){ //special Door
 							int tDoorNr=Integer.parseInt(cDesc[1]);
 							Door tDoor=new Door(x*Map.spritewidth,y*Map.spriteheight,tDoorNr,cDesc[2],Integer.parseInt(cDesc[3]));
 							doorList.add(tDoor);

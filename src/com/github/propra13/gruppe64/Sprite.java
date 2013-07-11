@@ -18,9 +18,8 @@ public class Sprite extends JComponent implements MouseListener{
 
 
 	/**
-	 * Ausmasse
+	 * Ausmasse (x,y)
 	 */
-	
 	protected int[] Dim=new int[2];
 	
 	private Rectangle rectangle; 
