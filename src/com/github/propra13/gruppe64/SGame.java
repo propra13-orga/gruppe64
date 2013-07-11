@@ -9,6 +9,9 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Timer;
@@ -28,14 +31,14 @@ public class SGame extends Game implements Runnable{
 	 * Instanzvariablen
 	 */
 	protected ArrayList<Player> playerList;
-
+	public final static int PORTNR=1234;
 	
 	
 	/**
 	 * cp ist content-pane von unserem JFrame
 	 */
-	public SGame(Container cp, Main main, Controller controller) {
-		super(cp,main,controller);
+	public SGame(Container cp, Main main) {
+		super(cp,main,main.controller);
 		addPl(super.getPlayer());
 	}	
 	
@@ -58,9 +61,43 @@ public class SGame extends Game implements Runnable{
 		}
 	}
 	public void run(){
-		//super.run();
+		
 	}
+	public void startServer(){
+		ServerSocket serverSocket=null;
+		try {
+			serverSocket = new ServerSocket( PORTNR );
 
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		while (serverRunning)
+		    {
+		      Socket client = null;
+	
+		      try
+		      {
+		        client = serverSocket.accept();
+		        handleConnection(client);
+		      }
+		      catch ( IOException e ) {
+		        e.printStackTrace();
+		      }catch ( NullPointerException e){
+		    	  e.printStackTrace();
+		      }
+		      finally {
+		        if ( client != null )
+		          try { client.close(); } catch ( IOException e ) { }
+		      }
+		    }
+		}
+
+	private void handleConnection(Socket client) {
+		
+		
+	}
 
 	
 }

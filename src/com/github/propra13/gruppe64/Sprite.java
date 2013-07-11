@@ -95,12 +95,7 @@ public class Sprite extends JComponent implements MouseListener{
 			/*
 			
 			*/
-			case 'O':
-				
-				Image img9 = Toolkit.getDefaultToolkit().getImage("res/oldman.png");
-			    g.drawImage(img9, 0, 0, this);
-			    g.finalize();	
-			break;
+			
 			
 	//		case 'r':
 				

@@ -111,7 +111,7 @@ public class Lobby implements ActionListener{
 		addLocalPl(player);
 		//Testing !! Server Edition!!
 				for(int i=0;i<3;i++) {
-					addPl(new NPlayer(5,150));
+					addPl(new NPlayer("player"));
 
 				}
 		

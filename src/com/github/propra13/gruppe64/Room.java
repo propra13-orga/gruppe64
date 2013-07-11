@@ -2,6 +2,9 @@ package com.github.propra13.gruppe64;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -71,6 +74,25 @@ public class Room extends Map {
 			tmp+="\n";
 		}
 		return tmp;
+	}
+
+	public void paintComponent(Graphics g){
+		super.paintComponent(g);
+		Image img9 = Toolkit.getDefaultToolkit().getImage("res/oldman.png");
+		for(int i=0;i<this.mapheight;i++){
+			for(int j=0;j<this.mapwidth;j++){
+			    g.drawImage(img9, j*wallSize, i*wallSize, this);
+			    
+			}
+				
+		}
+		g.finalize();
+	}
+
+	@Override
+	public void showMsg() {
+		// TODO Auto-generated method stub
+		
 	}
 }
 

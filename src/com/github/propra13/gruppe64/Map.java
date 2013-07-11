@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 
 
 @SuppressWarnings({ "serial"})
-public class Map extends JPanel {
+public abstract class Map extends JPanel {
 
 	/*
 	 * TODO
@@ -38,10 +38,10 @@ public class Map extends JPanel {
 	protected ArrayList<ActiveArea> activeAreas;
 	
 	// TODO sortiern nach Room etc.
-	protected Timer hauTimer;
-	protected TimerTask hau;
-	protected Timer moveTimer;
-	protected TimerTask move;
+	protected transient Timer hauTimer;
+	protected transient TimerTask hau;
+	protected transient Timer moveTimer;
+	protected transient TimerTask move;
 	
 
 	/*  Beispiel: x_max = mapwidth = 4 und y_max = mapheight = 3:
@@ -53,7 +53,7 @@ public class Map extends JPanel {
 	//char map[][]=new char [mapwidth][mapheight];
 
 	protected ArrayList<Player> playerList;
-	protected Game game;
+	protected transient Game game; //if even necessary
 	protected CopyOnWriteArrayList<Door> doorList;
 	/**
 	 * Erzeuge neues JPanel und ordne es an, hier kann auch das auslesen aus Datei gestartet werden
@@ -351,6 +351,7 @@ public class Map extends JPanel {
 		}
 		
 	}
+	abstract public void showMsg();
 	
 	
 }

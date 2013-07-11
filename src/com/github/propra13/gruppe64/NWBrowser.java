@@ -7,6 +7,9 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -86,20 +89,43 @@ public class NWBrowser implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getSource()==this.join){
-
-			cp.removeAll();
-			lobby=new Lobby(cp, main,new NPlayer(5,150));
+			try {
+				join(InetAddress.getByName(svrname.getText()));
+			} catch (UnknownHostException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
 		}
 		if(ae.getSource()==this.create){
-
-			cp.removeAll();
-			NPlayer tplayer= new NPlayer(5,150);
-			tplayer.setNick(nickname.getText());
-			lobby=new Lobby(cp, main,tplayer);
+			SGame sgame=new SGame(cp, main);
+			sgame.startServer();
+			try {
+				join(InetAddress.getLocalHost());
+			} catch (UnknownHostException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
 		if(ae.getSource()==this.back){
 			main.initMain();
 		}
 		
+	}
+	private void join(InetAddress svr){
+		NPlayer tplayer= new NPlayer(nickname.getText());
+		try {
+			tplayer.connect(svr);
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		cp.removeAll();
+		lobby=new Lobby(cp, main,tplayer);
 	}
 }

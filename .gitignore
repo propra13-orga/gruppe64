@@ -5,4 +5,5 @@ bin/
 .euml2
 .umlproject
 .classpath
+sav/
 doc/

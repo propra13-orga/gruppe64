@@ -21,19 +21,19 @@ public class Player extends Moveable {
 
 	private StatBar statBar;
 	private int goldmoney;
-
+	public static final int[] prefPos={600, 400};
 
 
 	private int w,a;						//waffen Nr im Waffenslot
 
-	private Timer timer_pl;
+	private transient Timer timer_pl;
 	private int mode=0;
 	TimerTask action;
 
 	// leben übrig
 	private int life;
 
-	private Game game;
+	private transient Game game;
 	private int level;
 	/**
 	 * 	freigeschaltenes Level des jeweiligen Spielers
@@ -90,12 +90,14 @@ public class Player extends Moveable {
 		if(map.wouldTouch(x+vel[0],y,Dim[0],Dim[1])!='x'){
 			
 			this.setLocation(x+vel[0],y);
+			map.setLocation(map.getX()-vel[0], map.getY());
 		}
 		x=this.getX();
 		y=this.getY();
 		if(map.wouldTouch(x,y-vel[1],Dim[0],Dim[1])!='x'){
 			
 			this.setLocation(x,y-vel[1]);
+			map.setLocation(map.getX(), map.getY()+vel[1]);
 		}
 	//	map.updateState(this);
 		x=this.getX();
@@ -166,16 +168,17 @@ public class Player extends Moveable {
 		super.damage(dmg, elementwaffe);
 		
 		statBar.updateHealth(this.health);
-		if(this.health<=0){
-			die();
-	}
+
 	}
 	
 	/**
 	 * man kann nur in einem Level sterben, also 
 	 */
-	private void die(){
+	@Override
+	protected void die(){
 		life--;
+		map.remove(this);
+		map.showMsg();
 		if(life>0){
 			aLevel.reset(this);
 			health=100;
@@ -273,8 +276,7 @@ public class Player extends Moveable {
 		statBar.getStateFrom();
 	}
 	
-	
-	
+		
 	public void abortTimer(){
 		timer_pl.cancel();
 		timer_pl.purge();

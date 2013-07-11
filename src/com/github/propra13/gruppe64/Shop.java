@@ -84,4 +84,9 @@ public class Shop extends Map{
 		}
 		return null;
 	}
+	@Override
+	public void showMsg() {
+		// TODO Auto-generated method stub
+		
+	}
 }

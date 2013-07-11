@@ -41,7 +41,7 @@ public class StatBar extends JPanel{
 		this.setBounds(0, 350, panelW, panelH);
 		//this.setSize(panelW,panelH);
 
-		this.setBackground(Color.RED);
+		this.setBackground(Color.GRAY);
 		this.setVisible(true);
 		
 		
@@ -58,12 +58,12 @@ public class StatBar extends JPanel{
   	public void paintComponent(java.awt.Graphics g){
   		super.paintComponent(g);
 		g.setColor(Color.green);
-  		g.fillRect(10, 10,health, 30);
+  		g.fillRect(10, 10,health, 7);
 	//	g.drawRect(10,50,90,30);
   		
   		
   		g.setColor(Color.blue);
-  		g.fillRect(10,50,manahealth,30);
+  		g.fillRect(10,20,manahealth,7);
   		
   		g.setColor(Color.white);
   		if(player.getGold()>0){
@@ -78,7 +78,7 @@ public class StatBar extends JPanel{
 
   		for(int i=0;i<slots.size();i++){
  
-  			slots.get(i).setLocation(220+i*60, 10);
+  			slots.get(i).setLocation(220+i*60, 3);
   			slots.get(i).setBorder(BorderFactory.createLineBorder(Color.black));
   			this.add(slots.get(i));
   		}
@@ -88,7 +88,7 @@ public class StatBar extends JPanel{
   		ArrayList<Item> items= player.getItems();
   		for(int i=0;i<items.size();i++){
   			
-  			items.get(i).setLocation(220+i*60, 70);
+  			items.get(i).setLocation(3+i*60, 70);
   			items.get(i).setBorder(BorderFactory.createLineBorder(Color.black));
   			
   			if(items.get(i).name=='Y'){

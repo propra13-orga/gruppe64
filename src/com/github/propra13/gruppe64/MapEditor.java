@@ -16,4 +16,10 @@ public class MapEditor extends Map{
 		
 	}
 
+	@Override
+	public void showMsg() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

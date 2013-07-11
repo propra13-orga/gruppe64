@@ -139,10 +139,12 @@ public abstract class Moveable extends Sprite {
 		else {dmg = dmg*2;} // doppelter Schaden, da verschiedene Elemente von Charakter und Waffe
 		
 		this.health -=dmg;
-		if(this.health<=0)	{ map.remove(this);}
+		if(this.health<=0)	{ this.die();}
 		
 	}
-	
+	protected void die(){
+		map.remove(this);
+	}
 	public ArrayList<Item> getSlots(){
 		return slotarr;
 	}

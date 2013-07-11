@@ -1,6 +1,11 @@
 package com.github.propra13.gruppe64;
 
 import java.awt.Container;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Stack;
@@ -18,7 +23,7 @@ public class Level implements java.io.Serializable{
 	ArrayList<Room> roomList;
 	ArrayList<Moveable> moveable;
 	
-	private Game game;
+	private transient Game game;
 	private Container cp;
 	private Player player; //networkf if NPlayer.class
 	public Stack<Door> fallBackDoor;
@@ -30,6 +35,8 @@ public class Level implements java.io.Serializable{
 	private Iterator<Room> roomIterator;
 	//current active Room
 	private Map aMap;
+
+	private World world;
 
 
 	
@@ -48,27 +55,62 @@ public class Level implements java.io.Serializable{
 		this.levelNr=levelnr;
 		
 		roomList = new ArrayList<Room>();
-
+		storeAllRooms(levelNr);
 	}
 	public void initLevel(){
-		readAllRooms(levelNr);
+		roomList=getAllRooms();
+		boolean entranceFound=false;
+		if(roomList.get(0)==null){
+			setMap(world);
+		}
 		roomIterator = roomList.iterator();
-		for(Room iRoom: roomList){
+		for(Map iMap: roomList){
 			//iRoom.removeAll();
-			iRoom.drawMap();
-			iRoom.startMotion();
+			iMap.drawMap();
+			iMap.startMotion();
 		}
 		this.nextRoom();
 	
 	}
-	public void readAllRooms(int lvl){
+	private ArrayList<Room> getAllRooms() {
+		try
+	      {
+	         FileInputStream fileIn = new FileInputStream("sav/roomList.tmp");
+	         ObjectInputStream in = new ObjectInputStream(fileIn);
+	         roomList = (ArrayList<Room>) in.readObject();
+	         in.close();
+	         fileIn.close();
+	      }catch(IOException i)
+	      {
+	         i.printStackTrace();
+	         return null;
+	      }catch(ClassNotFoundException c)
+	      {
+	         System.out.println("class not found");
+	         c.printStackTrace();
+	         return null;
+	      }
+		return roomList;
+	}
+	public void storeAllRooms(int lvl){
 		
 
 		char[][] tmpArray;
 		MapGenerator mg= new MapGenerator("res/Karten/Level%i_Raum%i.txt");
-		roomList=mg.generateRoomList(this);
+		ArrayList<Room> roomList2store=mg.generateRoomList(this);
 
 		System.out.println("Level "+lvl+ " hat "+roomList.size());
+		 try
+	      {
+	         FileOutputStream fileOut =new FileOutputStream("sav/roomList.tmp");
+	         ObjectOutputStream out = new ObjectOutputStream(fileOut);
+	         out.writeObject(roomList2store);
+	         out.close();
+	         fileOut.close();
+	      }catch(IOException i)
+	      {
+	          i.printStackTrace();
+	      }
 	}
 	/**
 	 * next Room
@@ -79,6 +121,7 @@ public class Level implements java.io.Serializable{
 			tmpRoom = roomIterator.next();
 			//tmpRoom.add(player);
 			setMap(tmpRoom);
+			aMap.setLocation(Player.prefPos[0]-player.getX(),Player.prefPos[1]-player.getY());
 		} else {
 			System.out.print("nextLevel");
 			removeOldMap();
@@ -108,7 +151,7 @@ public class Level implements java.io.Serializable{
 
 		System.out.print("\nw"+map.getWidth()+"h"+map.getHeight()+"\n"+aMap.toString());
 		cp.add(aMap);
-		//aMap.startMotion();
+		
 		aMap.repaint();
 	}
 
@@ -136,7 +179,7 @@ public class Level implements java.io.Serializable{
 	//TODO denke an network
 	public void reset(Player pl) {
 		
-		this.initLevel();
+		//this.initLevel();
 	}
 	public int getLevelNr() {
 		return levelNr;
@@ -181,13 +224,14 @@ public class Level implements java.io.Serializable{
 		}else{ //other Room from this
 			Door tDoor=door.getTarget();
 			Map tMap = (Map)tDoor.getParent();
-			if(door.carDir==Door.cd.EAST){
+			/*if(door.carDir==Door.cd.EAST){
 				swiftTo(aMap, tMap, door.carDir);
 				player.setLocation(tDoor.getX(),tDoor.getY());
-			}else{
+			}else{*/
 				setMap(tMap);
 				player.setLocation(tDoor.getX(),tDoor.getY());
-			}
+				aMap.setLocation(Player.prefPos[0]-player.getX(),Player.prefPos[1]-player.getY());
+			//}
 		}	
 		
 	}
