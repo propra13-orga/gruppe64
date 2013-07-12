@@ -34,7 +34,7 @@ public class Player extends Moveable {
 	private int life;
 
 	private transient Game game;
-	private int level;
+	int level;
 	/**
 	 * 	freigeschaltenes Level des jeweiligen Spielers
 	 * 
@@ -42,7 +42,7 @@ public class Player extends Moveable {
 	 */
 	private int lvlUnl;
 	private int gold=0;
-	private Level aLevel;
+	public  Level aLevel;
 	//private boolean hasArmor=false;
 	//private boolean hasArmorFire=false;
 	
@@ -90,14 +90,14 @@ public class Player extends Moveable {
 		if(map.wouldTouch(x+vel[0],y,Dim[0],Dim[1])!='x'){
 			
 			this.setLocation(x+vel[0],y);
-			map.setLocation(map.getX()-vel[0], map.getY());
+			if(map.getClass().equals(Room.class))map.setLocation(map.getX()-vel[0], map.getY());
 		}
 		x=this.getX();
 		y=this.getY();
 		if(map.wouldTouch(x,y-vel[1],Dim[0],Dim[1])!='x'){
 			
 			this.setLocation(x,y-vel[1]);
-			map.setLocation(map.getX(), map.getY()+vel[1]);
+			if(map.getClass().equals(Room.class))map.setLocation(map.getX(), map.getY()+vel[1]);
 		}
 	//	map.updateState(this);
 		x=this.getX();
@@ -177,15 +177,14 @@ public class Player extends Moveable {
 	@Override
 	protected void die(){
 		life--;
-		map.remove(this);
-		map.showMsg();
 		if(life>0){
 			aLevel.reset(this);
 			health=100;
 			statBar.updateHealth(health);
+			aLevel.setOnDoor(aLevel.entrance);
 		} else {
-
-			aLevel.gameOver();
+			
+			aLevel.gameLost();
 		}
 
 	}
@@ -333,7 +332,7 @@ public class Player extends Moveable {
 	}
 
 	public void setLvlUnlocked(int lvlUnl) {
-		this.lvlUnl = lvlUnl;
+		if(this.lvlUnl < lvlUnl)this.lvlUnl = lvlUnl;
 	}
 
 	public String getNick() {

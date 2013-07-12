@@ -50,7 +50,7 @@ public class Game implements Runnable{
 		this.main =main;
 		
 		//player and his statBar
-		player = new Player(0,150);
+		player = new Player(0,50);
 		
 		
 		
@@ -63,11 +63,11 @@ public class Game implements Runnable{
 		aLevelNr=1;
 	
 		
-
-		world = new World(50,50,aLevelNr,this);
+		MapGenerator mg=new MapGenerator();
+		world = (World) mg.generateMap(World.class, "res/Karten/world.txt");
 		lastLevelNr=world.getMaxLevel();
-		
-		
+		world.drawMap();
+		world.game=this;
 	}	
 
 	public void run(){
@@ -81,7 +81,7 @@ public class Game implements Runnable{
 		
 		
 		//start first level
-		startLevel();
+		showWorld();
 		
 		
 		
@@ -118,14 +118,12 @@ public class Game implements Runnable{
 		chatinput.repaint();
 		main.pack();
 	}
-	public void startLevel(){
+	public void startLevel(int aLevelNr){
 		//entferne von Game verwaltete map
 		if(map!=null){
 			map.stopMotion();
-			map.removeAll();
 			map.remove(player);
-			mapHandler.remove(map);
-			
+			mapHandler.removeAll();
 			map=null;
 		}
 		aLevel = new Level(this, aLevelNr);
@@ -134,7 +132,7 @@ public class Game implements Runnable{
 		//aLevel.nextRoom();
 		aLevel.initLevel();
 		statBar.getStateFrom();
-		
+		aLevel.setOnDoor(aLevel.entrance);
 
 	}
 	
@@ -142,28 +140,14 @@ public class Game implements Runnable{
 	 * beendet das Game
 	 * TODO 
 	 */
-	public void gameOver() {
+	public void return2Main() {
 
 		cp.removeAll();
 		cp.repaint();
-		main.win(false);
+		main.initMain();
 		
 	}
-	
-	/**
-	 * Wechset ins naechste Level
-	 */
-	public void nextLevel() {
-		//setzte naechstes Level
-		aLevelNr++;
-		if(aLevelNr>lastLevelNr){
-			cp.removeAll();
-			main.win(true);
-		}else {
-			//startLevel();
-			showShop();
-		}
-	}
+
 
 	public void showShop(){
 		map = new Shop(50,50,this);
@@ -186,9 +170,18 @@ public class Game implements Runnable{
 		return player;
 	}
 
-	public void showWorld() {
-		//this.levelNr = levelNr;
+	public void showMap(Map map) {
+		this.map=map;
+		mapHandler.add(map);
+		map.add(player);map.startMotion();
+		mapHandler.repaint();
 	}
+
+	public void showWorld() {
+		player.setLevel(null);
+		showMap(world);
+	}
+
 	
 }
 

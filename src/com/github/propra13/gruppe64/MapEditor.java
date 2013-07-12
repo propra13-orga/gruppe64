@@ -22,4 +22,10 @@ public class MapEditor extends Map{
 		
 	}
 
+	@Override
+	public void enterDoor(Door door, Player mv) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -2,6 +2,7 @@ package com.github.propra13.gruppe64;
 
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Font;
 import java.awt.Graphics;
 
 public class Door extends Sprite implements ActiveArea{
@@ -9,19 +10,18 @@ public class Door extends Sprite implements ActiveArea{
 	 * 
 	 */
 	private static final long serialVersionUID = 6013068930574390100L;
-	public static int NOKEY=0;
-	public static int REDKEY=1;
-	public static int BLUEKEY=2;
+	public static enum Key{no,red,green,blue}; 
 	
 	public enum cd{NONE,NORTH,EAST,SOUTH,WEST};
 	public cd carDir=cd.NONE;
 	
-	private boolean open;
+	boolean open;
 	private Door tDoor;
-	private int key=NOKEY;
+	private Key key=Key.no;
 	private int tDoorNr;
 	private int doorNr;
 	private String special;
+	public  int specialNr;
 	
 	
 	private static int xDim = 50;
@@ -39,12 +39,16 @@ public class Door extends Sprite implements ActiveArea{
 		this.doorNr=doorNr;
 		this.tDoorNr=-1;
 		this.special=special;
+		this.specialNr=specialNr;
 		open=true;
 	}
 	public void paintComponent(Graphics g){
 		
-				g.setColor(Color.green); 
-				g.fillRect(0, 0,Dim[0],Dim[1]);
+				if(open)g.setColor(Color.green);else g.setColor(Color.red);
+				g.fillRect(0, 0,Dim[0],Dim[1]);g.setColor(Color.gray); 
+				g.setFont(new Font ("Arial", Font.PLAIN , 11));
+				g.drawString(special+","+specialNr, 1, 10);
+				g.finalize();
 	}
 	public int getLeadToNr() {
 		return tDoorNr;
@@ -60,17 +64,17 @@ public class Door extends Sprite implements ActiveArea{
 			return this;
 		return tDoor;
 	}
-	public int getKey(){
+	public Key getKey(){
 		return key;
 	}
-	public void setKey(int key){
+	public void setKey(Key key){
 		this.key=key;
 	}
 
 	public String getSpecial() {
 		return special;
 	}
-	public boolean isOpen(){
+	public boolean open(Key key){
 		return open;
 	}
 
@@ -97,7 +101,7 @@ public class Door extends Sprite implements ActiveArea{
 	public void onAction(Moveable mv) {
 		setCarDir();
 		if(Player.class.isAssignableFrom(mv.getClass())){
-			((Player)mv).getLevel().enterDoor(this);
+			((Map)this.getParent()).enterDoor(this, (Player)mv);
 		}
 
 	}

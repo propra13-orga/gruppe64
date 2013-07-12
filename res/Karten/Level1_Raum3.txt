@@ -1,7 +1,7 @@
 xxxxxxxxxx
 x        D;D,3,1
 x        x;
-D  gg    D;D,4,2;this leads to prev room;  haha;D,7,world,2; last leads to better world;)
+D  gg    D;D,4,2;this leads to prev room;  haha;D,goal,2; last leads to better world;)
 x  gg    x
 x        x
 xxxxxxxxxx

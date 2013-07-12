@@ -1,7 +1,7 @@
 xxxxxxxxxx
 xx xx xxxx
 xxgxxgxxxx
-e   H    a
+D   H    D;D,entrance,0;D,1,2;
 xx xx xxxx
 xx xx xxxx
 xxxxxxxxxx
