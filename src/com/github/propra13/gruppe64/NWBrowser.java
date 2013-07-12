@@ -90,7 +90,7 @@ public class NWBrowser implements ActionListener {
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getSource()==this.join){
 			try {
-				join(InetAddress.getByName(svrname.getText()));
+				join(InetAddress.getByName(ip.getText()));
 			} catch (UnknownHostException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -99,8 +99,9 @@ public class NWBrowser implements ActionListener {
 			
 		}
 		if(ae.getSource()==this.create){
-			SGame sgame=new SGame(cp, main);
-			sgame.startServer();
+			SGame sgame=new SGame(cp, main, svrname.getText());
+			Thread svrthread=new Thread(sgame);
+			svrthread.start();
 			try {
 				join(InetAddress.getLocalHost());
 			} catch (UnknownHostException e) {

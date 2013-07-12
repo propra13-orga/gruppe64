@@ -19,9 +19,9 @@ public class Game implements Runnable{
 	/**
 	 * Instanzvariablen
 	 */
-	private Main main; 
-	private Map map;
-	private Container cp;
+	protected Main main; 
+	protected Map map;
+	protected Container cp;
 	
 	private Player player;
 	private StatBar statBar;

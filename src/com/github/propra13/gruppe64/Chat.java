@@ -33,8 +33,10 @@ public class Chat extends JScrollPane{
 		this.setViewportView(textArea);
 	}
 	
+
 	public void append(Moveable mv, String text){
 		this.textArea.append("["+mv.getNick()+"] "+text+"\n");
+		textArea.setCaretPosition(textArea.getDocument().getLength());
 		revalidate();
 		repaint();
 	}
