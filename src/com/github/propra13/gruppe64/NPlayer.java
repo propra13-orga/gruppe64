@@ -14,12 +14,12 @@ import java.net.UnknownHostException;
  */
 public class NPlayer extends Player {
 	private boolean readyState=false;
-	private transient Socket socket;
+	private transient Socket dataSocket;
 	private transient OutputStream outStream;
 	private transient InputStream inStream;
 	private transient ObjectOutputStream outOStream;
 	private transient ObjectInputStream intOStream;
-	private transient Socket client;
+
 	
 	public boolean isReady(){
 		return readyState;
@@ -35,15 +35,15 @@ public class NPlayer extends Player {
 	}
 
 	public void connect(InetAddress svr) throws UnknownHostException, IOException{
-
-			socket = new Socket( svr, SGame.PORTNR );
-			outStream = socket.getOutputStream();
-			inStream = socket.getInputStream();
+			dataSocket = new Socket( svr, SGame.PORTNR );
+			outStream = dataSocket.getOutputStream();
+			inStream = dataSocket.getInputStream();
 			outOStream = new ObjectOutputStream(outStream);
 			intOStream = new ObjectInputStream(inStream);
+			System.out.println("Willkommen auf dem Server "+ intOStream.readChar() );
 			outOStream.writeObject(this);
-	}
+	} 
 	public void setClient(Socket client){
-		this.client=client;
+		this.dataSocket=client;
 	}
 }
