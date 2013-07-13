@@ -73,7 +73,7 @@ public abstract class Map extends JPanel {
 		activeAreas = new ArrayList<ActiveArea>();
 		this.items = new ArrayList<Item>();
 		
-		this.setBackground(Color.WHITE);
+		//this.setBackground(Color.WHITE);
 		this.setLayout(null);
 		this.setVisible(true);
 		//System.out.print("ThreadGesammt" +Thread.activeCount());

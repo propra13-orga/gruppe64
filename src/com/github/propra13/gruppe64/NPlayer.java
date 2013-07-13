@@ -1,5 +1,6 @@
 package com.github.propra13.gruppe64;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -9,7 +10,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-import com.github.propra13.gruppe64.StatBar.QuanItem;
+
 
 /*
  * represents the sever instance of the player
@@ -42,8 +43,21 @@ public class NPlayer extends Player {
 			inStream = dataSocket.getInputStream();
 			outOStream = new ObjectOutputStream(outStream);
 			intOStream = new ObjectInputStream(inStream);
-			System.out.println("Willkommen auf dem Server "+ intOStream.readChar() );
-			outOStream.writeObject(this);
+			String serverName=null;
+			Nmessage msg;
+		
+				try{
+					serverName = (String) intOStream.readObject();
+				}catch(IOException e){
+					e.printStackTrace();
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			
+			System.out.println("Willkommen auf dem Server "+  serverName);
+			//outOStream.writeObject(this);
+			dataSocket.close();
 	} 
 	public void setClient(Socket client){
 		this.dataSocket=client;

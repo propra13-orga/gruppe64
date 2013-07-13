@@ -75,7 +75,7 @@ public class StatBar extends JPanel{
   			String qString;QuanItem qi=qiArray.get(i);
 			if(qi.item.name=='Y')qString= player.getGold() +"$"; else qString= "x " + qi.quantity;
 			if(qi.quantity>1)
-				g.drawString(qString,3+i*60,60-10);
+				g.drawString(qString,3+i*60,55+60);
   		}
   		g.setColor(Color.white);g.finalize();
 
@@ -87,7 +87,7 @@ public class StatBar extends JPanel{
 
   		for(int i=0;i<slots.size();i++){
  
-  			slots.get(i).setLocation(220+i*60, 3);
+  			slots.get(i).setLocation(220+i*60, 0);
   			slots.get(i).setBorder(BorderFactory.createLineBorder(Color.black));
   			this.add(slots.get(i));
   		}
@@ -106,7 +106,7 @@ public class StatBar extends JPanel{
    		}int i=0;
    		for(QuanItem qi: qiArray){
    			add(qi.item);
-  			qi.item.setLocation(3+i*60, 60);
+  			qi.item.setLocation(3+i*60, 55);
   			qi.item.setBorder(BorderFactory.createLineBorder(Color.black));
   			
   			i++;
