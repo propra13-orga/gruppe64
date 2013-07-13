@@ -71,7 +71,7 @@ public class Main extends JFrame implements ActionListener{
 	 */
 	private JButton bNGame;
 	private JButton bIGame;
-	private JButton bRandom;
+	private JButton bMapeditor;
 	private JButton bRead;
 	private JButton bCreate;
 	private JButton bClose;
@@ -97,7 +97,7 @@ public class Main extends JFrame implements ActionListener{
 		// Neues Netzwerkgame 
 		bIGame = new myJButton("Neues Netzwerk Spiel");
 		//Neues Randomlevel
-		bRandom = new myJButton("Speichere Random-Level");
+		bMapeditor = new myJButton("Mapeditor");
 		//Lade Level-Game
 		bRead = new myJButton("Lese Level");
 		//Beenden Button
@@ -109,7 +109,7 @@ public class Main extends JFrame implements ActionListener{
 		
 		cp.add(bNGame, 	new myGBC(0,0,2,1));
 		cp.add(bIGame, 	new myGBC(0,1,2,1));
-		cp.add(bRandom, new myGBC(0,2,1,0.5));
+		cp.add(bMapeditor, new myGBC(0,2,1,0.5));
 		cp.add(bRead, 	new myGBC(1,2,1,0.5));
 		cp.add(bClose, 	new myGBC(0,3,2,1));
 		this.pack();
@@ -185,7 +185,8 @@ public class Main extends JFrame implements ActionListener{
 			this.remove(pWeiter);
 			this.initMain();
 		}
-		if(ae.getSource()==this.bCreate){
+		if(ae.getSource()==this.bMapeditor){
+			cp.removeAll();
 			MapEditor me = new MapEditor(cp);
 			me.init();
 		}
