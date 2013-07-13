@@ -96,7 +96,7 @@ public class Room extends Map {
 	}
 	public void enterDoor(Door door, Player pl) {
 		if(!door.open){
-			pl.getChatPane().append("Door locked");return;
+			pl.tell("Door locked");return;
 		}
 		//target Door
 		if(door.getSpecial()!=null){

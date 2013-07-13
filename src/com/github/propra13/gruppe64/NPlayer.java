@@ -9,6 +9,8 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import com.github.propra13.gruppe64.StatBar.QuanItem;
+
 /*
  * represents the sever instance of the player
  */

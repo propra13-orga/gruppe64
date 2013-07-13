@@ -365,4 +365,12 @@ public class Player extends Moveable {
 				
 	}
 
+
+	public void tell(Moveable mv, String msg) {
+		getChatPane().append(mv,msg);	
+	}
+	public void tell(String msg) {
+		getChatPane().append(msg);	
+	}
+
 }

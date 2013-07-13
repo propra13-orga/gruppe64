@@ -347,7 +347,7 @@ public abstract class Map extends JPanel {
 	}
 	public void tellAll(Moveable mv,String msg) {
 		for(Player pl: playerList){
-			pl.getChatPane().append(mv,msg);
+			pl.tell(mv,msg);
 		}
 		
 	}

@@ -40,6 +40,7 @@ public class World extends Map implements ActionListener{
 	}
 	@Override
 	public void enterDoor(Door door, Player mv) {
+		if(!door.open)return;
 		if(door.getSpecial().equals("level")){
 			game.startLevel(door.specialNr);this.stopMotion();
 			lastPos= new Point(door.getX(),door.getY());
