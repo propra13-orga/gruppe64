@@ -40,10 +40,10 @@ public class Lobby implements ActionListener{
 		}
 	}
 
-	public Lobby(Container cp, Main main, NPlayer player) {
+	public Lobby(Container cp, Main main, ArrayList<NPlayer> playerlist) {
 		this.cp=cp;
 		this.main =main;
-		playerList=new ArrayList<NPlayer>();
+		playerList= playerlist;
 		
 		cp.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();

@@ -10,6 +10,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -30,19 +34,38 @@ public class SGame extends Game implements Runnable{
 	/**
 	 * Instanzvariablen
 	 */
-	protected ArrayList<Player> playerList;
-	public final static int PORTNR=1234;
+	protected 	ArrayList<NPlayer> playerList;
+	private		ArrayList<Thread> threads;
+	private 	boolean serverRunning;
+	private 	String svrname;
+	private 	Socket client;
+	
+	public final static int PORTNR=60001;
 	
 	
 	/**
 	 * cp ist content-pane von unserem JFrame
 	 */
-	public SGame(Container cp, Main main) {
+	public SGame(Container cp, Main main, String svrname) {
 		super(cp,main,main.controller);
-		addPl(super.getPlayer());
-	}	
+
+			this.svrname=svrname;
+			threads=new ArrayList<Thread>();
+			//addPl(super.getPlayer());
+			serverRunning = true;
+		
+	}
+	public SGame(Socket client, Container cp, Main main) {
+		super(cp,main,main.controller);
+		this.client=client;
+		serverRunning=false;
+	} 
 	
-	public void addPl(Player pl){
+	public SGame(Container cp, Main main, String text, ArrayList<NPlayer> playerList) {
+		this(cp,main,text);
+		this.playerList=playerList;
+	}
+	public void addPl(NPlayer pl){
 		playerList.add(pl);
 		
 	}
@@ -61,14 +84,13 @@ public class SGame extends Game implements Runnable{
 		}
 	}
 	public void run(){
+		if(serverRunning){	startServer();	}
 		
 	}
 	public void startServer(){
 		ServerSocket serverSocket=null;
 		try {
-			serverSocket = new ServerSocket( PORTNR );
-
-			
+			serverSocket = new ServerSocket( PORTNR );			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -76,16 +98,16 @@ public class SGame extends Game implements Runnable{
 		while (serverRunning)
 		    {
 		      Socket client = null;
-	
+		      
 		      try
 		      {
-		        client = serverSocket.accept();
-		        handleConnection(client);
+		    	handleConnection(client=serverSocket.accept());
+		        
 		      }
 		      catch ( IOException e ) {
 		        e.printStackTrace();
 		      }catch ( NullPointerException e){
-		    	  e.printStackTrace();
+		    	e.printStackTrace();
 		      }
 		      finally {
 		        if ( client != null )
@@ -94,8 +116,20 @@ public class SGame extends Game implements Runnable{
 		    }
 		}
 
-	private void handleConnection(Socket client) {
-		
+	private void handleConnection(Socket client) throws IOException {
+		System.out.println(client.toString());
+		//new SocketHandler(this,client);
+		OutputStream outStream;
+		try {
+			outStream = client.getOutputStream();
+			InputStream inStream = client.getInputStream();
+			ObjectOutputStream outOStream = new ObjectOutputStream(outStream);
+			ObjectInputStream inOStream = new ObjectInputStream(inStream);
+			outOStream.writeObject(svrname);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 

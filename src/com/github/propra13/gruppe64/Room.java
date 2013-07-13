@@ -26,7 +26,7 @@ public class Room extends Map {
 
 
 	Timer caretaker;
-	private Level level;
+	public transient Level level;
 
 
 	private boolean active=true;
@@ -37,7 +37,7 @@ public class Room extends Map {
 		super(mapArray);
 
 		this.level = aLevel;
-		//this.pos_eingang 	= getPosOf('e');
+		//this.addComListener(null);
 		
 	}
 	
@@ -76,7 +76,7 @@ public class Room extends Map {
 		return tmp;
 	}
 
-	public void paintComponent(Graphics g){
+	/*public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		Image img9 = Toolkit.getDefaultToolkit().getImage("res/oldman.png");
 		for(int i=0;i<this.mapheight;i++){
@@ -88,12 +88,37 @@ public class Room extends Map {
 		}
 		g.finalize();
 	}
-
+*/
 	@Override
 	public void showMsg() {
 		// TODO Auto-generated method stub
+
+	}
+	public void enterDoor(Door door, Player pl) {
+		if(!door.open){
+			pl.tell("Door locked");return;
+		}
+		//target Door
+		if(door.getSpecial()!=null){
+			if(pl.getClass().equals(NPlayer.class)){
+				
+			}
+			switch(door.getSpecial()){
+				case "shop": level.fallBackDoor.push(door); game.showShop();break;
+				case "goal": pl.setLvlUnlocked(level.getLevelNr()+1);level.showExtern("world");break;
+				case "exit": level.showExtern("world");break;
+				case "entrance": level.showExtern("world");
+				default:
+			}
+		}else{ //other Room from this level
+			Door tDoor=door.getTarget();
+			level.setOnDoor(tDoor);
+
+			
+		}	
 		
 	}
+	
 }
 
 

@@ -19,6 +19,9 @@ public class Shop extends Map{
 		this.game=game;
 
 	}
+	public Shop(char[][] tArray) {
+		// TODO Auto-generated constructor stub
+	}
 	/*//@Override
 	public void updateState(Moveable character) {
 
@@ -87,6 +90,14 @@ public class Shop extends Map{
 	@Override
 	public void showMsg() {
 		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void enterDoor(Door door, Player mv) {
+		if(door.getSpecial()==null)return;
+		switch(door.getSpecial()){
+		case "exit": mv.aLevel.popRoom();break;
+		}
 		
 	}
 }

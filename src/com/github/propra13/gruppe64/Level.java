@@ -1,6 +1,7 @@
 package com.github.propra13.gruppe64;
 
 import java.awt.Container;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -26,8 +27,8 @@ public class Level implements java.io.Serializable{
 	private transient Game game;
 	private Container cp;
 	private Player player; //networkf if NPlayer.class
-	public Stack<Door> fallBackDoor;
-
+	Stack<Door> fallBackDoor;
+	public Door entrance;
 	
 	private int levelNr;
 	
@@ -59,19 +60,18 @@ public class Level implements java.io.Serializable{
 	}
 	public void initLevel(){
 		roomList=getAllRooms();
-		boolean entranceFound=false;
+		//boolean entranceFound=false;
 		if(roomList.get(0)==null){
 			setMap(world);
 		}
 		roomIterator = roomList.iterator();
-		for(Map iMap: roomList){
-			//iRoom.removeAll();
+		for(Room iMap: roomList){
+			iMap.level=this;
 			iMap.drawMap();
 			iMap.startMotion();
 		}
-		this.nextRoom();
-	
 	}
+	
 	private ArrayList<Room> getAllRooms() {
 		try
 	      {
@@ -80,6 +80,7 @@ public class Level implements java.io.Serializable{
 	         roomList = (ArrayList<Room>) in.readObject();
 	         in.close();
 	         fileIn.close();
+	         entrance=roomList.get(0).getEntrance();
 	      }catch(IOException i)
 	      {
 	         i.printStackTrace();
@@ -101,7 +102,11 @@ public class Level implements java.io.Serializable{
 
 		System.out.println("Level "+lvl+ " hat "+roomList.size());
 		 try
-	      {
+	      {	
+			 File dirFile=new File("sav/");
+			 if(!dirFile.exists()){
+				 dirFile.mkdir();
+			 }
 	         FileOutputStream fileOut =new FileOutputStream("sav/roomList.tmp");
 	         ObjectOutputStream out = new ObjectOutputStream(fileOut);
 	         out.writeObject(roomList2store);
@@ -111,23 +116,6 @@ public class Level implements java.io.Serializable{
 	      {
 	          i.printStackTrace();
 	      }
-	}
-	/**
-	 * next Room
-	 */
-	public void nextRoom(){
-		Room tmpRoom;
-		if(roomIterator.hasNext()){
-			tmpRoom = roomIterator.next();
-			//tmpRoom.add(player);
-			setMap(tmpRoom);
-			aMap.setLocation(aMap.getParent().getWidth()/2-player.getX(),aMap.getParent().getHeight()/2-player.getY());
-		} else {
-			System.out.print("nextLevel");
-			removeOldMap();
-			player.setLevel(null);
-			game.nextLevel();
-		}	
 	}
 
 	/**
@@ -142,13 +130,9 @@ public class Level implements java.io.Serializable{
 	 */
 	public void setMap(Map map){
 		removeOldMap();
-		
-		
 		aMap = map;
 
 		aMap.add(player);
-		
-
 		System.out.print("\nw"+map.getWidth()+"h"+map.getHeight()+"\n"+aMap.toString());
 		cp.add(aMap);
 		
@@ -166,73 +150,44 @@ public class Level implements java.io.Serializable{
 			cp.repaint();
 		}
 	}
-	public boolean isLastRoom() {
-		if(roomList.indexOf(aMap)<roomList.size()-1)
-			return false;
-		return true;
-	}
 	
-	public void gameOver() {
-		game.gameOver();
-		
-	}
+
 	//TODO denke an network
 	public void reset(Player pl) {
-		
-		//this.initLevel();
+		aMap.remove(pl);
+		//showMsg();
+		roomList=getAllRooms();
+		roomIterator=roomList.iterator();
+		//TODO notification
+		initLevel();
 	}
 	public int getLevelNr() {
 		return levelNr;
 	}
-	public void swiftTo(final Map a, final Map b, final Door.cd carDir){
-		player.movMode=Moveable.modes.idle;
-		a.remove(player);b.add(player);
-		final int moveX,moveY;
-		if(carDir==cd.EAST){
-			moveX=-3;moveY=0;
-			b.setLocation(aMap.getWidth(),0);
-			cp.add(b);
-		}else{
-			moveX=0;moveY=0;return;
-		}
-		final Timer moveTimer=new Timer();
-		TimerTask move = new TimerTask() {
-			public void run() {
-				aMap.setLocation(aMap.getX()+moveX, aMap.getY()+moveY);
-				b.setLocation(b.getX()+moveX, b.getY()+moveY);
-				if(aMap.getX()+aMap.getWidth()<0||aMap.getX()>cp.getWidth()){
-					b.setLocation(0, 0);
-					cp.remove(aMap);
-					player.movMode=Moveable.modes.moving;
-					aMap=b;
-					moveTimer.cancel();
-				}	
-			}
-		};
-		
-		moveTimer.schedule(move, 0, 10);
+	
+	public void popRoom(){
+		Door tDoor = fallBackDoor.pop();
+		((Room)tDoor.getParent()).enterDoor(tDoor,player);
 	}
+	
+	public void gameLost() {
+		// TODO Auto-generated method stub
 		
-	public void enterDoor(Door door) {
-		// TODO if open Door
-		//target Door
-		if(door.getSpecial()!=null){
-			if(player.getClass().equals(NPlayer.class)){
-				
-			}
-			
-		}else{ //other Room from this
-			Door tDoor=door.getTarget();
-			Map tMap = (Map)tDoor.getParent();
-			/*if(door.carDir==Door.cd.EAST){
-				swiftTo(aMap, tMap, door.carDir);
-				player.setLocation(tDoor.getX(),tDoor.getY());
-			}else{*/
-				setMap(tMap);
-				player.setLocation(tDoor.getX(),tDoor.getY());
-				aMap.setLocation(aMap.getParent().getWidth()/2-player.getX(),aMap.getParent().getHeight()/2-player.getY());
-			//}
-		}	
+	}
+	public void setOnDoor(Door tDoor){
+		if(tDoor==null){System.out.println("Level has no entrance");return;}
+		Map tMap = (Map)tDoor.getParent();
+		setMap(tMap);
+		player.setLocation(tDoor.getX(),tDoor.getY());
+		aMap.setLocation(aMap.getParent().getWidth()/2-player.getX(),aMap.getParent().getHeight()/2-player.getY());
+
+	}
+	public void showExtern(String string) {
+		cp.removeAll();
+		switch(string){
+		case "world": game.showWorld();break;
+		case "shop" : game.showShop();
+		}
 		
 	}
 	

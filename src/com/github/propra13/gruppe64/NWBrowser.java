@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -90,7 +91,7 @@ public class NWBrowser implements ActionListener {
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getSource()==this.join){
 			try {
-				join(InetAddress.getByName(svrname.getText()));
+				join(InetAddress.getByName(ip.getText()));
 			} catch (UnknownHostException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -99,8 +100,12 @@ public class NWBrowser implements ActionListener {
 			
 		}
 		if(ae.getSource()==this.create){
-			SGame sgame=new SGame(cp, main);
-			sgame.startServer();
+			create.setEnabled(false);
+			ArrayList<NPlayer> playerList = new ArrayList<NPlayer>();
+			SGame sgame=new SGame(cp, main, svrname.getText(),playerList);
+			Thread svrthread=new Thread(sgame);
+			svrthread.start();
+			//lobby=new Lobby(cp, main, playerList);
 			try {
 				join(InetAddress.getLocalHost());
 			} catch (UnknownHostException e) {
@@ -125,7 +130,7 @@ public class NWBrowser implements ActionListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		cp.removeAll();
-		lobby=new Lobby(cp, main,tplayer);
+		//cp.removeAll();
+		
 	}
 }

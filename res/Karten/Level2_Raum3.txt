@@ -1,7 +1,7 @@
 xxxxxxxxxx
 xxx  gxxxx
 x H   xxxx
-e    g   a
+D    g   D;D,4,3;D,goal,0
 xxx   xxxx
 xxx   xxxx
 xxxxxxxxxx

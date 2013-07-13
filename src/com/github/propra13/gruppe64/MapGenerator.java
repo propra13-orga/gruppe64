@@ -24,7 +24,7 @@ public class MapGenerator {
 	private CopyOnWriteArrayList<String[][]> lineDesc;
 	private Iterator<String[][]> iLineDesc;
 	public static String[] processAbleSprites = {
-				"D:Door:D,[0-9]*,[0-9]*:D,[0-9]*,[a-z]*,[0-9]*",
+				"D:Door:D,[0-9]*,[0-9]*:D,[a-z]*,[0-9]*",
 				"$:Switch"
 			};
 	private String[][] pasToken;
@@ -35,7 +35,12 @@ public class MapGenerator {
 	 * the generic filepath
 	 */
 	public MapGenerator(String gFilePath) {
+		this();
 		pathToken = gFilePath.split("%i");
+	}
+		
+		
+	public MapGenerator(){
 		pasToken = new String[processAbleSprites.length][];
 		for(int i=0; i<processAbleSprites.length;i++){
 			//zerteilt die processAbleSprite Def
@@ -51,9 +56,9 @@ public class MapGenerator {
 		doorList.addAll(outsideDoors);
 	}
 	//Array
-	private String pathString(int i, int j){
+	private String pathString(int lvl, int rm){
 		if (pathToken.length>2){
-			return pathToken[0]+i+pathToken[1]+j+pathToken[2];
+			return pathToken[0]+lvl+pathToken[1]+rm+pathToken[2];
 		}
 		return null;
 	}
@@ -156,7 +161,7 @@ public class MapGenerator {
 	 * 	ODER
 	 * - null, wenn res/Karten/Level[lvl]_Raum[room].txt nicht existiert
 	 */
-	public char[][] readRoom(String fPath){
+	public char[][] readArrayList(String fPath){
 		
 		int mapwidth, mapheight;
 		int[] mapsize = getMapSize(fPath);
@@ -172,13 +177,13 @@ public class MapGenerator {
 		ArrayList<Room> roomList = new ArrayList<Room>();
 		char[][] tmpArray;
 		int lRoomNr=1, lvl = level.getLevelNr();
-		tmpArray=this.readRoom(this.pathString(lRoomNr, lvl));
+		tmpArray=this.readArrayList(this.pathString(lvl, lRoomNr));
 		while(tmpArray!=null){
 			System.out.println(Room.charString(tmpArray));
 			
 			Room raum = new Room(level,tmpArray);
 			roomList.add(raum);
-			tmpArray=this.readRoom(this.pathString(lvl,++lRoomNr));
+			tmpArray=this.readArrayList(this.pathString(lvl,++lRoomNr));
 		}
 		//procesprocess 
 		iLineDesc = lineDesc.iterator();
@@ -201,9 +206,15 @@ public class MapGenerator {
 		}
 		return roomList;
 	}
-	public World generateWorld(String worldFile, int lvlUnlocked){
-		World world = null;
-		return world;
+	public Map generateMap(Class<? extends Map> mapClass,String mapFile){
+		char[][] tArray=readArrayList(mapFile);Map map=null;
+		if(mapClass.equals(Shop.class))
+			map = new Shop(tArray);
+		else
+			map = new World(tArray);
+		iLineDesc = lineDesc.iterator();
+		this.preProcessMap(map, null); //needs no post process
+		return map;
 	}
 	private <T extends Map> void preProcessMap(T map, ArrayList<T> mapList){
 		// next LineDesc Set for the next map
@@ -220,7 +231,7 @@ public class MapGenerator {
 				// find every PAS in current line of MapArray
 				while(tLineDesc[y][0].indexOf(pasMapArrayNameT,x)!=-1){
 					x = tLineDesc[y][0].indexOf(pasMapArrayNameT,x);
-					System.out.println("found PAS in map " + mapList.indexOf(map) +" at "+x+","+y);
+					if(mapList!=null)System.out.println("found PAS in map " + mapList.indexOf(map) +" at "+x+","+y);
 					
 					boolean foundDesc=false;
 					int protoDesc=2; //first protoDesc at 2 of pasToken
@@ -248,8 +259,8 @@ public class MapGenerator {
 							doorList.add(tDoor);
 							map.add(tDoor);
 						}else if(protoDesc==3){ //special Door
-							int tDoorNr=Integer.parseInt(cDesc[1]);
-							Door tDoor=new Door(x*Map.spritewidth,y*Map.spriteheight,tDoorNr,cDesc[2],Integer.parseInt(cDesc[3]));
+							//int tDoorNr=Integer.parseInt(cDesc[1]);
+							Door tDoor=new Door(x*Map.spritewidth,y*Map.spriteheight,-1,cDesc[1],Integer.parseInt(cDesc[2]));
 							doorList.add(tDoor);
 							map.add(tDoor);
 						}

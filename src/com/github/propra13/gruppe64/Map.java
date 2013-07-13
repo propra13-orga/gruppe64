@@ -73,7 +73,7 @@ public abstract class Map extends JPanel {
 		activeAreas = new ArrayList<ActiveArea>();
 		this.items = new ArrayList<Item>();
 		
-		this.setBackground(Color.WHITE);
+		//this.setBackground(Color.WHITE);
 		this.setLayout(null);
 		this.setVisible(true);
 		//System.out.print("ThreadGesammt" +Thread.activeCount());
@@ -347,12 +347,20 @@ public abstract class Map extends JPanel {
 	}
 	public void tellAll(Moveable mv,String msg) {
 		for(Player pl: playerList){
-			pl.getChatPane().append(mv,msg);
+			pl.tell(mv,msg);
 		}
 		
 	}
 	abstract public void showMsg();
-	
+	public Door getEntrance(){
+		for(ActiveArea iAA: activeAreas){
+			if(iAA.getClass().equals(Door.class)){Door tDoor=(Door)iAA;
+				if(tDoor.getSpecial()!=null)if(tDoor.getSpecial().equals("entrance"))
+					return (Door)iAA;
+			}
+		}return null;
+	}
+	public abstract void enterDoor(Door door, Player mv);
 	
 }
 

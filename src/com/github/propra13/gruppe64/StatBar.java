@@ -1,10 +1,14 @@
 package com.github.propra13.gruppe64;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
+
 import javax.swing.*;
 
 import javax.swing.BorderFactory;
@@ -30,6 +34,7 @@ public class StatBar extends JPanel{
 	private int manahealth=200;
 	private Player player;
 	private int gposx, gposy;
+	private ArrayList<QuanItem> qiArray;
 	
 	public StatBar(Player pl) {
 		super();
@@ -45,7 +50,7 @@ public class StatBar extends JPanel{
 		this.setBackground(Color.GRAY);
 		this.setVisible(true);
 		
-		
+		qiArray=new ArrayList<QuanItem>();
 		
 	}
 	
@@ -65,12 +70,15 @@ public class StatBar extends JPanel{
   		
   		g.setColor(Color.blue);
   		g.fillRect(10,20,manahealth,7);
-  		
-  		g.setColor(Color.white);
-  		if(player.getGold()>0){
-  			g.drawString("$ "+player.getGold(),gposx,gposy);
-  			
+  		g.setFont(new Font ("Arial", Font.PLAIN , 11));
+  		for(int i=0;i<qiArray.size();i++){
+  			String qString;QuanItem qi=qiArray.get(i);
+			if(qi.item.name=='Y')qString= player.getGold() +"$"; else qString= "x " + qi.quantity;
+			if(qi.quantity>1)
+				g.drawString(qString,3+i*60,55+60);
   		}
+  		g.setColor(Color.white);g.finalize();
+
 	}
   	public void getStateFrom(){
         this.removeAll();
@@ -79,26 +87,29 @@ public class StatBar extends JPanel{
 
   		for(int i=0;i<slots.size();i++){
  
-  			slots.get(i).setLocation(220+i*60, 3);
+  			slots.get(i).setLocation(220+i*60, 0);
   			slots.get(i).setBorder(BorderFactory.createLineBorder(Color.black));
   			this.add(slots.get(i));
   		}
 
   		//repaint();
-
+  		
   		ArrayList<Item> items= player.getItems();
-  		for(int i=0;i<items.size();i++){
+  		qiArray = new ArrayList<QuanItem>();
+   		for(Item aItem:items){
+   			Boolean mustAdd=true;
+   			if(qiArray.isEmpty()){ qiArray.add(new QuanItem(aItem)); mustAdd=false;}
+   			else for(QuanItem qi: qiArray)
+   					if(qi.item.name==aItem.name){
+   						qi.quantity++;mustAdd=false;}
+   			if(mustAdd)qiArray.add(new QuanItem(aItem));
+   		}int i=0;
+   		for(QuanItem qi: qiArray){
+   			add(qi.item);
+  			qi.item.setLocation(3+i*60, 55);
+  			qi.item.setBorder(BorderFactory.createLineBorder(Color.black));
   			
-  			items.get(i).setLocation(3+i*60, 60);
-  			items.get(i).setBorder(BorderFactory.createLineBorder(Color.black));
-  			
-  			if(items.get(i).name=='Y'){
-  				if(player.getGold()>0) this.add(items.get(i));
-  				gposx=items.get(i).getX()+5;
-  				gposy=items.get(i).getY()+65;
-  			}else{
-  				this.add(items.get(i));
-  			}				
+  			i++;
   		}
   		repaint();
 
@@ -113,6 +124,9 @@ public class StatBar extends JPanel{
   		repaint();
   	}
   	
-
+  	private class QuanItem{
+  		public Item item;public int quantity=1;
+  		public QuanItem(Item item){this.item=item;}
+  	}
 
 }
