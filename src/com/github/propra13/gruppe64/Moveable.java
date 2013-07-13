@@ -96,7 +96,7 @@ public abstract class Moveable extends Sprite {
 	/**
 	 * Ist die beabsichtigte Bewegung moeglich
 	 */
-	public void updateMot(){
+	abstract public void updateMot();/*{
 		int x=this.getX();
 		int y=this.getY();
 		if(map.wouldTouch(x+vel[0],y,Dim[0],Dim[1])!='x'){
@@ -110,7 +110,7 @@ public abstract class Moveable extends Sprite {
 			this.setLocation(x,y-vel[1]);
 		}
 		//map.updateState(this);
-	}
+	}*/
 	@Override
 	public void setLocation(int x, int y){
 		super.setLocation(x,y);

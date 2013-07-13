@@ -79,6 +79,9 @@ public class Enemy extends Moveable {
 	}
 	@Override
 	public void updateMot(){
+		if(movMode!=modes.moving)return;
+		
+		
 		int x=this.getX();
 		int y=this.getY();
 		if(map.wouldTouch(x+vel[0],y,Dim[0],Dim[1])!='x'){

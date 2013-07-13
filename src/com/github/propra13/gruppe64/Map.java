@@ -160,8 +160,8 @@ public abstract class Map extends JPanel {
 	public char wouldTouch(int x, int y, int playersizex, int playersizey) {
 		int X,Y;
 		
-		if (x<0 || (x+playersizex) > ((mapwidth)*spritewidth)   ) return 'x';
-		if (y<0 || (y+playersizey) > (mapheight*spriteheight) ) return 'x';
+		if (x<0 || (x+playersizex) > (mapwidth)*spritewidth) return 'x';
+		if (y<0 || (y+playersizey) > (mapheight)*spriteheight) return 'x';
 		//Oben-Links
 		X= (int) (x/Map.spritewidth);
 		Y= (int) (y/Map.spriteheight);
@@ -232,7 +232,7 @@ public abstract class Map extends JPanel {
 			moveables.add((Moveable) sp);
 		}
 	
-		if(cClass.equals(Player.class)){
+		if(Player.class.isAssignableFrom(cClass)){
 			this.playerList.add((Player)sp);
 			this.setComponentZOrder(sp, 0);
 		}
@@ -361,6 +361,12 @@ public abstract class Map extends JPanel {
 		}return null;
 	}
 	public abstract void enterDoor(Door door, Player mv);
+	
+	public void freeze( ){
+		for(Moveable a:moveables){
+			a.movMode=Moveable.modes.idle;
+		}
+	}
 	
 }
 

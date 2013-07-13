@@ -186,9 +186,10 @@ public class Main extends JFrame implements ActionListener{
 			this.initMain();
 		}
 		if(ae.getSource()==this.bMapeditor){
-			cp.removeAll();
-			MapEditor me = new MapEditor(cp);
-			me.init();
+			cp.removeAll();this.setFocusable(true);
+			this.setSize(600,1200);
+			MapEditorHandler me = new MapEditorHandler(cp,this);
+			me.editRoom(1,1);
 		}
 		if(ae.getSource()==this.bIGame){
 			this.showNW();
