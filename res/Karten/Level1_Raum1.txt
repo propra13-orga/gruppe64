@@ -2,9 +2,22 @@ xxxxxxxxxx
 x x  HHH x
 x x   H) x      YYYYYYYYY
 DOx QT x                             D;D,entrance,0;D,1,2;
-x S W xR x;
+x S W xR x      
 x M s Y xx;
 xxxxxxxxxx
+ 
+x D;D,11,12
+  
+    D;D,12,11
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+x
 ;// Note: ";" must follow the last map column immediately
 ;// the text after token ";" describes the behaviour     ;// of the specific srite in order of the occcurrence    ;// this syntax, may even be helpful for network-messages
                                                         

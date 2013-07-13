@@ -296,6 +296,7 @@ public class Player extends Moveable {
 	 */
 	public void setLevel(Level aLevel){
 		this.aLevel= aLevel;
+		this.getChatPane().clearText();
 	}
 	public Level getLevel(){
 		return aLevel;

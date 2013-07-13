@@ -45,6 +45,9 @@ public class Chat extends JScrollPane{
 		revalidate();
 		repaint();
 	}
+	public void clearText(){
+		this.textArea.setText("");
+	}
 	
 
 }
