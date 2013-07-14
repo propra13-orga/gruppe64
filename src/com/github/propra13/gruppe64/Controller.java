@@ -3,8 +3,8 @@ package com.github.propra13.gruppe64;										// # 0002
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-import com.github.propra13.gruppe64.Moveable.axis;
-import com.github.propra13.gruppe64.Moveable.dir;
+import com.github.propra13.gruppe64.Movable.axis;
+import com.github.propra13.gruppe64.Movable.dir;
 
 
 
@@ -104,7 +104,7 @@ public class Controller extends KeyAdapter{									//brauche playerobject mit p
 			if(keyr==switchA && !player.getChatInput().isFocusOwner()) player.switcharmor();
 			if(keyr==hCast && !player.getChatInput().isFocusOwner()) player.use('H');			
 			if(keyr==KeyEvent.VK_ENTER && player.getChatInput().isFocusOwner()){
-				player.getChatPane().append(player, player.getChatInput().getText());
+				player.tell(player, player.getChatInput().getText());
 				player.getChatInput().setText("");
 			}
 		}

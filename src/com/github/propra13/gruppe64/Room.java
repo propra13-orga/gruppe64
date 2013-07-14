@@ -18,10 +18,10 @@ public class Room extends Map {
 	private static final long serialVersionUID = 1L;
 	
 	
-	public int raumnr;
+	public int roomNr;
 	public int levelnr;
 	
-	public int[] pos_eingang;
+
 	protected ArrayList<Door> doorList;
 
 
@@ -33,11 +33,11 @@ public class Room extends Map {
 
 
 	private static int wallSize= 50;
-	public Room(Level aLevel, char[][] mapArray) {
+	public Room(Level aLevel, char[][] mapArray, int roomNr) {
 		super(mapArray);
 
 		this.level = aLevel;
-		//this.addComListener(null);
+		this.roomNr=roomNr;
 		
 	}
 	
@@ -50,7 +50,7 @@ public class Room extends Map {
 	}
 	public void moveMoveable(){
 		
-		for(Moveable mov : moveables){
+		for(Movable mov : movables){
 			mov.updateMot();
 		}
 		

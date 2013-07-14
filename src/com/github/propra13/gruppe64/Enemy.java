@@ -6,7 +6,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 
-public class Enemy extends Moveable {
+public class Enemy extends Movable {
 	
 	/**
 	 * 

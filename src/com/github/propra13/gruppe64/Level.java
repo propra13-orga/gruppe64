@@ -22,7 +22,7 @@ public class Level implements java.io.Serializable{
 	int spriteWidth=50;
 	int spriteHeight=50;
 	ArrayList<Room> roomList;
-	ArrayList<Moveable> moveable;
+	ArrayList<Movable> moveable;
 	
 	private transient Game game;
 	protected Container cp;
@@ -35,9 +35,11 @@ public class Level implements java.io.Serializable{
 	// mapArray's for all Rooms
 	private Iterator<Room> roomIterator;
 	//current active Room
-	private Map aMap;
+	protected Map aMap;
 
 	private World world;
+
+	protected MapGenerator mg;
 
 
 	public Level(){
@@ -99,7 +101,7 @@ public class Level implements java.io.Serializable{
 		
 
 		char[][] tmpArray;
-		MapGenerator mg= new MapGenerator("res/Karten/Level%i_Raum%i.txt");
+		mg= new MapGenerator("res/Karten/Level%i_Raum%i.txt");
 		ArrayList<Room> roomList2store=mg.generateRoomList(this);
 
 		System.out.println("Level "+lvl+ " hat "+roomList2store.size());

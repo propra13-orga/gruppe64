@@ -15,7 +15,7 @@ import javax.swing.JTextField;
 
 
 @SuppressWarnings({ "serial" })
-public class Player extends Moveable {
+public class Player extends Movable {
 	//der bei der Bewegung bachtenswerter Offset zum (x,y)
 	//int x_off, y_off;
 
@@ -87,14 +87,14 @@ public class Player extends Moveable {
 		if(movMode!=modes.moving)return;
 		int x=this.getX();
 		int y=this.getY();
-		if(map.wouldTouch(x+vel[0],y,Dim[0],Dim[1])!='x'){
+		if(map.isCrossable(x+vel[0],y,Dim[0],Dim[1])){
 			
 			this.setLocation(x+vel[0],y);
 			if(map.getClass().equals(Room.class))map.setLocation(map.getX()-vel[0], map.getY());
 		}
 		x=this.getX();
 		y=this.getY();
-		if(map.wouldTouch(x,y-vel[1],Dim[0],Dim[1])!='x'){
+		if(map.isCrossable(x,y-vel[1],Dim[0],Dim[1])){
 			
 			this.setLocation(x,y-vel[1]);
 			if(map.getClass().equals(Room.class))map.setLocation(map.getX(), map.getY()+vel[1]);
@@ -137,8 +137,8 @@ public class Player extends Moveable {
 			};
 			timer_pl.schedule(action, 1000);
 
-			CopyOnWriteArrayList<Moveable> movarr=new CopyOnWriteArrayList<Moveable>(map.getMovables());
-			for(Moveable mov:movarr){
+			CopyOnWriteArrayList<Movable> movarr=new CopyOnWriteArrayList<Movable>(map.getMovables());
+			for(Movable mov:movarr){
 				if(!this.equals(mov) && this.slotarr.get(0).getRange()>Math.pow(x+Dim[0]/2-mov.getX()-mov.Dim[0]/2,2)+Math.pow(y+Dim[1]/2-mov.getY()-mov.Dim[1]/2,2))
 				{	System.out.println("Spieler trifft");
 					System.out.println(map.getMovables().size());
@@ -358,7 +358,7 @@ public class Player extends Moveable {
 	}
 
 	public void performAction() {
-		if(movMode!=Moveable.modes.moving)return;
+		if(movMode!=Movable.modes.moving)return;
 		ActiveArea activeSprite = map.isOnActiveArea(this);
 		if(activeSprite!=null){
 			activeSprite.onAction(this);
@@ -367,7 +367,7 @@ public class Player extends Moveable {
 	}
 
 
-	public void tell(Moveable mv, String msg) {
+	public void tell(Movable mv, String msg) {
 		getChatPane().append(mv,msg);	
 	}
 	public void tell(String msg) {

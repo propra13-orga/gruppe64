@@ -254,12 +254,12 @@ public class Item extends Sprite implements ActiveArea{
 		this.price = price;
 	}
 	@Override
-	public void onTouch(Moveable mv) {
+	public void onTouch(Movable mv) {
 		// TODO Auto-generated method stub
 		
 	}
 	@Override
-	public void onAction(Moveable mv) {
+	public void onAction(Movable mv) {
 		// TODO Auto-generated method stub
 		
 	}

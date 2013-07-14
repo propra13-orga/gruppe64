@@ -30,6 +30,7 @@ public class MapGenerator {
 	private String[][] pasToken;
 	private String[][] tLineDesc;
 	private ArrayList<Door> doorList;
+	private ArrayList<Room> roomList;
 	/** 
 	 * @param gFilePath 
 	 * the generic filepath
@@ -174,21 +175,21 @@ public class MapGenerator {
 		return map;
 	}
 	public  ArrayList<Room> generateRoomList(Level level){
-		ArrayList<Room> roomList = new ArrayList<Room>();
+		roomList = new ArrayList<Room>();
 		char[][] tmpArray;
 		int lRoomNr=1, lvl = level.getLevelNr();
 		tmpArray=this.readArrayList(this.pathString(lvl, lRoomNr));
 		while(tmpArray!=null){
 			System.out.println(Room.charString(tmpArray));
 			
-			Room raum = new Room(level,tmpArray);
+			Room raum = new Room(level,tmpArray,lRoomNr);
 			roomList.add(raum);
 			tmpArray=this.readArrayList(this.pathString(lvl,++lRoomNr));
 		}
 		//procesprocess 
 		iLineDesc = lineDesc.iterator();
 		for(Room map: roomList ){
-			preProcessMap(map, roomList);
+			preProcessMap(map);
 		}
 		//linked Doors
 		for(Door door: doorList){
@@ -213,10 +214,10 @@ public class MapGenerator {
 		else
 			map = new World(tArray);
 		iLineDesc = lineDesc.iterator();
-		this.preProcessMap(map, null); //needs no post process
+		this.preProcessMap(map); //needs no post process
 		return map;
 	}
-	private <T extends Map> void preProcessMap(T map, ArrayList<T> mapList){
+	private <T extends Map> void preProcessMap(T map){
 		// next LineDesc Set for the next map
 		String[][] tLineDesc = iLineDesc.next();
 		for(int y=0; y< tLineDesc.length; y++){
@@ -231,7 +232,7 @@ public class MapGenerator {
 				// find every PAS in current line of MapArray
 				while(tLineDesc[y][0].indexOf(pasMapArrayNameT,x)!=-1){
 					x = tLineDesc[y][0].indexOf(pasMapArrayNameT,x);
-					if(mapList!=null)System.out.println("found PAS in map " + mapList.indexOf(map) +" at "+x+","+y);
+					if(map instanceof Room)System.out.println("found PAS in map " + ((Room)map).roomNr +" at "+x+","+y);
 					
 					boolean foundDesc=false;
 					int protoDesc=2; //first protoDesc at 2 of pasToken
@@ -255,12 +256,12 @@ public class MapGenerator {
 						//TODO more genric or mutiple Versions
 						if(protoDesc == 2){
 							int tDoorNr=Integer.parseInt(cDesc[1]), tLeadsToNr=Integer.parseInt(cDesc[2]); //!!TODO tDoor differ to tDoor in Door.class
-							Door tDoor=new Door(x*Map.spritewidth,y*Map.spriteheight,tDoorNr,tLeadsToNr);
+							Door tDoor=new Door(x*map.spritewidth,y*map.spriteheight,tDoorNr,tLeadsToNr);
 							doorList.add(tDoor);
 							map.add(tDoor);
 						}else if(protoDesc==3){ //special Door
 							//int tDoorNr=Integer.parseInt(cDesc[1]);
-							Door tDoor=new Door(x*Map.spritewidth,y*Map.spriteheight,-1,cDesc[1],Integer.parseInt(cDesc[2]));
+							Door tDoor=new Door(x*map.spritewidth,y*map.spriteheight,-1,cDesc[1],Integer.parseInt(cDesc[2]));
 							doorList.add(tDoor);
 							map.add(tDoor);
 						}
@@ -280,5 +281,12 @@ public class MapGenerator {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}*/
+	}
+	public int  maxDoorNr(){
+		int maxDoorNr=0;
+		for(Door iDoor: doorList){
+			if(iDoor.getDoorNr()>maxDoorNr)maxDoorNr=iDoor.getDoorNr();
+		}
+		return maxDoorNr;
 	}
 }

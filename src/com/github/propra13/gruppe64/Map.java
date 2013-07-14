@@ -26,14 +26,14 @@ public abstract class Map extends JPanel {
 	public int getSpriteheight() {
 		return spriteheight;
 	}
-	
+	public boolean edit=false;
 	protected int mapwidth=10;
 	protected int mapheight=7;
 
-	static protected int spritewidth=50;
-	static protected int spriteheight=50;
+	protected int spritewidth=50;
+	protected int spriteheight=50;
 	protected char[][] mapArray;
-	protected ArrayList<Moveable> moveables;
+	protected ArrayList<Movable> movables;
 	protected ArrayList<Item> items;
 	protected ArrayList<ActiveArea> activeAreas;
 	
@@ -61,25 +61,22 @@ public abstract class Map extends JPanel {
 
 	public Map(char[][] mapArray){
 		this();
-		this.mapArray = mapArray;
-		//groessen 
-		mapheight = mapArray.length;
-		mapwidth = mapArray[0].length;
+		setArray(mapArray);
 		this.setBounds(0, 0, mapwidth*spritewidth, mapheight*spriteheight);
 	}
 	public Map(){
 		playerList = new ArrayList<Player>();
-		this.moveables = new ArrayList<Moveable>();
+		this.movables = new ArrayList<Movable>();
 		activeAreas = new ArrayList<ActiveArea>();
 		this.items = new ArrayList<Item>();
 		
-		//this.setBackground(Color.WHITE);
+		this.setBackground(Color.CYAN);
 		this.setLayout(null);
 		this.setVisible(true);
 		//System.out.print("ThreadGesammt" +Thread.activeCount());
 	}
-	public ArrayList<Moveable> getMovables(){
-		return moveables;
+	public ArrayList<Movable> getMovables(){
+		return movables;
 	}
 	
 	public ArrayList<Item> getItems(){
@@ -104,7 +101,7 @@ public abstract class Map extends JPanel {
 			
 			
 			
-			case 'r': return new Sprite (Map.spritewidth, Map.spriteheight, field);	
+			case 'r': return new Sprite (this.spritewidth, this.spriteheight, field);	
 			 
 			case '(': return new Enemy(0, 0, 50, 50,field, Item.FIRE);
 			case ')': return new Enemy(0, 0, 50, 50,field, Item.ICE);	
@@ -131,9 +128,9 @@ public abstract class Map extends JPanel {
 		
 		int x,y;
 		for(int i=0; i<mapwidth;i++){
-			x=i*Map.spritewidth;
+			x=i*this.spritewidth;
 			for(int j=0; j< mapheight; j++){
-				y=j*Map.spriteheight;
+				y=j*this.spriteheight;
 				Sprite sp1 = this.getSprite(i,j);
 				
 				if(sp1!=null){
@@ -163,31 +160,25 @@ public abstract class Map extends JPanel {
 		if (x<0 || (x+playersizex) > (mapwidth)*spritewidth) return 'x';
 		if (y<0 || (y+playersizey) > (mapheight)*spriteheight) return 'x';
 		//Oben-Links
-		X= (int) (x/Map.spritewidth);
-		Y= (int) (y/Map.spriteheight);
+		X= (int) (x/this.spritewidth);
+		Y= (int) (y/this.spriteheight);
 		char OL = mapArray[Y][X];
 		//Oben-Rechts
-		X=(int)	((x+playersizex-1)/Map.spritewidth);
-		Y=(int)(y/Map.spriteheight);
+		X=(int)	((x+playersizex-1)/this.spritewidth);
+		Y=(int)(y/this.spriteheight);
 		char OR = mapArray[Y][X];
 		//Unten-Links
-		X= (int) (x/Map.spritewidth);
-		Y= (int) ((y+playersizey-1)/Map.spriteheight);
+		X= (int) (x/this.spritewidth);
+		Y= (int) ((y+playersizey-1)/this.spriteheight);
 		char UL = mapArray[Y][X];
 		//Unten-Rechts
-		X= (int) ((x+playersizex-1)/Map.spritewidth);
-		Y= (int) ((y+playersizey-1)/Map.spriteheight);
+		X= (int) ((x+playersizex-1)/this.spritewidth);
+		Y= (int) ((y+playersizey-1)/this.spriteheight);
 		char UR = mapArray[Y][X];
 		
 		//Wichtig ist die Reihenfolge, was wichtiger ist oben
 		if	(OL=='x' || OR=='x' || UL=='x' || UR=='x') return 'x';
-		else if(OL=='a' || OR=='a' || UL=='a' || UR=='a') return 'a';
-		/*else if	(OL=='e' || OR=='e' || UL=='e' || UR=='e') return 'e';
-		else if (OL=='S' || OR=='S' || UL=='S' || UR=='S') return 'S';
-		else if (OL=='M' || OR=='M' || UL=='M' || UR=='M') return 'M';
-		else if (OL=='Y' || OR=='Y' || UL=='Y' || UR=='Y') return 'Y';
-		else if (OL=='H' || OR=='H' || UL=='H' || UR=='H') return 'H';
-		else if (OL=='O' || OR=='O' || UL=='O' || UR=='O') return 'O';*/
+
 		else return' ';
 
 	}
@@ -227,9 +218,9 @@ public abstract class Map extends JPanel {
 		if(!Sprite.class.isAssignableFrom(sp.getClass()))
 			return component;
 		Class<? extends Sprite> cClass = ((Sprite)sp).getClass();
-		if(Moveable.class.isAssignableFrom(cClass)){
-			((Moveable)sp).setMap();
-			moveables.add((Moveable) sp);
+		if(Movable.class.isAssignableFrom(cClass)){
+			((Movable)sp).setMap();
+			movables.add((Movable) sp);
 		}
 	
 		if(Player.class.isAssignableFrom(cClass)){
@@ -261,9 +252,9 @@ public abstract class Map extends JPanel {
 		if(cClass.equals(Item.class)){
 			items.remove((Item) sp);
 		}
-		if(Moveable.class.isAssignableFrom(cClass)){
-			((Moveable)sp).setMap();
-			moveables.remove((Moveable) sp);
+		if(Movable.class.isAssignableFrom(cClass)){
+			((Movable)sp).setMap();
+			movables.remove((Movable) sp);
 		}
 		if(ActiveArea.class.isAssignableFrom(sp.getClass())){
 			if(((ActiveArea)sp).onTouchAction() || ((ActiveArea)sp).onActionAction())
@@ -297,9 +288,9 @@ public abstract class Map extends JPanel {
 	public void startMotion(){
 		hau = new TimerTask() {
 			public void run() {
-				if(moveables.size()>1){
+				if(movables.size()>1){
 					try{
-						for(Moveable mov:moveables){		
+						for(Movable mov:movables){		
 							if(mov.getClass().equals(Enemy.class))	mov.attemptAttack();
 						}
 					}catch (Exception e){
@@ -314,7 +305,7 @@ public abstract class Map extends JPanel {
 		move = new TimerTask() {
 			public void run() {
 				try{
-					for (Moveable mov: Map.this.getMovables()){
+					for (Movable mov: Map.this.getMovables()){
 						mov.updateMot();
 					
 					}
@@ -345,7 +336,7 @@ public abstract class Map extends JPanel {
 		}
 		return null;
 	}
-	public void tellAll(Moveable mv,String msg) {
+	public void tellAll(Movable mv,String msg) {
 		for(Player pl: playerList){
 			pl.tell(mv,msg);
 		}
@@ -363,11 +354,41 @@ public abstract class Map extends JPanel {
 	public abstract void enterDoor(Door door, Player mv);
 	
 	public void freeze( ){
-		for(Moveable a:moveables){
-			a.movMode=Moveable.modes.idle;
+		for(Movable a:movables){
+			a.movMode=Movable.modes.idle;
 		}
 	}
-	
+	public char[][] getArray() {
+		return mapArray;
+	}
+	public void setArray(char[][] mapArray){
+		this.mapArray = mapArray;
+		//groessen 
+		mapheight = mapArray.length;
+		mapwidth = mapArray[0].length;
+	}
+	public void addPOS(){
+		
+	}
+	public boolean isCrossable(int x, int y, int width, int height){
+		
+		if (x<0 || (x+width) > (mapwidth)*spritewidth) return false;
+		if (y<0 || (y+height) > (mapheight)*spriteheight) return false;
+		ArrayList<Component> compArray = new ArrayList<Component>();
+		compArray.add(getComponentAt(x,y));compArray.add(getComponentAt(x+width,y));
+		compArray.add(getComponentAt(x+width,y+height));compArray.add(getComponentAt(x,y+height));
+		for(Component compIterator: compArray)
+			if(compIterator instanceof Sprite) 
+				if(!((Sprite)compIterator).crossable) return false;
+		return true;
+	}
+	@Override
+	public void removeAll(){
+		super.removeAll();
+		playerList.removeAll(playerList);
+		movables.removeAll(movables);
+		activeAreas.removeAll(activeAreas);
+	}
 }
 
 

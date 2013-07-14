@@ -28,7 +28,7 @@ public class Sprite extends JComponent implements MouseListener{
 	 */
 	char name;
 	protected boolean lootable=false;
-	
+	public boolean crossable=true;
 	
 	// Konstruktor Namenloser 
 
@@ -49,8 +49,8 @@ public class Sprite extends JComponent implements MouseListener{
 		this.setDim(xDim,yDim);
 		this.rectangle = new Rectangle(0,0,xDim,yDim);
 		this.setBounds(0,0,xDim,yDim);
+		if(name=='x')crossable=false;
 	}
-	
 
 		
 	
@@ -86,30 +86,7 @@ public class Sprite extends JComponent implements MouseListener{
 				    g.drawImage(img4, 0, 0, this);
 				    g.finalize();	
 				    
-			break;
-			
-			case 'e':
-				g.setColor(Color.gray); 
-				g.fillRect(0, 0,Dim[0],Dim[1]);
-			break;
-			
-			case 'a': 
-				g.setColor(Color.green); 
-				g.fillRect(0, 0,Dim[0],Dim[1]);
-			break;
-			/*
-			
-			*/
-			
-			
-	//		case 'r':
-				
-		/*		g.setColor(Color.cyan);
-				g.drawOval(0, 0, 10, 50);//Oval Zeichnen
-				g.fillOval(10,10,25,25);
-		*/
-	//		break;
-			
+			break;	
 			
 		}
 		

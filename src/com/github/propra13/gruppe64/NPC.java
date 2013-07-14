@@ -6,7 +6,7 @@ import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class NPC extends Moveable implements ActiveArea{
+public class NPC extends Movable implements ActiveArea{
 
 	/**
 	 * 
@@ -26,11 +26,16 @@ public class NPC extends Moveable implements ActiveArea{
 			nick="Meister des Zen";
 			sentence.add("Hallo mein Freund!Die Welt wird von Katzen terrorisiert. Benutze space um auf die Katzen einzuschlagen und benutze c um deine Waffen zu wechseln. Wenn du gen��gend Mana hast kannst du mit h dein Leben regenerieren.Mit einem Doppelklick kannst du Lebens- und Manatr��nke verwenden");
 			sentence.add("Du bist auf dich alleingestellt");
+		
+		case '$':
+			nick="Verkaeufer";
+			sentence.add("Hallo ich bin der Verkaeufer in diesem Laden, ein Zauberer hat mit dazu verdammt auf ewig in einem Wandelnden Laden zu arbeiten. Aber die Geschaefte laufen, ich kann nicht klagen. Schau dir meine Waren an, aber wenn du was anfasst musst du es kaufen.");
+			sentence.add("Die letzte Truhe aus sapientpearwood habe an Twoflower verkauft. Ich habe aber viele andere nuetzliche Gegenstaende!!");
 		}
 	}
 
 	@Override
-	public void onTouch(Moveable mv) {
+	public void onTouch(Movable mv) {
 		//if kind of player
 		if(Player.class.isAssignableFrom(mv.getClass())){
 			if(touchTell ){
@@ -43,7 +48,7 @@ public class NPC extends Moveable implements ActiveArea{
 	}
 
 	@Override
-	public void onAction(Moveable mv) {
+	public void onAction(Movable mv) {
 		if(Player.class.isAssignableFrom(mv.getClass())){
 			//TODO iterator
 			((Map)this.getParent()).tellAll(this,sentence.get(0));

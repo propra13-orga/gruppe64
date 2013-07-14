@@ -4,8 +4,11 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
 
-public class Door extends Sprite implements ActiveArea{
+import javax.swing.JPanel;
+
+public class Door extends Sprite implements ActiveArea,PAS{
 	/**
 	 * 
 	 */
@@ -91,15 +94,18 @@ public class Door extends Sprite implements ActiveArea{
 	}
 
 	@Override
-	public void onTouch(Moveable mv) {
-		// TODO Auto-generated method stub
+	public void onTouch(Movable mv) {
+		if(mv instanceof Architect){
+			MapEditor meh= (MapEditor)((Player)mv).getLevel();
+			meh.onEditableSprite(this);
+		}
 		
 	}
 
 
 	@Override
-	public void onAction(Moveable mv) {
-		setCarDir();
+	public void onAction(Movable mv) {
+
 		if(Player.class.isAssignableFrom(mv.getClass())){
 			((Map)this.getParent()).enterDoor(this, (Player)mv);
 		}
@@ -112,6 +118,19 @@ public class Door extends Sprite implements ActiveArea{
 	@Override
 	public boolean onActionAction() {
 		return true;
+	}
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		if (arg0.getClickCount()>1){
+			Level l=((Room)this.getParent()).level;
+			if(l instanceof MapEditor)
+				((MapEditor)l).showDialog(this);
+		}
+	}
+	@Override
+	public JPanel getSetupDialog(MapGenerator mg) {
+		
+		return null;
 	}
 
 }
