@@ -22,7 +22,7 @@ public class NWBrowser implements ActionListener {
 	private Main main;
 	JTextField nickname, svrname,ip;
 	JButton join,create,back;
-	Lobby lobby;
+
 	
 	private class myJButton extends JButton{
 		myJButton(String label){
@@ -101,11 +101,11 @@ public class NWBrowser implements ActionListener {
 		}
 		if(ae.getSource()==this.create){
 			create.setEnabled(false);
-			ArrayList<NPlayer> playerList = new ArrayList<NPlayer>();
-			SGame sgame=new SGame(cp, main, svrname.getText(),playerList);
+			
+			Server sgame=new Server(cp, main, svrname.getText());
 			Thread svrthread=new Thread(sgame);
 			svrthread.start();
-			//lobby=new Lobby(cp, main, playerList);
+			
 			try {
 				join(InetAddress.getLocalHost());
 			} catch (UnknownHostException e) {
@@ -119,10 +119,13 @@ public class NWBrowser implements ActionListener {
 		}
 		
 	}
-	private void join(InetAddress svr){
-		NPlayer tplayer= new NPlayer(nickname.getText());
+	private void join(InetAddress svr) throws UnknownHostException{
+		NGame nGame= new NGame(cp,main,main.controller,nickname.getText());
+		nGame.serverOwner=svr.equals(InetAddress.getLocalHost());
+		Thread t=new Thread(nGame);
 		try {
-			tplayer.connect(svr);
+			nGame.nplayer.connect(svr);
+			t.start();
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -130,7 +133,6 @@ public class NWBrowser implements ActionListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//cp.removeAll();
 		
 	}
 }

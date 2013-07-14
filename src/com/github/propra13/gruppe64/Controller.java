@@ -104,7 +104,8 @@ public class Controller extends KeyAdapter{									//brauche playerobject mit p
 			if(keyr==switchA && !player.getChatInput().isFocusOwner()) player.switcharmor();
 			if(keyr==hCast && !player.getChatInput().isFocusOwner()) player.use('H');			
 			if(keyr==KeyEvent.VK_ENTER && player.getChatInput().isFocusOwner()){
-				player.tell(player, player.getChatInput().getText());
+				if(player instanceof NPlayer)	((NPlayer)player).tell((NPlayer)player, player.getChatInput().getText());
+				else							player.tell(player, player.getChatInput().getText());
 				player.getChatInput().setText("");
 			}
 		}

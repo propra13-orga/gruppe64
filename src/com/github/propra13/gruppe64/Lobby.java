@@ -29,7 +29,6 @@ public class Lobby implements ActionListener{
 	JTable table;
 	private ArrayList<NPlayer> playerList;
 	NPlayer player;
-	String[][] data = new String[8][2];
 	private PlayerTable tableModel;
 
 	
@@ -40,7 +39,7 @@ public class Lobby implements ActionListener{
 		}
 	}
 
-	public Lobby(Container cp, Main main, ArrayList<NPlayer> playerlist) {
+	public Lobby(Container cp, Main main, ArrayList<NPlayer> playerlist, boolean serverOwner) {
 		this.cp=cp;
 		this.main =main;
 		playerList= playerlist;
@@ -107,13 +106,7 @@ public class Lobby implements ActionListener{
 		cp.add(back, c);
 		main.pack();
 		// normaly first one
-	
-		addLocalPl(player);
-		//Testing !! Server Edition!!
-				for(int i=0;i<3;i++) {
-					addPl(new NPlayer("player"));
 
-				}
 		
 	}
 	
@@ -123,42 +116,45 @@ public class Lobby implements ActionListener{
 		tableModel.fireTableDataChanged();
 	}
 	
-	public void addLocalPl(NPlayer pl){
+	public void addlocalPl(NPlayer pl){
 		if(player==null){
 			this.player=pl;
 			player.addChatPane(chat);
 			player.addChatInput(chatinput);
-			main.controller.setPlayer(player);
-			playerList.add(pl);	
+			main.controller.setPlayer(pl);
 			correctNicks();
 			tableModel.fireTableDataChanged();
 		}
 	}
+	
 	public void correctNicks(){
 		
-		for(Player pl:playerList){
+		for(NPlayer pl:playerList){
 			Integer i = new Integer(0);
-			for(Player pls:playerList){
+			for(NPlayer pls:playerList){
 				if(!pl.equals(pls))
 					if(pl.getNick().equals(pls.getNick())){
-						for(Player pl2:playerList)
+						for(NPlayer pl2:playerList)
 							if(!pl.equals(pl2) && pl2.getNick().equals(pls.getNick()+"("+i.toString()+")"))i++;
 						pls.setNick(pls.getNick()+"("+(i++).toString()+")");
 					}	
 			}
 		}
 	}
-	
+	public void updateTable(){
+		tableModel.fireTableDataChanged();
+		if(player.nGame.serverOwner){
+			boolean allready=true;
+			if(playerList.size()==0) allready=false;
+			for(NPlayer pl:playerList)
+				if(!pl.isReady())allready=false;
+			start.setEnabled(allready);
+		}
+	}
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getSource()==this.ready){
-			if(player.isReady()){				
-				ready.setText("ready");
-				player.setReadyState(false); tableModel.fireTableDataChanged();
-			}else{
-				ready.setText("unready");
-				player.setReadyState(true); tableModel.fireTableDataChanged();
-			}
+			player.chgready();
 		}
 		if(ae.getSource()==this.start){
 			//TODO start new NGame or something

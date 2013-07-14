@@ -33,7 +33,7 @@ public class Player extends Movable {
 	// leben übrig
 	private int life;
 
-	private transient Game game;
+	public transient Game game;
 	int level;
 	/**
 	 * 	freigeschaltenes Level des jeweiligen Spielers

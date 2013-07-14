@@ -7,9 +7,14 @@ import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -23,6 +28,7 @@ public class MapEditor extends Level  implements ActionListener{
 	private JPanel controllPane;
 	private JButton bLoadLevelSet;
 	private JButton bCreateLevelSet;
+	private JComboBox levelsetChooser;
 	
 	public MapEditor(Container realCp,Main main){
 	
@@ -68,10 +74,12 @@ public class MapEditor extends Level  implements ActionListener{
 		controllPane = new JPanel();
 		controllPane.setPreferredSize(new Dimension(200,200));
 		controllPane.setLayout(new GridBagLayout());
+		levelsetChooser = generateSetchooser();
+		controllPane.add(levelsetChooser,new myGBC(0,0));
 		bLoadLevelSet = new JButton("load levelset"); bLoadLevelSet.addActionListener(this);
-		controllPane.add(bLoadLevelSet, new myGBC(0,0));
+		controllPane.add(bLoadLevelSet, new myGBC(0,1));
 		bCreateLevelSet = new JButton("create levelset"); bCreateLevelSet.addActionListener(this);
-		controllPane.add(bCreateLevelSet, new myGBC(0,1));
+		controllPane.add(bCreateLevelSet, new myGBC(1,1));
 		legende.add(controllPane, BorderLayout.CENTER);
 		
 	}
@@ -156,5 +164,23 @@ public class MapEditor extends Level  implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+	private JComboBox<String> generateSetchooser() {
+		 File dirFile=new File("sav/");
+		 if(!dirFile.exists()){
+			 dirFile.mkdir();
+		 }
+		 ArrayList<String> levelNames = new ArrayList<String>();
+		 CopyOnWriteArrayList<String> names = new CopyOnWriteArrayList<String>(Arrays.asList(dirFile.list()));
+		 for(String name : names){
+			 if(!name.matches("Level[0-9]*_Room*[0-9]*.txt"))names.remove(name);else{
+				for(String levelName: levelNames){
+				//	if(name.contains(levelName))
+				}
+			 }
+		 }
+		 String[] levelSetnames= names.toArray(new String[0]);
+		 
+		return new JComboBox<String>(levelSetnames);
 	}
 }
