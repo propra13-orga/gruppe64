@@ -16,6 +16,7 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketAddress;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Timer;
@@ -120,20 +121,22 @@ public class Server implements Runnable{
 			outOStream = new ObjectOutputStream(outStream);
 			inOStream = new ObjectInputStream(inStream);
 			NPlayer npl = (NPlayer) inOStream.readObject();
+			npl.clientAddress=client.getRemoteSocketAddress();
 			playerList.add(npl);	
 			outOStream.writeObject(svrname);
 			outOStream.writeObject(playerList);
 			while(client.isConnected()){
 				try {
 					Object msgobj=inOStream.readObject();
+					outOStream.reset();
 					switch(((Nmessage)msgobj).head){
 					case chatmsg:	outOStream.writeObject(msgobj);
 						break;
 					case chgready:	ArrayList<Object> obj=new ArrayList<Object>();
 						npl=(NPlayer)((Nmessage)msgobj).object.get(0);
-						playerList.get(playerList.indexOf(npl)).setReadyState(!npl.isReady());
+						playerList.get(playerNr(client)).setReadyState(!npl.isReady());
 						obj.add(playerList);
-						outOStream.writeObject(new Nmessage(Nmessage.headers.chgready,obj));					
+						sendMsg(Nmessage.headers.chgready,obj);					
 						break;
 					case damage:
 						break;
@@ -176,5 +179,23 @@ public class Server implements Runnable{
 			
 		}
 		
+	}
+	public void sendMsg(Nmessage.headers header, ArrayList<Object> arrayList){
+		try{
+			outOStream.writeObject(new Nmessage(header,arrayList));outOStream.reset();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (NullPointerException e){
+			e.printStackTrace();
+		}
+	}
+	public int playerNr(Socket client){
+		SocketAddress remoteAdress = client.getRemoteSocketAddress();
+		int i=0;
+		for(NPlayer iPlayer: playerList){
+			if(iPlayer.clientAddress.equals(remoteAdress))return i;
+			i++;
+		}
+		return -1;
 	}
 }

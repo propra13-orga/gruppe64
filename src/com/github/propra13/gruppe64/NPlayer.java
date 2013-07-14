@@ -6,9 +6,11 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.io.Serializable;
 import java.net.ConnectException;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.net.SocketAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
@@ -17,8 +19,12 @@ import java.util.ArrayList;
 /*
  * represents the sever instance of the player
  */
-public class NPlayer extends Player {
-	private boolean readyState=false;
+public class NPlayer extends Player implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1899004144393455638L;
+	private boolean readyState;
 	private transient Socket dataSocket;
 	private transient OutputStream outStream;
 	private transient InputStream inStream;
@@ -26,7 +32,7 @@ public class NPlayer extends Player {
 	private transient ObjectInputStream intOStream;
 	public transient Lobby lobby;
 	public transient NGame nGame;
-
+	public transient SocketAddress clientAddress;
 	
 	public boolean isReady(){
 		return readyState;
@@ -38,7 +44,7 @@ public class NPlayer extends Player {
 	public NPlayer(String nick,NGame nGame) {
 		super(0, 0);
 		setNick(nick);
-		this.nGame=nGame;
+		this.nGame=nGame;readyState=false;
 		//TODO setup client
 	}
 
@@ -82,7 +88,7 @@ public class NPlayer extends Player {
 		NPlayer npl;
 		try {
 			while(dataSocket.isConnected()){
-				Object msgobj=intOStream.readObject();
+				;Object msgobj=intOStream.readObject();
 				switch(((Nmessage)msgobj).head){
 				case chatmsg:	this.getChatPane().append((Movable)((Nmessage)msgobj).object.get(0), (String)((Nmessage)msgobj).object.get(1));
 					break;
@@ -115,7 +121,7 @@ public class NPlayer extends Player {
 			ArrayList<Object> obj=new ArrayList<Object>();
 			obj.add(npl);
 			obj.add(msg);
-			outOStream.writeObject(new Nmessage(Nmessage.headers.chatmsg,obj));
+			outOStream.writeObject(new Nmessage(Nmessage.headers.chatmsg,obj));outOStream.reset();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -123,18 +129,24 @@ public class NPlayer extends Player {
 	}
 	
 	public void chgready(){
-		try {
+	
 			ArrayList<Object> obj=new ArrayList<Object>();
 			obj.add(this);
-			outOStream.writeObject(new Nmessage(Nmessage.headers.chgready,obj));
+			sendMsg(Nmessage.headers.chgready,obj);
 			setReadyState(!isReady());
 			if(isReady())	lobby.ready.setText("unready");
 			else			lobby.ready.setText("ready"); 
+		
+	}
+
+	public void sendMsg(Nmessage.headers header, ArrayList<Object> arrayList){
+		try{
+			outOStream.writeObject(new Nmessage(header,arrayList));outOStream.reset();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NullPointerException e){
 			e.printStackTrace();
 		}
 	}
-	
 
 }

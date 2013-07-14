@@ -128,7 +128,8 @@ public class Lobby implements ActionListener{
 	
 	
 	public void updateTable(){
-		tableModel.fireTableDataChanged();
+		tableModel.playerList=nGame.playerList;
+		tableModel.fireTableDataChanged();tableModel.fireTableStructureChanged();
 		if(player.nGame.serverOwner){
 			boolean allready=true;
 			if(nGame.playerList.size()==0) allready=false;
