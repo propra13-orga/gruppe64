@@ -79,8 +79,13 @@ public class Sprite extends JComponent implements MouseListener{
 		switch (this.name){
 			case 'x':
 			case 'X':	
-					g.setColor(Color.black); 
-					g.fillRect(0, 0, Dim[0],Dim[1]);
+				//	g.setColor(Color.black); 
+				//	g.fillRect(0, 0, Dim[0],Dim[1]);
+					
+					Image img4 = Toolkit.getDefaultToolkit().getImage("res/bricket.jpg");
+				    g.drawImage(img4, 0, 0, this);
+				    g.finalize();	
+				    
 			break;
 			
 			case 'e':

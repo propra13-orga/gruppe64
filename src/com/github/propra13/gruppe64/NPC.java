@@ -82,4 +82,10 @@ public class NPC extends Moveable implements ActiveArea{
 	protected void die(){
 		map.remove(this);
 	}
+
+	@Override
+	public void updateMot() {
+		// TODO Auto-generated method stub
+		
+	}
 }

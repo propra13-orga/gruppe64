@@ -25,12 +25,12 @@ public class Level implements java.io.Serializable{
 	ArrayList<Moveable> moveable;
 	
 	private transient Game game;
-	private Container cp;
-	private Player player; //networkf if NPlayer.class
+	protected Container cp;
+	protected Player player; //networkf if NPlayer.class
 	Stack<Door> fallBackDoor;
 	public Door entrance;
 	
-	private int levelNr;
+	protected int levelNr;
 	
 	// mapArray's for all Rooms
 	private Iterator<Room> roomIterator;
@@ -40,7 +40,9 @@ public class Level implements java.io.Serializable{
 	private World world;
 
 
-	
+	public Level(){
+		
+	}
 	/**
 	 * 
 	 * @param player
@@ -72,7 +74,7 @@ public class Level implements java.io.Serializable{
 		}
 	}
 	
-	private ArrayList<Room> getAllRooms() {
+	protected ArrayList<Room> getAllRooms() {
 		try
 	      {
 	         FileInputStream fileIn = new FileInputStream("sav/roomList.tmp");
@@ -100,7 +102,7 @@ public class Level implements java.io.Serializable{
 		MapGenerator mg= new MapGenerator("res/Karten/Level%i_Raum%i.txt");
 		ArrayList<Room> roomList2store=mg.generateRoomList(this);
 
-		System.out.println("Level "+lvl+ " hat "+roomList.size());
+		System.out.println("Level "+lvl+ " hat "+roomList2store.size());
 		 try
 	      {	
 			 File dirFile=new File("sav/");
