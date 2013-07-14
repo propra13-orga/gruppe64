@@ -9,12 +9,15 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.io.IOException;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.swing.Action;
+import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -27,33 +30,27 @@ public class NGame extends Game implements Runnable{
 	/**
 	 * Instanzvariablen
 	 */
-	protected ArrayList<Player> playerList;
 
+	public transient NPlayer nplayer;
 	
 	
 	/**
 	 * cp ist content-pane von unserem JFrame
 	 */
-	public NGame(Container cp, Main main, Controller controller) {
+	public NGame(Container cp, Main main, Controller controller, String nick) {
 		super(cp,main,controller);
-		addPl(super.getPlayer());
+		nplayer = new NPlayer(nick,this);
+		 													
 	}	
 	
-	public void addPl(Player pl){
-		playerList.add(pl);
-		correctNicks();
-		
+	public void initLobby(String svrname, ArrayList<NPlayer> playerList){
+		cp.removeAll();
+		lobby=new Lobby(cp, main, playerList, serverOwner);
+		lobby.chat.append("Wilkommen auf Server "+svrname);
+		nplayer.lobby=lobby;
 	}
-	public void correctNicks(){
-		for(Player pl:playerList){
-			for(Player pls:playerList){
-				int i=0;
-				if(!pl.equals(pls))
-					if(pl.getNick()==pls.getNick()) pls.setNick(pls.getNick()+"("+(i++)+")");
-			}
-		}
+	public void run(){
+		nplayer.handleNW();				
 	}
-
-
 	
 }

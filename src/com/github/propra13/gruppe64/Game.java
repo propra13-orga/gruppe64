@@ -5,6 +5,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
@@ -34,12 +35,15 @@ public class Game implements Runnable{
 	//private Timer caretaker;
 	
 	/** active Level **/
-	private int aLevelNr;
+	protected int aLevelNr;
 	/**highest acessible Level **/
-	private int levelNr;
+	protected int levelNr;
 	/**last Level**/
 	private int lastLevelNr;
 	private JPanel mapHandler;
+	
+	public boolean serverOwner=false;
+	Lobby lobby;
 	
 	
 	/**
@@ -49,12 +53,6 @@ public class Game implements Runnable{
 		this.cp=cp;//new JPanel();this.cp.setLayout(null);cp.add(this.cp,BorderLayout.CENTER);
 		this.main =main;
 		
-		//player and his statBar
-		player = new Player(0,50);
-		
-		
-		
-		
 		
 		cp.setBackground(Color.WHITE);
 		cp.setLayout(new BoxLayout(cp, BoxLayout.Y_AXIS));//cp.setLayout(new BorderLayout());
@@ -63,17 +61,19 @@ public class Game implements Runnable{
 		aLevelNr=1;
 	
 		
+		
+	}	
+
+	public void run(){
 		MapGenerator mg=new MapGenerator();
 		world = (World) mg.generateMap(World.class, "res/Karten/world.txt");
 		lastLevelNr=world.getMaxLevel();
 		world.drawMap();
 		world.game=this;
-	}	
-
-	public void run(){
 		
-		
-
+		//player and his statBar
+		player = new Player(0,50);
+				
 		initGamefield();
 		
 		
@@ -181,7 +181,7 @@ public class Game implements Runnable{
 		player.setLevel(null);
 		showMap(world);
 	}
-
+	
 	
 }
 

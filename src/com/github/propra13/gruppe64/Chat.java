@@ -40,6 +40,7 @@ public class Chat extends JScrollPane{
 		revalidate();
 		repaint();
 	}
+
 	public void append(String text){
 		this.textArea.append("=="+text+"==\n");
 		revalidate();
