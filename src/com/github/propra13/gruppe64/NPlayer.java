@@ -66,29 +66,27 @@ public class NPlayer extends Player {
 				try{
 					outOStream.writeObject(this);
 					serverName = (String) intOStream.readObject();
-					nplayers=(ArrayList<NPlayer>) intOStream.readObject();
+					nplayers=(ArrayList<NPlayer>) intOStream.readObject();	// FALSCH?
 				}catch(IOException e){
 					e.printStackTrace();
 				} catch (ClassNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			
-			nGame.initLobby(serverName,nplayers);
+			nGame.playerList=nplayers;
+			nGame.initLobby(serverName);
 			lobby.addlocalPl(this);
 	} 
 	
 	public void handleNW(){
+		NPlayer npl;
 		try {
 			while(dataSocket.isConnected()){
-			
 				Object msgobj=intOStream.readObject();
 				switch(((Nmessage)msgobj).head){
 				case chatmsg:	this.getChatPane().append((Moveable)((Nmessage)msgobj).object.get(0), (String)((Nmessage)msgobj).object.get(1));
 					break;
-				case chgready:	setReadyState((boolean)((Nmessage)msgobj).object.get(1));
-								if(isReady())	lobby.ready.setText("unready");
-								else			lobby.ready.setText("ready"); 
+				case chgready:	nGame.playerList=(ArrayList<NPlayer>) ((Nmessage)msgobj).object.get(0); // FALSCH!
 								lobby.updateTable();
 					break;
 				case damage:
@@ -128,8 +126,10 @@ public class NPlayer extends Player {
 		try {
 			ArrayList<Object> obj=new ArrayList<Object>();
 			obj.add(this);
-			obj.add(readyState);
 			outOStream.writeObject(new Nmessage(Nmessage.headers.chgready,obj));
+			setReadyState(!isReady());
+			if(isReady())	lobby.ready.setText("unready");
+			else			lobby.ready.setText("ready"); 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

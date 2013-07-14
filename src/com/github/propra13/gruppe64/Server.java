@@ -121,7 +121,6 @@ public class Server implements Runnable{
 			inOStream = new ObjectInputStream(inStream);
 			NPlayer npl = (NPlayer) inOStream.readObject();
 			playerList.add(npl);	
-			//lobby.updateTable();
 			outOStream.writeObject(svrname);
 			outOStream.writeObject(playerList);
 			while(client.isConnected()){
@@ -131,8 +130,9 @@ public class Server implements Runnable{
 					case chatmsg:	outOStream.writeObject(msgobj);
 						break;
 					case chgready:	ArrayList<Object> obj=new ArrayList<Object>();
-						obj.add((NPlayer)((Nmessage)msgobj).object.get(0));
-						obj.add(!(boolean)((Nmessage)msgobj).object.get(1));
+						npl=(NPlayer)((Nmessage)msgobj).object.get(0);
+						playerList.get(playerList.indexOf(npl)).setReadyState(!npl.isReady());
+						obj.add(playerList);
 						outOStream.writeObject(new Nmessage(Nmessage.headers.chgready,obj));					
 						break;
 					case damage:

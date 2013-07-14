@@ -32,7 +32,7 @@ public class NGame extends Game implements Runnable{
 	 */
 
 	public transient NPlayer nplayer;
-	
+	public ArrayList<NPlayer> playerList;
 	
 	/**
 	 * cp ist content-pane von unserem JFrame
@@ -43,14 +43,27 @@ public class NGame extends Game implements Runnable{
 		 													
 	}	
 	
-	public void initLobby(String svrname, ArrayList<NPlayer> playerList){
+	public void initLobby(String svrname){
 		cp.removeAll();
-		lobby=new Lobby(cp, main, playerList, serverOwner);
+		lobby=new Lobby(cp, main, this, serverOwner);
 		lobby.chat.append("Wilkommen auf Server "+svrname);
 		nplayer.lobby=lobby;
 	}
 	public void run(){
 		nplayer.handleNW();				
 	}
-	
+	public void correctNicks(){
+		
+		for(NPlayer pl:playerList){
+			Integer i = new Integer(0);
+			for(NPlayer pls:playerList){
+				if(!pl.equals(pls))
+					if(pl.getNick().equals(pls.getNick())){
+						for(NPlayer pl2:playerList)
+							if(!pl.equals(pl2) && pl2.getNick().equals(pls.getNick()+"("+i.toString()+")"))i++;
+						pls.setNick(pls.getNick()+"("+(i++).toString()+")");
+					}	
+			}
+		}
+	}
 }
