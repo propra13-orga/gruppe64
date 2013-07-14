@@ -127,13 +127,16 @@ public class Server implements Runnable{
 			outOStream.writeObject(playerList);
 			while(client.isConnected()){
 				try {
-					Object msgobj=inOStream.readObject();
+					Object robj= inOStream.readObject();
+					Nmessage msgobj = null;
+					if(robj instanceof Nmessage)msgobj=(Nmessage)robj;
 					outOStream.reset();
-					switch(((Nmessage)msgobj).head){
+					
+					switch(msgobj.head){
 					case chatmsg:	outOStream.writeObject(msgobj);
 						break;
 					case chgready:	ArrayList<Object> obj=new ArrayList<Object>();
-						npl=(NPlayer)((Nmessage)msgobj).object.get(0);
+						npl=(NPlayer)msgobj.object.get(0);
 						playerList.get(playerNr(client)).setReadyState(!npl.isReady());
 						obj.add(playerList);
 						sendMsg(Nmessage.headers.chgready,obj);					

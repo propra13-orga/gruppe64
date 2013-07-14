@@ -23,7 +23,7 @@ public class NPlayer extends Player implements Serializable{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1899004144393455638L;
+	private static final long serialVersionUID = 1L;
 	private boolean readyState;
 	private transient Socket dataSocket;
 	private transient OutputStream outStream;
@@ -88,11 +88,13 @@ public class NPlayer extends Player implements Serializable{
 		NPlayer npl;
 		try {
 			while(dataSocket.isConnected()){
-				;Object msgobj=intOStream.readObject();
-				switch(((Nmessage)msgobj).head){
-				case chatmsg:	this.getChatPane().append((Movable)((Nmessage)msgobj).object.get(0), (String)((Nmessage)msgobj).object.get(1));
+				Object robj= intOStream.readObject();
+				Nmessage msgobj = null;
+				if(robj instanceof Nmessage)msgobj=(Nmessage)robj;
+				switch(msgobj.head){
+				case chatmsg:	this.getChatPane().append((Movable)msgobj.object.get(0), (String)msgobj.object.get(1));
 					break;
-				case chgready:	nGame.playerList=(ArrayList<NPlayer>) ((Nmessage)msgobj).object.get(0); // FALSCH!
+				case chgready:	nGame.playerList=(ArrayList<NPlayer>) msgobj.object.get(0); // FALSCH!
 								lobby.updateTable();
 					break;
 				case damage:
