@@ -27,9 +27,9 @@ public class Lobby implements ActionListener{
 	Chat chat;
 	JButton ready,start,back;
 	JTable table;
-	private ArrayList<NPlayer> playerList;
 	NPlayer player;
 	private PlayerTable tableModel;
+	public NGame nGame;
 
 	
 	private class myJButton extends JButton{
@@ -39,11 +39,10 @@ public class Lobby implements ActionListener{
 		}
 	}
 
-	public Lobby(Container cp, Main main, ArrayList<NPlayer> playerlist, boolean serverOwner) {
+	public Lobby(Container cp, Main main, NGame nGame, boolean serverOwner) {
 		this.cp=cp;
 		this.main =main;
-		playerList= playerlist;
-		
+		this.nGame=nGame;
 		cp.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		
@@ -51,7 +50,7 @@ public class Lobby implements ActionListener{
 		
 
 
-		tableModel =new PlayerTable(playerList);
+		tableModel =new PlayerTable(nGame.playerList);
 		table = new JTable(tableModel);
 		c.fill = GridBagConstraints.VERTICAL;
 		c.gridheight = 3;
@@ -111,8 +110,8 @@ public class Lobby implements ActionListener{
 	}
 	
 	public void addPl(NPlayer pl){
-		playerList.add(pl);	
-		correctNicks();
+		nGame.playerList.add(pl);	
+		nGame.correctNicks();
 		tableModel.fireTableDataChanged();
 	}
 	
@@ -122,31 +121,18 @@ public class Lobby implements ActionListener{
 			player.addChatPane(chat);
 			player.addChatInput(chatinput);
 			main.controller.setPlayer(pl);
-			correctNicks();
+			nGame.correctNicks();
 			tableModel.fireTableDataChanged();
 		}
 	}
 	
-	public void correctNicks(){
-		
-		for(NPlayer pl:playerList){
-			Integer i = new Integer(0);
-			for(NPlayer pls:playerList){
-				if(!pl.equals(pls))
-					if(pl.getNick().equals(pls.getNick())){
-						for(NPlayer pl2:playerList)
-							if(!pl.equals(pl2) && pl2.getNick().equals(pls.getNick()+"("+i.toString()+")"))i++;
-						pls.setNick(pls.getNick()+"("+(i++).toString()+")");
-					}	
-			}
-		}
-	}
+	
 	public void updateTable(){
 		tableModel.fireTableDataChanged();
 		if(player.nGame.serverOwner){
 			boolean allready=true;
-			if(playerList.size()==0) allready=false;
-			for(NPlayer pl:playerList)
+			if(nGame.playerList.size()==0) allready=false;
+			for(NPlayer pl:nGame.playerList)
 				if(!pl.isReady())allready=false;
 			start.setEnabled(allready);
 		}
@@ -159,7 +145,7 @@ public class Lobby implements ActionListener{
 		if(ae.getSource()==this.start){
 			//TODO start new NGame or something
 			ArrayList<NPlayer> readyPlayer=new ArrayList<NPlayer>();
-			for (NPlayer pl: playerList){
+			for (NPlayer pl: nGame.playerList){
 				if(pl.isReady())readyPlayer.add(pl);
 			}
 			System.exit(0);
