@@ -24,6 +24,10 @@ import com.github.propra13.gruppe64.Main;
 import com.github.propra13.gruppe64.myGBC;
 
 public class MapEditor extends Level  implements ActionListener, PAS{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3174880195930245312L;
 	Container realCp;
 	JPanel legende;
 	JPanel dialogBox;

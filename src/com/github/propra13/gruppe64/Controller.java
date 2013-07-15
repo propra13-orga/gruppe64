@@ -85,7 +85,7 @@ public class Controller extends KeyAdapter{									//brauche playerobject mit p
 	public void keyPressed(KeyEvent e){										//	if(...&&___) -> Wenn der spieler in entgegengesetzte Richtungen dr��ckt,
 			keyp=e.getKeyCode();											
 			if(player!=null){																	//			0			1	         wird die letzte Eingabe ignoriert.
-				if(!player.chatIsFocusOwner()){
+				if(!player.getChatterBox().ownsFocus()){
 					if(keyp== hoch && player.getVel()[1] != -1)player.setMot(dir.up);			//			|			|
 					if(keyp== rechts && player.getVel()[0] != -1)player.setMot(dir.right);		//		3---+---1		0		-1	---0---   1
 					if(keyp== runter && player.getVel()[1] !=  1)player.setMot(dir.down);		//			|			|
@@ -100,12 +100,12 @@ public class Controller extends KeyAdapter{									//brauche playerobject mit p
 		if(player!=null){
 			if(keyr==hoch || keyr==runter)	player.unsetMot(axis.y);				//			1
 			if(keyr==rechts || keyr==links)	player.unsetMot(axis.x);				//			|
-			if(keyr==switchW && !player.chatIsFocusOwner()) player.switchweapon();//			+---0
-			if(keyr==switchA && !player.chatIsFocusOwner()) player.switcharmor();
-			if(keyr==hCast && !player.chatIsFocusOwner()) player.use('H');			
-			if(keyr==KeyEvent.VK_ENTER && player.chatIsFocusOwner()){
-				player.tell((ActiveArea)player, player.getChatInputText());
-				player.setChatInputText("");
+			if(keyr==switchW && !player.getChatterBox().ownsFocus()) player.switchweapon();//			+---0
+			if(keyr==switchA && !player.getChatterBox().ownsFocus()) player.switcharmor();
+			if(keyr==hCast && !player.getChatterBox().ownsFocus()) player.use('H');			
+			if(keyr==KeyEvent.VK_ENTER && player.getChatterBox().ownsFocus()){
+				player.tell((ActiveArea)player, player.getChatterBox().getInput());
+				player.getChatterBox().clearInputText();
 			}
 		}
 	}

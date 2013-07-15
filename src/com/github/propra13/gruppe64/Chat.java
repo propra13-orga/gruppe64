@@ -7,8 +7,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 
-@SuppressWarnings("serial")
+
 public class Chat extends JScrollPane{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 899637230571821011L;
 	private Player player;
 	private JTextArea textArea=new JTextArea();
 

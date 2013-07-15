@@ -106,9 +106,7 @@ public class Game implements Runnable{
 		
 		statBar = new StatBar(player);
 		player.addStatBar(statBar);
-		player.addChatPane(chatp);
-		player.addChatInput(chatinput);
-		
+		player.setChatterBox(chatp,chatinput);
 		
 		cp.add(statBar,cp);
 		statBar.repaint();

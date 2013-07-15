@@ -15,6 +15,10 @@ import com.github.propra13.gruppe64.Player;
 
 
 public class World extends Map implements ActionListener{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private boolean network=false;
 	private JPanel msgBox;
 	private JButton okButton;

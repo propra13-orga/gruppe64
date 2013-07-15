@@ -19,16 +19,81 @@ public interface Player extends Serializable,ActiveArea{
 	Game getGame();
 
 	void addStatBar(StatBar statBar);
+	
+	public class ChatterBox {
+		private Chat chatPane;
+		private JTextField chatInput;
+		public ChatterBox(Chat chatPane, JTextField chatInput){
+			this.chatPane=chatPane;
+			this.chatInput=chatInput;
+		}
+		public ChatterBox(Player pl) {
+			chatPane = new Chat(pl);
+			chatInput = new JTextField();
+			chatInput.setToolTipText("Chatinput");
+		}
+		public void addChatPane(Chat chatp) {
+			this.chatPane = chatp;
+			
+		}
+		public void addChatInput(JTextField chatinput) {
+			// TODO Auto-generated method stub
+			chatInput = chatinput;
+		}
 
-	void addChatPane(Chat chatp);
+		public JTextField getChatInput() {
+			return chatInput;
+		}
+		
+		public Chat getChatPane(){
+			return chatPane;
+		}
 
-	void addChatInput(JTextField chatinput);
+		
+		public String getChatInputText() {
+			
+			return getChatInput().getText();
+		}
+		
+		public void setChatInputText(String string) {
+			getChatInput().setText(string);
+			
+		}
+		
+		public boolean chatIsFocusOwner() {
+			
+			return getChatInput().isFocusOwner();
+		}
+		
+		public void tell(ActiveArea player, String chatInputText) {
+			writeChat(player,chatInputText);
+			
+		}
+		
+		public void writeChat(String string) {
+			getChatPane().append(string);
+			
+		}
+		public void writeChat(ActiveArea mv, String msg) {
+			getChatPane().append(mv,msg);
+			
+		}
+		public void clearInputText() {
+			getChatInput().setText("");
+			
+		}
+		public boolean ownsFocus() {
+			return getChatInput().isFocusOwner();
+		}
+		public String getInput() {
+			return getChatInputText();
+		}
+		
+	}
+	
 
-	void setLevel(Level aLevel);
 
 	Rectangle getRectangle();
-
-	void writeChat(ActiveArea mv, String msg);
 
 	void setLocation(int x, int y);
 
@@ -46,15 +111,9 @@ public interface Player extends Serializable,ActiveArea{
 
 	void attemptAttack();
 
-	boolean chatIsFocusOwner();
-
-	String getChatInputText();
-
 	void switchweapon();
 
 	void switcharmor();
-
-	void setChatInputText(String string);
 
 	void performAction();
 
@@ -77,11 +136,21 @@ public interface Player extends Serializable,ActiveArea{
 
 	void tell(ActiveArea player, String chatInputText);
 
-	void writeChat(String string);
-
 	Component getSprite();
 
 	void setMap(Map map);
+	
+	
+	
+	
+	void setChatterBox(Chat chatp, JTextField chatinput);
+
+	
+
+	ChatterBox getChatterBox();
+
+	void setLevel(Level level);
+
 
 
 }

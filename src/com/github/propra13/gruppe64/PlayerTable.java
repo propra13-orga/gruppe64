@@ -6,6 +6,10 @@ import javax.swing.table.AbstractTableModel;
 
 class PlayerTable extends AbstractTableModel {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7697333135152555691L;
 	String[] columnNames = {"nickname","state"};
 	String[] stateMsg={"not ready", "ready"}; 
 	

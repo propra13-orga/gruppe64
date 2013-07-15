@@ -7,6 +7,11 @@ import java.awt.event.KeyEvent;
 public class Architect extends PlayerSprite {
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3635199988671252120L;
+
 	public class ArchitectController extends KeyAdapter {
 		
 		

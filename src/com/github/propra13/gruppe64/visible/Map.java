@@ -329,7 +329,7 @@ public abstract class Map implements Serializable{
 	}
 	public void tellAll(ActiveArea mv,String msg) {
 		for(Player pl: playerList){
-			pl.writeChat(mv,msg);
+			pl.getChatterBox().writeChat(mv,msg);
 		}
 		
 	}

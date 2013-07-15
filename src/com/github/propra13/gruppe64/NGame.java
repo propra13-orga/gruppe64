@@ -26,7 +26,7 @@ import com.github.propra13.gruppe64.visible.Room;
 import com.github.propra13.gruppe64.visible.World;
 
 
-@SuppressWarnings("serial")
+
 public class NGame extends Game implements Runnable{
 	
 

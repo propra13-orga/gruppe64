@@ -43,12 +43,9 @@ public class NPlayer  extends PlayerSprite implements Player,ActiveArea{
 	public transient NGame nGame;
 	public SocketAddress clientAddress;
 	public String nick;
-	private transient JTextField chatInput;
+
 	public transient boolean serverInstance=true;
-	//private boolean hasArmor=false;
-	//private boolean hasArmorFire=false;
 	
-	private Chat chatPane;
 
 	
 	public boolean isReady(){
@@ -111,7 +108,7 @@ public class NPlayer  extends PlayerSprite implements Player,ActiveArea{
 				Message msgobj = null;
 				if(robj instanceof Message)msgobj=(Message)robj;
 				switch(msgobj.head){
-				case chatmsg:	this.writeChat((ActiveArea)msgobj.object.get(0), (String)msgobj.object.get(1));
+				case chatmsg:	this.getChatterBox().writeChat((ActiveArea)msgobj.object.get(0), (String)msgobj.object.get(1));
 					break;
 				case chgready:	nGame.playerList=(ArrayList<NPlayer>) msgobj.array[0]; // FALSCH!
 								lobby.updateTable();
@@ -217,11 +214,7 @@ public class NPlayer  extends PlayerSprite implements Player,ActiveArea{
 		return null;
 	}
 
-	@Override
-	public void writeChat(ActiveArea mv, String msg) {
-		getChatPane().append(mv,msg);
-		
-	}
+	
 
 	@Override
 	/**
@@ -259,11 +252,7 @@ public class NPlayer  extends PlayerSprite implements Player,ActiveArea{
 		
 	}
 
-	@Override
-	public boolean chatIsFocusOwner() {
-		
-		return getChatInput().isFocusOwner();
-	}
+	
 
 	@Override
 	public void switchweapon() {
@@ -277,11 +266,7 @@ public class NPlayer  extends PlayerSprite implements Player,ActiveArea{
 		
 	}
 
-	@Override
-	public void setChatInputText(String string) {
-		getChatInput().setText(string);
-		
-	}
+	
 
 	@Override
 	public void performAction() {
@@ -302,11 +287,6 @@ public class NPlayer  extends PlayerSprite implements Player,ActiveArea{
 		
 	}
 
-	@Override
-	public void writeChat(String string) {
-		getChatPane().append(string);
-		
-	}
 
 	@Override
 	public ArrayList<Item> getItems() {
@@ -338,29 +318,6 @@ public class NPlayer  extends PlayerSprite implements Player,ActiveArea{
 		
 	}
 
-	public void addChatInput(JTextField chatinput) {
-		// TODO Auto-generated method stub
-		chatInput = chatinput;
-	}
-
-	public void addChatPane(Chat chatp) {
-		this.chatPane = chatp;
-		
-	}
-
-	public JTextField getChatInput() {
-		return chatInput;
-	}
-
-	@Override
-	public String getChatInputText() {
-		
-		return getChatInput().getText();
-	}
-
-	public Chat getChatPane(){
-		return chatPane;
-	}
 
 	@Override
 	public boolean onTouchAction() {

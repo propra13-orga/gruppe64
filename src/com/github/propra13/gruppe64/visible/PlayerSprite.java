@@ -24,8 +24,12 @@ import com.github.propra13.gruppe64.Player;
 import com.github.propra13.gruppe64.StatBar;
 
 
-@SuppressWarnings({ "serial" })
+
 public class PlayerSprite extends Movable implements Player, SpriteContent{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4414756618308751730L;
 	//der bei der Bewegung bachtenswerter Offset zum (x,y)
 	//int x_off, y_off;
 
@@ -56,8 +60,7 @@ public class PlayerSprite extends Movable implements Player, SpriteContent{
 	//private boolean hasArmor=false;
 	//private boolean hasArmorFire=false;
 	
-	private Chat chatPane;
-	private JTextField chatInput;
+	public ChatterBox chatterBox;
 	
 
 	//Test Konstruktor
@@ -304,8 +307,8 @@ public class PlayerSprite extends Movable implements Player, SpriteContent{
 	 */
 	public void setLevel(Level aLevel){
 		this.aLevel= aLevel;
-		if(!(aLevel instanceof MapEditor))
-		this.getChatPane().clearText();
+		if(chatterBox!=null)
+		chatterBox.clearInputText();
 	}
 	public Level getLevel(){
 		return aLevel;
@@ -357,48 +360,13 @@ public class PlayerSprite extends Movable implements Player, SpriteContent{
 		this.statBar = statBar;
 		
 	}
-	public void addChatPane(Chat chatp) {
-		this.chatPane = chatp;
-		
+	public void setChatterBox(Chat chatPane, JTextField chatInput){
+		chatterBox=new ChatterBox(chatPane,chatInput);
 	}
-	public void addChatInput(JTextField chatinput) {
-		// TODO Auto-generated method stub
-		chatInput = chatinput;
-	}
-
-	public JTextField getChatInput() {
-		return chatInput;
+	public ChatterBox getChatterBox(){
+		return chatterBox;
 	}
 	
-	public Chat getChatPane(){
-		return chatPane;
-	}
-
-	@Override
-	public String getChatInputText() {
-		
-		return getChatInput().getText();
-	}
-	@Override
-	public void setChatInputText(String string) {
-		getChatInput().setText(string);
-		
-	}
-	@Override
-	public boolean chatIsFocusOwner() {
-		
-		return getChatInput().isFocusOwner();
-	}
-	@Override
-	public void tell(ActiveArea player, String chatInputText) {
-		writeChat(player,chatInputText);
-		
-	}
-	@Override
-	public void writeChat(String string) {
-		getChatPane().append(string);
-		
-	}
 	public void performAction() {
 		if(movMode!=Movable.modes.moving)return;
 		ActiveArea activeSprite = map.isOnActiveArea(this);
@@ -414,14 +382,6 @@ public class PlayerSprite extends Movable implements Player, SpriteContent{
 		// TODO Auto-generated method stub
 		
 	}
-
-
-	@Override
-	public void writeChat(ActiveArea mv, String msg) {
-		getChatPane().append(mv,msg);
-		
-	}
-
 
 	@Override
 	public boolean onTouchAction() {
@@ -449,6 +409,13 @@ public class PlayerSprite extends Movable implements Player, SpriteContent{
 		// TODO Auto-generated method stub
 		
 	}
+	
+	@Override
+	public void tell(ActiveArea player, String chatInputText) {
+		getChatterBox().writeChat(player, chatInputText);
+		
+	}
+	
 	
 
 

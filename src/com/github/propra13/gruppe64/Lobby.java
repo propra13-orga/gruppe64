@@ -117,8 +117,7 @@ public class Lobby implements ActionListener{
 	public void addlocalPl(NPlayer pl){
 		if(player==null){
 			this.player=pl;
-			player.addChatPane(chat);
-			player.addChatInput(chatinput);
+			player.setChatterBox(chat,chatinput);
 			main.controller.setPlayer(pl);
 			tableModel.fireTableDataChanged();
 		}

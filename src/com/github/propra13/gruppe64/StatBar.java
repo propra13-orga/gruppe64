@@ -30,6 +30,10 @@ import com.github.propra13.gruppe64.visible.Item;
 
 
 public class StatBar extends JPanel{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1780279115422298216L;
 	static private  int panelH =120;
 	static private int panelW =800;
 	private int health=200;
