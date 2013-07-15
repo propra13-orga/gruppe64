@@ -9,6 +9,7 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -123,13 +124,14 @@ public class Server implements Runnable{
 
 	private void handleConnection(Socket client) throws IOException, ClassNotFoundException {
 		System.out.println(client.toString());
+		NPlayer serverPlayer=null;
 		try {
 			OutputStream outStream = client.getOutputStream();
 			InputStream inStream = client.getInputStream();
 			ObjectOutputStream outOStream = new ObjectOutputStream(outStream);
 			ObjectInputStream inOStream = new ObjectInputStream(inStream);
 			
-			NPlayer serverPlayer = (NPlayer) inOStream.readObject();
+			serverPlayer = (NPlayer) inOStream.readObject();
 			addPl(serverPlayer,outOStream,inOStream,client.getRemoteSocketAddress());
 			
 			outOStream.writeObject(svrname);
@@ -148,7 +150,7 @@ public class Server implements Runnable{
 					case chgready:	
 						serverPlayer.setReadyState(!serverPlayer.isReady());
 						Object[] o={playerList};
-						serverPlayer.sendMsg(Message.headers.chgready,o);					
+						sendAll(Message.headers.chgready,o);					
 						break;
 					case damage:
 						break;
@@ -162,6 +164,9 @@ public class Server implements Runnable{
 				} catch (ClassNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+				} catch (EOFException e){
+					System.out.println("Catched in der Schleife ");
+					e.printStackTrace();
 				}
 			}
 		} catch (IOException e) {
@@ -170,6 +175,8 @@ public class Server implements Runnable{
 		}finally {
 	        if ( client != null )
 		          try { client.close(); } catch ( IOException e ) { }
+	        System.out.println("Playerverbindung abgebrochen:"+serverPlayer.getNick());
+	        playerList.remove(serverPlayer);
 		}
 		
 	}
@@ -178,6 +185,11 @@ public class Server implements Runnable{
 			pl.sendMsg(msgobj);
 		}
 		
+	}
+	private void sendAll(Message.headers header, Object[] array){
+		for(NPlayer pl: playerList){
+			pl.sendMsg(header, array);
+		}
 	}
 	public class ClientHandler implements Runnable{
 		private Server sgame;

@@ -60,7 +60,7 @@ public class PlayerSprite extends Movable implements Player, SpriteContent{
 	//private boolean hasArmor=false;
 	//private boolean hasArmorFire=false;
 	
-	public ChatterBox chatterBox;
+	public transient ChatterBox chatterBox;
 	
 
 	//Test Konstruktor
