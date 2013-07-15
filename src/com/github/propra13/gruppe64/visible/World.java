@@ -30,13 +30,9 @@ public class World extends Map implements ActionListener{
 		return 5;
 	}
 	public Container getCP(){
-		return this.getParent();
+		return getJPanel().getParent();
 	}
-	public void showMsg(){
-		msgBox = new JPanel();
-		msgBox.setLocation(this.getWidth()/2-msgBox.getWidth()/2, this.getHeight()/2-msgBox.getHeight()/2);
-		this.add(msgBox);
-	}
+	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
@@ -59,9 +55,9 @@ public class World extends Map implements ActionListener{
 		}
 	}
 	@Override
-	public Component add(Component sp){
-		Component c=super.add(sp);
-		if(Player.class.isAssignableFrom(sp.getClass())){
+	public Sprite add(Sprite sp){
+		Sprite c=super.add(sp);
+		if(sp instanceof Player){
 			sp.setLocation(lastPos);
 			setOpenDoors(((Player)sp).getLvlUnlocked());
 		}return c;

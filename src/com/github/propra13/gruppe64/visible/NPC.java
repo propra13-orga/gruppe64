@@ -6,6 +6,8 @@ import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import javax.swing.JComponent;
+
 import com.github.propra13.gruppe64.ActiveArea;
 import com.github.propra13.gruppe64.Player;
 
@@ -19,7 +21,7 @@ public class NPC extends Movable implements ActiveArea{
 	private ArrayList<String> sentence;
 	private Iterator<String> iSentence;
 	private String nick;
-	
+	private transient JComponent sprite;
 
 	public NPC(char name) {
 		super(50, 50, name);
@@ -27,7 +29,7 @@ public class NPC extends Movable implements ActiveArea{
 		switch(this.name){
 		case 'O':
 			setNick("Meister des Zen");
-			sentence.add("Hallo mein Freund!Die Welt wird von Katzen terrorisiert. Benutze space um auf die Katzen einzuschlagen und benutze c um deine Waffen zu wechseln. Wenn du gen��gend Mana hast kannst du mit h dein Leben regenerieren.Mit einem Doppelklick kannst du Lebens- und Manatr��nke verwenden");
+			sentence.add("Hallo mein Freund!Die Welt wird von Katzen terrorisiert. Benutze space um auf die Katzen einzuschlagen und benutze c um deine Waffen zu wechseln. Wenn du gen������gend Mana hast kannst du mit h dein Leben regenerieren.Mit einem Doppelklick kannst du Lebens- und Manatr������nke verwenden");
 			sentence.add("Du bist auf dich alleingestellt");
 		
 		case '$':
@@ -36,13 +38,32 @@ public class NPC extends Movable implements ActiveArea{
 			sentence.add("Die letzte Truhe aus sapientpearwood habe an Twoflower verkauft. Ich habe aber viele andere nuetzliche Gegenstaende!!");
 		}
 	}
+	public NPC(){
+		sprite = new JComponent(){
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
 
+			@Override
+			public void paintComponent(Graphics g){
+				switch(NPC.this.name){
+				case 'O':
+					
+					Image img9 = Toolkit.getDefaultToolkit().getImage("res/oldman.png");
+				    g.drawImage(img9, 0, 0, this);
+				    g.finalize();	
+				break;
+			}
+			}
+		};
+	}
 	@Override
 	public void onTouch(Movable mv) {
 		//if kind of player
 		if(Player.class.isAssignableFrom(mv.getClass())){
 			if(touchTell ){
-				((Map)this.getParent()).tellAll(this,sentence.get(0));
+				map.tellAll(this,sentence.get(0));
 				sentence.remove(0);
 				touchTell=false;
 			}
@@ -54,21 +75,12 @@ public class NPC extends Movable implements ActiveArea{
 	public void onAction(Movable mv) {
 		if(Player.class.isAssignableFrom(mv.getClass())){
 			//TODO iterator
-			((Map)this.getParent()).tellAll(this,sentence.get(0));
+			map.tellAll(this,sentence.get(0));
 		}
 		
 	}
-	@Override
-	public void paintComponent(Graphics g){
-		switch(this.name){
-		case 'O':
-			
-			Image img9 = Toolkit.getDefaultToolkit().getImage("res/oldman.png");
-		    g.drawImage(img9, 0, 0, this);
-		    g.finalize();	
-		break;
-	}
-}
+	
+
 
 	@Override
 	public String getNick() {

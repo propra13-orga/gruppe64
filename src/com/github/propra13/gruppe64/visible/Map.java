@@ -3,10 +3,13 @@ package com.github.propra13.gruppe64.visible;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Rectangle;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.CopyOnWriteArrayList;
+
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import com.github.propra13.gruppe64.ActiveArea;
@@ -14,8 +17,8 @@ import com.github.propra13.gruppe64.Game;
 import com.github.propra13.gruppe64.Player;
 
 
-@SuppressWarnings({ "serial"})
-public abstract class Map extends JPanel {
+
+public abstract class Map implements Serializable{
 
 	/*
 	 * TODO
@@ -24,6 +27,10 @@ public abstract class Map extends JPanel {
 	 * - ?Siehe WIKI?
 	 */
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7917755657040804742L;
 	public int getSpritewidth() {
 		return spritewidth;
 	}
@@ -59,6 +66,8 @@ public abstract class Map extends JPanel {
 	protected ArrayList<Player> playerList;
 	protected transient Game game; //if even necessary
 	protected CopyOnWriteArrayList<Door> doorList;
+	private JComponent map;
+	private ArrayList<Sprite> spriteArray;
 	/**
 	 * Erzeuge neues JPanel und ordne es an, hier kann auch das auslesen aus Datei gestartet werden
 	 */
@@ -66,18 +75,19 @@ public abstract class Map extends JPanel {
 	public Map(char[][] mapArray){
 		this();
 		setArray(mapArray);
-		this.setBounds(0, 0, mapwidth*spritewidth, mapheight*spriteheight);
+		getJPanel().setBounds(0, 0, mapwidth*spritewidth, mapheight*spriteheight);
+		spriteArray = new ArrayList<Sprite>();
 	}
 	public Map(){
 		playerList = new ArrayList<Player>();
 		this.movables = new ArrayList<Movable>();
 		activeAreas = new ArrayList<ActiveArea>();
 		this.items = new ArrayList<Item>();
+		map = new JPanel();
+		getJPanel().setBackground(Color.CYAN);
+		getJPanel().setLayout(null);
+		getJPanel().setVisible(true);
 		
-		this.setBackground(Color.CYAN);
-		this.setLayout(null);
-		this.setVisible(true);
-		//System.out.print("ThreadGesammt" +Thread.activeCount());
 	}
 	public ArrayList<Movable> getMovables(){
 		return movables;
@@ -214,38 +224,35 @@ public abstract class Map extends JPanel {
 
 	
 	/**
-	 *  extends the  add method from JPanel, to do specific tasks for e.g. Movables or Doors
 	 */
-	@Override
-	public Component add(Component sp){
-		Component component=super.add(sp);
-		if(!Sprite.class.isAssignableFrom(sp.getClass()))
-			return component;
-		Class<? extends Sprite> cClass = ((Sprite)sp).getClass();
-		if(Movable.class.isAssignableFrom(cClass)){
-			((Movable)sp).setMap();
+	public Sprite add(Sprite sp){
+		getJPanel().add(sp.sprite);
+		
+		spriteArray.add(sp);
+		sp.setMap(this);
+		if(sp instanceof Movable){
 			movables.add((Movable) sp);
 		}
 	
-		if(Player.class.isAssignableFrom(cClass)){
+		if(sp instanceof Player){
 			this.playerList.add((Player)sp);
-			this.setComponentZOrder(sp, 0);
+			getJPanel().setComponentZOrder(sp.sprite, 0);
 		}
-		if(cClass.equals(Item.class)){
+		if(sp instanceof Item){
 			items.add((Item) sp);
 		}
-		if(ActiveArea.class.isAssignableFrom(sp.getClass())){
+		if(sp instanceof ActiveArea){
 			if(((ActiveArea)sp).onTouchAction() || ((ActiveArea)sp).onActionAction())
 				activeAreas.add((ActiveArea)sp);
 		}
 
-		return component;
+		return sp;
 	}
 
 
-	@Override
-	public void remove(Component sp){
-		super.remove(sp);
+	
+	public void remove(Sprite sp){
+		getJPanel().remove(sp.sprite);
 		if(!Sprite.class.isAssignableFrom(sp.getClass()))
 			return;
 		Class<? extends Sprite> cClass = ((Sprite)sp).getClass();
@@ -257,7 +264,7 @@ public abstract class Map extends JPanel {
 			items.remove((Item) sp);
 		}
 		if(Movable.class.isAssignableFrom(cClass)){
-			((Movable)sp).setMap();
+			((Movable)sp).setMap(null);
 			movables.remove((Movable) sp);
 		}
 		if(ActiveArea.class.isAssignableFrom(sp.getClass())){
@@ -265,8 +272,8 @@ public abstract class Map extends JPanel {
 				activeAreas.add((ActiveArea)sp);
 		}
 		
-		repaint();
-		super.revalidate();
+		getJPanel().repaint();
+		getJPanel().revalidate();
 	}
 	
 	
@@ -346,7 +353,7 @@ public abstract class Map extends JPanel {
 		}
 		
 	}
-	abstract public void showMsg();
+	
 	public Door getEntrance(){
 		for(ActiveArea iAA: activeAreas){
 			if(iAA.getClass().equals(Door.class)){Door tDoor=(Door)iAA;
@@ -378,30 +385,56 @@ public abstract class Map extends JPanel {
 		
 		if (x<0 || (x+width) > (mapwidth)*spritewidth) return false;
 		if (y<0 || (y+height) > (mapheight)*spriteheight) return false;
-		ArrayList<Component> compArray = new ArrayList<Component>();
-		compArray.add(getComponentAt(x,y));compArray.add(getComponentAt(x+width,y));
-		compArray.add(getComponentAt(x+width,y+height));compArray.add(getComponentAt(x,y+height));
-		for(Component compIterator: compArray)
-			if(compIterator instanceof Sprite) 
+		for(Sprite compIterator: spriteArray)
 				if(!((Sprite)compIterator).crossable) return false;
 		return true;
 	}
-	@Override
+	
 	public void removeAll(){
-		super.removeAll();
+		getJPanel().removeAll();
 		playerList.removeAll(playerList);
 		movables.removeAll(movables);
 		activeAreas.removeAll(activeAreas);
 	}
 	public Component add(Player player) {
-		if(player instanceof PlayerSprite){
-			return this.add((Component)player); //TODO
-		}
-		return null;
+		
+			return getJPanel().add(player.getSprite());
+		
+
 	}
 	public void remove(Player player) {
 		// TODO Auto-generated method stub
 		
+	}
+	public int getHeight() {
+		// TODO Auto-generated method stub
+		return getJPanel().getHeight();
+	}
+	public int getWidth(){
+		return getJPanel().getWidth();
+	}
+	public void setSize(int width, int height) {
+		getJPanel().setSize( width, height);
+		
+	}
+	public int getX() {
+		return getJPanel().getX();
+	}
+	public int getY() {
+		return getJPanel().getY();
+	}
+	public void setLocation(int x, int y) {
+		getJPanel().setLocation(x,y);
+		
+	}
+	public JComponent getJPanel() {
+		return map;
+	}
+	public void setMap(JComponent map) {
+		this.map = map;
+	}
+	public Component getParent() {
+		return map.getParent();
 	}
 }
 

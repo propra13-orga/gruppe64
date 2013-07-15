@@ -3,6 +3,8 @@ package com.github.propra13.gruppe64.visible;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
+import javax.swing.JComponent;
+
 import com.github.propra13.gruppe64.ActiveArea;
 
 
@@ -29,13 +31,15 @@ public class Item extends Sprite implements ActiveArea{
 	private int price=0;
 	
 	static public int NORMAL=0,FIRE=1,ICE=2;
-	public int elementtype=NORMAL; 	
+	public int elementtype=NORMAL;
+
+	public transient JComponent sprite; 	
 	
 	
 	public Item( char name)// Name des Items
 	
 	{	
-		super();
+		this();
 		//int xd,yd;
 		lootable=true;
 		switch(name){
@@ -101,9 +105,9 @@ public class Item extends Sprite implements ActiveArea{
 		
 		this.name=name;
 		//this.rectangle = new Rectangle(0,0,xd,yd);
-		this.setVisible(true);
-		this.setBounds(0,0,xd,yd);
-		this.setToolTipText(displayedName);
+		sprite.setVisible(true);
+		sprite.setBounds(0,0,xd,yd);
+		sprite.setToolTipText(displayedName);
 		
 		
 	}
@@ -111,93 +115,15 @@ public class Item extends Sprite implements ActiveArea{
 	 * For cloning the logical param
 	 */
 	public Item(Item old){
+
 		this(old.getSpriteName());
-		//this.setLootable(old.isLootable());	
+		setSprite();	
 	}
-	public void paintComponent(Graphics g){
+	public Item(){//super();
+		setSprite();super.sprite=sprite;
 		
-		switch(this.name){
-		
-		case 'S':
-			xd=30;
-			yd=30;
-			Image img2 = Toolkit.getDefaultToolkit().getImage("res/sword.png");
-		    g.drawImage(img2, 0, 0, this);
-		    g.finalize();	
-		    break;
-		    
-		case 'M':
-			xd=30;
-			yd=30;
-			Image img3 = Toolkit.getDefaultToolkit().getImage("res/M.png");
-		    g.drawImage(img3, 0, 0, this);
-		    g.finalize();	
-		    break;
-		
-		case 'Y':
-			xd=30;
-			xd=30;
-			Image img4 = Toolkit.getDefaultToolkit().getImage("res/gold.png");
-		    g.drawImage(img4, 0, 0, this);
-		    g.finalize();	
-		    break;
-		
-		case 'H':
-			xd=50;
-			yd=50;
-			Image img5 = Toolkit.getDefaultToolkit().getImage("res/H.png");
-		    g.drawImage(img5, 0, 0, this);
-		    g.finalize();	
-		    break;
-		case 's':
-			xd=50;
-			yd=50;
-			Image img6 = Toolkit.getDefaultToolkit().getImage("res/s.png");
-		    g.drawImage(img6, 0, 0, this);
-		    g.finalize();	
-		    break;
-	//Rüstungen
-		case 'R':
-			xd=50;
-			yd=50;
-			Image img7 = Toolkit.getDefaultToolkit().getImage("res/firearmor.png");
-		    g.drawImage(img7, 0, 0, this);
-		    g.finalize();	
-		    break;
-		    
-		case 'T':
-			xd=50;
-			yd=50;
-			Image img8 = Toolkit.getDefaultToolkit().getImage("res/icearmor.png");
-		    g.drawImage(img8, 0, 0, this);
-		    g.finalize();	
-		    break;
-		 
-		    
-		case 'Q':
-			xd=50;
-			yd=50;
-			Image img9 = Toolkit.getDefaultToolkit().getImage("res/firesword.png");
-		    g.drawImage(img9, 0, 0, this);
-		    g.finalize();	
-		    break;
-		    
-		    
-		case 'W':
-			xd=50;
-			yd=50;
-			Image img10 = Toolkit.getDefaultToolkit().getImage("res/icesword.png");
-		    g.drawImage(img10, 0, 0, this);
-		    g.finalize();	
-		    break;
+	}
 	
-		}
-		
-		
-		
-		
-		
-	}
 	
 	public boolean isLootable(){
 		return lootable;
@@ -217,7 +143,7 @@ public class Item extends Sprite implements ActiveArea{
 		return Range;
 	}
 
-	//prüfe Rüstung
+	//pr��fe R��stung
 	
 	public boolean isArmor(){
 		if(displayedName.equals("FireArmor")||displayedName.equals("IceArmor")){
@@ -284,5 +210,84 @@ public class Item extends Sprite implements ActiveArea{
 	public void setNick(String string) {
 		// TODO Auto-generated method stub
 		
+	}
+	private  void setSprite(){
+		sprite = new JComponent(){
+			
+			public void paintComponent(Graphics g){
+				
+				switch(Item.this.name){
+				
+				case 'S':
+				
+					Image img2 = Toolkit.getDefaultToolkit().getImage("res/sword.png");
+				    g.drawImage(img2, 0, 0, sprite);
+				    g.finalize();	
+				    break;
+				    
+				case 'M':
+					
+					Image img3 = Toolkit.getDefaultToolkit().getImage("res/M.png");
+				    g.drawImage(img3, 0, 0, sprite);
+				    g.finalize();	
+				    break;
+				case 'Y':
+					
+					Image img4 = Toolkit.getDefaultToolkit().getImage("res/gold.png");
+				    g.drawImage(img4, 0, 0, this);
+				    g.finalize();	
+				    break;
+				
+				case 'H':
+					
+					Image img5 = Toolkit.getDefaultToolkit().getImage("res/H.png");
+				    g.drawImage(img5, 0, 0, this);
+				    g.finalize();	
+				    break;
+				case 's':
+					
+					Image img6 = Toolkit.getDefaultToolkit().getImage("res/s.png");
+				    g.drawImage(img6, 0, 0, this);
+				    g.finalize();	
+				    break;
+			//R��stungen
+				case 'R':
+					
+					Image img7 = Toolkit.getDefaultToolkit().getImage("res/firearmor.png");
+				    g.drawImage(img7, 0, 0, this);
+				    g.finalize();	
+				    break;
+				    
+				case 'T':
+					
+					Image img8 = Toolkit.getDefaultToolkit().getImage("res/icearmor.png");
+				    g.drawImage(img8, 0, 0, this);
+				    g.finalize();	
+				    break;
+				 
+				    
+				case 'Q':
+					
+					Image img9 = Toolkit.getDefaultToolkit().getImage("res/firesword.png");
+				    g.drawImage(img9, 0, 0, this);
+				    g.finalize();	
+				    break;
+				    
+				    
+				case 'W':
+					
+					Image img10 = Toolkit.getDefaultToolkit().getImage("res/icesword.png");
+				    g.drawImage(img10, 0, 0, this);
+				    g.finalize();	
+				    break;
+			
+				}
+				
+				
+				
+				
+				
+			}
+		};
 	}
 }

@@ -1,5 +1,6 @@
 package com.github.propra13.gruppe64;
 
+import java.awt.Component;
 import java.awt.Rectangle;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -76,6 +77,8 @@ public interface Player extends Serializable,ActiveArea{
 	void tell(ActiveArea player, String chatInputText);
 
 	void writeChat(String string);
+
+	Component getSprite();
 
 
 }

@@ -7,6 +7,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 
 
@@ -29,8 +30,9 @@ public abstract class Movable extends Sprite {
 	protected ArrayList<Item> itemarr;
 	protected ArrayList<Item> slotarr;
 	protected String nick;
+	protected transient JComponent sprite;
 	
-	// Feuer(elementtype=1) oder Eis(elementtype=2 f��r bewegende Gegner und Player
+	// Feuer(elementtype=1) oder Eis(elementtype=2 f������r bewegende Gegner und Player
 	protected int elementtype=Item.NORMAL; 
 	/**
 	 * aktuelle Geschwindigkeit
@@ -42,15 +44,20 @@ public abstract class Movable extends Sprite {
 
 	public Movable(int posx, int posy,int Dimx, int Dimy) {
 		super(posx, posy, Dimx, Dimy);
-		// TODO Auto-generated constructor stub
+		super.sprite=sprite;
 	}
 
 
 	public Movable(int Dimx, int Dimy, char name) {
 		super(Dimx, Dimy, name);
-		// TODO Auto-generated constructor stub
+		super.sprite=sprite;
 	}
 	
+	public Movable() {
+		super.sprite=sprite;
+	}
+
+
 	public int[] getVel(){
 		return vel;
 	}
@@ -66,7 +73,7 @@ public abstract class Movable extends Sprite {
 
 			CopyOnWriteArrayList<Movable> movarr=new CopyOnWriteArrayList<Movable>(map.getMovables());
 			for(Movable mov:movarr){
-				if(!mov.getClass().equals(this.getClass()) && !this.equals(mov) && this.slotarr.get(0).getRange()>sqDistance(this,mov))
+				if(!mov.getClass().equals(this.getClass()) && !this.equals(mov) && this.slotarr.get(0).getRange()>sqDistance(this.sprite,mov.sprite,this.Dim,mov.Dim))
 				{	//System.out.println("treffer");
 					//System.out.println(map.getMovables().size());
 					mov.damage(this.slotarr.get(0).getDmg(),this.elementtype);
@@ -85,19 +92,6 @@ public abstract class Movable extends Sprite {
 		}
 		
 	}
-	/**
-	 * Gets called at add(Moveable) from map
-	 */
-	public void setMap(){
-		Map preCast = (Map) getParent();
-		if(preCast==null){
-			map=preCast;return;
-		}
-			
-		Class<? extends Map> cClass =   preCast.getClass();
-		this.map = cClass.cast(this.getParent());
-	}
-	
 	/**
 	 * Ist die beabsichtigte Bewegung moeglich
 	 */
@@ -134,7 +128,7 @@ public abstract class Movable extends Sprite {
 		if(this.health<=0)		map.remove(this);
 	}
 */	
-	//neue damage- Methode,die auch elementtype der Waffe bzw. des Gegners ��bergibgt
+	//neue damage- Methode,die auch elementtype der Waffe bzw. des Gegners ������bergibgt
 	
 	public void damage(int dmg, int waffenelement){
 		
@@ -155,8 +149,8 @@ public abstract class Movable extends Sprite {
 	public ArrayList<Item> getItems(){
 		return itemarr;
 	}
-	public static double sqDistance(Movable a, Movable b){
-		return Math.pow(a.getX()+a.Dim[0]/2-b.getX()-b.Dim[0]/2,2)+Math.pow(a.getY()+a.Dim[1]/2-b.getY()-b.Dim[1]/2,2);
+	public static double sqDistance(JComponent a, JComponent b, int[] aD, int[] bD){
+		return Math.pow(a.getX()+aD[0]/2-b.getX()-bD[0]/2,2)+Math.pow(a.getY()+aD[1]/2-b.getY()-bD[1]/2,2);
 	}
 
 	abstract public String getNick();

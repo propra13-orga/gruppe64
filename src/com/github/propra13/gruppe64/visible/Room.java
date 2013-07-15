@@ -80,24 +80,7 @@ public class Room extends Map {
 		return tmp;
 	}
 
-	/*public void paintComponent(Graphics g){
-		super.paintComponent(g);
-		Image img9 = Toolkit.getDefaultToolkit().getImage("res/oldman.png");
-		for(int i=0;i<this.mapheight;i++){
-			for(int j=0;j<this.mapwidth;j++){
-			    g.drawImage(img9, j*wallSize, i*wallSize, this);
-			    
-			}
-				
-		}
-		g.finalize();
-	}
-*/
-	@Override
-	public void showMsg() {
-		// TODO Auto-generated method stub
-
-	}
+	
 	public void enterDoor(Door door, Player pl) {
 		if(!door.open){
 			pl.tell(door,"Door locked");return;

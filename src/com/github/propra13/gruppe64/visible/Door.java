@@ -1,6 +1,7 @@
 package com.github.propra13.gruppe64.visible;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -65,7 +66,8 @@ public class Door extends Sprite implements ActiveArea,PAS{
 		return doorNr;
 	}
 	public void setTarget(Door pDoor) {
-		tDoor=pDoor;		
+		tDoor=pDoor;
+		
 	}
 	public Door getTarget(){
 		if(tDoor==null)
@@ -86,17 +88,7 @@ public class Door extends Sprite implements ActiveArea,PAS{
 		return open;
 	}
 
-	public void setCarDir(){
-		Container parent;
-		if((parent=this.getParent())!=null){
-			if(getX()<this.getWidth()*2){
-				carDir=cd.WEST;
-			}
-			if(getX()>parent.getWidth()-2*this.getWidth()){
-				carDir=cd.EAST;
-			}
-		}
-	}
+
 
 	@Override
 	public void onTouch(Movable mv) {
@@ -112,7 +104,7 @@ public class Door extends Sprite implements ActiveArea,PAS{
 	public void onAction(Movable mv) {
 
 		if(Player.class.isAssignableFrom(mv.getClass())){
-			((Map)this.getParent()).enterDoor(this, (Player)mv);
+			map.enterDoor(this, (Player)mv);
 		}
 
 	}
@@ -127,9 +119,11 @@ public class Door extends Sprite implements ActiveArea,PAS{
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		if (arg0.getClickCount()>1){
-			Level l=((Room)this.getParent()).level;
+			if(map instanceof Room){
+			Level l=((Room)map).level;
 			if(l instanceof MapEditor)
 				((MapEditor)l).showDialog(this);
+			}
 		}
 	}
 	@Override
@@ -145,6 +139,12 @@ public class Door extends Sprite implements ActiveArea,PAS{
 	@Override
 	public void setNick(String string) {
 		nick=string;
+	}
+	public Room getRoom() {
+		return (Room)map;
+	}
+	public Map getMap() {
+		return map;
 	}
 
 }

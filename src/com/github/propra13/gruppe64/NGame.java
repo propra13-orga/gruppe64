@@ -21,6 +21,10 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import com.github.propra13.gruppe64.visible.MapGenerator;
+import com.github.propra13.gruppe64.visible.Room;
+import com.github.propra13.gruppe64.visible.World;
+
 
 @SuppressWarnings("serial")
 public class NGame extends Game implements Runnable{
@@ -56,10 +60,17 @@ public class NGame extends Game implements Runnable{
 	public void showWorld(){
 		Object[] o={"Serverbesizter waelt Level aus"};
 		player.sendMsg(Message.headers.svrmsg, o);
+		MapGenerator mg=new MapGenerator();
+		world = (World) mg.generateMap(World.class, "res/Karten/world.txt");
+		lastLevelNr=world.getMaxLevel();
+		world.drawMap();
+		world.game=this;
 		super.showWorld();
 	}
 	@Override
 	public void startLevel(int lvl){
-		
+		ArrayList<Room> roomList=null;
+		Object[] o={roomList};
+		player.sendMsg(Message.headers.svrmsg, o);
 	}
 }

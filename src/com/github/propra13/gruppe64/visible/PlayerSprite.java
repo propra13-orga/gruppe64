@@ -1,6 +1,7 @@
 package com.github.propra13.gruppe64.visible;								// # 0001
 
 
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -10,6 +11,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -17,6 +19,7 @@ import com.github.propra13.gruppe64.ActiveArea;
 import com.github.propra13.gruppe64.Chat;
 import com.github.propra13.gruppe64.Game;
 import com.github.propra13.gruppe64.Level;
+import com.github.propra13.gruppe64.MapEditor;
 import com.github.propra13.gruppe64.Player;
 import com.github.propra13.gruppe64.StatBar;
 
@@ -37,7 +40,7 @@ public class PlayerSprite extends Movable implements Player{
 	private int mode=0;
 	TimerTask action;
 
-	// leben ������brig
+	// leben ������������������brig
 	private int life;
 
 	public transient Game game;
@@ -55,13 +58,13 @@ public class PlayerSprite extends Movable implements Player{
 	
 	private Chat chatPane;
 	private JTextField chatInput;
-	
+	public transient JComponent sprite;
 	
 
 	//Test Konstruktor
 	public PlayerSprite(int x, int y){
-		//Groesse des Spielers 
-		super(x,y,30,30);
+		this();
+
 		timer_pl = new Timer();
 		nick="player";
 		this.life=3;
@@ -74,22 +77,28 @@ public class PlayerSprite extends Movable implements Player{
 
 		lvlUnl=1;
 
-		
+		sprite.setBounds(x,y,30,30);
 		 
 	}
-	
-
-	public void paintComponent(Graphics g){
-		//Zeichnet jenach Typ
-	//	g.setColor(Color.ORANGE);
-	//	g.fillRect(0, 0, xDim, yDim);
-		
-		Image img2 = Toolkit.getDefaultToolkit().getImage("res/banana.gif");
-	    g.drawImage(img2, 0, 0, this);
-	    g.finalize();	
-	    g.setFont(new Font ("Arial", Font.PLAIN , 11));
-		g.drawString(nick, 10, 10);
+	public PlayerSprite(){
+		//Groesse des Spielers 
+		super(0,0,30,30);
+		sprite = new JComponent(){
+			public void paintComponent(Graphics g){
+				//Zeichnet jenach Typ
+			//	g.setColor(Color.ORANGE);
+			//	g.fillRect(0, 0, xDim, yDim);
+				
+				Image img2 = Toolkit.getDefaultToolkit().getImage("res/banana.gif");
+			    g.drawImage(img2, 0, 0, this);
+			    g.finalize();	
+			    g.setFont(new Font ("Arial", Font.PLAIN , 11));
+				g.drawString(nick, 10, 10);
+			}
+		};
 	}
+
+	
 	public void updateMot(){
 		if(movMode!=modes.moving)return;
 		int x=this.getX();
@@ -97,14 +106,14 @@ public class PlayerSprite extends Movable implements Player{
 		if(map.isCrossable(x+vel[0],y,Dim[0],Dim[1])){
 			
 			this.setLocation(x+vel[0],y);
-			map.setLocation(map.getX()-vel[0], map.getY());
+			map.getJPanel().setLocation(map.getJPanel().getX()-vel[0], map.getJPanel().getY());
 		}
 		x=this.getX();
 		y=this.getY();
 		if(map.isCrossable(x,y-vel[1],Dim[0],Dim[1])){
 			
 			this.setLocation(x,y-vel[1]);
-			map.setLocation(map.getX(), map.getY()+vel[1]);
+			map.getJPanel().setLocation(map.getJPanel().getX(), map.getJPanel().getY()+vel[1]);
 		}
 	//	map.updateState(this);
 		x=this.getX();
@@ -112,7 +121,7 @@ public class PlayerSprite extends Movable implements Player{
 		//Items aufnehmen
 		CopyOnWriteArrayList<Item> items=new CopyOnWriteArrayList<Item>(map.getItems());
 		for(Item it:items){
-			if(it.isLootable() && Math.pow(it.getHeight()+it.getWidth(), 2)/16>Math.pow(x+Dim[0]/2-it.getX()-it.getWidth()/2,2)+Math.pow(y+Dim[1]/2-it.getY()-it.getHeight()/2,2))	
+			if(it.isLootable() && Math.pow(it.sprite.getHeight()+it.sprite.getWidth(), 2)/16>Math.pow(x+Dim[0]/2-it.sprite.getX()-it.sprite.getWidth()/2,2)+Math.pow(y+Dim[1]/2-it.sprite.getY()-it.sprite.getHeight()/2,2))	
 				pickup(it);
 		}
 		ActiveArea aActiveA=map.isOnActiveArea(this);
@@ -146,7 +155,7 @@ public class PlayerSprite extends Movable implements Player{
 
 			CopyOnWriteArrayList<Movable> movarr=new CopyOnWriteArrayList<Movable>(map.getMovables());
 			for(Movable mov:movarr){
-				if(!this.equals(mov) && this.slotarr.get(0).getRange()>Math.pow(x+Dim[0]/2-mov.getX()-mov.Dim[0]/2,2)+Math.pow(y+Dim[1]/2-mov.getY()-mov.Dim[1]/2,2))
+				if(!this.equals(mov) && this.slotarr.get(0).getRange()>sqDistance(this.sprite,mov.sprite,this.Dim,mov.Dim))
 				{	System.out.println("Spieler trifft");
 					System.out.println(map.getMovables().size());
 					mov.damage(this.slotarr.get(0).getDmg(),this.slotarr.get(0).elementtype);
@@ -168,7 +177,7 @@ public class PlayerSprite extends Movable implements Player{
 		}
 	}
 	
-	//neue damage- Methode,die auch elementtype der Waffe bzw. des Gegners ber������cksichtigt
+	//neue damage- Methode,die auch elementtype der Waffe bzw. des Gegners ber������������������cksichtigt
 	
 	public void damage(int dmg, int elementwaffe){
 		
@@ -233,11 +242,11 @@ public class PlayerSprite extends Movable implements Player{
 		}
 	
 		
-		Class<? extends JPanel> cClass = map.getClass();
+		
 		if(notRedundant){
 
 			if(item.getSpriteName()=='Y')	gold+= 50;
-			if(cClass.equals(Shop.class) && gold>=item.getPrice()){
+			if(map instanceof Shop && gold>=item.getPrice()){
 				
 				
 				gold-= item.getPrice();
@@ -245,7 +254,7 @@ public class PlayerSprite extends Movable implements Player{
 				item.setOwner(this);
 				map.remove(item);
 				statBar.getStateFrom();
-			}else if(!cClass.equals(Shop.class)){
+			}else if(!(map instanceof Shop)){
 				
 				itemarr.add(item);
 				item.setOwner(this);
@@ -253,7 +262,7 @@ public class PlayerSprite extends Movable implements Player{
 				statBar.getStateFrom();
 			}
 		}else{
-			if(!cClass.equals(Shop.class)){
+			if(!(map instanceof Shop)){
 				map.remove(item);
 				statBar.getStateFrom();
 			}
@@ -303,6 +312,7 @@ public class PlayerSprite extends Movable implements Player{
 	 */
 	public void setLevel(Level aLevel){
 		this.aLevel= aLevel;
+		if(!(aLevel instanceof MapEditor))
 		this.getChatPane().clearText();
 	}
 	public Level getLevel(){
@@ -456,6 +466,15 @@ public class PlayerSprite extends Movable implements Player{
 		getChatPane().append(string);
 		
 	}
+	@Override
+	public int getX() {
+		return sprite.getX();
+	}
+	@Override
+	public int getY() {
+		return sprite.getY();
+	}
+	
 
 
 }

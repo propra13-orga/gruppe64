@@ -31,12 +31,12 @@ public class Game implements Runnable{
 	protected Container cp;
 	
 	protected Player player;
-	private StatBar statBar;
-	private Chat chatp;
-	private JTextField chatinput;
-	private World world;
+	protected StatBar statBar;
+	protected Chat chatp;
+	protected JTextField chatinput;
+	protected World world;
 	//active  Level
-	private Level aLevel;
+	protected Level aLevel;
 	
 	//private Timer caretaker;
 	
@@ -45,8 +45,8 @@ public class Game implements Runnable{
 	/**highest acessible Level **/
 	protected int levelNr;
 	/**last Level**/
-	private int lastLevelNr;
-	private JPanel mapHandler;
+	protected int lastLevelNr;
+	protected JPanel mapHandler;
 	
 	public boolean serverOwner=false;
 	Lobby lobby;
@@ -163,9 +163,9 @@ public class Game implements Runnable{
 		
 		statBar.getStateFrom();
 		map.drawMap();
-		cp.add(map,BorderLayout.CENTER);
+		cp.add(map.getJPanel(),BorderLayout.CENTER);
 		//map.startMotion();
-		map.repaint();
+		map.getJPanel().repaint();
 		
 	}
 
@@ -180,7 +180,7 @@ public class Game implements Runnable{
 
 	public void showMap(Map map) {
 		this.map=map;
-		mapHandler.add(map);
+		mapHandler.add(map.getJPanel());
 		map.add(player);map.startMotion();
 		mapHandler.repaint();
 	}

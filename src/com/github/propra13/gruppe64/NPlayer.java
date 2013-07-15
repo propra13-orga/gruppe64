@@ -28,7 +28,7 @@ import com.github.propra13.gruppe64.visible.Movable.dir;
 /*
  * represents the sever instance of the player
  */
-public class NPlayer  implements Player,ActiveArea{
+public class NPlayer  extends PlayerSprite implements Player,ActiveArea{
 	/**
 	 * 
 	 */
@@ -43,7 +43,6 @@ public class NPlayer  implements Player,ActiveArea{
 	public transient NGame nGame;
 	public SocketAddress clientAddress;
 	public String nick;
-	private transient PlayerSprite playerSprite;
 	private transient JTextField chatInput;
 	public transient boolean serverInstance=true;
 	//private boolean hasArmor=false;
@@ -60,7 +59,7 @@ public class NPlayer  implements Player,ActiveArea{
 		readyState=b;
 	}
 	public NPlayer(String nick,NGame nGame) {
-		playerSprite=new PlayerSprite(0, 0);
+		super();
 		this.nick=nick;
 		
 		this.nGame=nGame;
@@ -190,7 +189,7 @@ public class NPlayer  implements Player,ActiveArea{
 		for(NPlayer npl:nGame.playerList)
 			if(npl.clientAddress.equals(this.clientAddress))	nick=npl.nick;
 
-		playerSprite.setNick(nick);
+		super.setNick(nick);
 
 	}
 
@@ -205,11 +204,6 @@ public class NPlayer  implements Player,ActiveArea{
 		return nGame;
 	}
 
-	@Override
-	public void addStatBar(StatBar statBar) {
-		playerSprite.addStatBar(statBar);
-		
-	}
 
 	@Override
 	public void setLevel(Level aLevel) {
@@ -236,19 +230,10 @@ public class NPlayer  implements Player,ActiveArea{
 	public void setLocation(int x, int y) {
 		Object[] o={x,y};
 		if(serverInstance)sendMsg(Message.headers.setLocation,o);
-		playerSprite.setLocation(x, y);
+		sprite.setLocation(x, y);
 	}
 
-	@Override
-	public int getX() {
-		return playerSprite.getX();
-	}
-
-	@Override
-	public int getY() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	
 
 	@Override
 	public int[] getVel() {

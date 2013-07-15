@@ -145,7 +145,7 @@ public class MapEditor extends Level  implements ActionListener{
 		aMap.setArray(newMapArray);System.out.println(aMap);
 		aMap.drawMap();
 		aMap.freeze();
-		aMap.repaint();
+		aMap.getJPanel().repaint();
 		aMap.startMotion();
 		aMap.add(player);
 		/*int x=map.getX(),y=map.getY();

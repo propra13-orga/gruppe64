@@ -144,9 +144,9 @@ public class Level implements java.io.Serializable{
 
 		aMap.add(player);
 		System.out.print("\nw"+map.getWidth()+"h"+map.getHeight()+"\n"+aMap.toString());
-		cp.add(aMap);
+		cp.add(aMap.getJPanel());
 		
-		aMap.repaint();
+		aMap.getJPanel().repaint();
 	}
 
 	public void removeOldMap(){
@@ -155,7 +155,7 @@ public class Level implements java.io.Serializable{
 				//aMap.stopMotion();
 			}*/
 			aMap.remove(player);//
-			cp.remove(aMap);
+			cp.remove(aMap.getJPanel());
 			cp.revalidate();
 			cp.repaint();
 		}
@@ -177,7 +177,7 @@ public class Level implements java.io.Serializable{
 	
 	public void popRoom(){
 		Door tDoor = fallBackDoor.pop();
-		((Room)tDoor.getParent()).enterDoor(tDoor,player);
+		tDoor.getRoom().enterDoor(tDoor,player);
 	}
 	
 	public void gameLost() {
@@ -186,7 +186,7 @@ public class Level implements java.io.Serializable{
 	}
 	public void setOnDoor(Door tDoor){
 		if(tDoor==null){System.out.println("Level has no entrance");return;}
-		Map tMap = (Map)tDoor.getParent();
+		Map tMap = tDoor.map;
 		setMap(tMap);
 		player.setLocation(tDoor.getX(),tDoor.getY());
 		aMap.setLocation(aMap.getParent().getWidth()/2-player.getX(),aMap.getParent().getHeight()/2-player.getY());
