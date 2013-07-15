@@ -21,7 +21,7 @@ import com.github.propra13.gruppe64.visible.World;
 
 public class Game implements Runnable{
 	
-
+	Game(){}
 	
 	/**
 	 * Instanzvariablen
@@ -180,6 +180,7 @@ public class Game implements Runnable{
 		this.map=map;
 		mapHandler.add(map.getJPanel());
 		map.add(player);map.startMotion();
+		map.setLocation(mapHandler.getWidth()/2-player.getX(), mapHandler.getHeight()/2-player.getY());
 		mapHandler.repaint();
 	}
 

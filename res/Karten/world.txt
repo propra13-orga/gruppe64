@@ -1,6 +1,6 @@
-xSxeMxgxxx
-D D D D  x;D,exit,0;  ;D,level,1;D,level,2;D,level,3
-xxxxxxgx x
-x        x
-x        x
-xxxxxxxxxx
+xxxxxxxxxxxxxxx
+D D D D       x;D,exit,0;  ;D,level,1;D,level,2;D,level,3
+xxxxxxxxxxxxxxx
+x          x  x
+x          xe x
+xxxxxxxxxxxxxxx

@@ -11,6 +11,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.SocketAddress;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Timer;
@@ -46,7 +47,7 @@ public class NGame extends Game implements Runnable{
 		player = new NPlayer(nick,this);
 		super.player=player;											
 	}	
-	
+	public NGame(){	}
 	public void initLobby(String svrname){
 		cp.removeAll();
 		lobby=new Lobby(cp, main, this, serverOwner);
@@ -72,5 +73,11 @@ public class NGame extends Game implements Runnable{
 		ArrayList<Room> roomList=null;
 		Object[] o={roomList};
 		player.sendMsg(Message.headers.svrmsg, o);
+	}
+	public void removePl(SocketAddress socketAddress){
+		for(NPlayer iPl: playerList){
+			if(iPl.clientAddress.equals(socketAddress))
+				playerList.remove(iPl);
+		}
 	}
 }
