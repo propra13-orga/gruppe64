@@ -7,7 +7,7 @@ import com.github.propra13.gruppe64.Movable.axis;
 import com.github.propra13.gruppe64.Movable.dir;
 import com.github.propra13.gruppe64.Movable.modes;
 
-public class Architect extends Player {
+public class Architect extends PlayerSprite {
 	
 	
 	public class ArchitectController extends KeyAdapter {

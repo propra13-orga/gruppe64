@@ -85,7 +85,7 @@ public class Controller extends KeyAdapter{									//brauche playerobject mit p
 	public void keyPressed(KeyEvent e){										//	if(...&&___) -> Wenn der spieler in entgegengesetzte Richtungen dr��ckt,
 			keyp=e.getKeyCode();											
 			if(player!=null){																	//			0			1	         wird die letzte Eingabe ignoriert.
-				if(!player.getChatInput().isFocusOwner()){
+				if(!player.chatIsFocusOwner()){
 					if(keyp== hoch && player.getVel()[1] != -1)player.setMot(dir.up);			//			|			|
 					if(keyp== rechts && player.getVel()[0] != -1)player.setMot(dir.right);		//		3---+---1		0		-1	---0---   1
 					if(keyp== runter && player.getVel()[1] !=  1)player.setMot(dir.down);		//			|			|
@@ -100,13 +100,13 @@ public class Controller extends KeyAdapter{									//brauche playerobject mit p
 		if(player!=null){
 			if(keyr==hoch || keyr==runter)	player.unsetMot(axis.y);				//			1
 			if(keyr==rechts || keyr==links)	player.unsetMot(axis.x);				//			|
-			if(keyr==switchW && !player.getChatInput().isFocusOwner()) player.switchweapon();//			+---0
-			if(keyr==switchA && !player.getChatInput().isFocusOwner()) player.switcharmor();
-			if(keyr==hCast && !player.getChatInput().isFocusOwner()) player.use('H');			
-			if(keyr==KeyEvent.VK_ENTER && player.getChatInput().isFocusOwner()){
-				if(player instanceof NPlayer)	((NPlayer)player).tell((NPlayer)player, player.getChatInput().getText());
-				else							player.tell(player, player.getChatInput().getText());
-				player.getChatInput().setText("");
+			if(keyr==switchW && !player.chatIsFocusOwner()) player.switchweapon();//			+---0
+			if(keyr==switchA && !player.chatIsFocusOwner()) player.switcharmor();
+			if(keyr==hCast && !player.chatIsFocusOwner()) player.use('H');			
+			if(keyr==KeyEvent.VK_ENTER && player.chatIsFocusOwner()){
+				if(player instanceof NPlayer)	((NPlayer)player).tell((NPlayer)player, player.getChatInputText());
+				else							player.tell((PlayerSprite)player, player.getChatInputText());
+				player.setChatInputText("");
 			}
 		}
 	}

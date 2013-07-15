@@ -96,7 +96,7 @@ public class Shop extends Map{
 	public void enterDoor(Door door, Player mv) {
 		if(door.getSpecial()==null)return;
 		switch(door.getSpecial()){
-		case "exit": mv.aLevel.popRoom();break;
+		case "exit": mv.getLevel().popRoom();break;
 		}
 		
 	}

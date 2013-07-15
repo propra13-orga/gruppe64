@@ -23,7 +23,7 @@ public class Item extends Sprite implements ActiveArea{
 	private boolean isWeapon=false;
 	private int Dmg;
 	private int Range;
-	private Player player;
+	private PlayerSprite player;
 	private int price=0;
 	
 	static public int NORMAL=0,FIRE=1,ICE=2;
@@ -243,7 +243,7 @@ public class Item extends Sprite implements ActiveArea{
 			
 		}
 	}
-	public void setOwner(Player mov) {
+	public void setOwner(PlayerSprite mov) {
 		this.player = mov;
 		
 	}

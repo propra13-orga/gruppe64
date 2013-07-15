@@ -27,7 +27,7 @@ public class Lobby implements ActionListener{
 	Chat chat;
 	JButton ready,start,back;
 	JTable table;
-	NPlayer player;
+	Player player;
 	private PlayerTable tableModel;
 	public NGame nGame;
 
@@ -115,7 +115,7 @@ public class Lobby implements ActionListener{
 		tableModel.fireTableDataChanged();
 	}
 	
-	public void addlocalPl(NPlayer pl){
+	public void addlocalPl(Player pl){
 		if(player==null){
 			this.player=pl;
 			player.addChatPane(chat);
@@ -130,7 +130,7 @@ public class Lobby implements ActionListener{
 	public void updateTable(){
 		tableModel.playerList=nGame.playerList;
 		tableModel.fireTableDataChanged();tableModel.fireTableStructureChanged();
-		if(player.nGame.serverOwner){
+		if(player.getGame().serverOwner){
 			boolean allready=true;
 			if(nGame.playerList.size()==0) allready=false;
 			for(NPlayer pl:nGame.playerList)

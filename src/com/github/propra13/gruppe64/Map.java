@@ -389,6 +389,16 @@ public abstract class Map extends JPanel {
 		movables.removeAll(movables);
 		activeAreas.removeAll(activeAreas);
 	}
+	public Component add(Player player) {
+		if(player instanceof PlayerSprite){
+			return this.add((Component)player); //TODO
+		}
+		return null;
+	}
+	public void remove(Player player) {
+		// TODO Auto-generated method stub
+		
+	}
 }
 
 

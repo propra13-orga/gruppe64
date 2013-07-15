@@ -72,7 +72,7 @@ public class Game implements Runnable{
 		world.game=this;
 		
 		//player and his statBar
-		player = new Player(0,50);
+		player = new PlayerSprite(0,50);
 				
 		initGamefield();
 		

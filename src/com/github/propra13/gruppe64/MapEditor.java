@@ -41,7 +41,7 @@ public class MapEditor extends Level  implements ActionListener{
 		cp.setPreferredSize(new Dimension(1200,500));
 		cp.setMaximumSize(new Dimension(3000,500));cp.setLayout(null);
 		cp.setBackground(Color.DARK_GRAY);cp.setVisible(true);cp.repaint(16);
-		player=new Architect();player.aLevel=this;
+		player=new Architect();player.setLevel(this);
 		
 		Architect.ArchitectController aac=((Architect)player).new ArchitectController();
 		main.setFocusable(true);
