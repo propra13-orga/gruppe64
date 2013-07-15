@@ -273,4 +273,14 @@ public class Item extends Sprite implements ActiveArea{
 		//TODO map specific
 		return false;
 	}
+	@Override
+	public String getNick() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public void setNick(String string) {
+		// TODO Auto-generated method stub
+		
+	}
 }

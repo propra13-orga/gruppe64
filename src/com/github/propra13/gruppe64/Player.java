@@ -9,7 +9,7 @@ import javax.swing.JTextField;
 import com.github.propra13.gruppe64.Movable.axis;
 import com.github.propra13.gruppe64.Movable.dir;
 
-public interface Player extends Serializable{
+public interface Player extends Serializable,ActiveArea{
 
 	Level getLevel();
 
@@ -25,7 +25,7 @@ public interface Player extends Serializable{
 
 	Rectangle getRectangle();
 
-	void tell(Movable mv, String msg);
+	void writeChat(ActiveArea mv, String msg);
 
 	void setLocation(int x, int y);
 
@@ -61,13 +61,8 @@ public interface Player extends Serializable{
 
 	void setLvlUnlocked(int i);
 
-	String getNick();
-
 	void chgready();
 
-	void tell(String string);
-
-	void setNick(String string);
 
 	ArrayList<Item> getItems();
 
@@ -76,6 +71,10 @@ public interface Player extends Serializable{
 	ArrayList<Item> getSlots();
 
 	int getLvlUnlocked();
+
+	void tell(ActiveArea player, String chatInputText);
+
+	void writeChat(String string);
 
 
 }

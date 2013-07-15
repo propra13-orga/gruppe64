@@ -8,4 +8,7 @@ public interface ActiveArea {
 	public void onTouch(Movable mv);
 	public void onAction(Movable mv);
 	public Rectangle getRectangle();
+	public String getNick();
+	void setNick(String string);
+	
 }

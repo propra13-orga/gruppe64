@@ -69,12 +69,12 @@ public class Server implements Runnable{
 	}
 	public void correctNicks(){
 		
-		for(Player pl:playerList){
+		for(NPlayer pl:playerList){
 			Integer i = new Integer(0);
-			for(Player pls:playerList){
+			for(NPlayer pls:playerList){
 				if(!pl.equals(pls))
 					if(pl.getNick().equals(pls.getNick())){
-						for(Player pl2:playerList)
+						for(NPlayer pl2:playerList)
 							if(!pl.equals(pl2) && pl2.getNick().equals(pls.getNick()+"("+i.toString()+")"))i++;
 						pls.setNick(pls.getNick()+"("+(i++).toString()+")");
 					}	

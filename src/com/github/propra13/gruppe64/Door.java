@@ -25,7 +25,7 @@ public class Door extends Sprite implements ActiveArea,PAS{
 	private int doorNr;
 	private String special;
 	public  int specialNr;
-	
+	private String nick="Door";
 	
 	private static int xDim = 50;
 	private static int yDim =50;
@@ -131,6 +131,15 @@ public class Door extends Sprite implements ActiveArea,PAS{
 	public JPanel getSetupDialog(MapGenerator mg) {
 		
 		return null;
+	}
+	@Override
+	public String getNick() {
+
+		return nick;
+	}
+	@Override
+	public void setNick(String string) {
+		nick=string;
 	}
 
 }

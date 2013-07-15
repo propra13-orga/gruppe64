@@ -15,7 +15,7 @@ public class NPC extends Movable implements ActiveArea{
 	private boolean touchTell = true;
 	private ArrayList<String> sentence;
 	private Iterator<String> iSentence;
-	
+	private String nick;
 	
 
 	public NPC(char name) {
@@ -23,7 +23,7 @@ public class NPC extends Movable implements ActiveArea{
 		sentence = new ArrayList<String>();
 		switch(this.name){
 		case 'O':
-			nick="Meister des Zen";
+			setNick("Meister des Zen");
 			sentence.add("Hallo mein Freund!Die Welt wird von Katzen terrorisiert. Benutze space um auf die Katzen einzuschlagen und benutze c um deine Waffen zu wechseln. Wenn du gen��gend Mana hast kannst du mit h dein Leben regenerieren.Mit einem Doppelklick kannst du Lebens- und Manatr��nke verwenden");
 			sentence.add("Du bist auf dich alleingestellt");
 		
@@ -91,6 +91,12 @@ public class NPC extends Movable implements ActiveArea{
 	@Override
 	public void updateMot() {
 		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setNick(String string) {
+		nick=string;
 		
 	}
 }

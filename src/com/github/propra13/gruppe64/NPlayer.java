@@ -25,7 +25,7 @@ import com.github.propra13.gruppe64.Movable.dir;
 /*
  * represents the sever instance of the player
  */
-public class NPlayer  implements Player{
+public class NPlayer  implements Player,ActiveArea{
 	/**
 	 * 
 	 */
@@ -39,7 +39,14 @@ public class NPlayer  implements Player{
 	public transient Lobby lobby;
 	public transient NGame nGame;
 	public SocketAddress clientAddress;
-	public String nick="player";
+	public String nick;
+	private transient PlayerSprite playerSprite;
+	private transient JTextField chatInput;
+	//private boolean hasArmor=false;
+	//private boolean hasArmorFire=false;
+	
+	private Chat chatPane;
+
 	
 	public boolean isReady(){
 		return readyState;
@@ -49,7 +56,9 @@ public class NPlayer  implements Player{
 		readyState=b;
 	}
 	public NPlayer(String nick,NGame nGame) {
-		setNick(nick);
+		playerSprite=new PlayerSprite(0, 0);
+		this.nick=nick;
+		
 		this.nGame=nGame;readyState=false;
 		//TODO setup client
 	}
@@ -98,7 +107,7 @@ public class NPlayer  implements Player{
 				Nmessage msgobj = null;
 				if(robj instanceof Nmessage)msgobj=(Nmessage)robj;
 				switch(msgobj.head){
-				case chatmsg:	this.tell((Movable)msgobj.object.get(0), (String)msgobj.object.get(1));
+				case chatmsg:	this.writeChat((ActiveArea)msgobj.object.get(0), (String)msgobj.object.get(1));
 					break;
 				case chgready:	nGame.playerList=(ArrayList<NPlayer>) msgobj.object.get(0); // FALSCH!
 								lobby.updateTable();
@@ -124,10 +133,10 @@ public class NPlayer  implements Player{
 	public void setClient(Socket client){
 		this.dataSocket=client;
 	}
-	public void tell(NPlayer npl,String msg){
+	public void tell(ActiveArea npl,String msg){
 		try {
 			ArrayList<Object> obj=new ArrayList<Object>();
-			obj.add(npl);
+			obj.add(this);
 			obj.add(msg);
 			outOStream.writeObject(new Nmessage(Nmessage.headers.chatmsg,obj));outOStream.reset();
 		} catch (IOException e) {
@@ -158,14 +167,17 @@ public class NPlayer  implements Player{
 	}
 
 	public String getNick() {
-		// TODO Auto-generated method stub
-		return null;
+		return nick;
 	}
+
 
 	public void setNick() {
 		// TODO Auto-generated method stub
 		for(NPlayer npl:nGame.playerList)
 			if(npl.clientAddress.equals(this.clientAddress))	nick=npl.nick;
+
+		playerSprite.setNick(nick);
+
 	}
 
 	@Override
@@ -176,24 +188,11 @@ public class NPlayer  implements Player{
 
 	@Override
 	public Game getGame() {
-		// TODO Auto-generated method stub
-		return null;
+		return nGame;
 	}
 
 	@Override
 	public void addStatBar(StatBar statBar) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void addChatPane(Chat chatp) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void addChatInput(JTextField chatinput) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -211,8 +210,8 @@ public class NPlayer  implements Player{
 	}
 
 	@Override
-	public void tell(Movable mv, String msg) {
-		// TODO Auto-generated method stub
+	public void writeChat(ActiveArea mv, String msg) {
+		getChatPane().append(mv,msg);
 		
 	}
 
@@ -260,14 +259,8 @@ public class NPlayer  implements Player{
 
 	@Override
 	public boolean chatIsFocusOwner() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public String getChatInputText() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return getChatInput().isFocusOwner();
 	}
 
 	@Override
@@ -284,7 +277,7 @@ public class NPlayer  implements Player{
 
 	@Override
 	public void setChatInputText(String string) {
-		// TODO Auto-generated method stub
+		getChatInput().setText(string);
 		
 	}
 
@@ -308,8 +301,8 @@ public class NPlayer  implements Player{
 	}
 
 	@Override
-	public void tell(String string) {
-		// TODO Auto-generated method stub
+	public void writeChat(String string) {
+		getChatPane().append(string);
 		
 	}
 
@@ -342,5 +335,54 @@ public class NPlayer  implements Player{
 		// TODO Auto-generated method stub
 		
 	}
+
+	public void addChatInput(JTextField chatinput) {
+		// TODO Auto-generated method stub
+		chatInput = chatinput;
+	}
+
+	public void addChatPane(Chat chatp) {
+		this.chatPane = chatp;
+		
+	}
+
+	public JTextField getChatInput() {
+		return chatInput;
+	}
+
+	@Override
+	public String getChatInputText() {
+		
+		return getChatInput().getText();
+	}
+
+	public Chat getChatPane(){
+		return chatPane;
+	}
+
+	@Override
+	public boolean onTouchAction() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean onActionAction() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void onTouch(Movable mv) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onAction(Movable mv) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }

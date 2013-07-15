@@ -30,7 +30,7 @@ public class PlayerSprite extends Movable implements Player{
 	private int mode=0;
 	TimerTask action;
 
-	// leben ��brig
+	// leben ������brig
 	private int life;
 
 	public transient Game game;
@@ -161,7 +161,7 @@ public class PlayerSprite extends Movable implements Player{
 		}
 	}
 	
-	//neue damage- Methode,die auch elementtype der Waffe bzw. des Gegners ber��cksichtigt
+	//neue damage- Methode,die auch elementtype der Waffe bzw. des Gegners ber������cksichtigt
 	
 	public void damage(int dmg, int elementwaffe){
 		
@@ -367,14 +367,6 @@ public class PlayerSprite extends Movable implements Player{
 	}
 
 
-	public void tell(Movable mv, String msg) {
-		getChatPane().append(mv,msg);	
-	}
-	public void tell(String msg) {
-		getChatPane().append(msg);	
-	}
-
-
 	@Override
 	public Game getGame() {
 		return game;
@@ -406,6 +398,55 @@ public class PlayerSprite extends Movable implements Player{
 	@Override
 	public void chgready() {
 		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void writeChat(ActiveArea mv, String msg) {
+		getChatPane().append(mv,msg);
+		
+	}
+
+
+	@Override
+	public boolean onTouchAction() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public boolean onActionAction() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public void onTouch(Movable mv) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void onAction(Movable mv) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void tell(ActiveArea player, String chatInputText) {
+		writeChat(player,chatInputText);
+		
+	}
+
+
+	@Override
+	public void writeChat(String string) {
+		getChatPane().append(string);
 		
 	}
 

@@ -336,9 +336,9 @@ public abstract class Map extends JPanel {
 		}
 		return null;
 	}
-	public void tellAll(Movable mv,String msg) {
+	public void tellAll(ActiveArea mv,String msg) {
 		for(Player pl: playerList){
-			pl.tell(mv,msg);
+			pl.writeChat(mv,msg);
 		}
 		
 	}
