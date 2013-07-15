@@ -39,6 +39,7 @@ public class NPlayer  implements Player{
 	public transient Lobby lobby;
 	public transient NGame nGame;
 	public transient SocketAddress clientAddress;
+	private transient PlayerSprite playerSprite;
 	
 	public boolean isReady(){
 		return readyState;
@@ -48,7 +49,9 @@ public class NPlayer  implements Player{
 		readyState=b;
 	}
 	public NPlayer(String nick,NGame nGame) {
-		setNick(nick);
+		playerSprite=new PlayerSprite(0, 0);
+
+		
 		this.nGame=nGame;readyState=false;
 		//TODO setup client
 	}
@@ -157,12 +160,11 @@ public class NPlayer  implements Player{
 	}
 
 	public String getNick() {
-		// TODO Auto-generated method stub
-		return null;
+		return playerSprite.getNick();
 	}
 
-	public void setNick(String string) {
-		// TODO Auto-generated method stub
+	public void setNick(String nick) {
+		playerSprite.setNick(nick);
 		
 	}
 
@@ -174,8 +176,7 @@ public class NPlayer  implements Player{
 
 	@Override
 	public Game getGame() {
-		// TODO Auto-generated method stub
-		return null;
+		return nGame;
 	}
 
 	@Override

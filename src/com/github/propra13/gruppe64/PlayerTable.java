@@ -38,7 +38,7 @@ class PlayerTable extends AbstractTableModel {
     }
 
     public Class getColumnClass(int c) {
-        return getValueAt(0, c).getClass();
+        return String.class;//getValueAt(0, c).getClass();
     }
 
     

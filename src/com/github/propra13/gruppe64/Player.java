@@ -1,6 +1,7 @@
 package com.github.propra13.gruppe64;
 
 import java.awt.Rectangle;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.swing.JTextField;
@@ -8,7 +9,7 @@ import javax.swing.JTextField;
 import com.github.propra13.gruppe64.Movable.axis;
 import com.github.propra13.gruppe64.Movable.dir;
 
-public interface Player {
+public interface Player extends Serializable{
 
 	Level getLevel();
 
