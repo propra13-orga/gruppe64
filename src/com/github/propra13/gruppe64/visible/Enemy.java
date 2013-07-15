@@ -10,7 +10,7 @@ import javax.swing.JComponent;
 
 
 
-public class Enemy extends Movable implements SpriteNames {
+public class Enemy extends Movable implements SpriteNames,SpriteContent {
 	
 	/**
 	 * 
@@ -51,19 +51,16 @@ public class Enemy extends Movable implements SpriteNames {
 		itemarr.add(new Item(PAW));
 		slotarr.add(itemarr.get(0));
 		
-		sprite=new JComponent(){
-			/**
-			 * Klassen Unique ID, bei Serialisieren verwendet
-			 */
-			private static final long serialVersionUID = 6833919079272308034L;
+		sprite=new SpriteComponent(this);super.sprite=sprite;
+		}
 
-			public void paintComponent(Graphics g){
+			public void paint (Graphics g){
 				
 				switch( Enemy.this.name){    
 					case 'g':
 						
 						Image img1 = Toolkit.getDefaultToolkit().getImage("res/nyan_cat2.gif");
-						g.drawImage(img1, 0, 0, this);
+						g.drawImage(img1, 0, 0, sprite);
 					    g.finalize();	
 				
 					break;
@@ -73,14 +70,14 @@ public class Enemy extends Movable implements SpriteNames {
 					case '(':
 						
 						Image img11 = Toolkit.getDefaultToolkit().getImage("res/flamme.gif");
-						g.drawImage(img11, 0, 0, this);
+						g.drawImage(img11, 0, 0, sprite);
 					    g.finalize();	
 					break;
 					
 					case ')':
 						
 						Image img12 = Toolkit.getDefaultToolkit().getImage("res/iceking.png");
-						g.drawImage(img12, 0, 0, this);
+						g.drawImage(img12, 0, 0, sprite);
 					    g.finalize();	
 					    break;
 					}
@@ -90,8 +87,8 @@ public class Enemy extends Movable implements SpriteNames {
 						g.fillRect(0, 0, health*Dim[0]/100, 10);
 					}
 				}
-		};super.sprite=sprite;
-	}
+		
+	
 	
 	@Override
 	public void updateMot(){

@@ -376,12 +376,12 @@ public abstract class Map implements Serializable{
 		movables.removeAll(movables);
 		activeAreas.removeAll(activeAreas);
 	}
-	public Component add(Player player) {
+	/*public Component add(Player player) {
 			 getJPanel().add(player.getSprite());
 			 player.setMap(this);
 		return null;
 
-	}
+	}*/
 	public void remove(Player player) {
 		// TODO Auto-generated method stub
 		

@@ -5,8 +5,6 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 
-
-import javax.swing.JComponent;
 import javax.swing.JPanel;
 import com.github.propra13.gruppe64.*;
 
@@ -59,22 +57,18 @@ public class Door extends Sprite implements ActiveArea,PAS{
 		sprite.setBounds( 0, 0, xDim, yDim);
 	}
 	public Door(){
-		sprite= new JComponent(){ 
-			/**
-			 * Version 1.0
-			 */
-			private static final long serialVersionUID = -4207287999951297519L;
-
-			public void paintComponent(Graphics g){
+		sprite= new SpriteComponent(this);super.sprite=sprite;}
+			
+			public void paint(Graphics g){
 						if(Door.this.open)g.setColor(Color.green);else g.setColor(Color.red);
 						g.fillRect(0, 0,Door.this.Dim[0],Door.this.Dim[1]);g.setColor(Color.gray); 
 						g.setFont(new Font ("Arial", Font.PLAIN , 11));
 						g.drawString(Door.this.special+","+Door.this.specialNr, 1, 10);
 						g.finalize();
 			}
-		};
-		super.sprite=sprite;
-	}
+		
+		
+	
 	public int getLeadToNr() {
 		return tDoorNr;
 	}
