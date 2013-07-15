@@ -46,7 +46,7 @@ public class NWBrowser implements ActionListener {
 		c.gridy = 0;
 		cp.add(nickname, c);
 
-		ip = new JTextField("192.168.1.1",15);
+		ip = new JTextField("192.168.1.1	",15);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = 0.5;
 		c.gridx = 0;

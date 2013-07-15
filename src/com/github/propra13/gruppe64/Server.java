@@ -42,6 +42,7 @@ public class Server implements Runnable{
 	
 	private 	boolean serverRunning;
 	private 	String svrname;
+	public ServerSocket serverSocket;
 
 	
 	public final static int PORTNR=60001;
@@ -70,6 +71,7 @@ public class Server implements Runnable{
 
 		if(!playerList.contains(pl)){
 				playerList.add(pl);
+				correctNicks();
 				hashMap.put(socketAddress, pl);
 		}
 
@@ -94,7 +96,7 @@ public class Server implements Runnable{
 		
 	}
 	public void startServer(){
-		ServerSocket serverSocket=null;
+		serverSocket=null;
 		try {
 			serverSocket = new ServerSocket( PORTNR );			
 		} catch (IOException e) {
@@ -154,6 +156,13 @@ public class Server implements Runnable{
 						break;
 					case move:
 						break;
+					case svrshutdown:
+						forward(msgobj);
+						client.close();
+						break;
+					case clshutdown:
+						forward(msgobj);
+						break;
 					default:
 						break;
 					}
@@ -168,8 +177,8 @@ public class Server implements Runnable{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
-	        if ( client != null )
-		          try { client.close(); } catch ( IOException e ) { }
+	        if ( !serverSocket.isClosed() )
+		          try { serverSocket.close(); } catch ( IOException e ) { }
 		}
 		
 	}
