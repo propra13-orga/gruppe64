@@ -6,8 +6,9 @@ import java.util.ArrayList;
 
 import javax.swing.JTextField;
 
-import com.github.propra13.gruppe64.Movable.axis;
-import com.github.propra13.gruppe64.Movable.dir;
+import com.github.propra13.gruppe64.visible.Item;
+import com.github.propra13.gruppe64.visible.Movable.axis;
+import com.github.propra13.gruppe64.visible.Movable.dir;
 
 public interface Player extends Serializable,ActiveArea{
 

@@ -1,4 +1,4 @@
-package com.github.propra13.gruppe64;
+package com.github.propra13.gruppe64.visible;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -8,6 +8,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.CopyOnWriteArrayList;
 import javax.swing.JPanel;
+
+import com.github.propra13.gruppe64.ActiveArea;
+import com.github.propra13.gruppe64.Game;
+import com.github.propra13.gruppe64.Player;
 
 
 @SuppressWarnings({ "serial"})

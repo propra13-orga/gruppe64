@@ -17,8 +17,11 @@ import java.util.ArrayList;
 
 import javax.swing.JTextField;
 
-import com.github.propra13.gruppe64.Movable.axis;
-import com.github.propra13.gruppe64.Movable.dir;
+import com.github.propra13.gruppe64.visible.Item;
+import com.github.propra13.gruppe64.visible.Movable;
+import com.github.propra13.gruppe64.visible.PlayerSprite;
+import com.github.propra13.gruppe64.visible.Movable.axis;
+import com.github.propra13.gruppe64.visible.Movable.dir;
 
 
 
@@ -34,14 +37,15 @@ public class NPlayer  implements Player,ActiveArea{
 	private transient Socket dataSocket;
 	private transient OutputStream outStream;
 	private transient InputStream inStream;
-	private transient ObjectOutputStream outOStream;
-	private transient ObjectInputStream intOStream;
+	public transient ObjectOutputStream outOStream;
+	public transient ObjectInputStream inOStream;
 	public transient Lobby lobby;
 	public transient NGame nGame;
 	public SocketAddress clientAddress;
 	public String nick;
 	private transient PlayerSprite playerSprite;
 	private transient JTextField chatInput;
+	public transient boolean serverInstance=true;
 	//private boolean hasArmor=false;
 	//private boolean hasArmorFire=false;
 	
@@ -59,8 +63,9 @@ public class NPlayer  implements Player,ActiveArea{
 		playerSprite=new PlayerSprite(0, 0);
 		this.nick=nick;
 		
-		this.nGame=nGame;readyState=false;
-		//TODO setup client
+		this.nGame=nGame;
+		readyState=false;
+		serverInstance=false;
 	}
 
 	public void connect(InetAddress svr) throws UnknownHostException, IOException{
@@ -79,22 +84,22 @@ public class NPlayer  implements Player,ActiveArea{
 			outStream = dataSocket.getOutputStream();
 			inStream = dataSocket.getInputStream();
 			outOStream = new ObjectOutputStream(outStream);
-			intOStream = new ObjectInputStream(inStream);
+			inOStream = new ObjectInputStream(inStream);
 			String serverName=null;
-			ArrayList<NPlayer> nplayers=null;
-			Nmessage msg;
+			ArrayList<NPlayer> playerList=null;
+			Message msg;
 		
 				try{
 					outOStream.writeObject(this);
-					serverName = (String) intOStream.readObject();
-					nplayers=(ArrayList<NPlayer>) intOStream.readObject();	// FALSCH?
+					serverName = (String) inOStream.readObject();
+					playerList=(ArrayList<NPlayer>) inOStream.readObject();	
 				}catch(IOException e){
 					e.printStackTrace();
 				} catch (ClassNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			nGame.playerList=nplayers;
+			nGame.playerList=playerList;
 			nGame.initLobby(serverName);
 			lobby.addlocalPl(this);
 	} 
@@ -103,13 +108,13 @@ public class NPlayer  implements Player,ActiveArea{
 		NPlayer npl;
 		try {
 			while(dataSocket.isConnected()){
-				Object robj= intOStream.readObject();
-				Nmessage msgobj = null;
-				if(robj instanceof Nmessage)msgobj=(Nmessage)robj;
+				Object robj= inOStream.readObject();
+				Message msgobj = null;
+				if(robj instanceof Message)msgobj=(Message)robj;
 				switch(msgobj.head){
 				case chatmsg:	this.writeChat((ActiveArea)msgobj.object.get(0), (String)msgobj.object.get(1));
 					break;
-				case chgready:	nGame.playerList=(ArrayList<NPlayer>) msgobj.object.get(0); // FALSCH!
+				case chgready:	nGame.playerList=(ArrayList<NPlayer>) msgobj.array[0]; // FALSCH!
 								lobby.updateTable();
 					break;
 				case damage:
@@ -138,7 +143,7 @@ public class NPlayer  implements Player,ActiveArea{
 			ArrayList<Object> obj=new ArrayList<Object>();
 			obj.add(this);
 			obj.add(msg);
-			outOStream.writeObject(new Nmessage(Nmessage.headers.chatmsg,obj));outOStream.reset();
+			outOStream.writeObject(new Message(Message.headers.chatmsg,obj));outOStream.reset();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -147,18 +152,27 @@ public class NPlayer  implements Player,ActiveArea{
 	
 	public void chgready(){
 	
-			ArrayList<Object> obj=new ArrayList<Object>();
-			obj.add(this);
-			sendMsg(Nmessage.headers.chgready,obj);
+			Object[] o={this};
+			sendMsg(Message.headers.chgready,o);
 			setReadyState(!isReady());
 			if(isReady())	lobby.ready.setText("unready");
 			else			lobby.ready.setText("ready"); 
 		
 	}
 
-	public void sendMsg(Nmessage.headers header, ArrayList<Object> arrayList){
+	public void sendMsg(Message.headers header, Object[] o){
 		try{
-			outOStream.writeObject(new Nmessage(header,arrayList));outOStream.reset();
+			outOStream.writeObject(new Message(header,o));outOStream.reset();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (NullPointerException e){
+			e.printStackTrace();
+		}
+	}
+
+	public void sendMsg(Message msgObj) {
+		try{
+			outOStream.writeObject(msgObj);outOStream.reset();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (NullPointerException e){
@@ -193,7 +207,7 @@ public class NPlayer  implements Player,ActiveArea{
 
 	@Override
 	public void addStatBar(StatBar statBar) {
-		// TODO Auto-generated method stub
+		playerSprite.addStatBar(statBar);
 		
 	}
 
@@ -216,15 +230,18 @@ public class NPlayer  implements Player,ActiveArea{
 	}
 
 	@Override
+	/**
+	 * 
+	 */
 	public void setLocation(int x, int y) {
-		// TODO Auto-generated method stub
-		
+		Object[] o={x,y};
+		if(serverInstance)sendMsg(Message.headers.setLocation,o);
+		playerSprite.setLocation(x, y);
 	}
 
 	@Override
 	public int getX() {
-		// TODO Auto-generated method stub
-		return 0;
+		return playerSprite.getX();
 	}
 
 	@Override
@@ -332,7 +349,7 @@ public class NPlayer  implements Player,ActiveArea{
 
 	@Override
 	public void setNick(String string) {
-		// TODO Auto-generated method stub
+		nick=string;
 		
 	}
 
@@ -383,6 +400,7 @@ public class NPlayer  implements Player,ActiveArea{
 		// TODO Auto-generated method stub
 		
 	}
-
-
+	public void callbackFkt(Message.Performer perf){
+		perf.performOn(this);
+	}
 }

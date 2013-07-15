@@ -1,7 +1,9 @@
-package com.github.propra13.gruppe64;
+package com.github.propra13.gruppe64.visible;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
+
+import com.github.propra13.gruppe64.ActiveArea;
 
 
 public class Item extends Sprite implements ActiveArea{

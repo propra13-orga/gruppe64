@@ -1,4 +1,4 @@
-package com.github.propra13.gruppe64;
+package com.github.propra13.gruppe64.visible;
 
 
 
@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.CopyOnWriteArrayList;
+
+import com.github.propra13.gruppe64.Level;
 
 
 

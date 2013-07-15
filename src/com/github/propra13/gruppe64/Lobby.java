@@ -111,7 +111,6 @@ public class Lobby implements ActionListener{
 	
 	public void addPl(NPlayer pl){
 		nGame.playerList.add(pl);	
-		nGame.correctNicks();
 		tableModel.fireTableDataChanged();
 	}
 	
@@ -121,7 +120,6 @@ public class Lobby implements ActionListener{
 			player.addChatPane(chat);
 			player.addChatInput(chatinput);
 			main.controller.setPlayer(pl);
-			nGame.correctNicks();
 			tableModel.fireTableDataChanged();
 		}
 	}
@@ -144,6 +142,7 @@ public class Lobby implements ActionListener{
 			player.chgready();
 		}
 		if(ae.getSource()==this.start){
+			nGame.initGamefield();
 			nGame.showWorld();
 		}
 		if(ae.getSource()==this.back){

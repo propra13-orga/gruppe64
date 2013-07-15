@@ -1,11 +1,9 @@
-package com.github.propra13.gruppe64;
+package com.github.propra13.gruppe64.visible;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-import com.github.propra13.gruppe64.Movable.axis;
-import com.github.propra13.gruppe64.Movable.dir;
-import com.github.propra13.gruppe64.Movable.modes;
+import com.github.propra13.gruppe64.MapEditor;
 
 public class Architect extends PlayerSprite {
 	

@@ -1,10 +1,14 @@
-package com.github.propra13.gruppe64;
+package com.github.propra13.gruppe64.visible;
 
 import java.awt.Color;
 import java.awt.Component;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+
+import com.github.propra13.gruppe64.ActiveArea;
+import com.github.propra13.gruppe64.Game;
+import com.github.propra13.gruppe64.Player;
 
 public class Shop extends Map{
 

@@ -1,4 +1,4 @@
-package com.github.propra13.gruppe64.debug;
+package com.github.propra13.gruppe64.visible;
 
 
 import java.awt.event.ActionEvent;

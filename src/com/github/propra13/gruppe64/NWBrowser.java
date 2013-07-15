@@ -124,7 +124,7 @@ public class NWBrowser implements ActionListener {
 		nGame.serverOwner=svr.equals(InetAddress.getLocalHost());
 		Thread t=new Thread(nGame);
 		try {
-			nGame.nplayer.connect(svr);
+			nGame.player.connect(svr);
 			t.start();
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block

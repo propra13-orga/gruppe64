@@ -1,4 +1,4 @@
-package com.github.propra13.gruppe64;								// # 0001
+package com.github.propra13.gruppe64.visible;								// # 0001
 
 
 import java.awt.Font;
@@ -12,6 +12,13 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import com.github.propra13.gruppe64.ActiveArea;
+import com.github.propra13.gruppe64.Chat;
+import com.github.propra13.gruppe64.Game;
+import com.github.propra13.gruppe64.Level;
+import com.github.propra13.gruppe64.Player;
+import com.github.propra13.gruppe64.StatBar;
 
 
 @SuppressWarnings({ "serial" })
@@ -90,14 +97,14 @@ public class PlayerSprite extends Movable implements Player{
 		if(map.isCrossable(x+vel[0],y,Dim[0],Dim[1])){
 			
 			this.setLocation(x+vel[0],y);
-			if(map.getClass().equals(Room.class))map.setLocation(map.getX()-vel[0], map.getY());
+			map.setLocation(map.getX()-vel[0], map.getY());
 		}
 		x=this.getX();
 		y=this.getY();
 		if(map.isCrossable(x,y-vel[1],Dim[0],Dim[1])){
 			
 			this.setLocation(x,y-vel[1]);
-			if(map.getClass().equals(Room.class))map.setLocation(map.getX(), map.getY()+vel[1]);
+			map.setLocation(map.getX(), map.getY()+vel[1]);
 		}
 	//	map.updateState(this);
 		x=this.getX();

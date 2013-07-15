@@ -19,6 +19,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import com.github.propra13.gruppe64.visible.Architect;
+import com.github.propra13.gruppe64.visible.Map;
+import com.github.propra13.gruppe64.visible.PAS;
+import com.github.propra13.gruppe64.visible.Room;
+
 public class MapEditor extends Level  implements ActionListener{
 	Container realCp;
 	JPanel legende;

@@ -1,4 +1,4 @@
-package com.github.propra13.gruppe64;
+package com.github.propra13.gruppe64.visible;
 
 import java.awt.Color;
 import java.awt.Container;
@@ -7,6 +7,11 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JPanel;
+
+import com.github.propra13.gruppe64.ActiveArea;
+import com.github.propra13.gruppe64.Level;
+import com.github.propra13.gruppe64.MapEditor;
+import com.github.propra13.gruppe64.Player;
 
 public class Door extends Sprite implements ActiveArea,PAS{
 	/**

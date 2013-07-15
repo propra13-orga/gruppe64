@@ -30,8 +30,8 @@ public class NGame extends Game implements Runnable{
 	/**
 	 * Instanzvariablen
 	 */
-
-	public transient NPlayer nplayer;
+	
+	public transient NPlayer player;
 	public ArrayList<NPlayer> playerList;
 	
 	/**
@@ -39,31 +39,27 @@ public class NGame extends Game implements Runnable{
 	 */
 	public NGame(Container cp, Main main, Controller controller, String nick) {
 		super(cp,main,controller);
-		nplayer = new NPlayer(nick,this);
-		 													
+		player = new NPlayer(nick,this);
+		super.player=player;											
 	}	
 	
 	public void initLobby(String svrname){
 		cp.removeAll();
 		lobby=new Lobby(cp, main, this, serverOwner);
 		lobby.chat.append("Wilkommen auf Server "+svrname);
-		nplayer.lobby=lobby;
+		player.lobby=lobby;
 	}
 	public void run(){
-		nplayer.handleNW();				
+		player.handleNW();				
 	}
-	public void correctNicks(){
+	@Override
+	public void showWorld(){
+		Object[] o={"Serverbesizter waelt Level aus"};
+		player.sendMsg(Message.headers.svrmsg, o);
+		super.showWorld();
+	}
+	@Override
+	public void startLevel(int lvl){
 		
-		for(NPlayer pl:playerList){
-			Integer i = new Integer(0);
-			for(NPlayer pls:playerList){
-				if(!pl.equals(pls))
-					if(pl.getNick().equals(pls.getNick())){
-						for(NPlayer pl2:playerList)
-							if(!pl.equals(pl2) && pl2.getNick().equals(pls.getNick()+"("+i.toString()+")"))i++;
-						pls.setNick(pls.getNick()+"("+(i++).toString()+")");
-					}	
-			}
-		}
 	}
 }

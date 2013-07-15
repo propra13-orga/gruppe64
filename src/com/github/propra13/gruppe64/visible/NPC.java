@@ -1,10 +1,13 @@
-package com.github.propra13.gruppe64;
+package com.github.propra13.gruppe64.visible;
 
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.Iterator;
+
+import com.github.propra13.gruppe64.ActiveArea;
+import com.github.propra13.gruppe64.Player;
 
 public class NPC extends Movable implements ActiveArea{
 

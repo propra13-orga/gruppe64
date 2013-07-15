@@ -1,10 +1,12 @@
-package com.github.propra13.gruppe64;
+package com.github.propra13.gruppe64.visible;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.ArrayList;
+
+import com.github.propra13.gruppe64.visible.Movable.modes;
 
 public class Enemy extends Movable {
 	

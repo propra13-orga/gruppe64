@@ -1,4 +1,4 @@
-package com.github.propra13.gruppe64;
+package com.github.propra13.gruppe64.visible;
 
 import java.awt.Component;
 import java.awt.Container;
@@ -8,6 +8,10 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+
+import com.github.propra13.gruppe64.ActiveArea;
+import com.github.propra13.gruppe64.Game;
+import com.github.propra13.gruppe64.Player;
 
 
 public class World extends Map implements ActionListener{

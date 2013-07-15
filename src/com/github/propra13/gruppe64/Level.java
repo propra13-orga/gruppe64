@@ -13,7 +13,13 @@ import java.util.Stack;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.github.propra13.gruppe64.Door.cd;
+import com.github.propra13.gruppe64.visible.Door;
+import com.github.propra13.gruppe64.visible.Map;
+import com.github.propra13.gruppe64.visible.MapGenerator;
+import com.github.propra13.gruppe64.visible.Movable;
+import com.github.propra13.gruppe64.visible.Room;
+import com.github.propra13.gruppe64.visible.World;
+import com.github.propra13.gruppe64.visible.Door.cd;
 
 
 public class Level implements java.io.Serializable{
@@ -145,9 +151,9 @@ public class Level implements java.io.Serializable{
 
 	public void removeOldMap(){
 		if(aMap!=null){
-			if(aMap.playerList.size()<2){
+			/*if(aMap.playerList.size()<2){
 				//aMap.stopMotion();
-			}
+			}*/
 			aMap.remove(player);//
 			cp.remove(aMap);
 			cp.revalidate();
@@ -194,6 +200,13 @@ public class Level implements java.io.Serializable{
 		}
 		
 	}
-	
+	public void fallBackDoorpush(Door door) {
+		fallBackDoor.push(door);
+		
+	}
+	public Door fallBackDoorpop() {
+		return fallBackDoor.pop();
+		
+	}
 	
 }

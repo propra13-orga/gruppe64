@@ -3,8 +3,8 @@ package com.github.propra13.gruppe64;										// # 0002
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-import com.github.propra13.gruppe64.Movable.axis;
-import com.github.propra13.gruppe64.Movable.dir;
+import com.github.propra13.gruppe64.visible.Movable.axis;
+import com.github.propra13.gruppe64.visible.Movable.dir;
 
 
 

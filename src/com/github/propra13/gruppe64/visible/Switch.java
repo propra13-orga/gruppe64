@@ -1,4 +1,5 @@
-package com.github.propra13.gruppe64;
+package com.github.propra13.gruppe64.visible;
+
 
 public class Switch extends Sprite {
 

@@ -16,6 +16,8 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+
+import com.github.propra13.gruppe64.visible.Item;
 /**
  * Under all Maps (Room, Shop) the StatBar shows the current State of the Player
  * 	-Health

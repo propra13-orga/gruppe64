@@ -18,6 +18,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketAddress;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -37,13 +38,11 @@ public class Server implements Runnable{
 	 */
 	protected 	ArrayList<NPlayer> playerList;
 	private		ArrayList<Thread> threads;
+	HashMap<SocketAddress,NPlayer> hashMap;
+	
 	private 	boolean serverRunning;
 	private 	String svrname;
-	private 	Socket client;
-	OutputStream outStream;
-	InputStream inStream;
-	ObjectOutputStream outOStream;
-	ObjectInputStream inOStream;
+
 	
 	public final static int PORTNR=60001;
 	
@@ -58,13 +57,22 @@ public class Server implements Runnable{
 			//addPl(super.getPlayer());
 			serverRunning = true;
 			playerList=new ArrayList<NPlayer>();
-		
+			hashMap= new HashMap<SocketAddress,NPlayer>(); 
 	}
 	
 	
 	
-	public void addPl(NPlayer pl){
-		playerList.add(pl);
+	public void addPl(NPlayer pl, ObjectOutputStream outOStream, ObjectInputStream inOStream, SocketAddress socketAddress){
+		
+		pl.clientAddress=socketAddress;
+		pl.outOStream=outOStream;
+		pl.inOStream=inOStream;
+
+		if(!playerList.contains(pl)){
+				playerList.add(pl);
+				hashMap.put(socketAddress, pl);
+		}
+
 		
 	}
 	public void correctNicks(){
@@ -111,35 +119,36 @@ public class Server implements Runnable{
 		      }
 		      
 		    }
-		}
+	}
 
 	private void handleConnection(Socket client) throws IOException, ClassNotFoundException {
 		System.out.println(client.toString());
 		try {
-			outStream = client.getOutputStream();
-			inStream = client.getInputStream();
-			outOStream = new ObjectOutputStream(outStream);
-			inOStream = new ObjectInputStream(inStream);
-			NPlayer npl = (NPlayer) inOStream.readObject();
-			npl.clientAddress=client.getRemoteSocketAddress();
-			playerList.add(npl);	
+			OutputStream outStream = client.getOutputStream();
+			InputStream inStream = client.getInputStream();
+			ObjectOutputStream outOStream = new ObjectOutputStream(outStream);
+			ObjectInputStream inOStream = new ObjectInputStream(inStream);
+			
+			NPlayer serverPlayer = (NPlayer) inOStream.readObject();
+			addPl(serverPlayer,outOStream,inOStream,client.getRemoteSocketAddress());
+			
 			outOStream.writeObject(svrname);
 			outOStream.writeObject(playerList);
+			
 			while(client.isConnected()){
 				try {
 					Object robj= inOStream.readObject();
-					Nmessage msgobj = null;
-					if(robj instanceof Nmessage)msgobj=(Nmessage)robj;
+					Message msgobj= null;
+					if(robj instanceof Message)msgobj=(Message)robj;
 					outOStream.reset();
 					
 					switch(msgobj.head){
-					case chatmsg:	outOStream.writeObject(msgobj);
+					case chatmsg:	forward(msgobj);
 						break;
-					case chgready:	ArrayList<Object> obj=new ArrayList<Object>();
-						npl=(NPlayer)msgobj.object.get(0);
-						playerList.get(playerNr(client)).setReadyState(!npl.isReady());
-						obj.add(playerList);
-						sendMsg(Nmessage.headers.chgready,obj);					
+					case chgready:	
+						serverPlayer.setReadyState(!serverPlayer.isReady());
+						Object[] o={playerList};
+						serverPlayer.sendMsg(Message.headers.chgready,o);					
 						break;
 					case damage:
 						break;
@@ -164,6 +173,12 @@ public class Server implements Runnable{
 		}
 		
 	}
+	private void forward(Message msgobj) {
+		for(NPlayer pl: playerList){
+			pl.sendMsg(msgobj);
+		}
+		
+	}
 	public class ClientHandler implements Runnable{
 		private Server sgame;
 		private Socket socket;
@@ -183,15 +198,7 @@ public class Server implements Runnable{
 		}
 		
 	}
-	public void sendMsg(Nmessage.headers header, ArrayList<Object> arrayList){
-		try{
-			outOStream.writeObject(new Nmessage(header,arrayList));outOStream.reset();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (NullPointerException e){
-			e.printStackTrace();
-		}
-	}
+	
 	public int playerNr(Socket client){
 		SocketAddress remoteAdress = client.getRemoteSocketAddress();
 		int i=0;

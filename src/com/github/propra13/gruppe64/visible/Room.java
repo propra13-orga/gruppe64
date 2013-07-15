@@ -1,4 +1,4 @@
-package com.github.propra13.gruppe64;
+package com.github.propra13.gruppe64.visible;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -12,6 +12,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import com.github.propra13.gruppe64.Level;
+import com.github.propra13.gruppe64.NPlayer;
+import com.github.propra13.gruppe64.Player;
 
 public class Room extends Map {
 	
@@ -104,7 +108,7 @@ public class Room extends Map {
 				
 			}
 			switch(door.getSpecial()){
-				case "shop": level.fallBackDoor.push(door); game.showShop();break;
+				case "shop": level.fallBackDoorpush(door); game.showShop();break;
 				case "goal": pl.setLvlUnlocked(level.getLevelNr()+1);level.showExtern("world");break;
 				case "exit": level.showExtern("world");break;
 				case "entrance": level.showExtern("world");

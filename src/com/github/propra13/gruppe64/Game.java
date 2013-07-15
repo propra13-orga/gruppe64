@@ -11,6 +11,12 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import com.github.propra13.gruppe64.visible.Map;
+import com.github.propra13.gruppe64.visible.MapGenerator;
+import com.github.propra13.gruppe64.visible.PlayerSprite;
+import com.github.propra13.gruppe64.visible.Shop;
+import com.github.propra13.gruppe64.visible.World;
+
 
 
 public class Game implements Runnable{
@@ -24,7 +30,7 @@ public class Game implements Runnable{
 	protected Map map;
 	protected Container cp;
 	
-	private Player player;
+	protected Player player;
 	private StatBar statBar;
 	private Chat chatp;
 	private JTextField chatinput;
@@ -55,7 +61,7 @@ public class Game implements Runnable{
 		
 		
 		cp.setBackground(Color.WHITE);
-		cp.setLayout(new BoxLayout(cp, BoxLayout.Y_AXIS));//cp.setLayout(new BorderLayout());
+	
 		//which level is reachable
 		levelNr =1;
 		aLevelNr=1;
@@ -73,7 +79,7 @@ public class Game implements Runnable{
 		
 		//player and his statBar
 		player = new PlayerSprite(0,50);
-				
+		main.controller.setPlayer(player);
 		initGamefield();
 		
 		
@@ -88,7 +94,9 @@ public class Game implements Runnable{
 
 	}
 	public void initGamefield(){
-		main.controller.setPlayer(player);
+		
+		cp.removeAll();
+		cp.setLayout(new BoxLayout(cp, BoxLayout.Y_AXIS));
 		
 		chatp = new Chat(player);
 		chatinput = new JTextField();

@@ -1,4 +1,4 @@
-package com.github.propra13.gruppe64;
+package com.github.propra13.gruppe64.visible;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -26,7 +26,7 @@ public class Sprite extends JComponent implements MouseListener{
 	/**
 	 * Sprite name
 	 */
-	char name;
+	public char name;
 	protected boolean lootable=false;
 	public boolean crossable=true;
 	
