@@ -38,7 +38,8 @@ public class NPlayer  implements Player{
 	private transient ObjectInputStream intOStream;
 	public transient Lobby lobby;
 	public transient NGame nGame;
-	public transient SocketAddress clientAddress;
+	public SocketAddress clientAddress;
+	public String nick="player";
 	
 	public boolean isReady(){
 		return readyState;
@@ -161,9 +162,10 @@ public class NPlayer  implements Player{
 		return null;
 	}
 
-	public void setNick(String string) {
+	public void setNick() {
 		// TODO Auto-generated method stub
-		
+		for(NPlayer npl:nGame.playerList)
+			if(npl.clientAddress.equals(this.clientAddress))	nick=npl.nick;
 	}
 
 	@Override
