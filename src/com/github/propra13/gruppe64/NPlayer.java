@@ -337,4 +337,10 @@ public class NPlayer  implements Player{
 		return 0;
 	}
 
+	@Override
+	public void setNick(String string) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
