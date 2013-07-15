@@ -54,13 +54,13 @@ public class World extends Map implements ActionListener{
 			}
 		}
 	}
-	@Override
-	public Sprite add(Sprite sp){
-		Sprite c=super.add(sp);
+	/*@Override
+	public Sprite add(Object obj){
+		Sprite sp=super.add(obj);
 		if(sp instanceof Player){
 			sp.setLocation(lastPos);
 			setOpenDoors(((Player)sp).getLvlUnlocked());
-		}return c;
-	}
+		}return sp;
+	}*/
 
 }

@@ -1,24 +1,25 @@
 package com.github.propra13.gruppe64.visible;
 
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 
-import javax.swing.JPanel;
 
-import com.github.propra13.gruppe64.ActiveArea;
-import com.github.propra13.gruppe64.Level;
-import com.github.propra13.gruppe64.MapEditor;
-import com.github.propra13.gruppe64.Player;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
+import com.github.propra13.gruppe64.*;
+
 
 public class Door extends Sprite implements ActiveArea,PAS{
 	/**
-	 * 
+	 * Unique ID zum Versionsvergleich
 	 */
 	private static final long serialVersionUID = 6013068930574390100L;
+	
+	/**
+	 * Diverse Schluessel fuer die Tuer
+	 */
 	public static enum Key{no,red,green,blue}; 
 	
 	public enum cd{NONE,NORTH,EAST,SOUTH,WEST};
@@ -38,26 +39,41 @@ public class Door extends Sprite implements ActiveArea,PAS{
 	
 
 	public Door(int x, int y, int doorNr, int leadsToNr) {
-		super(x,y,xDim, yDim);
+		this();
 		this.doorNr=doorNr;
 		this.tDoorNr=leadsToNr;
 		open=true;
+		this.name='D';
+		this.setDim(xDim, yDim);
+		sprite.setBounds( 0, 0, xDim, yDim);
 	}
 	public Door(int x, int y, int doorNr, String special, int specialNr){
-		super(x,y,xDim, yDim);
+		this();
 		this.doorNr=doorNr;
 		this.tDoorNr=-1;
 		this.special=special;
 		this.specialNr=specialNr;
 		open=true;
+		this.name='D';
+		this.setDim(xDim, yDim);
+		sprite.setBounds( 0, 0, xDim, yDim);
 	}
-	public void paintComponent(Graphics g){
-		
-				if(open)g.setColor(Color.green);else g.setColor(Color.red);
-				g.fillRect(0, 0,Dim[0],Dim[1]);g.setColor(Color.gray); 
-				g.setFont(new Font ("Arial", Font.PLAIN , 11));
-				g.drawString(special+","+specialNr, 1, 10);
-				g.finalize();
+	public Door(){
+		sprite= new JComponent(){ 
+			/**
+			 * Version 1.0
+			 */
+			private static final long serialVersionUID = -4207287999951297519L;
+
+			public void paintComponent(Graphics g){
+						if(Door.this.open)g.setColor(Color.green);else g.setColor(Color.red);
+						g.fillRect(0, 0,Door.this.Dim[0],Door.this.Dim[1]);g.setColor(Color.gray); 
+						g.setFont(new Font ("Arial", Font.PLAIN , 11));
+						g.drawString(Door.this.special+","+Door.this.specialNr, 1, 10);
+						g.finalize();
+			}
+		};
+		super.sprite=sprite;
 	}
 	public int getLeadToNr() {
 		return tDoorNr;
@@ -127,7 +143,7 @@ public class Door extends Sprite implements ActiveArea,PAS{
 		}
 	}
 	@Override
-	public JPanel getSetupDialog(MapGenerator mg) {
+	public JPanel getSetupDialog(MapGenerator mg, MapEditor me) {
 		
 		return null;
 	}
@@ -142,9 +158,6 @@ public class Door extends Sprite implements ActiveArea,PAS{
 	}
 	public Room getRoom() {
 		return (Room)map;
-	}
-	public Map getMap() {
-		return map;
 	}
 
 }

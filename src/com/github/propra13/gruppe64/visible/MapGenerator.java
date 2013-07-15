@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import javax.swing.JPanel;
+
 import com.github.propra13.gruppe64.Level;
 
 
@@ -20,15 +22,12 @@ import com.github.propra13.gruppe64.Level;
  *	Diese Klasse liest aus einer Datei und gibt einen Char-Array zurrueck
  *	@author chrimus, nur zusammengefasst von ford-perfect
  */
-public class MapGenerator {
+public class MapGenerator implements PAS{
 	/** contains the path tokens, between integers**/
 	private String[] pathToken;
 	private CopyOnWriteArrayList<String[][]> lineDesc;
 	private Iterator<String[][]> iLineDesc;
-	public static String[] processAbleSprites = {
-				"D:Door:D,[0-9]*,[0-9]*:D,[a-z]*,[0-9]*",
-				"$:Switch"
-			};
+	
 	private String[][] pasToken;
 	private String[][] tLineDesc;
 	private ArrayList<Door> doorList;
@@ -68,7 +67,7 @@ public class MapGenerator {
 
 
 	/* 
-	 * Ruft res/Karten/Level[lvl]_Raum[room].txt auf und bestimmt seine Groe��e
+	 * Ruft res/Karten/Level[lvl]_Raum[room].txt auf und bestimmt seine Groe������e
 	 * 
 	 * AUSGABE:
 	 * - int[] {Zeilenanzahl des Files, max. Zeilenlaenge im File}
@@ -290,5 +289,12 @@ public class MapGenerator {
 			if(iDoor.getDoorNr()>maxDoorNr)maxDoorNr=iDoor.getDoorNr();
 		}
 		return maxDoorNr;
+	}
+
+
+	@Override
+	public JPanel getSetupDialog(MapGenerator mg, MapEditor me) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

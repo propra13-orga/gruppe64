@@ -1,4 +1,4 @@
-package com.github.propra13.gruppe64;
+package com.github.propra13.gruppe64.visible;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -19,12 +19,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import com.github.propra13.gruppe64.visible.Architect;
-import com.github.propra13.gruppe64.visible.Map;
-import com.github.propra13.gruppe64.visible.PAS;
-import com.github.propra13.gruppe64.visible.Room;
+import com.github.propra13.gruppe64.Level;
+import com.github.propra13.gruppe64.Main;
+import com.github.propra13.gruppe64.myGBC;
 
-public class MapEditor extends Level  implements ActionListener{
+public class MapEditor extends Level  implements ActionListener, PAS{
 	Container realCp;
 	JPanel legende;
 	JPanel dialogBox;
@@ -158,7 +157,7 @@ public class MapEditor extends Level  implements ActionListener{
 
 	}
 	public void showDialog(PAS pas) {
-		JPanel dialog = pas.getSetupDialog(mg);
+		JPanel dialog = pas.getSetupDialog(mg,this);
 		dialog.setPreferredSize(new Dimension(100,100));
 		dialog.setMaximumSize(new Dimension(300,300));
 		legende.add(dialog,BorderLayout.LINE_END);
@@ -187,5 +186,10 @@ public class MapEditor extends Level  implements ActionListener{
 		 String[] levelSetnames= names.toArray(new String[0]);
 		 
 		return new JComboBox<String>(levelSetnames);
+	}
+	@Override
+	public JPanel getSetupDialog(MapGenerator mg, MapEditor me) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -2,6 +2,7 @@ package com.github.propra13.gruppe64.visible;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,9 +13,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
-import com.github.propra13.gruppe64.ActiveArea;
-import com.github.propra13.gruppe64.Game;
-import com.github.propra13.gruppe64.Player;
+import com.github.propra13.gruppe64.*;
 
 
 
@@ -197,46 +196,28 @@ public abstract class Map implements Serializable{
 
 	}
 	
-	
-	
-	
-	/*public void updateState(Moveable character) {
-		char touchedSprite = wouldTouch(player.getRectangle());	
-		//System.out.println(player.getVisibleRect().toString());
-		
-		switch(touchedSprite){
-	
-		case 'g': case 'G':
-			game.gameOver();
-		break;
-		case 'a':case 'A':
-			game.nextLevel();
-		break;
-		
-	
-			
-		default:
-		break;
-		}
-		
-		
-	}*/
+
 
 	
 	/**
 	 */
-	public Sprite add(Sprite sp){
-		getJPanel().add(sp.sprite);
+	public Sprite add(Object obj){
+		Sprite sp=null;
+		if(obj instanceof Sprite)
+			sp = (Sprite) obj;
+		else return null;
 		
-		spriteArray.add(sp);
+		getJPanel().add(sp.getSprite());
+		
+		if(!(sp instanceof Player))
+			spriteArray.add(sp);
 		sp.setMap(this);
 		if(sp instanceof Movable){
 			movables.add((Movable) sp);
 		}
-	
 		if(sp instanceof Player){
 			this.playerList.add((Player)sp);
-			getJPanel().setComponentZOrder(sp.sprite, 0);
+			getJPanel().setComponentZOrder(sp.getSprite(), 0);
 		}
 		if(sp instanceof Item){
 			items.add((Item) sp);
@@ -253,21 +234,20 @@ public abstract class Map implements Serializable{
 	
 	public void remove(Sprite sp){
 		getJPanel().remove(sp.sprite);
-		if(!Sprite.class.isAssignableFrom(sp.getClass()))
+		if(!(sp instanceof Sprite))
 			return;
-		Class<? extends Sprite> cClass = ((Sprite)sp).getClass();
-		
-		if(cClass.equals(Player.class)){
+			
+		if(sp instanceof Player){
 			playerList.remove(sp);
 		}
-		if(cClass.equals(Item.class)){
+		if(sp instanceof Item){
 			items.remove((Item) sp);
 		}
-		if(Movable.class.isAssignableFrom(cClass)){
+		if(sp instanceof Movable){
 			((Movable)sp).setMap(null);
 			movables.remove((Movable) sp);
 		}
-		if(ActiveArea.class.isAssignableFrom(sp.getClass())){
+		if(sp instanceof ActiveArea){
 			if(((ActiveArea)sp).onTouchAction() || ((ActiveArea)sp).onActionAction())
 				activeAreas.add((ActiveArea)sp);
 		}
@@ -378,18 +358,18 @@ public abstract class Map implements Serializable{
 		mapheight = mapArray.length;
 		mapwidth = mapArray[0].length;
 	}
-	public void addPOS(){
+	
+	public boolean isCrossable(Point a, Point b){
 		
-	}
-	public boolean isCrossable(int x, int y, int width, int height){
-		
-		if (x<0 || (x+width) > (mapwidth)*spritewidth) return false;
-		if (y<0 || (y+height) > (mapheight)*spriteheight) return false;
-		for(Sprite compIterator: spriteArray)
-				if(!((Sprite)compIterator).crossable) return false;
+		if(!getJPanel().contains(a)) return false;
+		if(!getJPanel().contains(b)) return false;
+		if(!getSpriteAt(a).crossable) return false;
+		if(!getSpriteAt(b).crossable) return false;
 		return true;
 	}
-	
+	public Sprite getSpriteAt(Point a){
+		return ((SpriteContent.SpriteComponent)getJPanel().getComponentAt(a)).ref;
+	}
 	public void removeAll(){
 		getJPanel().removeAll();
 		playerList.removeAll(playerList);
@@ -397,9 +377,9 @@ public abstract class Map implements Serializable{
 		activeAreas.removeAll(activeAreas);
 	}
 	public Component add(Player player) {
-		
-			return getJPanel().add(player.getSprite());
-		
+			 getJPanel().add(player.getSprite());
+			 player.setMap(this);
+		return null;
 
 	}
 	public void remove(Player player) {

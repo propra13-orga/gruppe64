@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import javax.swing.JTextField;
 
 import com.github.propra13.gruppe64.visible.Item;
+import com.github.propra13.gruppe64.visible.Map;
 import com.github.propra13.gruppe64.visible.Movable.axis;
 import com.github.propra13.gruppe64.visible.Movable.dir;
 
@@ -79,6 +80,8 @@ public interface Player extends Serializable,ActiveArea{
 	void writeChat(String string);
 
 	Component getSprite();
+
+	void setMap(Map map);
 
 
 }

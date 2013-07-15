@@ -13,9 +13,8 @@ import java.util.Iterator;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.github.propra13.gruppe64.Level;
-import com.github.propra13.gruppe64.NPlayer;
-import com.github.propra13.gruppe64.Player;
+import com.github.propra13.gruppe64.*;
+
 
 public class Room extends Map {
 	

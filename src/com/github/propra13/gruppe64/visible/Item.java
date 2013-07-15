@@ -8,7 +8,7 @@ import javax.swing.JComponent;
 import com.github.propra13.gruppe64.ActiveArea;
 
 
-public class Item extends Sprite implements ActiveArea{
+public class Item extends Sprite implements ActiveArea,SpriteNames{
 	/**
 	 * 
 	 */
@@ -33,9 +33,6 @@ public class Item extends Sprite implements ActiveArea{
 	static public int NORMAL=0,FIRE=1,ICE=2;
 	public int elementtype=NORMAL;
 
-	public transient JComponent sprite; 	
-	
-	
 	public Item( char name)// Name des Items
 	
 	{	
@@ -50,7 +47,7 @@ public class Item extends Sprite implements ActiveArea{
 		setWeapon(true);
 		break;
 		
-		case 'Q': this.displayedName="FireSword"; //Schwert 
+		case FIRESWORD: this.displayedName="FireSword"; //Schwert 
 		elementtype=FIRE;
 		Dmg=20;
 		Range=6400;
@@ -119,8 +116,9 @@ public class Item extends Sprite implements ActiveArea{
 		this(old.getSpriteName());
 		setSprite();	
 	}
-	public Item(){//super();
-		setSprite();super.sprite=sprite;
+	public Item(){
+		setSprite();
+		super.sprite=sprite;
 		
 	}
 	

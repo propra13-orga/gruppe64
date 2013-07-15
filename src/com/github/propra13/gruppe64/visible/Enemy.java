@@ -8,50 +8,55 @@ import java.util.ArrayList;
 
 import javax.swing.JComponent;
 
-import com.github.propra13.gruppe64.visible.Movable.modes;
 
-public class Enemy extends Movable {
+
+public class Enemy extends Movable implements SpriteNames {
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 2216301988921162914L;
 	private char name;
-	public transient JComponent sprite;
-	
 	public Enemy(int x, int y, int xDim, int yDim,char name) {
 		this();
 		this.name=name;
+		
 		vel[0]=1;vel[1]=1;
-		itemarr = new ArrayList<Item>();
-		slotarr = new ArrayList<Item>();
-		itemarr.add(new Item('p'));
-		slotarr.add(itemarr.get(0));
+		this.setDim(xDim, yDim);
+		sprite.setBounds( x, y, xDim, yDim);	
 	}
 	
 	public Enemy(int x, int y, int xDim, int yDim, char name, int elementtype) {
 		this();
-		this.name=name;
 		this.elementtype=elementtype;
+		this.name=name;
+		
 		vel[0]=1;vel[1]=1;
-		itemarr = new ArrayList<Item>();
-		slotarr = new ArrayList<Item>();
-		itemarr.add(new Item('p'));
-		slotarr.add(itemarr.get(0));
-		super.sprite=sprite;
+		this.setDim(xDim, yDim);
+		sprite.setBounds( x, y, xDim, yDim);
 	}
 
 	public Enemy(int xDim, int yDim, char name) {
 		this();
-		itemarr = new ArrayList<Item>();
-		slotarr = new ArrayList<Item>();
-		itemarr.add(new Item('p'));
-		slotarr.add(itemarr.get(0));
-		super.sprite=sprite;
+		this.name=name;
+		
+		vel[0]=1;vel[1]=1;
+		this.setDim(xDim, yDim);
+		sprite.setBounds( 0, 0, xDim, yDim);
+	
 	}
 	public Enemy(){
-		super();
+		itemarr = new ArrayList<Item>();
+		slotarr = new ArrayList<Item>();
+		itemarr.add(new Item(PAW));
+		slotarr.add(itemarr.get(0));
+		
 		sprite=new JComponent(){
+			/**
+			 * Klassen Unique ID, bei Serialisieren verwendet
+			 */
+			private static final long serialVersionUID = 6833919079272308034L;
+
 			public void paintComponent(Graphics g){
 				
 				switch( Enemy.this.name){    

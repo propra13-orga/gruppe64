@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.Timer;
@@ -19,13 +20,12 @@ import com.github.propra13.gruppe64.ActiveArea;
 import com.github.propra13.gruppe64.Chat;
 import com.github.propra13.gruppe64.Game;
 import com.github.propra13.gruppe64.Level;
-import com.github.propra13.gruppe64.MapEditor;
 import com.github.propra13.gruppe64.Player;
 import com.github.propra13.gruppe64.StatBar;
 
 
 @SuppressWarnings({ "serial" })
-public class PlayerSprite extends Movable implements Player{
+public class PlayerSprite extends Movable implements Player, SpriteContent{
 	//der bei der Bewegung bachtenswerter Offset zum (x,y)
 	//int x_off, y_off;
 
@@ -58,7 +58,6 @@ public class PlayerSprite extends Movable implements Player{
 	
 	private Chat chatPane;
 	private JTextField chatInput;
-	public transient JComponent sprite;
 	
 
 	//Test Konstruktor
@@ -83,34 +82,31 @@ public class PlayerSprite extends Movable implements Player{
 	public PlayerSprite(){
 		//Groesse des Spielers 
 		super(0,0,30,30);
-		sprite = new JComponent(){
-			public void paintComponent(Graphics g){
-				//Zeichnet jenach Typ
-			//	g.setColor(Color.ORANGE);
-			//	g.fillRect(0, 0, xDim, yDim);
-				
-				Image img2 = Toolkit.getDefaultToolkit().getImage("res/banana.gif");
-			    g.drawImage(img2, 0, 0, this);
-			    g.finalize();	
-			    g.setFont(new Font ("Arial", Font.PLAIN , 11));
-				g.drawString(nick, 10, 10);
-			}
-		};
+		sprite = new SpriteComponent(this);
 	}
 
-	
+	public void paint(Graphics g){
+		Image img2 = Toolkit.getDefaultToolkit().getImage("res/banana.gif");
+	    g.drawImage(img2, 0, 0, sprite);
+	    g.finalize();	
+	    g.setFont(new Font ("Arial", Font.PLAIN , 11));
+		g.drawString(nick, 10, 10);
+	}
 	public void updateMot(){
 		if(movMode!=modes.moving)return;
 		int x=this.getX();
 		int y=this.getY();
-		if(map.isCrossable(x+vel[0],y,Dim[0],Dim[1])){
+		boolean movPossible=true;
+		if(vel[0]>0)movPossible=map.isCrossable(new Point(x+Dim[0]+vel[0],y), new Point(x+Dim[0]+vel[0],y+Dim[1]));
+		if(vel[0]<0)movPossible=map.isCrossable(new Point(x+vel[0],y), new Point(x+vel[0],y+Dim[1]));
+		if(true){
 			
 			this.setLocation(x+vel[0],y);
 			map.getJPanel().setLocation(map.getJPanel().getX()-vel[0], map.getJPanel().getY());
 		}
 		x=this.getX();
 		y=this.getY();
-		if(map.isCrossable(x,y-vel[1],Dim[0],Dim[1])){
+		if(true){
 			
 			this.setLocation(x,y-vel[1]);
 			map.getJPanel().setLocation(map.getJPanel().getX(), map.getJPanel().getY()+vel[1]);
@@ -128,14 +124,6 @@ public class PlayerSprite extends Movable implements Player{
 		if(aActiveA!= null){
 			aActiveA.onTouch(this);
 		}
-		
-	}
-	public void addStatBar(StatBar statBar) {
-		this.statBar = statBar;
-		
-	}
-	public void addChatPane(Chat chatp) {
-		this.chatPane = chatp;
 		
 	}
 	public void attemptAttack(){
@@ -177,7 +165,7 @@ public class PlayerSprite extends Movable implements Player{
 		}
 	}
 	
-	//neue damage- Methode,die auch elementtype der Waffe bzw. des Gegners ber������������������cksichtigt
+	//neue damage- Methode,die auch elementtype der Waffe bzw. des Gegners beruecksichtigt
 	
 	public void damage(int dmg, int elementwaffe){
 		
@@ -297,6 +285,10 @@ public class PlayerSprite extends Movable implements Player{
 		timer_pl.purge();
 	}
 
+	@Override
+	public Game getGame() {
+		return game;
+	}
 	/**
 	 * Setze vom Spieler erreichbares Level
 	 * @param i
@@ -361,6 +353,14 @@ public class PlayerSprite extends Movable implements Player{
 		this.nick = nick;
 	}
 
+	public void addStatBar(StatBar statBar) {
+		this.statBar = statBar;
+		
+	}
+	public void addChatPane(Chat chatp) {
+		this.chatPane = chatp;
+		
+	}
 	public void addChatInput(JTextField chatinput) {
 		// TODO Auto-generated method stub
 		chatInput = chatinput;
@@ -374,6 +374,31 @@ public class PlayerSprite extends Movable implements Player{
 		return chatPane;
 	}
 
+	@Override
+	public String getChatInputText() {
+		
+		return getChatInput().getText();
+	}
+	@Override
+	public void setChatInputText(String string) {
+		getChatInput().setText(string);
+		
+	}
+	@Override
+	public boolean chatIsFocusOwner() {
+		
+		return getChatInput().isFocusOwner();
+	}
+	@Override
+	public void tell(ActiveArea player, String chatInputText) {
+		writeChat(player,chatInputText);
+		
+	}
+	@Override
+	public void writeChat(String string) {
+		getChatPane().append(string);
+		
+	}
 	public void performAction() {
 		if(movMode!=Movable.modes.moving)return;
 		ActiveArea activeSprite = map.isOnActiveArea(this);
@@ -382,34 +407,6 @@ public class PlayerSprite extends Movable implements Player{
 		}
 				
 	}
-
-
-	@Override
-	public Game getGame() {
-		return game;
-	}
-
-
-	@Override
-	public boolean chatIsFocusOwner() {
-		
-		return getChatInput().isFocusOwner();
-	}
-
-
-	@Override
-	public String getChatInputText() {
-		
-		return getChatInput().getText();
-	}
-
-
-	@Override
-	public void setChatInputText(String string) {
-		getChatInput().setText(string);
-		
-	}
-
 
 
 	@Override
@@ -451,28 +448,6 @@ public class PlayerSprite extends Movable implements Player{
 	public void onAction(Movable mv) {
 		// TODO Auto-generated method stub
 		
-	}
-
-
-	@Override
-	public void tell(ActiveArea player, String chatInputText) {
-		writeChat(player,chatInputText);
-		
-	}
-
-
-	@Override
-	public void writeChat(String string) {
-		getChatPane().append(string);
-		
-	}
-	@Override
-	public int getX() {
-		return sprite.getX();
-	}
-	@Override
-	public int getY() {
-		return sprite.getY();
 	}
 	
 

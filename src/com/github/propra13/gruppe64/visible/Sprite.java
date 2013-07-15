@@ -12,55 +12,60 @@ import java.io.Serializable;
 
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
-import javax.swing.JPanel;
 
-@SuppressWarnings("serial")
-public class Sprite  implements MouseListener, Serializable{
+import com.github.propra13.gruppe64.visible.*;
 
-	
-	
+/**
+ * Basis Sprite-Klasse z.B. Mauer
+ * @author manad, chkell, sewue, vaabr
+ */
+public class Sprite  implements MouseListener, Serializable, SpriteContent{
 
+	/**
+	 * einzigartige ID zum Serialisieren
+	 */
+	private static final long serialVersionUID = -3969230972538288646L;
 	/**
 	 * Ausmasse (x,y)
 	 */
 	protected int[] Dim=new int[2];
 	/**
-	 * Sprite name
+	 * Sprite name, kodiert die Basis Fkt und Darstellung der Sprites
 	 */
 	public char name;
+	/**
+	 * Aufnehmbar oder Nicht
+	 */
 	protected boolean lootable=false;
 	public boolean crossable=true;
-	protected transient JComponent sprite;
-	// Konstruktor Namenloser 
+	/**
+	 * Die dargestellte Komponente
+	 */
+	protected transient SpriteComponent sprite;
+	/**
+	 * Eltern Map, der Komponente 
+	 */
 	public Map map;
 
+	/**
+	 * Setzt Bounds des JComponent, und den Dim[] 
+	 * @param x x-Position auf Map
+	 * @param y y-Position auf Map
+	 * @param xDim Breite des Sprites
+	 * @param yDim Hoehe des Sprites
+	 */
 	public Sprite(int x, int y, int xDim, int yDim){
 		this();
 		this.setDim(xDim, yDim);
-
 		sprite.setBounds( x, y, xDim, yDim);
 	}
-	//leerer Konstruktor fuer z.B. Spieler, der ja immer am Eingang startet
+	
+	/**
+	 * leerer Konstruktor default Contructor, ethhaelt setzt Zeichnung
+	 */
 	public Sprite(){
-		sprite = new JComponent(){
-			public void paintComponent(Graphics g){
-				//Zeichnet jenach Typ
-				switch (Sprite.this.name){
-					case 'x':
-					case 'X':	
-						//	g.setColor(Color.black); 
-						//	g.fillRect(0, 0, Dim[0],Dim[1]);
-							
-							Image img4 = Toolkit.getDefaultToolkit().getImage("res/bricket.jpg");
-						    g.drawImage(img4, 0, 0, this);
-						    g.finalize();	
-						    
-					break;	
-					
-				}
-				
-			}
-		};
+		sprite = new SpriteComponent(this);
+		
 		sprite.addMouseListener(this);
 	         
 	}
@@ -133,9 +138,6 @@ public class Sprite  implements MouseListener, Serializable{
 	public int getY(){
 		return sprite.getY();
 	}
-	public void setMap(Map map) {
-		this.map = map;
-	}
 	public void setLocation(Point lastPos) {
 		sprite.setLocation(lastPos);
 		
@@ -144,5 +146,30 @@ public class Sprite  implements MouseListener, Serializable{
 	public JComponent getSprite() {
 		return sprite;
 	}
+
+	public void setMap(Map map) {
+		this.map = map;assert (map==null);
+	}
+
+	public Map getMap() {
+		return map;
+	}
+
+	public void paint(Graphics g) {
+		//Zeichnet jenach Typ
+		switch (this.name){
+			case 'x':
+				//	g.setColor(Color.black); 
+				//	g.fillRect(0, 0, Dim[0],Dim[1]);
+					
+					Image img4 = Toolkit.getDefaultToolkit().getImage("res/bricket.jpg");
+				    g.drawImage(img4, 0, 0, sprite);
+				    g.finalize();	
+				    
+			break;	
+		}
+		
+	}
+	
 	
 }

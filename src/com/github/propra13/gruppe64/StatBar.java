@@ -90,8 +90,8 @@ public class StatBar extends JPanel{
   		for(int i=0;i<slots.size();i++){
  
   			slots.get(i).setLocation(220+i*60, 0);
-  			slots.get(i).sprite.setBorder(BorderFactory.createLineBorder(Color.black));
-  			this.add(slots.get(i).sprite);
+  			slots.get(i).getSprite().setBorder(BorderFactory.createLineBorder(Color.black));
+  			this.add(slots.get(i).getSprite());
   		}
 
   		//repaint();
@@ -107,9 +107,9 @@ public class StatBar extends JPanel{
    			if(mustAdd)qiArray.add(new QuanItem(aItem));
    		}int i=0;
    		for(QuanItem qi: qiArray){
-   			add(qi.item.sprite);
+   			add(qi.item.getSprite());
   			qi.item.setLocation(3+i*60, 55);
-  			qi.item.sprite.setBorder(BorderFactory.createLineBorder(Color.black));
+  			qi.item.getSprite().setBorder(BorderFactory.createLineBorder(Color.black));
   			
   			i++;
   		}

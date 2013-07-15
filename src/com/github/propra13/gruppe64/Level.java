@@ -27,7 +27,7 @@ public class Level implements java.io.Serializable{
 	
 	int spriteWidth=50;
 	int spriteHeight=50;
-	ArrayList<Room> roomList;
+	protected ArrayList<Room> roomList;
 	ArrayList<Movable> moveable;
 	
 	private transient Game game;

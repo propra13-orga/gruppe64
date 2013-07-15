@@ -22,7 +22,6 @@ public abstract class Movable extends Sprite {
 	protected double armor;
 	protected int health=100;
 	protected int mana=100;
-	protected Map map;
 	public enum dir {up ,right,down,left};
 	public enum axis {x,y};
 	protected enum modes {idle, attack, evade, block, moving};
@@ -30,8 +29,6 @@ public abstract class Movable extends Sprite {
 	protected ArrayList<Item> itemarr;
 	protected ArrayList<Item> slotarr;
 	protected String nick;
-	protected transient JComponent sprite;
-	
 	// Feuer(elementtype=1) oder Eis(elementtype=2 f������r bewegende Gegner und Player
 	protected int elementtype=Item.NORMAL; 
 	/**
@@ -42,20 +39,22 @@ public abstract class Movable extends Sprite {
 	
 
 
-	public Movable(int posx, int posy,int Dimx, int Dimy) {
-		super(posx, posy, Dimx, Dimy);
-		super.sprite=sprite;
-	}
-
-
-	public Movable(int Dimx, int Dimy, char name) {
-		super(Dimx, Dimy, name);
-		super.sprite=sprite;
+	public Movable(){
+		
 	}
 	
-	public Movable() {
-		super.sprite=sprite;
+
+
+	public Movable(int xDim, int yDim) {
+		super(0,0,xDim,yDim);
 	}
+
+
+
+	public Movable(int x, int y, int xDim, int yDim) {
+		super(x,y,xDim,yDim);
+	}
+
 
 
 	public int[] getVel(){

@@ -28,6 +28,8 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
 
+import com.github.propra13.gruppe64.visible.MapEditor;
+
 
 @SuppressWarnings("serial")
 public class Main extends JFrame implements ActionListener{

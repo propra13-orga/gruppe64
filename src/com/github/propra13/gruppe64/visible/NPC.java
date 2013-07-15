@@ -24,7 +24,8 @@ public class NPC extends Movable implements ActiveArea{
 	private transient JComponent sprite;
 
 	public NPC(char name) {
-		super(50, 50, name);
+		super(50, 50);
+		this.name=name;
 		sentence = new ArrayList<String>();
 		switch(this.name){
 		case 'O':
