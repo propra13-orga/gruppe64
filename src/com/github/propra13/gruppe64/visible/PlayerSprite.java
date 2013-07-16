@@ -109,7 +109,7 @@ public class PlayerSprite extends Movable implements Player, SpriteContent{
 		if(movPossible){
 			
 			this.setLocation(x+vel[0],y);
-			map.getJPanel().setLocation(map.getJPanel().getX()-vel[0], map.getJPanel().getY());
+			//map.getJPanel().setLocation(map.getJPanel().getX()-vel[0], map.getJPanel().getY());
 		}
 		x=this.getX();
 		y=this.getY();
@@ -119,7 +119,7 @@ public class PlayerSprite extends Movable implements Player, SpriteContent{
 		if(movPossible){
 			
 			this.setLocation(x,y-vel[1]);
-			map.getJPanel().setLocation(map.getJPanel().getX(), map.getJPanel().getY()+vel[1]);
+			//map.getJPanel().setLocation(map.getJPanel().getX(), map.getJPanel().getY()+vel[1]);
 		}
 	//	map.updateState(this);
 		x=this.getX();

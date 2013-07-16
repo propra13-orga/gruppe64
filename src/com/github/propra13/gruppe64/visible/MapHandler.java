@@ -8,6 +8,7 @@ import java.awt.event.ComponentEvent;
 import javax.swing.JPanel;
 
 import com.github.propra13.gruppe64.Player;
+import com.github.propra13.gruppe64.visible.SpriteContent.SpriteComponent;
 
 public class MapHandler extends JPanel{
 
@@ -32,6 +33,7 @@ public class MapHandler extends JPanel{
 	}
 	public void add(Map map, Player player){
 		map.setFocusPlayer(player);
+		((PlayerSprite)player).getSprite().addComponentListener(new HandlerListener());
 		add(map);
 	}
 	class HandlerListener extends ComponentAdapter {
@@ -41,11 +43,11 @@ public class MapHandler extends JPanel{
         }
         @Override
         public void componentMoved(ComponentEvent e) {
-        	
-        	super.componentMoved(e);
+        	if(e.getSource() instanceof SpriteComponent){ updateMapPos();}
+        	super.componentMoved(e);System.out.println("move");
         }
-	}
 
+	}
 	public void updateMapPos() {
 		if(map==null){System.out.println("keineMap");return;}
 		if(mapPanel==null)return;
