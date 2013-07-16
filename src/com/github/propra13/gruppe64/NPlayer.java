@@ -119,7 +119,7 @@ public class NPlayer  extends PlayerSprite implements Player,ActiveArea{
 					break;
 				case svrshutdown:	dataSocket.close(); lobby.initmain();
 					break;
-				case clshutdown:	if(msgobj.equals(clientAddress)){dataSocket.close();lobby.initmain();}
+				case clshutdown:	if(msgobj.object.get(0).equals(clientAddress)){dataSocket.close();lobby.initmain();}
 									else{nGame.removePl((SocketAddress)msgobj.object.get(0));}
 					break;
 				default:
@@ -359,14 +359,7 @@ public class NPlayer  extends PlayerSprite implements Player,ActiveArea{
 		perf.performOn(this);
 	}
 	public void disconnect(){
-		ArrayList<Object> obj=new ArrayList<Object>();
-		obj.add(clientAddress);
-		try {
-			if(nGame.serverOwner){	sendMsg(new Message(Message.headers.svrshutdown,obj));outOStream.reset();}
-			else{					sendMsg(new Message(Message.headers.clshutdown,obj));outOStream.reset();}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		if(nGame.serverOwner){	sendMsg(new Message(Message.headers.svrshutdown,new Object[]{clientAddress}));}
+		else{					sendMsg(new Message(Message.headers.clshutdown,new Object[]{clientAddress}));}
 	}
 }

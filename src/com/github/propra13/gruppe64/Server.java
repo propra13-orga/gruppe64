@@ -175,7 +175,9 @@ public class Server extends NGame implements Runnable{
 						client.close();
 						break;
 					case clshutdown:
+						removePl(socketaddr);
 						forward(msgobj);
+						client.close();
 						break;
 					default:
 						break;
