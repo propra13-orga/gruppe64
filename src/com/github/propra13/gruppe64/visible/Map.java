@@ -66,7 +66,7 @@ public abstract class Map implements Serializable{
 	protected ArrayList<Player> playerList;
 	protected transient Game game; //if even necessary
 	protected CopyOnWriteArrayList<Door> doorList;
-	private JPanel map;
+	transient private JPanel map;
 	private ArrayList<Sprite> spriteArray;
 	/**
 	 * Erzeuge neues JPanel und ordne es an, hier kann auch das auslesen aus Datei gestartet werden

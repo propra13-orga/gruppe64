@@ -50,6 +50,8 @@ public class Controller extends KeyAdapter{									//brauche playerobject mit p
 	public int hCast;
 	private int enterRoom;
 	
+	boolean hochp,runterp,rechtsp,linksp,attackp,enterp;
+	
 	
 	
 	public Controller(Player player){
@@ -83,24 +85,30 @@ public class Controller extends KeyAdapter{									//brauche playerobject mit p
 	}
 	
 	public void keyPressed(KeyEvent e){										
-			keyp=e.getKeyCode();											
-			if(player!=null){																	//			0			1	         wird die letzte Eingabe ignoriert.
+			keyp=e.getKeyCode();
+			if(player!=null){																	
 				if(!player.getChatterBox().ownsFocus()){
-					if(keyp== hoch && player.getVel()[1] != -1)player.setMot(dir.up);			//			|			|
-					if(keyp== rechts && player.getVel()[0] != -1)player.setMot(dir.right);		//		3---+---1		0		-1	---0---   1
-					if(keyp== runter && player.getVel()[1] !=  1)player.setMot(dir.down);		//			|			|
-					if(keyp== links && player.getVel()[0] !=  1)player.setMot(dir.left);		//			2		   -1
-					if(keyp== attack)player.attemptAttack();
-					if(keyp== enterRoom)player.performAction();
+					if(keyp== hoch &&hochp){player.setMot(dir.up);hochp=false;}			
+					if(keyp== rechts &&rechtsp){player.setMot(dir.right);rechtsp=false;}		
+					if(keyp== runter &&runterp){player.setMot(dir.down);runterp=false;}		
+					if(keyp== links){player.setMot(dir.left);linksp=false;}		
+					if(keyp== attack&&attackp){player.attemptAttack();attackp=false;}
+					if(keyp== enterRoom&&enterp){player.performAction();enterp=false;}
 				}
 			}
 	}
 	public void keyReleased(KeyEvent e){
 		keyr=e.getKeyCode();
 		if(player!=null){
-			if(keyr==hoch || keyr==runter)	player.unsetMot(axis.y);				//			1
-			if(keyr==rechts || keyr==links)	player.unsetMot(axis.x);				//			|
-			if(keyr==switchW && !player.getChatterBox().ownsFocus()) player.switchweapon();//			+---0
+			if((keyr==hoch&&player.getVel()[1] != -1) || (keyr==runter&&player.getVel()[1] !=  1)){	
+				player.unsetMot(axis.y); 
+				if(keyr==hoch)hochp=false;else runterp=false;}
+			if((keyr==rechts&&player.getVel()[0] != -1) || (keyr==links&&linksp&& player.getVel()[0] !=  1)){
+				player.unsetMot(axis.x); 
+				if(keyr==rechts)rechtsp=false;else linksp=false;}	
+			if(keyr== attack&&attackp){attackp=false;}
+			if(keyr== enterRoom&&enterp){enterp=false;}
+			if(keyr==switchW && !player.getChatterBox().ownsFocus()) player.switchweapon();
 			if(keyr==switchA && !player.getChatterBox().ownsFocus()) player.switcharmor();
 			if(keyr==hCast && !player.getChatterBox().ownsFocus()) player.use('H');			
 			if(keyr==KeyEvent.VK_ENTER && player.getChatterBox().ownsFocus()){
