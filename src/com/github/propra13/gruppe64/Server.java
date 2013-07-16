@@ -156,7 +156,7 @@ public class Server extends NGame implements Runnable{
 			outOStream.writeObject(playerList);
 			
 			while(client.isConnected()){
-				try {
+
 					Object robj= inOStream.readObject();
 					Message msgobj= null;
 					if(robj instanceof Message)msgobj=(Message)robj;
@@ -187,16 +187,14 @@ public class Server extends NGame implements Runnable{
 						break;
 					}
 					
-					
-				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (EOFException e){
-					removePl(socketaddr);
-					sendAll(Message.headers.clshutdown,new Object[]{socketaddr});
-					client.close();
-				}
 			}
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (EOFException e){
+			removePl(socketaddr);
+			sendAll(Message.headers.clshutdown,new Object[]{socketaddr});
+			client.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
