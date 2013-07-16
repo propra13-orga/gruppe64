@@ -185,7 +185,7 @@ public class Server extends NGame implements Runnable{
 						break;
 					case damage:
 						break;
-					case move:		playerList.get(playerNr(client)).setVel((int[]) msgobj.array[1]);
+					case move:		playerList.get(playerNr(client)).setVel((int[]) msgobj.array[0]);
 						break;
 					case svrshutdown:
 									forward(msgobj);

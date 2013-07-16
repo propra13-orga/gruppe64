@@ -11,11 +11,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import com.github.propra13.gruppe64.visible.Map;
-import com.github.propra13.gruppe64.visible.MapGenerator;
-import com.github.propra13.gruppe64.visible.PlayerSprite;
-import com.github.propra13.gruppe64.visible.Shop;
-import com.github.propra13.gruppe64.visible.World;
 import com.github.propra13.gruppe64.visible.*;
 
 
@@ -47,7 +42,7 @@ public class Game implements Runnable{
 	protected int levelNr;
 	/**last Level**/
 	protected int lastLevelNr;
-	protected JPanel mapHandler;
+	protected MapHandler mapHandler;
 	
 	public boolean serverOwner=false;
 	Lobby lobby;
@@ -169,7 +164,7 @@ public class Game implements Runnable{
 	}
 
 
-	public Container getCP() {
+	public MapHandler getCP() {
 		return mapHandler;
 	}
 

@@ -43,7 +43,8 @@ public class Door extends Sprite implements ActiveArea,PAS{
 		open=true;
 		this.name='D';
 		this.setDim(xDim, yDim);
-		sprite.setBounds( 0, 0, xDim, yDim);
+		sprite.setBounds( x, y, xDim, yDim);
+		this.x=x;this.y=y;
 	}
 	public Door(int x, int y, int doorNr, String special, int specialNr){
 		this();
@@ -55,6 +56,7 @@ public class Door extends Sprite implements ActiveArea,PAS{
 		this.name='D';
 		this.setDim(xDim, yDim);
 		sprite.setBounds( x, y, xDim, yDim);
+		this.x=x;this.y=y;
 	}
 	public Door(){super();
 		sprite= new SpriteComponent(this);}

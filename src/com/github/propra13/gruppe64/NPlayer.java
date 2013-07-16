@@ -29,7 +29,7 @@ import com.github.propra13.gruppe64.visible.Movable.dir;
 /*
  * represents the sever instance of the player
  */
-public class NPlayer  extends PlayerSprite implements Player,ActiveArea{
+public class NPlayer extends PlayerSprite implements Player,ActiveArea{
 	/**
 	 * 
 	 */
@@ -271,7 +271,7 @@ public class NPlayer  extends PlayerSprite implements Player,ActiveArea{
 			case down: vel[1]=-1; break;
 			case left: vel[0]=-1; break;
 		}
-		sendMsg(new Message(Message.headers.move,new Object[]{clientAddress,vel}));
+		sendMsg(new Message(Message.headers.move,new Object[]{vel}));
 	}
 
 	@Override

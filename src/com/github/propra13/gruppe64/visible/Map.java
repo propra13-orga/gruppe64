@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Timer;
@@ -53,7 +55,7 @@ public abstract class Map implements Serializable{
 	protected transient TimerTask hau;
 	protected transient Timer moveTimer;
 	protected transient TimerTask move;
-	
+	protected transient boolean transientAreNull=false;
 
 	/*  Beispiel: x_max = mapwidth = 4 und y_max = mapheight = 3:
 	 * 
@@ -66,8 +68,8 @@ public abstract class Map implements Serializable{
 	protected ArrayList<Player> playerList;
 	protected transient Game game; //if even necessary
 	protected CopyOnWriteArrayList<Door> doorList;
-	private JPanel map;
-	private ArrayList<Sprite> spriteArray;
+	protected transient JPanel map;
+	private CopyOnWriteArrayList<Sprite> spriteArray;
 	/**
 	 * Erzeuge neues JPanel und ordne es an, hier kann auch das auslesen aus Datei gestartet werden
 	 */
@@ -76,7 +78,8 @@ public abstract class Map implements Serializable{
 		this();
 		setArray(mapArray);
 		getJPanel().setBounds(0, 0, mapwidth*spritewidth, mapheight*spriteheight);
-		spriteArray = new ArrayList<Sprite>();
+		spriteArray = new CopyOnWriteArrayList<Sprite>();
+		transientAreNull=true;
 	}
 	public Map(){
 		playerList = new ArrayList<Player>();
@@ -87,7 +90,6 @@ public abstract class Map implements Serializable{
 		getJPanel().setBackground(Color.CYAN);
 		getJPanel().setLayout(null);
 		getJPanel().setVisible(true);
-		
 	}
 	public ArrayList<Movable> getMovables(){
 		return movables;
@@ -139,7 +141,7 @@ public abstract class Map implements Serializable{
 	
 	
 	public void drawMap(){
-		
+		//if(edit){
 		int x,y;
 		for(int i=0; i<mapwidth;i++){
 			x=i*this.spritewidth;
@@ -148,12 +150,9 @@ public abstract class Map implements Serializable{
 				Sprite sp1 = this.getSprite(i,j);
 				
 				if(sp1!=null){
-					//System.out.print("("+x+","+y+")- {"+i+","+j+"}");
 					sp1.setLocation(x,y);
-					this.add(sp1);
-					
+					this.add(sp1);	
 				}
-			//System.out.print("\n");
 			}
 		}
 		
@@ -425,7 +424,20 @@ public abstract class Map implements Serializable{
 	public Point getPlayerPos(){
 		return new Point(focusPlayer.getX(), focusPlayer.getY());
 	}
-	
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        map = new JPanel();
+        getJPanel().setBackground(Color.CYAN);
+		getJPanel().setLayout(null);
+		getJPanel().setVisible(true);
+		getJPanel().setBounds(0, 0, mapwidth*spritewidth, mapheight*spriteheight);
+		//drawMap();
+		
+		for(Sprite sp: spriteArray){
+			sp.readResolve();
+			add(sp);
+		}
+    }
 }
 
 

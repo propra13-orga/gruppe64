@@ -33,7 +33,7 @@ public class PlayerSprite extends Movable implements Player, SpriteContent{
 	//der bei der Bewegung bachtenswerter Offset zum (x,y)
 	//int x_off, y_off;
 
-	private StatBar statBar;
+	private transient StatBar statBar;
 	private int goldmoney;
 	public static final int[] prefPos={600, 400};
 
@@ -42,7 +42,7 @@ public class PlayerSprite extends Movable implements Player, SpriteContent{
 
 	private transient Timer timer_pl;
 	private int mode=0;
-	TimerTask action;
+	private transient TimerTask action;
 
 	// leben uebrig
 	private int life;
@@ -56,7 +56,7 @@ public class PlayerSprite extends Movable implements Player, SpriteContent{
 	 */
 	private int lvlUnl;
 	private int gold=0;
-	public  Level aLevel;
+	public  transient Level aLevel;
 	//private boolean hasArmor=false;
 	//private boolean hasArmorFire=false;
 	
