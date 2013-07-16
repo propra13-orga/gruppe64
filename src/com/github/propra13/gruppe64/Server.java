@@ -175,7 +175,7 @@ public class Server extends NGame implements Runnable{
 					outOStream.reset();
 					
 					switch(msgobj.head){
-					case chatmsg:	forward(msgobj);
+					case chatmsg:	sendAll(msgobj);
 						break;
 					case chgready:	serverPlayer.setReadyState(!serverPlayer.isReady());
 									Object[] o={playerList};
@@ -185,14 +185,16 @@ public class Server extends NGame implements Runnable{
 						break;
 					case damage:
 						break;
-					case move:		playerList.get(playerNr(client)).setVel((int[]) msgobj.array[0]);
+					case move:		playerList.get(playerNr(client)).setVel((int[]) msgobj.array[1]);
+									sendAll(msgobj);
+									
 						break;
 					case svrshutdown:
-									forward(msgobj);
+									sendAll(msgobj);
 									client.close();
 						break;
 					case clshutdown:
-									forward(msgobj);
+									sendAll(msgobj);
 									removePl(socketaddr);						
 									client.close();
 						break;
@@ -220,12 +222,12 @@ public class Server extends NGame implements Runnable{
 		     if( outOStream!=null) outOStream.close();
 		     if(inOStream!=null)   inOStream.close();
 	       
-	        playerList.remove(serverPlayer);
+		     playerList.remove(serverPlayer);
 	        
 		}
 		
 	}
-	private void forward(Message msgobj) {
+	private void sendAll(Message msgobj) {
 		for(NPlayer pl: playerList){
 			pl.sendMsg(msgobj);
 		}

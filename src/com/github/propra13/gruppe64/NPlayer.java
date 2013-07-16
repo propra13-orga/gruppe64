@@ -122,7 +122,7 @@ public class NPlayer extends PlayerSprite implements Player,ActiveArea{
 					break;
 				case damage:
 					break;
-				case move:
+				case move:		getPlayerBySA((SocketAddress) msgobj.array[0]).setVel((int[]) msgobj.array[1]);
 					break;
 				case svrshutdown:	dataSocket.close(); lobby.initmain();
 					break;
@@ -211,11 +211,15 @@ public class NPlayer extends PlayerSprite implements Player,ActiveArea{
 
 	public void setNick() {
 		// TODO Auto-generated method stub
-		for(NPlayer npl:nGame.playerList)
-			if(npl.clientAddress.equals(this.clientAddress))	nick=npl.nick;
-
+		nick=getPlayerBySA(clientAddress).nick;
 		super.setNick(nick);
 
+	}
+	
+	public NPlayer getPlayerBySA(SocketAddress sa){
+		for(NPlayer npl:nGame.playerList)
+			if(npl.clientAddress.equals(sa)) return npl;
+		return this;
 	}
 
 	@Override
@@ -264,20 +268,22 @@ public class NPlayer extends PlayerSprite implements Player,ActiveArea{
 
 	@Override
 	public void setMot(dir i) {
-		int[] vel=new int[2];
 		switch (i){
 			case up: vel[1]= 1; break;
 			case right: vel[0]= 1; break;
 			case down: vel[1]=-1; break;
 			case left: vel[0]=-1; break;
 		}
-		sendMsg(new Message(Message.headers.move,new Object[]{vel}));
+		sendMsg(new Message(Message.headers.move,new Object[]{clientAddress,vel}));
 	}
 
 	@Override
-	public void unsetMot(axis y) {
-		// TODO Auto-generated method stub
-		
+	public void unsetMot(axis i) {
+		switch (i){
+			case x: this.setVel(0, this.getVel()[1]); break;
+			case y: this.setVel(this.getVel()[0],0); break;
+		}
+		sendMsg(new Message(Message.headers.move,new Object[]{clientAddress,vel}));
 	}
 
 	@Override
