@@ -1,7 +1,7 @@
 xxxxxxxxxx
 x x  HHH x
-x x   H) x      YYYYYYYYY
-DOx QT x                             D;D,entrance,0;D,1,2;
+x x   H) x  
+DOx QT x    D;D,entrance,0;D,1,2;
 x S W xR x      
 x M s Y xx;
 xxxxxxxxxx

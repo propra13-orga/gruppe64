@@ -157,7 +157,7 @@ public class Game implements Runnable{
 		
 		statBar.getStateFrom();
 		map.drawMap();
-		cp.add(map.getJPanel(),BorderLayout.CENTER);
+		mapHandler.add(map,player);
 		//map.startMotion();
 		map.getJPanel().repaint();
 		
@@ -174,7 +174,7 @@ public class Game implements Runnable{
 
 	public void showMap(Map map) {
 		this.map=map;
-		mapHandler.add(map.getJPanel());
+		mapHandler.add(map,player);
 		map.add(player);map.startMotion();
 		map.setLocation(mapHandler.getWidth()/2-player.getX(), mapHandler.getHeight()/2-player.getY());
 		mapHandler.repaint();
