@@ -49,7 +49,7 @@ public class Sprite  implements MouseListener, Serializable, SpriteContent{
 	/**
 	 * selbst
 	 */
-	public static Sprite self;
+	protected static Sprite self;
 	/**
 	 * Setzt Bounds des JComponent, und den Dim[] 
 	 * @param x x-Position auf Map
@@ -137,7 +137,7 @@ public class Sprite  implements MouseListener, Serializable, SpriteContent{
 		
 	}
 	public int getX(){
-		return sprite.getX();
+		return this.sprite.getX();
 	}
 	public int getY(){
 		return sprite.getY();

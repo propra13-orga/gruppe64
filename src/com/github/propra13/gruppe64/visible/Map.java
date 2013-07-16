@@ -413,7 +413,7 @@ public abstract class Map implements Serializable{
 		getJPanel().setLocation(x,y);
 		
 	}
-	public JComponent getJPanel() {
+	public JPanel getJPanel() {
 		return map;
 	}
 	/*public void setMap(JComponent map) {

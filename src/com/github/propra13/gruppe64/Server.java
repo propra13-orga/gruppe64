@@ -103,7 +103,8 @@ public class Server extends NGame implements Runnable{
 	public void startServer(){
 		serverSocket=null;
 		try {
-			serverSocket = new ServerSocket( PORTNR );			
+			serverSocket = new ServerSocket( PORTNR );
+			//serverSocket.setReuseAddress(false);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -211,7 +212,7 @@ public class Server extends NGame implements Runnable{
 			System.out.println("Playerverbindung abgebrochen:"+serverPlayer.getNick());
 			e.printStackTrace();
 		}finally {
-		     serverSocket.close();
+		     //serverSocket.close();
 		     if(outStream!=null)   outStream.close();
 		     if(inStream!=null)    inStream.close();
 		     if( outOStream!=null) outOStream.close();

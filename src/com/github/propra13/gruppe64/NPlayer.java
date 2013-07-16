@@ -42,7 +42,7 @@ public class NPlayer  extends PlayerSprite implements Player,ActiveArea{
 	public transient Lobby lobby;
 	public transient NGame nGame;
 	public SocketAddress clientAddress;
-	public String nick;
+
 
 	public transient boolean serverInstance=true;
 	
