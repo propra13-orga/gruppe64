@@ -102,6 +102,7 @@ public class NPlayer  extends PlayerSprite implements Player,ActiveArea{
 					e.printStackTrace();
 				}
 			nGame.playerList=playerList;
+			for(NPlayer npl:nGame.playerList)if(npl.clientAddress.equals(clientAddress))nick=npl.nick;
 			nGame.initLobby(serverName);
 			lobby.addlocalPl(this);
 	} 
