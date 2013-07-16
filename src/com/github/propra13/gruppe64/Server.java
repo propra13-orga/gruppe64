@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.swing.Action;
 import javax.swing.JPanel;
@@ -179,8 +180,8 @@ public class Server extends NGame implements Runnable{
 						client.close();
 						break;
 					case clshutdown:
-						removePl(socketaddr);
 						forward(msgobj);
+						removePl(socketaddr);
 						client.close();
 						break;
 					default:

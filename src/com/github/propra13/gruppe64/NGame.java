@@ -75,9 +75,11 @@ public class NGame extends Game implements Runnable{
 		player.sendMsg(Message.headers.svrmsg, o);
 	}
 	public void removePl(SocketAddress socketAddress){
+		NPlayer removedPlayer= null;
 		for(NPlayer iPl: playerList){
 			if(iPl.clientAddress.equals(socketAddress))
-				playerList.remove(iPl);
+				removedPlayer=iPl;
 		}
+		playerList.remove(removedPlayer);
 	}
 }

@@ -34,7 +34,7 @@ public class MapHandler extends JPanel{
 		if(map==null)return;
 		if(mapPanel==null)return;
 		Point playerPos=map.getPlayerPos();
-		
+		map.setLocation(getWidth()/2-playerPos.x, getHeight()/2-playerPos.y);
 		
 	}
 }
