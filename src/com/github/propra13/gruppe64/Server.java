@@ -30,6 +30,9 @@ import javax.swing.Action;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import com.github.propra13.gruppe64.visible.MapGenerator;
+import com.github.propra13.gruppe64.visible.World;
+
 
 
 public class Server extends NGame implements Runnable{
@@ -284,6 +287,8 @@ public class Server extends NGame implements Runnable{
 		playerList.remove(hashMap.get(sa));
 	}
 	private void startGame() {
+		MapGenerator mg=new MapGenerator();
+		world = (World) mg.generateMap(World.class, "res/Karten/world.txt");
 		sendAll(Message.headers.start,new Object[]{playerList,world});
 		
 	}
