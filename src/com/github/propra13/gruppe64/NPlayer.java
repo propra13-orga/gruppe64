@@ -149,6 +149,12 @@ public class NPlayer  extends PlayerSprite implements Player,ActiveArea{
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			try {	outOStream.close();	} catch (IOException e) {System.out.println("kann oOS nicht closen obwohl noch nicht geclosed wurde.");}
+			try {	outStream.close();	} catch (IOException e) {System.out.println("kann oS nicht closen obwohl noch nicht geclosed wurde.");}
+			try {	inOStream.close();	} catch (IOException e) {System.out.println("kann iOS nicht closen obwohl noch nicht geclosed wurde.");}
+			try {	inStream.close();	} catch (IOException e) {System.out.println("kann iS nicht closen obwohl noch nicht geclosed wurde.");}	
+			if(!dataSocket.isClosed())try {	dataSocket.close();	} catch (IOException e) {System.out.println("kann socket nicht closen obwohl noch nicht geclosed wurde.");}	
 		}
 	}
 	
