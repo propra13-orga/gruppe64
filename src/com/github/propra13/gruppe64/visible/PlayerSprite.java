@@ -107,8 +107,9 @@ public class PlayerSprite extends Movable implements Player, SpriteContent{
 		if(vel[0]>0)movPossible=map.isCrossable(new Point(x+Dim[0]+vel[0],y),new Point(x+Dim[0]+vel[0],y+Dim[1]));
 		if(vel[0]<0)movPossible=map.isCrossable(new Point(x+vel[0],y), new Point(x+vel[0],y+Dim[1]));
 		if(movPossible){
-			
+			//System.out.print(vel[0]+" "+vel[1]);
 			this.setLocation(x+vel[0],y);
+			//System.out.println(" "+x+" "+y);
 			//map.getJPanel().setLocation(map.getJPanel().getX()-vel[0], map.getJPanel().getY());
 		}
 		x=this.getX();

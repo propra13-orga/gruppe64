@@ -257,8 +257,9 @@ public class NPlayer extends PlayerSprite implements Player,ActiveArea{
 	 */
 	public void setLocation(int x, int y) {
 		Object[] o={x,y};
-		if(serverInstance)sendMsg(Message.headers.setLocation,o);
+		//if(serverInstance)sendMsg(Message.headers.setLocation,o);
 		sprite.setLocation(x, y);
+		this.x=x;this.y=y;
 	}
 
 	
