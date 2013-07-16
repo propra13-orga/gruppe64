@@ -121,6 +121,7 @@ public class NPlayer  extends PlayerSprite implements Player,ActiveArea{
 				case svrshutdown:	dataSocket.close();
 					break;
 				case clshutdown:	if(msgobj.equals(clientAddress))dataSocket.close();
+									else{nGame.removePl((SocketAddress)msgobj.object.get(0));}
 					break;
 				default:
 					break;

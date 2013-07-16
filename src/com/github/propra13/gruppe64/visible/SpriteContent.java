@@ -39,4 +39,17 @@ public interface SpriteContent {
 	 * @param g Graphics von JContent
 	 */
 	 void paint(Graphics g);
+	 
+	 /***
+	  * Statische Klasse die Informationen des Sprites ausgibt
+	  *
+	  */
+	/* public static class SpriteDebuger extends Sprite{
+		 *//**
+		  * 
+		  *//*
+		 public static void printInfo(){
+			 System.out.println("name"+ self.name);
+		 }
+	 }*/
 }

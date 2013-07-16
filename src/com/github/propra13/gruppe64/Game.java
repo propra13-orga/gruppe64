@@ -16,6 +16,7 @@ import com.github.propra13.gruppe64.visible.MapGenerator;
 import com.github.propra13.gruppe64.visible.PlayerSprite;
 import com.github.propra13.gruppe64.visible.Shop;
 import com.github.propra13.gruppe64.visible.World;
+import com.github.propra13.gruppe64.visible.*;
 
 
 
@@ -113,7 +114,7 @@ public class Game implements Runnable{
 		statBar.setLevel(aLevelNr);
 		statBar.repaint(30);
 		
-		cp.add(mapHandler=new JPanel(),cp);
+		cp.add(mapHandler=new MapHandler(),cp);
 		mapHandler.setPreferredSize(new Dimension(1200,500));
 		mapHandler.setMaximumSize(new Dimension(3000,500));mapHandler.setLayout(null);
 		mapHandler.setBackground(Color.DARK_GRAY);mapHandler.setVisible(true);mapHandler.repaint(16);

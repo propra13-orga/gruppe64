@@ -117,7 +117,7 @@ public class Item extends Sprite implements ActiveArea,SpriteNames{
 		
 	}
 	public Item(){
-		sprite = new SpriteComponent(this);
+		super();
 	}
 	
 	

@@ -360,15 +360,20 @@ public abstract class Map implements Serializable{
 	}
 	
 	public boolean isCrossable(Point a, Point b){
-		
 		if(!getJPanel().contains(a)) return false;
+		for(Sprite sp: spriteArray){
+			if(sp.getRectangle().contains(a))if(!sp.crossable)return false;
+		}
 		if(!getJPanel().contains(b)) return false;
-		if(!getSpriteAt(a).crossable) return false;
-		if(!getSpriteAt(b).crossable) return false;
+		for(Sprite sp: spriteArray){
+			if(sp.getRectangle().contains(b))if(!sp.crossable)return false;
+		}
 		return true;
 	}
 	public Sprite getSpriteAt(Point a){
-		return ((SpriteContent.SpriteComponent)getJPanel().getComponentAt(a)).ref;
+		for(Sprite sp: spriteArray){
+			if(sp.getRectangle().contains(a))return sp;
+		}return null;
 	}
 	public void removeAll(){
 		getJPanel().removeAll();

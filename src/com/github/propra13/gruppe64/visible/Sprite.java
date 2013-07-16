@@ -46,7 +46,10 @@ public class Sprite  implements MouseListener, Serializable, SpriteContent{
 	 * Eltern Map, der Komponente 
 	 */
 	public Map map;
-
+	/**
+	 * selbst
+	 */
+	public static Sprite self;
 	/**
 	 * Setzt Bounds des JComponent, und den Dim[] 
 	 * @param x x-Position auf Map
@@ -67,7 +70,7 @@ public class Sprite  implements MouseListener, Serializable, SpriteContent{
 		sprite = new SpriteComponent(this);
 		
 		sprite.addMouseListener(this);
-	         
+	    self=this;
 	}
 	public Sprite(int xDim, int yDim, char name){
 		this();
@@ -103,7 +106,8 @@ public class Sprite  implements MouseListener, Serializable, SpriteContent{
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		if (arg0.getClickCount()>1){
-			sprite.setBorder(BorderFactory.createLineBorder(Color.blue)); 
+			sprite.setBorder(BorderFactory.createLineBorder(Color.blue));
+			System.out.println(this.toString());
 		}else{
 			sprite.setBorder(BorderFactory.createLineBorder(Color.GRAY)); 
 		}
@@ -170,6 +174,9 @@ public class Sprite  implements MouseListener, Serializable, SpriteContent{
 		}
 		
 	}
-	
+	@Override
+	public String toString(){
+		return "name:"+this.name+" x:" +this.getX() + " y:" + this.getY()+" Dim:"+ Dim[0]+","+Dim[1];
+	}
 	
 }

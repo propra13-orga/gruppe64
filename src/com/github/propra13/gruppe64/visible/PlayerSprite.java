@@ -44,7 +44,7 @@ public class PlayerSprite extends Movable implements Player, SpriteContent{
 	private int mode=0;
 	TimerTask action;
 
-	// leben ������������������brig
+	// leben uebrig
 	private int life;
 
 	public transient Game game;
@@ -100,16 +100,19 @@ public class PlayerSprite extends Movable implements Player, SpriteContent{
 		int x=this.getX();
 		int y=this.getY();
 		boolean movPossible=true;
-		//if(vel[0]>0)movPossible=map.isCrossable(new Point(x+Dim[0]+vel[0],y), new Point(x+Dim[0]+vel[0],y+Dim[1]));
-		//if(vel[0]<0)movPossible=map.isCrossable(new Point(x+vel[0],y), new Point(x+vel[0],y+Dim[1]));
-		if(true){
+		if(vel[0]>0)movPossible=map.isCrossable(new Point(x+Dim[0]+vel[0],y),new Point(x+Dim[0]+vel[0],y+Dim[1]));
+		if(vel[0]<0)movPossible=map.isCrossable(new Point(x+vel[0],y), new Point(x+vel[0],y+Dim[1]));
+		if(movPossible){
 			
 			this.setLocation(x+vel[0],y);
 			map.getJPanel().setLocation(map.getJPanel().getX()-vel[0], map.getJPanel().getY());
 		}
 		x=this.getX();
 		y=this.getY();
-		if(true){
+		movPossible=true;
+		if(vel[1]>0)movPossible=map.isCrossable(new Point(x,y-vel[1]),new Point(x+Dim[0],y-vel[1]));
+		if(vel[1]<0)movPossible=map.isCrossable(new Point(x,y+Dim[1]-vel[1]), new Point(x+Dim[0],y+Dim[1]-vel[1]));
+		if(movPossible){
 			
 			this.setLocation(x,y-vel[1]);
 			map.getJPanel().setLocation(map.getJPanel().getX(), map.getJPanel().getY()+vel[1]);
