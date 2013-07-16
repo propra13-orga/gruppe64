@@ -144,8 +144,7 @@ public class Lobby implements ActionListener{
 			player.chgready();
 		}
 		if(ae.getSource()==this.start){
-			nGame.initGamefield();
-			nGame.showWorld();
+			player.startNWGame();
 		}
 		if(ae.getSource()==this.back){
 			player.disconnect();

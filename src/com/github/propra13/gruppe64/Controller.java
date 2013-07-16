@@ -82,7 +82,7 @@ public class Controller extends KeyAdapter{									//brauche playerobject mit p
 		this.player=player;
 	}
 	
-	public void keyPressed(KeyEvent e){										//	if(...&&___) -> Wenn der spieler in entgegengesetzte Richtungen dr��ckt,
+	public void keyPressed(KeyEvent e){										
 			keyp=e.getKeyCode();											
 			if(player!=null){																	//			0			1	         wird die letzte Eingabe ignoriert.
 				if(!player.getChatterBox().ownsFocus()){
