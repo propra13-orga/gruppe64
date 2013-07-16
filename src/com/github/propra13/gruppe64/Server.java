@@ -18,6 +18,7 @@ import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketAddress;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -96,6 +97,7 @@ public class Server extends NGame implements Runnable{
 		if(serverRunning){	startServer();	}
 		
 	}
+	@SuppressWarnings("unused")
 	public void startServer(){
 		serverSocket=null;
 		try {
@@ -116,10 +118,19 @@ public class Server extends NGame implements Runnable{
 		        threads.get(threads.size()-1).start();
 		      }
 		      catch ( IOException e ) {
-		        e.printStackTrace();
+		    	  if(e instanceof SocketException){
+		    		  if(client!=null){
+		    			  try {
+		    				  	client.close();
+		    			  } catch (IOException e1) {
+		    				  e1.printStackTrace();
+		    			}}
+		    	  }
+		    	  
+		    	  e.printStackTrace();
 		      }catch ( NullPointerException e){
 		    	e.printStackTrace();
-		      }
+		      } 
 		      
 		    }
 	}
