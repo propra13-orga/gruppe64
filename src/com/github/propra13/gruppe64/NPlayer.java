@@ -82,6 +82,7 @@ public class NPlayer  extends PlayerSprite implements Player,ActiveArea{
 					}
 				}
 			}
+			clientAddress=dataSocket.getLocalSocketAddress();
 			outStream = dataSocket.getOutputStream();
 			inStream = dataSocket.getInputStream();
 			outOStream = new ObjectOutputStream(outStream);
@@ -124,8 +125,10 @@ public class NPlayer  extends PlayerSprite implements Player,ActiveArea{
 					break;
 				case svrshutdown:	dataSocket.close(); lobby.initmain();
 					break;
-				case clshutdown:	if(msgobj.object.get(0).equals(clientAddress)){dataSocket.close();lobby.initmain();}
-									else{nGame.removePl((SocketAddress)msgobj.object.get(0));}
+				case clshutdown:	if(((SocketAddress)msgobj.array[0]).equals(clientAddress)){
+										dataSocket.close();
+										lobby.initmain();}
+									else{nGame.removePl((SocketAddress)msgobj.object.get(0));lobby.updateTable();}
 					break;
 				default:
 					break;

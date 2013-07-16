@@ -182,7 +182,7 @@ public class Server extends NGame implements Runnable{
 						break;
 					case clshutdown:
 						forward(msgobj);
-						removePl(socketaddr);
+						removePl(socketaddr);						
 						client.close();
 						break;
 					default:
