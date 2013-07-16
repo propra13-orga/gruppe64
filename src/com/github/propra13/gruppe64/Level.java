@@ -140,27 +140,14 @@ public class Level implements java.io.Serializable{
 	 * @param map
 	 */
 	public void setMap(Map map){
-		removeOldMap();
 		aMap = map;
-
 		aMap.add(player);
 		System.out.print("\nw"+map.getWidth()+"h"+map.getHeight()+"\n"+aMap.toString());
-		cp.add(aMap);
-		
-		aMap.getJPanel().repaint();
+		cp.add(aMap,player);
+
 	}
 
-	public void removeOldMap(){
-		if(aMap!=null){
-			/*if(aMap.playerList.size()<2){
-				//aMap.stopMotion();
-			}*/
-			aMap.remove(player);//
-			cp.remove(aMap.getJPanel());
-			cp.revalidate();
-			cp.repaint();
-		}
-	}
+
 	
 
 	//TODO denke an network
@@ -182,7 +169,7 @@ public class Level implements java.io.Serializable{
 	}
 	
 	public void gameLost() {
-		// TODO Auto-generated method stub
+		cp.showOverlay();
 		
 	}
 	public void setOnDoor(Door tDoor){

@@ -440,6 +440,10 @@ public abstract class Map implements Serializable{
 			add(sp);
 		}
     }
+	public void setFocusPlayer(Player player) {
+		focusPlayer=player;
+		
+	}
 }
 
 

@@ -40,25 +40,21 @@ public class NPC extends Movable implements ActiveArea{
 		}
 	}
 	public NPC(){
-		sprite = new JComponent(){
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
-
+		sprite = new SpriteComponent(this);}
+			
 			@Override
-			public void paintComponent(Graphics g){
+			public void paint(Graphics g){
 				switch(NPC.this.name){
 				case 'O':
 					
 					Image img9 = Toolkit.getDefaultToolkit().getImage("res/oldman.png");
-				    g.drawImage(img9, 0, 0, this);
+				    g.drawImage(img9, 0, 0, sprite);
 				    g.finalize();	
 				break;
 			}
 			}
-		};
-	}
+		
+	
 	@Override
 	public void onTouch(Movable mv) {
 		//if kind of player

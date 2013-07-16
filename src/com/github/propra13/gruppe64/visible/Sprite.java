@@ -104,7 +104,7 @@ public class Sprite  implements MouseListener, Serializable, SpriteContent{
 	
 			
 	public Rectangle getRectangle(){
-		return new Rectangle(sprite.getX(),sprite.getY(),Dim[0],Dim[1]);
+		return new Rectangle(x,y,Dim[0],Dim[1]);
 	}
 	public char getSpriteName(){
 		return name;
@@ -189,6 +189,7 @@ public class Sprite  implements MouseListener, Serializable, SpriteContent{
 	public Object readResolve(){
        // in.defaultReadObject();
         sprite = new SpriteComponent(this);
+        if(Dim!=null)sprite.setBounds(x,y,Dim[0],Dim[1]);
         return this;
 	}
 }

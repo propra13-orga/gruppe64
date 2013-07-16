@@ -45,7 +45,7 @@ public class MapEditor extends Level  implements ActionListener, PAS{
 		realCp.setBackground(Color.WHITE);
 		realCp.setLayout(new BoxLayout(realCp, BoxLayout.Y_AXIS));
 		
-		realCp.add(cp=new JPanel(),realCp);
+		realCp.add(cp=new MapHandler(),realCp);
 		cp.setPreferredSize(new Dimension(1200,500));
 		cp.setMaximumSize(new Dimension(3000,500));cp.setLayout(null);
 		cp.setBackground(Color.DARK_GRAY);cp.setVisible(true);cp.repaint(16);
