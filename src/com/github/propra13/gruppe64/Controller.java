@@ -50,7 +50,7 @@ public class Controller extends KeyAdapter{									//brauche playerobject mit p
 	public int hCast;
 	private int enterRoom;
 	
-	boolean hochp,runterp,rechtsp,linksp,attackp,enterp;
+	boolean hochp=true,runterp=true,rechtsp=true,linksp=true,attackp=true,enterp=true;
 	
 	
 	
@@ -91,7 +91,7 @@ public class Controller extends KeyAdapter{									//brauche playerobject mit p
 					if(keyp== hoch &&hochp){player.setMot(dir.up);hochp=false;}			
 					if(keyp== rechts &&rechtsp){player.setMot(dir.right);rechtsp=false;}		
 					if(keyp== runter &&runterp){player.setMot(dir.down);runterp=false;}		
-					if(keyp== links){player.setMot(dir.left);linksp=false;}		
+					if(keyp== links && linksp){player.setMot(dir.left);linksp=false;}		
 					if(keyp== attack&&attackp){player.attemptAttack();attackp=false;}
 					if(keyp== enterRoom&&enterp){player.performAction();enterp=false;}
 				}
@@ -103,11 +103,12 @@ public class Controller extends KeyAdapter{									//brauche playerobject mit p
 			if((keyr==hoch&&player.getVel()[1] != -1) || (keyr==runter&&player.getVel()[1] !=  1)){	
 				player.unsetMot(axis.y); 
 				if(keyr==hoch)hochp=true;else runterp=true;}
-			if((keyr==rechts&&player.getVel()[0] != -1) || (keyr==links&&linksp&& player.getVel()[0] !=  1)){
+
+			if((keyr==rechts&&player.getVel()[0] != -1) || (keyr==links&& player.getVel()[0] !=  1)){
 				player.unsetMot(axis.x); 
 				if(keyr==rechts)rechtsp=true;else linksp=true;}	
-			if(keyr== attack&&attackp){attackp=true;}
-			if(keyr== enterRoom&&enterp){enterp=true;}
+			if(keyr== attack){attackp=true;}
+			if(keyr== enterRoom){enterp=true;}
 			if(keyr==switchW && !player.getChatterBox().ownsFocus()) player.switchweapon();
 			if(keyr==switchA && !player.getChatterBox().ownsFocus()) player.switcharmor();
 			if(keyr==hCast && !player.getChatterBox().ownsFocus()) player.use('H');			
