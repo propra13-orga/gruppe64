@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import javax.swing.JTextField;
 
 import com.github.propra13.gruppe64.visible.Item;
+import com.github.propra13.gruppe64.visible.Map;
 import com.github.propra13.gruppe64.visible.Movable;
 import com.github.propra13.gruppe64.visible.PlayerSprite;
 import com.github.propra13.gruppe64.visible.Movable.axis;
@@ -118,7 +119,7 @@ public class NPlayer extends PlayerSprite implements Player,ActiveArea{
 					break;
 				case start:		nGame.playerList=(ArrayList<NPlayer>) msgobj.array[0];
 								nGame.initGamefield();
-								nGame.showWorld();								
+								nGame.showMap((Map)msgobj.array[0]);								
 					break;
 				case damage:
 					break;

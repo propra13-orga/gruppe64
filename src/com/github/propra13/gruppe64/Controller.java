@@ -102,12 +102,12 @@ public class Controller extends KeyAdapter{									//brauche playerobject mit p
 		if(player!=null){
 			if((keyr==hoch&&player.getVel()[1] != -1) || (keyr==runter&&player.getVel()[1] !=  1)){	
 				player.unsetMot(axis.y); 
-				if(keyr==hoch)hochp=false;else runterp=false;}
+				if(keyr==hoch)hochp=true;else runterp=true;}
 			if((keyr==rechts&&player.getVel()[0] != -1) || (keyr==links&&linksp&& player.getVel()[0] !=  1)){
 				player.unsetMot(axis.x); 
-				if(keyr==rechts)rechtsp=false;else linksp=false;}	
-			if(keyr== attack&&attackp){attackp=false;}
-			if(keyr== enterRoom&&enterp){enterp=false;}
+				if(keyr==rechts)rechtsp=true;else linksp=true;}	
+			if(keyr== attack&&attackp){attackp=true;}
+			if(keyr== enterRoom&&enterp){enterp=true;}
 			if(keyr==switchW && !player.getChatterBox().ownsFocus()) player.switchweapon();
 			if(keyr==switchA && !player.getChatterBox().ownsFocus()) player.switcharmor();
 			if(keyr==hCast && !player.getChatterBox().ownsFocus()) player.use('H');			

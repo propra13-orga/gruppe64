@@ -181,7 +181,7 @@ public class Server extends NGame implements Runnable{
 									Object[] o={playerList};
 									sendAll(Message.headers.chgready,o);					
 						break;
-					case start:		sendAll(Message.headers.start,new Object[]{playerList});						
+					case start:		startGame();					
 						break;
 					case damage:
 						break;
@@ -225,6 +225,8 @@ public class Server extends NGame implements Runnable{
 		}
 		
 	}
+	
+
 	private void forward(Message msgobj) {
 		for(NPlayer pl: playerList){
 			pl.sendMsg(msgobj);
@@ -278,4 +280,9 @@ public class Server extends NGame implements Runnable{
 	public void removePl(SocketAddress sa){
 		playerList.remove(hashMap.get(sa));
 	}
+	private void startGame() {
+		sendAll(Message.headers.start,new Object[]{playerList,world});
+		
+	}
+
 }

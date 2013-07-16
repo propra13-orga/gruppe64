@@ -82,4 +82,9 @@ public class NGame extends Game implements Runnable{
 		}
 		playerList.remove(removedPlayer);
 	}
+	@Override
+	public void initGamefield() {
+		super.initGamefield();
+		main.controller.setPlayer(player);
+	}
 }
