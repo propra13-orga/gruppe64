@@ -40,6 +40,7 @@ public abstract class Map implements Serializable{
 	protected int mapwidth=10;
 	protected int mapheight=7;
 
+	protected Player focusPlayer;
 	protected int spritewidth=50;
 	protected int spriteheight=50;
 	protected char[][] mapArray;
@@ -421,6 +422,10 @@ public abstract class Map implements Serializable{
 	public Component getParent() {
 		return map.getParent();
 	}
+	public Point getPlayerPos(){
+		return new Point(focusPlayer.getX(), focusPlayer.getY());
+	}
+	
 }
 
 
