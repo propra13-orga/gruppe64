@@ -73,6 +73,7 @@ public class Server extends NGame implements Runnable{
 		pl.inOStream=inOStream;
 
 		if(!playerList.contains(pl)){
+				if(!pl.clientAddress.equals(socketAddress))System.out.println("inconsitente IP");
 				playerList.add(pl);
 				correctNicks();
 				hashMap.put(socketAddress, pl);
@@ -115,8 +116,10 @@ public class Server extends NGame implements Runnable{
 		      {
 		    	client=serverSocket.accept();
 		        ClientHandler ch=new ClientHandler(this,client);
-		        threads.add(new Thread(ch));
-		        threads.get(threads.size()-1).start();
+		        Thread aThread = new Thread(ch);
+		        ch.setThread(aThread);
+		        threads.add(aThread);
+		        aThread.start();
 		      }
 		      catch ( IOException e ) {
 		    	  if(e instanceof SocketException){
@@ -143,12 +146,18 @@ public class Server extends NGame implements Runnable{
 	private void handleConnection(Socket client) throws IOException, ClassNotFoundException {
 		SocketAddress socketaddr=client.getRemoteSocketAddress();
 		System.out.println(client.toString());
+		
 		NPlayer serverPlayer=null;
+		
+		OutputStream outStream = null;
+		InputStream inStream = null;
+		ObjectOutputStream outOStream = null;
+		ObjectInputStream inOStream = null;
 		try {
-			OutputStream outStream = client.getOutputStream();
-			InputStream inStream = client.getInputStream();
-			ObjectOutputStream outOStream = new ObjectOutputStream(outStream);
-			ObjectInputStream inOStream = new ObjectInputStream(inStream);
+			outStream = client.getOutputStream();
+			inStream = client.getInputStream();
+			outOStream = new ObjectOutputStream(outStream);
+			inOStream = new ObjectInputStream(inStream);
 			
 			serverPlayer = (NPlayer) inOStream.readObject();
 			addPl(serverPlayer,outOStream,inOStream,client.getRemoteSocketAddress());
@@ -197,14 +206,19 @@ public class Server extends NGame implements Runnable{
 			sendAll(Message.headers.clshutdown,new Object[]{socketaddr});
 			client.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			if(e instanceof SocketException)
+				
+			System.out.println("Playerverbindung abgebrochen:"+serverPlayer.getNick());
 			e.printStackTrace();
 		}finally {
-	        if ( !serverSocket.isClosed() )
-		          try { serverSocket.close(); } catch ( IOException e ) { }
-	        System.out.println("Playerverbindung abgebrochen:"+serverPlayer.getNick());
-	       // playerList.remove(serverPlayer);
-
+		     serverSocket.close();
+		     if(outStream!=null)   outStream.close();
+		     if(inStream!=null)    inStream.close();
+		     if( outOStream!=null) outOStream.close();
+		     if(inOStream!=null)   inOStream.close();
+	       
+	        playerList.remove(serverPlayer);
+	        
 		}
 		
 	}
@@ -222,10 +236,15 @@ public class Server extends NGame implements Runnable{
 	public class ClientHandler implements Runnable{
 		private Server sgame;
 		private Socket socket;
+		private Thread myThread;
 		
 		public ClientHandler(Server sgame,Socket socket){
 			this.sgame=sgame;
 			this.socket=socket;
+		}
+		public void setThread(Thread aThread) {
+			myThread=aThread;
+			
 		}
 		public void run(){
 			try {
@@ -234,7 +253,7 @@ public class Server extends NGame implements Runnable{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}		
-			
+			threads.remove(myThread);
 		}
 		
 	}
@@ -248,11 +267,12 @@ public class Server extends NGame implements Runnable{
 		}
 		return -1;
 	}
-	
-	public void removePl(SocketAddress socketAddress){
-		for(NPlayer iPl: playerList){
-			if(iPl.clientAddress.equals(socketAddress))
-				playerList.remove(iPl);
-		}
+	/***
+	 * hashmap test
+	 * 
+	 */
+	@Override
+	public void removePl(SocketAddress sa){
+		playerList.remove(hashMap.get(sa));
 	}
 }
