@@ -59,7 +59,7 @@ public class NPlayer extends PlayerSprite implements Player,ActiveArea{
 		readyState=b;
 	}
 	public NPlayer(String nick,NGame nGame) {
-		super();
+		super(0,0);
 		this.nick=nick;
 		
 		this.nGame=nGame;

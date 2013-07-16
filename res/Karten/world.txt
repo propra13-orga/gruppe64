@@ -1,4 +1,4 @@
-              xxxxxxxxxxxxxxx
+  x           xxxxxxxxxxxxxxx
 D D D D       x;D,exit,0;  ;D,level,1;D,level,2;D,level,3
 xxxxxxxxxxxxxxx
 x  s SM       x  x

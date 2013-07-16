@@ -83,7 +83,7 @@ public class PlayerSprite extends Movable implements Player, SpriteContent{
 
 		lvlUnl=1;
 
-		sprite.setBounds(x,y,30,30);
+		sprite.setBounds(x,y,100,30);
 		 
 	}
 	public PlayerSprite(){
@@ -97,7 +97,7 @@ public class PlayerSprite extends Movable implements Player, SpriteContent{
 	    g.drawImage(img2, 0, 0, sprite);
 	    g.finalize();	
 	    g.setFont(new Font ("Arial", Font.PLAIN , 11));
-		g.drawString(nick, 10, 10);
+		g.drawString(nick, 0, 10);
 	}
 	public void updateMot(){
 		if(movMode!=modes.moving)return;
