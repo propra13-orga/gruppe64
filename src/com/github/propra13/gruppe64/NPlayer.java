@@ -75,7 +75,6 @@ public class NPlayer  extends PlayerSprite implements Player,ActiveArea{
 			try{
 				dataSocket.connect(new InetSocketAddress( svr, Server.PORTNR ),5000);
 				
-				clientAddress=dataSocket.getLocalSocketAddress();
 				outStream = dataSocket.getOutputStream();
 				inStream = dataSocket.getInputStream();
 				outOStream = new ObjectOutputStream(outStream);
@@ -88,6 +87,7 @@ public class NPlayer  extends PlayerSprite implements Player,ActiveArea{
 						outOStream.writeObject(this);outOStream.reset();
 						serverName = (String) inOStream.readObject();
 						playerList=(ArrayList<NPlayer>) inOStream.readObject();	
+						clientAddress=(SocketAddress) inOStream.readObject();;
 					}catch(IOException e){
 						e.printStackTrace();
 					} catch (ClassNotFoundException e) {

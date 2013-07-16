@@ -45,7 +45,7 @@ public class Server extends NGame implements Runnable{
 	
 	private 	boolean serverRunning;
 	private 	String svrname;
-	public ServerSocket serverSocket;
+	public		ServerSocket serverSocket;
 
 	
 	public final static int PORTNR=60001;
@@ -165,6 +165,7 @@ public class Server extends NGame implements Runnable{
 			
 			outOStream.writeObject(svrname);
 			outOStream.writeObject(playerList);
+			outOStream.writeObject(client.getRemoteSocketAddress());
 			
 			while(client.isConnected()){
 
