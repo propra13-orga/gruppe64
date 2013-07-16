@@ -124,6 +124,8 @@ public class NPlayer extends PlayerSprite implements Player,ActiveArea{
 					break;
 				case damage:
 					break;
+				case attack:
+					break;
 				case move:		getPlayerBySA((SocketAddress) msgobj.array[0]).setVel((int[]) msgobj.array[1]);
 					break;
 				case svrshutdown:	dataSocket.close(); lobby.initmain();
@@ -227,7 +229,7 @@ public class NPlayer extends PlayerSprite implements Player,ActiveArea{
 	@Override
 	public Level getLevel() {
 		// TODO Auto-generated method stub
-		return null;
+		return super.getLevel();
 	}
 
 	@Override
@@ -238,8 +240,7 @@ public class NPlayer extends PlayerSprite implements Player,ActiveArea{
 
 	@Override
 	public void setLevel(Level aLevel) {
-		// TODO Auto-generated method stub
-		
+		super.setLevel(aLevel);
 	}
 
 	@Override
@@ -262,29 +263,16 @@ public class NPlayer extends PlayerSprite implements Player,ActiveArea{
 
 	
 
-	@Override
-	public int[] getVel() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public void setMot(dir i) {
-		switch (i){
-			case up: vel[1]= 1; break;
-			case right: vel[0]= 1; break;
-			case down: vel[1]=-1; break;
-			case left: vel[0]=-1; break;
-		}
+		super.setMot(i);
 		sendMsg(new Message(Message.headers.move,new Object[]{clientAddress,vel}));
 	}
 
 	@Override
 	public void unsetMot(axis i) {
-		switch (i){
-			case x: this.setVel(0, this.getVel()[1]); break;
-			case y: this.setVel(this.getVel()[0],0); break;
-		}
+		super.unsetMot(i);
 		sendMsg(new Message(Message.headers.move,new Object[]{clientAddress,vel}));
 	}
 
@@ -294,7 +282,10 @@ public class NPlayer extends PlayerSprite implements Player,ActiveArea{
 		
 	}
 
-	
+	@Override
+	public int[] getVel(){
+		return super.getVel();
+	}
 
 	@Override
 	public void switchweapon() {
