@@ -135,6 +135,9 @@ public class Lobby implements ActionListener{
 			start.setEnabled(allready);
 		}
 	}
+	/**
+	 * Verwaltet die Benutzter Butten Actionen
+	 */
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getSource()==this.ready){

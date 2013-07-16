@@ -1,6 +1,7 @@
 package com.github.propra13.gruppe64.visible;
 
 import java.awt.Component;
+import java.awt.Point;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
@@ -32,6 +33,8 @@ public class MapHandler extends JPanel{
 	public void updateMapPos() {
 		if(map==null)return;
 		if(mapPanel==null)return;
+		Point playerPos=map.getPlayerPos();
+		map.setLocation(getWidth()/2-playerPos.x, getHeight()/2-playerPos.y);
 		
 	}
 }

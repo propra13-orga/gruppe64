@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.swing.Action;
 import javax.swing.JPanel;
@@ -124,10 +125,14 @@ public class Server extends NGame implements Runnable{
 		    				  	client.close();
 		    			  } catch (IOException e1) {
 		    				  e1.printStackTrace();
-		    			}}
+		    			  } finally{
+		    				  client=null;
+		    			  }
+		    		  }
 		    	  }
-		    	  
-		    	  e.printStackTrace();
+		    	  else{
+		    		  e.printStackTrace();
+		    	  }
 		      }catch ( NullPointerException e){
 		    	e.printStackTrace();
 		      } 

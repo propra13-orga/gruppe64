@@ -46,7 +46,7 @@ public class NWBrowser implements ActionListener {
 		c.gridy = 0;
 		cp.add(nickname, c);
 
-		ip = new JTextField("91.19.70.251",15);
+		ip = new JTextField("192.168.1.1	",15);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = 0.5;
 		c.gridx = 0;
@@ -87,8 +87,12 @@ public class NWBrowser implements ActionListener {
 		main.pack();
 		
 	}
+	/**
+	 * Benutzter Aktionen an Buttons werden verabreitet
+	 */
 	@Override
 	public void actionPerformed(ActionEvent ae) {
+		//Ein Spieler moechte sich einloggen 
 		if(ae.getSource()==this.join){
 			try {
 				join(InetAddress.getByName(ip.getText()));
@@ -99,6 +103,7 @@ public class NWBrowser implements ActionListener {
 			
 			
 		}
+		//Ein Server wird gestartet, Taste ist grau ab dann 
 		if(ae.getSource()==this.create){
 			create.setEnabled(false);
 			
