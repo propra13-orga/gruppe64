@@ -22,7 +22,8 @@ public class MapHandler extends JPanel{
 
 	public void add(Map map){
 		map=map;
-		add(mapPanel=map.getJPanel());
+		mapPanel=map.getJPanel();
+		add(mapPanel);
 	}
 	
 	class HandlerListener extends ComponentAdapter {

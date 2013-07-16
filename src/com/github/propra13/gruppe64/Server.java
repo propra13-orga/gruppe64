@@ -198,12 +198,14 @@ public class Server extends NGame implements Runnable{
 			sendAll(Message.headers.clshutdown,new Object[]{socketaddr});
 			client.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			if(e instanceof SocketException)
+				
+			System.out.println("Playerverbindung abgebrochen:"+serverPlayer.getNick());
 			e.printStackTrace();
 		}finally {
-	        if ( !serverSocket.isClosed() )
+	        if ( !serverSocket.isClosed() )//Ist das nicht sinnlos??!
 		          try { serverSocket.close(); } catch ( IOException e ) { }
-	        System.out.println("Playerverbindung abgebrochen:"+serverPlayer.getNick());
+	        
 	       // playerList.remove(serverPlayer);
 
 		}
