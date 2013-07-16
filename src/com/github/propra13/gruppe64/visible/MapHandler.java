@@ -21,14 +21,15 @@ public class MapHandler extends JPanel{
 	}
 
 	public void add(Map map){
-		//map=
+		map=map;
+		add(mapPanel=map.getJPanel());
 	}
 	
 	class HandlerListener extends ComponentAdapter {
         public void componentResized(ComponentEvent e) {
             MapHandler.this.updateMapPos();
         }
-}
+	}
 
 	public void updateMapPos() {
 		if(map==null)return;

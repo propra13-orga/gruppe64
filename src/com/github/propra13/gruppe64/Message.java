@@ -27,4 +27,5 @@ public class Message implements Serializable {
 		this.head=head;
 		this.array=array;
 	}
+	
 }

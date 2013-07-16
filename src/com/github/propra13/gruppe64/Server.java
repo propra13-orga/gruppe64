@@ -73,6 +73,7 @@ public class Server extends NGame implements Runnable{
 		pl.inOStream=inOStream;
 
 		if(!playerList.contains(pl)){
+				if(!pl.clientAddress.equals(socketAddress))System.out.println("inconsitente IP");
 				playerList.add(pl);
 				correctNicks();
 				hashMap.put(socketAddress, pl);
@@ -248,11 +249,12 @@ public class Server extends NGame implements Runnable{
 		}
 		return -1;
 	}
-	
-	public void removePl(SocketAddress socketAddress){
-		for(NPlayer iPl: playerList){
-			if(iPl.clientAddress.equals(socketAddress))
-				playerList.remove(iPl);
-		}
+	/***
+	 * hashmap test
+	 * 
+	 */
+	@Override
+	public void removePl(SocketAddress sa){
+		playerList.remove(hashMap.get(sa));
 	}
 }
