@@ -66,6 +66,10 @@ public abstract class Movable extends Sprite {
 		this.vel[1]=vy;
 	}
 	
+	public void setVel(int vel[]){
+		this.vel=vel;
+	}
+	
 	public void attemptAttack(){
 		
 			//System.out.print("schlag ");

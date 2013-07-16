@@ -176,23 +176,24 @@ public class Server extends NGame implements Runnable{
 					switch(msgobj.head){
 					case chatmsg:	forward(msgobj);
 						break;
-					case chgready:	
-						serverPlayer.setReadyState(!serverPlayer.isReady());
-						Object[] o={playerList};
-						sendAll(Message.headers.chgready,o);					
+					case chgready:	serverPlayer.setReadyState(!serverPlayer.isReady());
+									Object[] o={playerList};
+									sendAll(Message.headers.chgready,o);					
+						break;
+					case start:		sendAll(Message.headers.start,new Object[]{playerList});						
 						break;
 					case damage:
 						break;
-					case move:
+					case move:		playerList.get(playerNr(client)).setVel((int[]) msgobj.array[1]);
 						break;
 					case svrshutdown:
-						forward(msgobj);
-						client.close();
+									forward(msgobj);
+									client.close();
 						break;
 					case clshutdown:
-						forward(msgobj);
-						removePl(socketaddr);						
-						client.close();
+									forward(msgobj);
+									removePl(socketaddr);						
+									client.close();
 						break;
 					default:
 						break;

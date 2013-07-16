@@ -115,6 +115,10 @@ public class NPlayer  extends PlayerSprite implements Player,ActiveArea{
 				case chgready:	nGame.playerList=(ArrayList<NPlayer>) msgobj.array[0]; // FALSCH!
 								lobby.updateTable();
 					break;
+				case start:		nGame.playerList=(ArrayList<NPlayer>) msgobj.array[0];
+								nGame.initGamefield();
+								nGame.showWorld();								
+					break;
 				case damage:
 					break;
 				case move:
@@ -258,9 +262,15 @@ public class NPlayer  extends PlayerSprite implements Player,ActiveArea{
 	}
 
 	@Override
-	public void setMot(dir up) {
-		// TODO Auto-generated method stub
-		
+	public void setMot(dir i) {
+		int[] vel=new int[2];
+		switch (i){
+			case up: vel[1]= 1; break;
+			case right: vel[0]= 1; break;
+			case down: vel[1]=-1; break;
+			case left: vel[0]=-1; break;
+		}
+		sendMsg(new Message(Message.headers.move,new Object[]{clientAddress,vel}));
 	}
 
 	@Override
@@ -371,5 +381,10 @@ public class NPlayer  extends PlayerSprite implements Player,ActiveArea{
 	public void disconnect(){
 		if(nGame.serverOwner){	sendMsg(new Message(Message.headers.svrshutdown,new Object[]{clientAddress}));}
 		else{					sendMsg(new Message(Message.headers.clshutdown,new Object[]{clientAddress}));}
+	}
+
+	public void startNWGame() {
+		// TODO Auto-generated method stub
+		sendMsg(new Message(Message.headers.start,new Object[]{null}));
 	}
 }
