@@ -105,7 +105,6 @@ public class NPlayer  extends PlayerSprite implements Player,ActiveArea{
 		try {
 			while(dataSocket.isConnected()){
 				Object robj= inOStream.readObject();
-				if(robj.equals("EOF")){break;}
 				Message msgobj = null;
 				if(robj instanceof Message)msgobj=(Message)robj;
 				switch(msgobj.head){
@@ -134,6 +133,7 @@ public class NPlayer  extends PlayerSprite implements Player,ActiveArea{
 		} catch (EOFException e){
 			try {
 				dataSocket.close();
+				lobby.initmain();
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
