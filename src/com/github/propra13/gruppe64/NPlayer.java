@@ -24,6 +24,7 @@ import com.github.propra13.gruppe64.visible.Movable;
 import com.github.propra13.gruppe64.visible.PlayerSprite;
 import com.github.propra13.gruppe64.visible.Movable.axis;
 import com.github.propra13.gruppe64.visible.Movable.dir;
+import com.github.propra13.gruppe64.visible.World;
 
 
 
@@ -119,9 +120,11 @@ public class NPlayer extends PlayerSprite implements Player,ActiveArea{
 					break;
 				case start:		nGame.playerList=(ArrayList<NPlayer>) msgobj.array[0];
 								nGame.initGamefield();
-								nGame.showMap((Map)msgobj.array[0]);								
+								nGame.showMap((Map)msgobj.array[1]);								
 					break;
 				case damage:
+					break;
+				case attack:
 					break;
 				case move:		getPlayerBySA((SocketAddress) msgobj.array[0]).setVel((int[]) msgobj.array[1]);
 					break;
