@@ -29,17 +29,16 @@ public class Room extends Map {
 
 
 	Timer caretaker;
-	public transient Level level;
+
 
 
 	private boolean active=true;
 
 
 	private static int wallSize= 50;
-	public Room(Level aLevel, char[][] mapArray, int roomNr) {
+	public Room(char[][] mapArray, int roomNr) {
 		super(mapArray);
 
-		this.level = aLevel;
 		this.roomNr=roomNr;
 		
 	}
@@ -84,8 +83,12 @@ public class Room extends Map {
 		if(!door.open){
 			pl.tell(door,"Door locked");return;
 		}
-		//target Door
+		//finde das Level dieses Raumes
+		if(this.getFocusPlayer()==null)return;
+		Level level= this.getFocusPlayer().getLevel();
+		
 		if(door.getSpecial()!=null){
+			
 			if(pl.getClass().equals(NPlayer.class)){
 				
 			}

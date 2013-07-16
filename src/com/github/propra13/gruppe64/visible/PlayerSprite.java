@@ -38,7 +38,9 @@ public class PlayerSprite extends Movable implements Player, SpriteContent{
 	public static final int[] prefPos={600, 400};
 
 
-	private int w,a;						//waffen Nr im Waffenslot
+	protected int w;						//waffen Nr im Waffenslot
+
+	private int a;
 
 	private transient Timer timer_pl;
 	private int mode=0;

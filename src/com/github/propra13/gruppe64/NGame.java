@@ -87,4 +87,7 @@ public class NGame extends Game implements Runnable{
 		super.initGamefield();
 		main.controller.setPlayer(player);
 	}
+	public void startLevel(){
+		//TODO
+	}
 }

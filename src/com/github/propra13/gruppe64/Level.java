@@ -28,10 +28,10 @@ public class Level implements java.io.Serializable{
 	
 	int spriteWidth=50;
 	int spriteHeight=50;
-	protected ArrayList<Room> roomList;
+	protected ArrayList<Map> roomList;
 	ArrayList<Movable> moveable;
 	
-	private transient Game game;
+	protected transient Game game;
 	protected MapHandler cp;
 	protected Player player; //networkf if NPlayer.class
 	Stack<Door> fallBackDoor;
@@ -40,13 +40,13 @@ public class Level implements java.io.Serializable{
 	protected int levelNr;
 	
 	// mapArray's for all Rooms
-	private Iterator<Room> roomIterator;
+	private Iterator<Map> roomIterator;
 	//current active Room
 	protected Map aMap;
 
 	private World world;
 
-	protected MapGenerator mg;
+	//protected MapGenerator mg;
 
 
 	public Level(){
@@ -66,36 +66,38 @@ public class Level implements java.io.Serializable{
 		this.player = game.getPlayer();
 		this.levelNr=levelnr;
 		
-		roomList = new ArrayList<Room>();
+		roomList = new ArrayList<Map>();
 		storeAllRooms(levelNr);
 	}
 	public void initLevel(){
 		roomList=getAllRooms();
+		entrance=roomList.get(0).getEntrance(); //TODO
 		//boolean entranceFound=false;
 		if(roomList.get(0)==null){
 			setMap(world);
 		}
 		roomIterator = roomList.iterator();
-		for(Room iMap: roomList){
-			iMap.level=this;
+		for(Map iMap: roomList){
 			iMap.drawMap();
 			iMap.startMotion();
 		}
 	}
 	
-	protected ArrayList<Room> getAllRooms() {
+	protected static ArrayList<Map> getAllRooms() {
+		ArrayList<Map> roomList=null;
 		try
 	      {
 	         FileInputStream fileIn = new FileInputStream("sav/roomList.tmp");
 	         ObjectInputStream in = new ObjectInputStream(fileIn);
-	         roomList = (ArrayList<Room>) in.readObject();
+	         Object o=  in.readObject();
+	         if (o instanceof ArrayList<?>)roomList=(ArrayList<Map>)o;
 	         in.close();
 	         fileIn.close();
-	         entrance=roomList.get(0).getEntrance();
+	         
 	      }catch(IOException i)
 	      {
 	         i.printStackTrace();
-	         return null;
+	         return roomList;
 	      }catch(ClassNotFoundException c)
 	      {
 	         System.out.println("class not found");
@@ -104,12 +106,12 @@ public class Level implements java.io.Serializable{
 	      }
 		return roomList;
 	}
-	public void storeAllRooms(int lvl){
+	public static void storeAllRooms(int lvl){
 		
 
 		char[][] tmpArray;
-		mg= new MapGenerator("res/Karten/Level%i_Raum%i.txt");
-		ArrayList<Room> roomList2store=mg.generateRoomList(this);
+		MapGenerator mg = new MapGenerator("res/Karten/Level%i_Raum%i.txt");
+		ArrayList<Map> roomList2store=mg.generateRoomList(lvl);
 
 		System.out.println("Level "+lvl+ " hat "+roomList2store.size());
 		 try
@@ -140,6 +142,7 @@ public class Level implements java.io.Serializable{
 	 * @param map
 	 */
 	public void setMap(Map map){
+		if(aMap!=null)aMap.remove(player);
 		aMap = map;
 		aMap.add(player);
 		System.out.print("\nw"+map.getWidth()+"h"+map.getHeight()+"\n"+aMap.toString());

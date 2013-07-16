@@ -132,7 +132,7 @@ public class Door extends Sprite implements ActiveArea,PAS{
 	public void mouseClicked(MouseEvent arg0) {
 		if (arg0.getClickCount()>1){
 			if(map instanceof Room){
-			Level l=((Room)map).level;
+			Level l=((Room)map).getFocusPlayer().getLevel();
 			if(l instanceof MapEditor)
 				((MapEditor)l).showDialog(this);
 			}	

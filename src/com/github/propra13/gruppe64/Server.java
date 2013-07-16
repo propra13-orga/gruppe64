@@ -30,7 +30,9 @@ import javax.swing.Action;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import com.github.propra13.gruppe64.visible.Map;
 import com.github.propra13.gruppe64.visible.MapGenerator;
+import com.github.propra13.gruppe64.visible.Room;
 import com.github.propra13.gruppe64.visible.World;
 
 
@@ -49,6 +51,7 @@ public class Server extends NGame implements Runnable{
 	private 	boolean serverRunning;
 	private 	String svrname;
 	public		ServerSocket serverSocket;
+	private ArrayList<Map> roomList;
 
 	
 	public final static int PORTNR=60001;
@@ -290,6 +293,16 @@ public class Server extends NGame implements Runnable{
 		MapGenerator mg=new MapGenerator();
 		world = (World) mg.generateMap(World.class, "res/Karten/world.txt");
 		sendAll(Message.headers.start,new Object[]{playerList,world});
+		
+	}
+	@Override
+	public void startLevel(int lvl){
+		Level.storeAllRooms(lvl);
+		roomList =Level.getAllRooms();
+		for(NPlayer pl: playerList){
+			pl.aLevel=new NLevel(pl,this,lvl,roomList);
+			pl.sendMsg(Message.headers.startLevel, new Object[]{pl.aLevel});
+		}
 		
 	}
 

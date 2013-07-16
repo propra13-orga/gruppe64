@@ -444,6 +444,9 @@ public abstract class Map implements Serializable{
 		focusPlayer=player;
 		
 	}
+	public Player getFocusPlayer(){
+		return focusPlayer; 
+	}
 }
 
 
