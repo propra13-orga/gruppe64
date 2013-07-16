@@ -125,6 +125,7 @@ public class Server extends NGame implements Runnable{
 	}
 
 	private void handleConnection(Socket client) throws IOException, ClassNotFoundException {
+		SocketAddress socketaddr=client.getRemoteSocketAddress();
 		System.out.println(client.toString());
 		NPlayer serverPlayer=null;
 		try {
@@ -174,8 +175,9 @@ public class Server extends NGame implements Runnable{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (EOFException e){
-					System.out.println("Catched in der Schleife ");
-					e.printStackTrace();
+					removePl(socketaddr);
+					sendAll(Message.headers.clshutdown,new Object[]{socketaddr});
+					client.close();
 				}
 			}
 		} catch (IOException e) {
@@ -229,5 +231,12 @@ public class Server extends NGame implements Runnable{
 			i++;
 		}
 		return -1;
+	}
+	
+	public void removePl(SocketAddress socketAddress){
+		for(NPlayer iPl: playerList){
+			if(iPl.clientAddress.equals(socketAddress))
+				playerList.remove(iPl);
+		}
 	}
 }

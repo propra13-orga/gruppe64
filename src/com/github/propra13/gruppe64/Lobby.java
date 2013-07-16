@@ -145,8 +145,11 @@ public class Lobby implements ActionListener{
 			nGame.showWorld();
 		}
 		if(ae.getSource()==this.back){
-			main.initMain();
+			player.disconnect();
 		}
 		
+	}
+	public void initmain(){
+		main.initMain();
 	}
 }

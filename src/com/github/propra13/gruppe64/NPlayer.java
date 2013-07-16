@@ -118,9 +118,9 @@ public class NPlayer  extends PlayerSprite implements Player,ActiveArea{
 					break;
 				case move:
 					break;
-				case svrshutdown:	dataSocket.close();
+				case svrshutdown:	dataSocket.close(); lobby.initmain();
 					break;
-				case clshutdown:	if(msgobj.equals(clientAddress))dataSocket.close();
+				case clshutdown:	if(msgobj.equals(clientAddress)){dataSocket.close();lobby.initmain();}
 									else{nGame.removePl((SocketAddress)msgobj.object.get(0));}
 					break;
 				default:
@@ -131,6 +131,13 @@ public class NPlayer  extends PlayerSprite implements Player,ActiveArea{
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (EOFException e){
+			try {
+				dataSocket.close();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -355,8 +362,8 @@ public class NPlayer  extends PlayerSprite implements Player,ActiveArea{
 		ArrayList<Object> obj=new ArrayList<Object>();
 		obj.add(clientAddress);
 		try {
-			if(nGame.serverOwner){	outOStream.writeObject(new Message(Message.headers.svrshutdown,obj));outOStream.reset();}
-			else{					outOStream.writeObject(new Message(Message.headers.clshutdown,obj));outOStream.reset();}
+			if(nGame.serverOwner){	sendMsg(new Message(Message.headers.svrshutdown,obj));outOStream.reset();}
+			else{					sendMsg(new Message(Message.headers.clshutdown,obj));outOStream.reset();}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
