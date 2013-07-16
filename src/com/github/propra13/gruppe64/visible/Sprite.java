@@ -46,6 +46,8 @@ public class Sprite  implements MouseListener, Serializable, SpriteContent{
 	 * Eltern Map, der Komponente 
 	 */
 	public Map map;
+	protected int x;
+	protected int y;
 	/**
 	 * selbst
 	 */
@@ -97,7 +99,7 @@ public class Sprite  implements MouseListener, Serializable, SpriteContent{
 	
 			
 	public Rectangle getRectangle(){
-		return new Rectangle(sprite.getX(),sprite.getY(),Dim[0],Dim[1]);
+		return new Rectangle(x,y,Dim[0],Dim[1]);
 	}
 	public char getSpriteName(){
 		return name;
@@ -137,10 +139,10 @@ public class Sprite  implements MouseListener, Serializable, SpriteContent{
 		
 	}
 	public int getX(){
-		return this.sprite.getX();
+		return x;
 	}
 	public int getY(){
-		return sprite.getY();
+		return y;
 	}
 	public void setLocation(Point lastPos) {
 		sprite.setLocation(lastPos);

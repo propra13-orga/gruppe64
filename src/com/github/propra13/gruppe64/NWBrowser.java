@@ -130,7 +130,7 @@ public class NWBrowser implements ActionListener {
 		Thread t=new Thread(nGame);
 		try {
 			nGame.player.connect(svr);
-			t.start();
+			if(nGame.player.dataSocket.isConnected())	t.start();
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
