@@ -164,6 +164,7 @@ public class Server extends NGame implements Runnable{
 			
 			outOStream.writeObject(svrname);
 			outOStream.writeObject(playerList);
+			outOStream.writeObject(client.getRemoteSocketAddress());
 			
 			while(client.isConnected()){
 
