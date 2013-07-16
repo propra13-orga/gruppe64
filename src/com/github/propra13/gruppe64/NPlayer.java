@@ -84,7 +84,7 @@ public class NPlayer  extends PlayerSprite implements Player,ActiveArea{
 				Message msg;
 			
 					try{
-						outOStream.writeObject(this);
+						outOStream.writeObject(this);outOStream.reset();
 						serverName = (String) inOStream.readObject();
 						playerList=(ArrayList<NPlayer>) inOStream.readObject();	
 					}catch(IOException e){
