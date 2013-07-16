@@ -10,6 +10,7 @@ import java.io.OutputStream;
 import java.io.Serializable;
 import java.net.ConnectException;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
 import java.net.UnknownHostException;
@@ -34,7 +35,7 @@ public class NPlayer  extends PlayerSprite implements Player,ActiveArea{
 	 */
 	private static final long serialVersionUID = 1L;
 	private boolean readyState;
-	private transient Socket dataSocket;
+	public transient Socket dataSocket;
 	private transient OutputStream outStream;
 	private transient InputStream inStream;
 	public transient ObjectOutputStream outOStream;
@@ -42,7 +43,6 @@ public class NPlayer  extends PlayerSprite implements Player,ActiveArea{
 	public transient Lobby lobby;
 	public transient NGame nGame;
 	public SocketAddress clientAddress;
-	public String nick;
 
 	public transient boolean serverInstance=true;
 	
@@ -70,41 +70,36 @@ public class NPlayer  extends PlayerSprite implements Player,ActiveArea{
 	 * @throws IOException
 	 */
 	public void connect(InetAddress svr) throws UnknownHostException, IOException{
-			while(dataSocket==null){
-				try{
-					dataSocket = new Socket( svr, Server.PORTNR );
-				} catch(IOException e){
-					
-					if(e instanceof ConnectException){
-						
-					} else{
+			dataSocket=new Socket();
+			try{
+				dataSocket.connect(new InetSocketAddress( svr, Server.PORTNR ),5000);
+				
+				clientAddress=dataSocket.getLocalSocketAddress();
+				outStream = dataSocket.getOutputStream();
+				inStream = dataSocket.getInputStream();
+				outOStream = new ObjectOutputStream(outStream);
+				inOStream = new ObjectInputStream(inStream);
+				String serverName=null;
+				ArrayList<NPlayer> playerList=null;
+				Message msg;
+			
+					try{
+						outOStream.writeObject(this);
+						serverName = (String) inOStream.readObject();
+						playerList=(ArrayList<NPlayer>) inOStream.readObject();	
+					}catch(IOException e){
+						e.printStackTrace();
+					} catch (ClassNotFoundException e) {
+						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-				}
-			}
-			clientAddress=dataSocket.getLocalSocketAddress();
-			outStream = dataSocket.getOutputStream();
-			inStream = dataSocket.getInputStream();
-			outOStream = new ObjectOutputStream(outStream);
-			inOStream = new ObjectInputStream(inStream);
-			String serverName=null;
-			ArrayList<NPlayer> playerList=null;
-			Message msg;
-		
-				try{
-					outOStream.writeObject(this);
-					serverName = (String) inOStream.readObject();
-					playerList=(ArrayList<NPlayer>) inOStream.readObject();	
-				}catch(IOException e){
-					e.printStackTrace();
-				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			nGame.playerList=playerList;
-			for(NPlayer npl:nGame.playerList)if(npl.clientAddress.equals(clientAddress))nick=npl.nick;
-			nGame.initLobby(serverName);
-			lobby.addlocalPl(this);
+				nGame.playerList=playerList;
+				setNick();
+				nGame.initLobby(serverName);
+				lobby.addlocalPl(this);
+			} catch(IOException e){
+				e.printStackTrace();
+		}
 	} 
 	
 	public void handleNW(){
@@ -165,7 +160,7 @@ public class NPlayer  extends PlayerSprite implements Player,ActiveArea{
 	public void tell(ActiveArea npl,String msg){
 		try {
 			ArrayList<Object> obj=new ArrayList<Object>();
-			obj.add(this);
+			obj.add(npl);
 			obj.add(msg);
 			outOStream.writeObject(new Message(Message.headers.chatmsg,obj));outOStream.reset();
 		} catch (IOException e) {
