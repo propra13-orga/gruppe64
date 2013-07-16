@@ -23,7 +23,8 @@ public class Enemy extends Movable implements SpriteNames,SpriteContent {
 		
 		vel[0]=1;vel[1]=1;
 		this.setDim(xDim, yDim);
-		sprite.setBounds( x, y, xDim, yDim);	
+		sprite.setBounds( x, y, xDim, yDim);
+		this.x=x;this.y=y;
 	}
 	
 	public Enemy(int x, int y, int xDim, int yDim, char name, int elementtype) {
@@ -34,6 +35,7 @@ public class Enemy extends Movable implements SpriteNames,SpriteContent {
 		vel[0]=1;vel[1]=1;
 		this.setDim(xDim, yDim);
 		sprite.setBounds( x, y, xDim, yDim);
+		this.x=x;this.y=y;
 	}
 
 	public Enemy(int xDim, int yDim, char name) {

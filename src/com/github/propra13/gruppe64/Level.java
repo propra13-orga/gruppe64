@@ -16,6 +16,7 @@ import java.util.TimerTask;
 import com.github.propra13.gruppe64.visible.Door;
 import com.github.propra13.gruppe64.visible.Map;
 import com.github.propra13.gruppe64.visible.MapGenerator;
+import com.github.propra13.gruppe64.visible.MapHandler;
 import com.github.propra13.gruppe64.visible.Movable;
 import com.github.propra13.gruppe64.visible.Room;
 import com.github.propra13.gruppe64.visible.World;
@@ -31,7 +32,7 @@ public class Level implements java.io.Serializable{
 	ArrayList<Movable> moveable;
 	
 	private transient Game game;
-	protected Container cp;
+	protected MapHandler cp;
 	protected Player player; //networkf if NPlayer.class
 	Stack<Door> fallBackDoor;
 	public Door entrance;
@@ -144,7 +145,7 @@ public class Level implements java.io.Serializable{
 
 		aMap.add(player);
 		System.out.print("\nw"+map.getWidth()+"h"+map.getHeight()+"\n"+aMap.toString());
-		cp.add(aMap.getJPanel());
+		cp.add(aMap);
 		
 		aMap.getJPanel().repaint();
 	}

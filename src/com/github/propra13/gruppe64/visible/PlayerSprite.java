@@ -42,7 +42,10 @@ public class PlayerSprite extends Movable implements Player, SpriteContent{
 
 	private transient Timer timer_pl;
 	private int mode=0;
+
 	transient TimerTask action;
+
+
 
 	// leben uebrig
 	private int life;
@@ -56,6 +59,7 @@ public class PlayerSprite extends Movable implements Player, SpriteContent{
 	 */
 	private int lvlUnl;
 	private int gold=0;
+
 	transient public  Level aLevel;
 	//private boolean hasArmor=false;
 	//private boolean hasArmorFire=false;

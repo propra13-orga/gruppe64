@@ -8,6 +8,8 @@ import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 
 import javax.swing.BorderFactory;
@@ -25,6 +27,10 @@ public class Sprite  implements MouseListener, Serializable, SpriteContent{
 	 * einzigartige ID zum Serialisieren
 	 */
 	private static final long serialVersionUID = -3969230972538288646L;
+	/**
+	 * Position auf map
+	 */
+	protected int x,y;
 	/**
 	 * Ausmasse (x,y)
 	 */
@@ -49,7 +55,7 @@ public class Sprite  implements MouseListener, Serializable, SpriteContent{
 	/**
 	 * selbst
 	 */
-	public static Sprite self;
+	protected static Sprite self;
 	/**
 	 * Setzt Bounds des JComponent, und den Dim[] 
 	 * @param x x-Position auf Map
@@ -61,6 +67,7 @@ public class Sprite  implements MouseListener, Serializable, SpriteContent{
 		this();
 		this.setDim(xDim, yDim);
 		sprite.setBounds( x, y, xDim, yDim);
+		this.x=x;this.y=y;
 	}
 	
 	/**
@@ -133,14 +140,14 @@ public class Sprite  implements MouseListener, Serializable, SpriteContent{
 		
 	}
 	public void setLocation(int x, int y) {
-		sprite.setLocation(x, y);
-		
+		if(sprite!=null) sprite.setLocation(x, y);
+		this.x=x;this.y=y;
 	}
 	public int getX(){
-		return sprite.getX();
+		return x;
 	}
 	public int getY(){
-		return sprite.getY();
+		return y;
 	}
 	public void setLocation(Point lastPos) {
 		sprite.setLocation(lastPos);
@@ -178,5 +185,10 @@ public class Sprite  implements MouseListener, Serializable, SpriteContent{
 	public String toString(){
 		return "name:"+this.name+" x:" +this.getX() + " y:" + this.getY()+" Dim:"+ Dim[0]+","+Dim[1];
 	}
-	
+	//@Override
+	public Object readResolve(){
+       // in.defaultReadObject();
+        sprite = new SpriteComponent(this);
+        return this;
+	}
 }

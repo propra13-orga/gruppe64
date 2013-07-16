@@ -29,7 +29,7 @@ import com.github.propra13.gruppe64.visible.Movable.dir;
 /*
  * represents the sever instance of the player
  */
-public class NPlayer  extends PlayerSprite implements Player,ActiveArea{
+public class NPlayer extends PlayerSprite implements Player,ActiveArea{
 	/**
 	 * 
 	 */
@@ -43,6 +43,7 @@ public class NPlayer  extends PlayerSprite implements Player,ActiveArea{
 	public transient Lobby lobby;
 	public transient NGame nGame;
 	public SocketAddress clientAddress;
+
 
 	public transient boolean serverInstance=true;
 	

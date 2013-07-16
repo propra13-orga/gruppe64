@@ -43,7 +43,8 @@ public class Door extends Sprite implements ActiveArea,PAS{
 		open=true;
 		this.name='D';
 		this.setDim(xDim, yDim);
-		sprite.setBounds( 0, 0, xDim, yDim);
+		sprite.setBounds( x, y, xDim, yDim);
+		this.x=x;this.y=y;
 	}
 	public Door(int x, int y, int doorNr, String special, int specialNr){
 		this();
@@ -54,10 +55,11 @@ public class Door extends Sprite implements ActiveArea,PAS{
 		open=true;
 		this.name='D';
 		this.setDim(xDim, yDim);
-		sprite.setBounds( 0, 0, xDim, yDim);
+		sprite.setBounds( x, y, xDim, yDim);
+		this.x=x;this.y=y;
 	}
-	public Door(){
-		sprite= new SpriteComponent(this);super.sprite=sprite;}
+	public Door(){super();
+		sprite= new SpriteComponent(this);}
 			
 			public void paint(Graphics g){
 						if(Door.this.open)g.setColor(Color.green);else g.setColor(Color.red);
@@ -133,8 +135,9 @@ public class Door extends Sprite implements ActiveArea,PAS{
 			Level l=((Room)map).level;
 			if(l instanceof MapEditor)
 				((MapEditor)l).showDialog(this);
-			}
+			}	
 		}
+		super.mouseClicked(arg0);
 	}
 	@Override
 	public JPanel getSetupDialog(MapGenerator mg, MapEditor me) {
