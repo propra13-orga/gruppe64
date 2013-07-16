@@ -63,7 +63,12 @@ public class NPlayer  extends PlayerSprite implements Player,ActiveArea{
 		readyState=false;
 		serverInstance=false;
 	}
-
+	/**
+	 * Verbindet sich mit dem Server, bekommt erste Playerlist
+	 * @param svr die Serveraddresse
+	 * @throws UnknownHostException
+	 * @throws IOException
+	 */
 	public void connect(InetAddress svr) throws UnknownHostException, IOException{
 			while(dataSocket==null){
 				try{

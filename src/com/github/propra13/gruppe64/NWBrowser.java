@@ -87,6 +87,9 @@ public class NWBrowser implements ActionListener {
 		main.pack();
 		
 	}
+	/**
+	 * Benutzter Aktionen an Buttons werden verabreitet
+	 */
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getSource()==this.join){

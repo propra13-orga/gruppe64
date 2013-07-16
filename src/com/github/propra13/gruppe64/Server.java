@@ -124,10 +124,14 @@ public class Server extends NGame implements Runnable{
 		    				  	client.close();
 		    			  } catch (IOException e1) {
 		    				  e1.printStackTrace();
-		    			}}
+		    			  } finally{
+		    				  client=null;
+		    			  }
+		    		  }
 		    	  }
-		    	  
-		    	  e.printStackTrace();
+		    	  else{
+		    		  e.printStackTrace();
+		    	  }
 		      }catch ( NullPointerException e){
 		    	e.printStackTrace();
 		      } 
