@@ -109,7 +109,7 @@ public class NPlayer  extends PlayerSprite implements Player,ActiveArea{
 	public void handleNW(){
 		NPlayer npl;
 		try {
-			while(dataSocket.isConnected()){
+			while(dataSocket.isConnected()&&!dataSocket.isClosed()){
 				Object robj= inOStream.readObject();
 				Message msgobj = null;
 				if(robj instanceof Message)msgobj=(Message)robj;
@@ -128,7 +128,7 @@ public class NPlayer  extends PlayerSprite implements Player,ActiveArea{
 				case clshutdown:	if(((SocketAddress)msgobj.array[0]).equals(clientAddress)){
 										dataSocket.close();
 										lobby.initmain();}
-									else{nGame.removePl((SocketAddress)msgobj.object.get(0));lobby.updateTable();}
+									else{nGame.removePl((SocketAddress)msgobj.array[0]);lobby.updateTable();}
 					break;
 				default:
 					break;
