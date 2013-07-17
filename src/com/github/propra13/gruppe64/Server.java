@@ -67,7 +67,8 @@ public class Server extends NGame implements Runnable{
 			//addPl(super.getPlayer());
 			serverRunning = true;
 			playerList=new ArrayList<NPlayer>();
-			hashMap= new HashMap<SocketAddress,NPlayer>(); 
+			hashMap= new HashMap<SocketAddress,NPlayer>();
+			roomList=new ArrayList<Map>();
 	}
 	
 	
@@ -291,19 +292,26 @@ public class Server extends NGame implements Runnable{
 	}
 	private void startGame() {
 		MapGenerator mg=new MapGenerator();
-		world = (World) mg.generateMap(World.class, "res/Karten/world.txt");
-		sendAll(Message.headers.start,new Object[]{playerList,world});
-		
+		roomList.removeAll(roomList);
+		world=(World) mg.generateMap(World.class, "res/Karten/world.txt");
+		world.drawMap();
+		roomList.add(world);
+		world.addAll(playerList);
+		sendAll(Message.headers.closeLobby,new Object[]{});
+		sendAll(Message.headers.setMap, new Object[]{world});
+		new ServerMapProcessor(null, roomList, playerList);
+		System.out.println("Server startet Game");
 	}
 	@Override
 	public void startLevel(int lvl){
 		Level.storeAllRooms(lvl);
+		roomList.removeAll(roomList);
 		roomList =Level.getAllRooms();
 		for(NPlayer pl: playerList){
 			pl.aLevel=new NLevel(pl,this,lvl,roomList);
-			pl.sendMsg(Message.headers.startLevel, new Object[]{pl.aLevel});
+			pl.sendMsg(Message.headers.setMap, new Object[]{roomList.get(0)});
 		}
 		
 	}
-
+	
 }

@@ -114,9 +114,10 @@ public class NPlayer extends PlayerSprite implements Player,ActiveArea{
 				case chgready:	nGame.playerList=(ArrayList<NPlayer>) msgobj.array[0]; // FALSCH!
 								lobby.updateTable();
 					break;
-				case start:		nGame.playerList=(ArrayList<NPlayer>) msgobj.array[0];
-								nGame.initGamefield();
-								nGame.showMap((Map)msgobj.array[1]);								
+				case setMap:		//nGame.playerList=(ArrayList<NPlayer>) msgobj.array[0];
+								if(nGame.getCP()==null)nGame.initGamefield();
+								//{null,roomList}
+								nGame.startMapProcessor(msgobj.array[0]);								
 					break;
 				case damage:
 					break;

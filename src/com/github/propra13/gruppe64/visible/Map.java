@@ -447,6 +447,11 @@ public abstract class Map implements Serializable{
 	public Player getFocusPlayer(){
 		return focusPlayer; 
 	}
+	public void addAll(ArrayList<NPlayer> playerList){
+		for(Player pl: playerList){
+			this.add(pl);
+		}
+	}
 }
 
 
