@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -37,6 +38,7 @@ public class MapEditor extends Level  implements ActionListener, PAS{
 	private JButton bLoadLevelSet;
 	private JButton bCreateLevelSet;
 	private JComboBox levelsetChooser;
+	private char[][] newMapArray;
 	
 	public MapEditor(Container realCp,Main main){
 	
@@ -98,9 +100,10 @@ public class MapEditor extends Level  implements ActionListener, PAS{
 		this.levelNr=level;
 		storeAllRooms(level);
 		roomList=getAllRooms();
-		Room room=roomList.get(roomnumber);
+		Room room=(Room)roomList.get(roomnumber);
 		
 		setMap(room);
+		newMapArray = aMap.mapArray;
 		player.setLocation(50,50);
 		room.setLocation(cp.getWidth()/2-player.getX(),cp.getHeight()/2-player.getY());
 	}
@@ -128,7 +131,7 @@ public class MapEditor extends Level  implements ActionListener, PAS{
 		
 		int newHeight = Math.max(oldMapArray.length,Y+1);
 		int newWidth = Math.max(oldMapArray[0].length,X+1);
-		char[][] newMapArray = new char[newHeight][newWidth];
+		newMapArray = new char[newHeight][newWidth];
 		for(int iy=0; iy<newHeight; iy++){
 			for(int ix=0; ix< newWidth; ix++){
 				if(iy>=oldHeight||ix>=oldWidth){
@@ -142,6 +145,8 @@ public class MapEditor extends Level  implements ActionListener, PAS{
 				else 
 					newMapArray[iy][ix]=oldMapArray[iy][ix];
 			}
+		
+			
 		}
 		aMap.removeAll();
 		aMap.stopMotion();
@@ -151,6 +156,8 @@ public class MapEditor extends Level  implements ActionListener, PAS{
 		aMap.getJPanel().repaint();
 		aMap.startMotion();
 		aMap.add(player);
+		Sprite tSprite=aMap.getSprite(X,Y);
+		if(tSprite!=null){aMap.add(tSprite);}
 		/*int x=map.getX(),y=map.getY();
 		//TODO map wird neu gezeichnet, mit POSadd von map
 		aLevel.setMap(new Room(aLevel,newMapArray,0));
@@ -161,7 +168,7 @@ public class MapEditor extends Level  implements ActionListener, PAS{
 
 	}
 	public void showDialog(PAS pas) {
-		JPanel dialog = pas.getSetupDialog(mg,this);
+		JPanel dialog = pas.getSetupDialog();
 		dialog.setPreferredSize(new Dimension(100,100));
 		dialog.setMaximumSize(new Dimension(300,300));
 		legende.add(dialog,BorderLayout.LINE_END);
@@ -170,7 +177,10 @@ public class MapEditor extends Level  implements ActionListener, PAS{
 	String tipps = "Bewege den Architekten usw.\n usw.";
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		if(e.getSource().equals(bCreateLevelSet)){
+			System.out.print("saved");
+			System.out.print(saveString());
+		}
 		
 	}
 	private JComboBox<String> generateSetchooser() {
@@ -192,8 +202,28 @@ public class MapEditor extends Level  implements ActionListener, PAS{
 		return new JComboBox<String>(levelSetnames);
 	}
 	@Override
-	public JPanel getSetupDialog(MapGenerator mg, MapEditor me) {
+	public JPanel getSetupDialog() {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	public String saveString(){
+		StringBuffer saveString=new StringBuffer();
+		for (int y=0; y<aMap.mapheight;y++){
+			StringBuffer lineString= new StringBuffer();
+			StringBuffer doorDescs= new StringBuffer();
+			for(int x=0; x<aMap.mapwidth;x++){
+				lineString.append(newMapArray[y][x]);
+				if(newMapArray[y][x]=='D'){
+				Sprite d=aMap.getSpriteAt(new Point (x*aMap.spritewidth,y*aMap.spriteheight));
+				if(d instanceof Door ){
+					doorDescs.append(((Door)d).code());
+				}}
+				
+			}
+			saveString.append(lineString);saveString.append(doorDescs);
+			saveString.append("\n");
+		}
+		return saveString.toString();
+	}
+	
 }

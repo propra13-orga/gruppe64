@@ -13,11 +13,9 @@ import javax.swing.JPanel;
 public interface PAS {
 	/**
 	 * Dialogfenster zum Einrichten eines PAS im MapEditor
-	 * @param mg falls das PAS in einem Set eines Levels vorkommt und mit diesen verknuepft ist
-	 * @param me MapEditor zum bearbeiten
 	 * @return JPanel mit Action Listener
 	 */
-	public JPanel getSetupDialog(MapGenerator mg, MapEditor me);
+	public JPanel getSetupDialog();
 	/**
 	 * Dieser String-Array speichert, dass Textmuster der einzelnen PAS:
 	 * CharName:Klasse:regExp1:regExp2:...

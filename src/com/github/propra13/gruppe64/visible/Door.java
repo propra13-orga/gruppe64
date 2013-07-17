@@ -152,7 +152,7 @@ public class Door extends Sprite implements ActiveArea,PAS{
 		super.mouseClicked(arg0);
 	}
 	@Override
-	public JPanel getSetupDialog(MapGenerator mg, MapEditor me) {
+	public JPanel getSetupDialog() {
 		JPanel pane = new JPanel(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 
@@ -243,4 +243,9 @@ public class Door extends Sprite implements ActiveArea,PAS{
 		return (Room)map;
 	}
 
+	public String code(){
+		if(special==null)
+		return ";" + doorNr + "," + tDoorNr;
+		return ";" + special + ","+specialNr;
+	}
 }

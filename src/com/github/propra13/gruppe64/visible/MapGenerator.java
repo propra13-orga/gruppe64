@@ -293,7 +293,7 @@ public class MapGenerator implements PAS{
 
 
 	@Override
-	public JPanel getSetupDialog(MapGenerator mg, MapEditor me) {
+	public JPanel getSetupDialog() {
 		// TODO Auto-generated method stub
 		return null;
 	}
