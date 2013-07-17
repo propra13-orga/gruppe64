@@ -30,7 +30,6 @@ import com.github.propra13.gruppe64.Player;
 import com.github.propra13.gruppe64.StatBar;
 
 
-
 public class PlayerSprite extends Movable implements Player, SpriteContent{
 	/**
 	 * 
@@ -38,14 +37,20 @@ public class PlayerSprite extends Movable implements Player, SpriteContent{
 	private static final long serialVersionUID = 4414756618308751730L;
 	//der bei der Bewegung bachtenswerter Offset zum (x,y)
 	//int x_off, y_off;
-
+	
+	
 	transient private StatBar statBar;
 	private int goldmoney;
 	public static final int[] prefPos={600, 400};
 
-
+	/**
+	 * ausgeruestete Waffe
+	 */
 	protected int w;						//waffen Nr im Waffenslot
-
+	
+	/**
+	 * ausgeruestete Ruestung
+	 */
 	private int a;
 
 	private transient Timer timer_pl;
@@ -55,10 +60,16 @@ public class PlayerSprite extends Movable implements Player, SpriteContent{
 
 
 
-	// leben uebrig
+	/**
+	 * Die Anzahl der Leben (Respawn-Anzahl)
+	 */
 	private int life;
 
 	public transient Game game;
+	
+	/**
+	 * (Faehigkeiten-)Level des Spielers
+	 */
 	int level;
 	/**
 	 * 	freigeschaltenes Level des jeweiligen Spielers
@@ -66,6 +77,10 @@ public class PlayerSprite extends Movable implements Player, SpriteContent{
 	 * @author sepp
 	 */
 	private int lvlUnl;
+	
+	/**
+	 * Goldmenge des Spielers
+	 */
 	private int gold=0;
 
 	transient public  Level aLevel;
@@ -108,6 +123,10 @@ public class PlayerSprite extends Movable implements Player, SpriteContent{
 	    g.setFont(new Font ("Arial", Font.PLAIN , 11));
 		g.drawString(nick, 0, 10);
 	}
+	
+	/**
+	 * Aktuallisiert die Bewegung
+	 */
 	public void updateMot(){
 		if(movMode!=modes.moving)return;
 		int x=this.getX();
@@ -146,6 +165,10 @@ public class PlayerSprite extends Movable implements Player, SpriteContent{
 		}*/
 		
 	}
+	/**
+	 * Versucht eine Attacke zu starten. Wenn Abkuehlzeit nach Angriff vergangen ist, wird jedem
+	 * Gegner in Reichweite Schaden der ausgeruesteten Waffe zuegefuegt
+	 */
 	public void attemptAttack(){
 		if(this.mode==0){
 			boolean treffer=false;
@@ -202,7 +225,10 @@ public class PlayerSprite extends Movable implements Player, SpriteContent{
 		}
 	}
 
-	
+	/**
+	 * Spieler erleidet schaden. Aktuallisiert Spielerwerte
+	 * @param dmg
+	 */
 	public void damage(int dmg){
 		this.health -= dmg;
 		
@@ -215,6 +241,9 @@ public class PlayerSprite extends Movable implements Player, SpriteContent{
 	
 	//neue damage- Methode,die auch elementtype der Waffe bzw. des Gegners beruecksichtigt
 	
+	/**
+	 * Spieler erleidet Schaden. Element der Waffe wird beruecksichtigt
+	 */
 	public void damage(int dmg, int elementwaffe){
 		
 		super.damage(dmg, elementwaffe);
@@ -224,7 +253,7 @@ public class PlayerSprite extends Movable implements Player, SpriteContent{
 	}
 	
 	/**
-	 * man kann nur in einem Level sterben, also 
+	 * man kann nur in einem Level sterben
 	 */
 	@Override
 	protected void die(){
@@ -240,6 +269,9 @@ public class PlayerSprite extends Movable implements Player, SpriteContent{
 		}
 
 	}
+	/**
+	 * Ruestet andere Waffe aus dem Inventar aus
+	 */
 	public void switchweapon(){
 		
 		do{
@@ -249,7 +281,9 @@ public class PlayerSprite extends Movable implements Player, SpriteContent{
 		statBar.getStateFrom();
 	}
 	
-
+	/**
+	 * Ruestet andere Ruestung aus
+	 */
 	public void switcharmor(){
 		boolean b=false;
 		for(Item item:itemarr)		if(item.isArmor()) b=true;
@@ -265,6 +299,11 @@ public class PlayerSprite extends Movable implements Player, SpriteContent{
 		}
 	}
 	
+	/**
+	 * Fuegt Item von Karte in Inventar des Spielers ein. Dabei werden nur Items mehrfach ins Inventar aufgenommen,
+	 * wenn es sinnvoll ist.
+	 * @param item aufzunehmendes Objekt
+	 */
 	public void pickup(Item item){
 		
 		//TODO gold soll geadded werden, nicht angezeigt
@@ -305,6 +344,9 @@ public class PlayerSprite extends Movable implements Player, SpriteContent{
 		}
 		
 	}
+	/**
+	 * Benutze Item mit Kennzeichnung c
+	 */
 	public void use(char c){
 		Item item = null;
 		for(Item it:itemarr){
@@ -312,6 +354,10 @@ public class PlayerSprite extends Movable implements Player, SpriteContent{
 		}
 		if(item!=null)	use(item);		
 	}
+	/**
+	 * Benutze Item item
+	 * @param item
+	 */
 	public void use(Item item){
 	
 		
@@ -358,7 +404,10 @@ public class PlayerSprite extends Movable implements Player, SpriteContent{
 	public Level getLevel(){
 		return aLevel;
 	}
-
+	
+	/**
+	 * Heilzauber, der wenn genug Mana vorhanden ist, Gesundheit erhoeht
+	 */
 	public void healthCast() {
 		// TODO Auto-generated method stub
 		int mtemp=this.mana;

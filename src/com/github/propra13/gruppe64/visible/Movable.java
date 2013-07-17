@@ -44,13 +44,23 @@ public abstract class Movable extends Sprite {
 	}
 	
 
-
+	/**
+	 * Setze Groeße des Objekts
+	 * @param xDim
+	 * @param yDim
+	 */
 	public Movable(int xDim, int yDim) {
 		super(0,0,xDim,yDim);
 	}
 
 
-
+	/**
+	 * Setze Groeße und Position des Objekts
+	 * @param x
+	 * @param y
+	 * @param xDim
+	 * @param yDim
+	 */
 	public Movable(int x, int y, int xDim, int yDim) {
 		super(x,y,xDim,yDim);
 	}
@@ -70,6 +80,9 @@ public abstract class Movable extends Sprite {
 		this.vel=vel;
 	}
 	
+	/**
+	 * Versucht Attacke auszufuehren. Alle Player in Reichweite erleiden Schaden
+	 */
 	public void attemptAttack(){
 		
 			//System.out.print("schlag ");
@@ -86,6 +99,10 @@ public abstract class Movable extends Sprite {
 	
 	}
 	
+	/**
+	 * Setze Geschwindigkeit in Richtung i
+	 * @param i
+	 */
 	public void setMot(dir i) {
 		switch (i){
 			case up: vel[1]= 1; break;
@@ -118,6 +135,7 @@ public abstract class Movable extends Sprite {
 		super.setLocation(x,y);
 		
 	}
+	
 	public void unsetMot(axis i){
 		switch (i){
 			case x: this.setVel(0, this.getVel()[1]); break;
@@ -133,6 +151,11 @@ public abstract class Movable extends Sprite {
 */	
 	//neue damage- Methode,die auch elementtype der Waffe bzw. des Gegners ������bergibgt
 	
+	/**
+	 * Schadenberechnung fuer Moveable. Abhaengig von erlittenen Grundschaden und Elementtyp
+	 * @param dmg
+	 * @param waffenelement
+	 */
 	public void damage(int dmg, int waffenelement){
 		
 		if (waffenelement==0){} //normaler Schaden, da Waffe neutral

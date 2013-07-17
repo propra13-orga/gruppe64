@@ -22,7 +22,11 @@ public class NPC extends Movable implements ActiveArea{
 	private Iterator<String> iSentence;
 	private String nick;
 	private transient JComponent sprite;
-
+	
+	/**
+	 * Initalisiert Sprite (50x50) und Textausgabe
+	 * @param name Meister des Zen oder Verkaeufer
+	 */
 	public NPC(char name) {
 		super(50, 50);
 		this.name=name;
@@ -39,6 +43,7 @@ public class NPC extends Movable implements ActiveArea{
 			sentence.add("Die letzte Truhe aus sapientpearwood habe an Twoflower verkauft. Ich habe aber viele andere nuetzliche Gegenstaende!!");
 		}
 	}
+	
 	public NPC(){
 		sprite = new SpriteComponent(this);}
 			
@@ -55,6 +60,9 @@ public class NPC extends Movable implements ActiveArea{
 			}
 		
 	
+	/**
+	 * Befindet sich Charakter auf diesen NPC
+	 */
 	@Override
 	public void onTouch(Movable mv) {
 		//if kind of player

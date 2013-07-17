@@ -30,9 +30,15 @@ public class World extends Map implements ActionListener{
 		super(tArray);
 		lastPos=new Point(0,50);
 	}
+	/**
+	 * Gibt die Anzahl der Level aus
+	 */
 	public int getMaxLevel(){
 		return 5;
 	}
+	/**
+	 * Gibt Elterncontainer zurück
+	 */
 	public Container getCP(){
 		return getJPanel().getParent();
 	}
@@ -42,6 +48,9 @@ public class World extends Map implements ActionListener{
 		// TODO Auto-generated method stub
 		
 	}
+	/**
+	 * Durch eine Tuer gehen. Spielerbewegung wird gestoppt und neues Level wird gestartet.
+	 */
 	@Override
 	public void enterDoor(Door door, Player mv) {
 		if(!door.open)return;
@@ -49,7 +58,10 @@ public class World extends Map implements ActionListener{
 			game.startLevel(door.specialNr);this.stopMotion();
 			lastPos= new Point(door.getX(),door.getY());
 		}
-		
+	/**
+	 * Alle Tueren bis einschließlich Level lvlUnlocked werden als offen gesetzt
+	 * @param lvlUnlocked 	
+	 */
 	}
 	private void setOpenDoors(int lvlUnlocked){
 		for(ActiveArea iAA: activeAreas){

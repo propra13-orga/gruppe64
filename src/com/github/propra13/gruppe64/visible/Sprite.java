@@ -88,20 +88,23 @@ public class Sprite  implements MouseListener, Serializable, SpriteContent{
 	}
 	
 		
-	
+	/**
+	 * Gibt die Groeße des Sprites zurueck
+	 * @return Vektor size= {x_Size, y_Size}
+	 */
 	public int[] getDim(){
 		return Dim;
 	}
 	
+	/**
+	 * Setzt die Groeße des Sprites
+	 * @param xDim
+	 * @param yDim
+	 */
 	public void setDim(int xDim,int yDim){
 		this.Dim[0] = xDim;
 		this.Dim[1] = yDim;
 	}
-	
-	
-	
-	
-	
 			
 	public Rectangle getRectangle(){
 		return new Rectangle(x,y,Dim[0],Dim[1]);
@@ -109,6 +112,7 @@ public class Sprite  implements MouseListener, Serializable, SpriteContent{
 	public char getSpriteName(){
 		return name;
 	}
+	
 	
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
@@ -139,16 +143,34 @@ public class Sprite  implements MouseListener, Serializable, SpriteContent{
 		// TODO Auto-generated method stub
 		
 	}
+	
+	/**
+	 * Positioniere Sprite an Position (x,y)
+	 * @param x
+	 * @param y
+	 */
 	public void setLocation(int x, int y) {
 		if(sprite!=null) sprite.setLocation(x, y);
 		this.x=x;this.y=y;
 	}
+	
+	/**
+	 * @return x-Position
+	 */
 	public int getX(){
 		return x;
 	}
+	/**
+	 * @return y-Position
+	 */
 	public int getY(){
 		return y;
 	}
+	
+	/**
+	 * Positioniere Sprite an Position lastPos
+	 * @param lastPos
+	 */
 	public void setLocation(Point lastPos) {
 		sprite.setLocation(lastPos);
 		

@@ -95,7 +95,7 @@ public class Item extends Sprite implements ActiveArea,SpriteNames{
 		//schlagsnd=new File("res/pfote_s.wav");
 		//treffsnd=new File("res/pfote_t.wav");
 		//elementtype=1;
-		Dmg=50;
+		Dmg=2;
 		Range=2000;
 		setWeapon(true);
 		break;

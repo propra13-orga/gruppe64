@@ -14,6 +14,13 @@ public class Shop extends Map{
 
 	static char[][] shop = readFile();
 	
+	/**
+	 * Initalisiere Shop-Raum. Lese shop.txt aus und lege die Groeße der jeweiligen Sprites fest.
+	 * Ordne Shop einer Game-Instanz zu.
+	 * @param spritewidth
+	 * @param spriteheight
+	 * @param game
+	 */
 	public Shop(int spritewidth, int spriteheight, Game game){
 		super(shop);
 		this.spritewidth= spritewidth;
@@ -77,6 +84,12 @@ public class Shop extends Map{
 		return map;
 
 	}
+	
+	/**
+	 * Fuege den Player in Shop ein
+	 * @param pl Objekt der Klasse Player
+	 * @return null, wenn erfolgreich terminiert
+	 */
 	public Component add(Player pl){
 		//Map is Super
 		super.add(pl);
@@ -91,6 +104,7 @@ public class Shop extends Map{
 		}
 		return null;
 	}
+	
 	@Override
 	public void enterDoor(Door door, Player mv) {
 		if(door.getSpecial()==null)return;
