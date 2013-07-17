@@ -1,6 +1,7 @@
 package com.github.propra13.gruppe64.visible;								// # 0001
 
 
+import java.io.File;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -12,6 +13,11 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -141,8 +147,8 @@ public class PlayerSprite extends Movable implements Player, SpriteContent{
 		
 	}
 	public void attemptAttack(){
-		
 		if(this.mode==0){
+			boolean treffer=false;
 			System.out.print("schlag ");
 			int x=this.getX();
 			int y=this.getY();
@@ -162,8 +168,36 @@ public class PlayerSprite extends Movable implements Player, SpriteContent{
 					System.out.println(map.getMovables().size());
 					mov.damage(this.slotarr.get(0).getDmg(),this.slotarr.get(0).elementtype);
 					System.out.println(map.getMovables().size());
+					treffer=true;
 				}
 			}
+			/*
+			File f=null;
+			if(treffer)	f=slotarr.get(0).treffsnd;
+			else		f=slotarr.get(0).schlagsnd;
+			AudioInputStream stream = null;
+			Clip clip;
+			if(stream==null&&f!=null){
+				try {
+				    AudioFormat format;
+				    DataLine.Info info;
+				    
+
+				    stream = AudioSystem.getAudioInputStream(f);
+				    format = stream.getFormat();
+				    info = new DataLine.Info(Clip.class, format);
+				    clip = (Clip) AudioSystem.getLine(info);
+				    clip.stop();
+				    clip.open(stream);
+				   // clip.start();   
+				}
+				catch (Exception e) {
+				    System.err.print("Sound-Fehler:\n");
+				    System.err.print(e.toString());
+				    System.err.print("\nOSX-specific\n");
+				}
+			}*/
+			 
 	
 		}
 	}
