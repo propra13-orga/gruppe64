@@ -92,6 +92,7 @@ public class PlayerSprite extends Movable implements Player, SpriteContent{
 		//Groesse des Spielers 
 		super(0,0,30,30);
 		sprite = new SpriteComponent(this);
+		sprite.addMouseListener(this);
 	}
 
 	public void paint(Graphics g){
@@ -425,7 +426,10 @@ public class PlayerSprite extends Movable implements Player, SpriteContent{
 		getChatterBox().writeChat(player, chatInputText);
 		
 	}
-	
+	@Override
+	public String toString(){
+		return super.toString()+ "Klasse" + this.getClass() + "Game: " + this.game;
+	}
 	
 
 

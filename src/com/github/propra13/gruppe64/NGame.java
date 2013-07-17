@@ -90,10 +90,10 @@ public class NGame extends Game implements Runnable,MapProcessor{
 	public void startLevel(){
 		//TODO
 	}
-	public void startMapProcessor(Object object) {
+	public void startMapProcessor(Object object, NPlayer player) {
 		map=(Map)object;
 		//this ist wichtig, da Game.player
-		new ClientMapProcessor(this,map,this.player);
+		new ClientMapProcessor(this,map,player);
 		
 	}
 }

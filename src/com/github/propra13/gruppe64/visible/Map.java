@@ -453,12 +453,19 @@ public abstract class Map implements Serializable{
 		}
 	}
 	public void updLocalPlayer(NPlayer npl){
-		for(Player np:playerList)
-			if(np.equals(npl))
-				np=npl;
-		for(Movable mov:movables)
-			if(mov.equals(npl))
-				mov=npl;
+		Player tPlayer=null;
+		for(Player iPl:playerList){
+			if(iPl instanceof NPlayer){
+				if(((NPlayer)iPl).clientAddress.equals(((NPlayer)npl).clientAddress))
+				tPlayer=iPl;
+			}
+		}
+		if(tPlayer!=null){
+			//TODO Kopiere POS etc
+			playerList.remove(tPlayer);
+			movables.remove(tPlayer);
+			add(npl);
+		}
 	}
 }
 

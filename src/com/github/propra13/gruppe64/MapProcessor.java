@@ -35,7 +35,6 @@ public class ClientMapProcessor extends Thread{
 			map.updLocalPlayer(localPlayer);
 			map.getMovables();
 			game.getCP().add(map, localPlayer);
-			map.getJPanel().add(localPlayer.getSprite());
 			map.startMotion();
 	}
 	
