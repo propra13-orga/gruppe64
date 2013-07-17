@@ -211,7 +211,8 @@ public abstract class Map implements Serializable{
 		
 		getJPanel().add(sp.getSprite());
 		
-		
+		if(!(sp instanceof Player))
+			spriteArray.add(sp);
 		sp.setMap(this);
 		if(sp instanceof Movable){
 			movables.add((Movable) sp);
@@ -438,7 +439,13 @@ public abstract class Map implements Serializable{
 		
 		for(Sprite sp: spriteArray){
 			sp.readResolve();
-			add(sp);
+			getJPanel().add(sp.getSprite());
+		}
+		for(Player pl: playerList){
+			if(pl instanceof PlayerSprite) {
+				((PlayerSprite)pl).readResolve();
+				getJPanel().add(pl.getSprite());
+			}
 		}
     }
 	public void setFocusPlayer(Player player) {
@@ -465,6 +472,7 @@ public abstract class Map implements Serializable{
 			//TODO Kopiere POS etc
 			playerList.remove(tPlayer);
 			movables.remove(tPlayer);
+			getJPanel().remove(tPlayer.getSprite());
 			add(npl);
 		}
 	}

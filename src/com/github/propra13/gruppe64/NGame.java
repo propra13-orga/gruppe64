@@ -45,9 +45,10 @@ public class NGame extends Game implements Runnable,MapProcessor{
 	public NGame(Container cp, Main main, Controller controller, String nick) {
 		super(cp,main,controller);
 		player = new NPlayer(nick,this);
+		super.main.controller.setPlayer(super.player);
 		super.player=player;
-		controller.setPlayer(null);
-		controller.setPlayer(player);
+		
+
 	}	
 	public NGame(){	}
 	public void initLobby(String svrname){
@@ -96,6 +97,7 @@ public class NGame extends Game implements Runnable,MapProcessor{
 		map=(Map)object;
 		//main.controller.setPlayer(player);
 		//this ist wichtig, da Game.player
+		main.controller.setPlayer(player);
 		new ClientMapProcessor(this,map,player);
 		
 	}

@@ -2,6 +2,7 @@ package com.github.propra13.gruppe64.visible;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.io.File;
 
 import javax.swing.JComponent;
 
@@ -29,6 +30,8 @@ public class Item extends Sprite implements ActiveArea,SpriteNames{
 	private int Range;
 	private PlayerSprite player;
 	private int price=0;
+	public File treffsnd=null;
+	public File schlagsnd=null;
 	
 	static public int NORMAL=0,FIRE=1,ICE=2;
 	public int elementtype=NORMAL;
@@ -42,12 +45,16 @@ public class Item extends Sprite implements ActiveArea,SpriteNames{
 		switch(name){
 		
 		case 'S': this.displayedName="Sword"; //Schwert 
+		schlagsnd=new File("res/sword_s.wav");
+		treffsnd=new File("res/sword_t.wav");
 		Dmg=20;
 		Range=6400;
 		setWeapon(true);
 		break;
 		
 		case FIRESWORD: this.displayedName="FireSword"; //Schwert 
+		schlagsnd=new File("res/fsword_s.wav");
+		treffsnd=new File("res/fsword_t.wav");
 		elementtype=FIRE;
 		Dmg=20;
 		Range=6400;
@@ -55,6 +62,8 @@ public class Item extends Sprite implements ActiveArea,SpriteNames{
 		break;
 		
 		case 'W': this.displayedName="IceSword"; //Schwert 
+		schlagsnd=new File("res/iword_s.wav");
+		treffsnd=new File("res/isword_t.wav");
 		elementtype=ICE;
 		Dmg=20;
 		Range=6400;
@@ -75,12 +84,16 @@ public class Item extends Sprite implements ActiveArea,SpriteNames{
 		break;
 		
 		case 's':this.displayedName="Schlagring"; //schlagring
+		schlagsnd=new File("res/sr_s.wav");
+		treffsnd=new File("res/sr_t.wav");
 		Dmg=5;
 		Range=1600;
 		setWeapon(true);
 		break;
 		
 		case 'p':this.displayedName="Pfote";
+		//schlagsnd=new File("res/pfote_s.wav");
+		//treffsnd=new File("res/pfote_t.wav");
 		//elementtype=1;
 		Dmg=50;
 		Range=2000;
