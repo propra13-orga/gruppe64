@@ -15,7 +15,7 @@ public class Message implements Serializable {
 	public ArrayList<Object> object;
 	public headers head;
 	public Object[] array;
-	enum headers{chatmsg,move,damage,chgready, svrmsg, setLocation, svrshutdown, clshutdown, start, attack};
+	enum headers{chatmsg,move,damage,chgready, svrmsg, setLocation, svrshutdown, clshutdown, start, attack, startLevel, switcharmor, setMap, closeLobby};
 	public interface  Performer{
 		public  Object performOn(NPlayer slave);
 	}

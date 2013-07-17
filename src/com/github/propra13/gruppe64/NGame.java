@@ -22,13 +22,11 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import com.github.propra13.gruppe64.visible.MapGenerator;
-import com.github.propra13.gruppe64.visible.Room;
-import com.github.propra13.gruppe64.visible.World;
+import com.github.propra13.gruppe64.visible.*;
 
 
 
-public class NGame extends Game implements Runnable{
+public class NGame extends Game implements Runnable,MapProcessor{
 	
 
 	
@@ -38,6 +36,8 @@ public class NGame extends Game implements Runnable{
 	
 	public transient NPlayer player;
 	public ArrayList<NPlayer> playerList;
+	private ArrayList<Map> mapList;
+	private Level level;
 	
 	/**
 	 * cp ist content-pane von unserem JFrame
@@ -86,5 +86,14 @@ public class NGame extends Game implements Runnable{
 	public void initGamefield() {
 		super.initGamefield();
 		main.controller.setPlayer(player);
+	}
+	public void startLevel(){
+		//TODO
+	}
+	public void startMapProcessor(Object object) {
+		map=(Map)object;
+		//this ist wichtig, da Game.player
+		new ClientMapProcessor(this,map,this.player);
+		
 	}
 }

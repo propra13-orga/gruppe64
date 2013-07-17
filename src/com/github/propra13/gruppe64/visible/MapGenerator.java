@@ -31,7 +31,7 @@ public class MapGenerator implements PAS{
 	private String[][] pasToken;
 	private String[][] tLineDesc;
 	private ArrayList<Door> doorList;
-	private ArrayList<Room> roomList;
+	private ArrayList<Map> mapList;
 	/** 
 	 * @param gFilePath 
 	 * the generic filepath
@@ -175,21 +175,21 @@ public class MapGenerator implements PAS{
 		char[][] map = readFile( mapwidth, mapheight, fPath);
 		return map;
 	}
-	public  ArrayList<Room> generateRoomList(Level level){
-		roomList = new ArrayList<Room>();
+	public  ArrayList<Map> generateRoomList(int lvl){
+		mapList = new ArrayList<Map>();
 		char[][] tmpArray;
-		int lRoomNr=1, lvl = level.getLevelNr();
+		int lRoomNr=1;
 		tmpArray=this.readArrayList(this.pathString(lvl, lRoomNr));
 		while(tmpArray!=null){
 			System.out.println(Room.charString(tmpArray));
 			
-			Room raum = new Room(level,tmpArray,lRoomNr);
-			roomList.add(raum);
+			Room raum = new Room(tmpArray,lRoomNr);
+			mapList.add((Map)raum);
 			tmpArray=this.readArrayList(this.pathString(lvl,++lRoomNr));
 		}
 		//procesprocess 
 		iLineDesc = lineDesc.iterator();
-		for(Room map: roomList ){
+		for(Map map: mapList ){
 			preProcessMap(map);
 		}
 		//linked Doors
@@ -206,7 +206,7 @@ public class MapGenerator implements PAS{
 				System.out.print("target Door not found");
 			}
 		}
-		return roomList;
+		return mapList;
 	}
 	public Map generateMap(Class<? extends Map> mapClass,String mapFile){
 		char[][] tArray=readArrayList(mapFile);Map map=null;

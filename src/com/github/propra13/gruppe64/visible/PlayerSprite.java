@@ -38,7 +38,9 @@ public class PlayerSprite extends Movable implements Player, SpriteContent{
 	public static final int[] prefPos={600, 400};
 
 
-	private int w,a;						//waffen Nr im Waffenslot
+	protected int w;						//waffen Nr im Waffenslot
+
+	private int a;
 
 	private transient Timer timer_pl;
 	private int mode=0;
@@ -83,7 +85,7 @@ public class PlayerSprite extends Movable implements Player, SpriteContent{
 
 		lvlUnl=1;
 
-		sprite.setBounds(x,y,30,30);
+		sprite.setBounds(x,y,100,30);
 		 
 	}
 	public PlayerSprite(){
@@ -97,7 +99,7 @@ public class PlayerSprite extends Movable implements Player, SpriteContent{
 	    g.drawImage(img2, 0, 0, sprite);
 	    g.finalize();	
 	    g.setFont(new Font ("Arial", Font.PLAIN , 11));
-		g.drawString(nick, 10, 10);
+		g.drawString(nick, 0, 10);
 	}
 	public void updateMot(){
 		if(movMode!=modes.moving)return;

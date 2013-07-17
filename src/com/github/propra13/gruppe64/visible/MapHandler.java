@@ -43,7 +43,9 @@ public class MapHandler extends JPanel{
         }
         @Override
         public void componentMoved(ComponentEvent e) {
+
         	if(e.getSource() instanceof SpriteComponent){ updateMapPos();}
+
         	super.componentMoved(e);
         }
 

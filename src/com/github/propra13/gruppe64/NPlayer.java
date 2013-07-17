@@ -7,8 +7,6 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
-import java.io.Serializable;
-import java.net.ConnectException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
@@ -16,15 +14,13 @@ import java.net.SocketAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
-import javax.swing.JTextField;
+
 
 import com.github.propra13.gruppe64.visible.Item;
 import com.github.propra13.gruppe64.visible.Map;
-import com.github.propra13.gruppe64.visible.Movable;
+
 import com.github.propra13.gruppe64.visible.PlayerSprite;
-import com.github.propra13.gruppe64.visible.Movable.axis;
-import com.github.propra13.gruppe64.visible.Movable.dir;
-import com.github.propra13.gruppe64.visible.World;
+
 
 
 
@@ -118,9 +114,10 @@ public class NPlayer extends PlayerSprite implements Player,ActiveArea{
 				case chgready:	nGame.playerList=(ArrayList<NPlayer>) msgobj.array[0]; // FALSCH!
 								lobby.updateTable();
 					break;
-				case start:		nGame.playerList=(ArrayList<NPlayer>) msgobj.array[0];
-								nGame.initGamefield();
-								nGame.showMap((Map)msgobj.array[1]);								
+				case setMap:		//nGame.playerList=(ArrayList<NPlayer>) msgobj.array[0];
+								if(nGame.getCP()==null)nGame.initGamefield();
+								//{null,roomList}
+								nGame.startMapProcessor(msgobj.array[0]);								
 					break;
 				case damage:
 					break;
@@ -296,7 +293,7 @@ public class NPlayer extends PlayerSprite implements Player,ActiveArea{
 
 	@Override
 	public void switcharmor() {
-		// TODO Auto-generated method stub
+		sendMsg(Message.headers.switcharmor, new Object[]{w});
 		
 	}
 
@@ -310,13 +307,6 @@ public class NPlayer extends PlayerSprite implements Player,ActiveArea{
 
 	@Override
 	public void use(char c) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void setLvlUnlocked(int i) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -346,36 +336,8 @@ public class NPlayer extends PlayerSprite implements Player,ActiveArea{
 		return 0;
 	}
 
-	@Override
-	public void setNick(String string) {
-		nick=string;
-		
-	}
 
 
-	@Override
-	public boolean onTouchAction() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean onActionAction() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void onTouch(Movable mv) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onAction(Movable mv) {
-		// TODO Auto-generated method stub
-		
-	}
 	public void callbackFkt(Message.Performer perf){
 		perf.performOn(this);
 	}
