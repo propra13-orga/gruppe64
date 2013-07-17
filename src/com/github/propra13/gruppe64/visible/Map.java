@@ -211,8 +211,7 @@ public abstract class Map implements Serializable{
 		
 		getJPanel().add(sp.getSprite());
 		
-		if(!(sp instanceof Player))
-			spriteArray.add(sp);
+		
 		sp.setMap(this);
 		if(sp instanceof Movable){
 			movables.add((Movable) sp);
@@ -299,11 +298,13 @@ public abstract class Map implements Serializable{
 			public void run() {
 				try{
 					for (Movable mov: Map.this.getMovables()){
+						
+						Movable tMov=mov;
 						mov.updateMot();
 					
 					}
 				}catch (Exception e){
-					
+					e.printStackTrace();
 				}
 			}
 		};

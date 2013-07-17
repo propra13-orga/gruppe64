@@ -134,10 +134,10 @@ public class PlayerSprite extends Movable implements Player, SpriteContent{
 			if(it.isLootable() && Math.pow(it.sprite.getHeight()+it.sprite.getWidth(), 2)/16>Math.pow(x+Dim[0]/2-it.sprite.getX()-it.sprite.getWidth()/2,2)+Math.pow(y+Dim[1]/2-it.sprite.getY()-it.sprite.getHeight()/2,2))	
 				pickup(it);
 		}
-		ActiveArea aActiveA=map.isOnActiveArea(this);
+		/*ActiveArea aActiveA=map.isOnActiveArea(this);
 		if(aActiveA!= null){
 			aActiveA.onTouch(this);
-		}
+		}*/
 		
 	}
 	public void attemptAttack(){
