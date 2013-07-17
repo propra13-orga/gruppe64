@@ -30,9 +30,12 @@ public class ClientMapProcessor extends Thread{
 
 	public ClientMapProcessor(NGame game, Map map, NPlayer localPlayer) {
 		//world version
-
+			
 			//TODO der Spieler in der Map soll durch den localen ersetzt werden
-			game.getCP().add(map);
+			map.updLocalPlayer(localPlayer);
+			map.getMovables();
+			game.getCP().add(map, localPlayer);
+			map.getJPanel().add(localPlayer.getSprite());
 			map.startMotion();
 	}
 	
