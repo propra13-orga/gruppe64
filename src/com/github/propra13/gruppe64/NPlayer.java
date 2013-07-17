@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 
 
+import com.github.propra13.gruppe64.MessageCallbacks.AutoMessage;
 import com.github.propra13.gruppe64.visible.Item;
 import com.github.propra13.gruppe64.visible.Map;
 
@@ -107,7 +108,9 @@ public class NPlayer extends PlayerSprite implements Player,ActiveArea{
 			while(dataSocket.isConnected()&&!dataSocket.isClosed()){
 				Object robj= inOStream.readObject();
 				Message msgobj = null;
-				if(robj instanceof Message)msgobj=(Message)robj;
+				if(robj instanceof Message){
+					msgobj=(Message)robj;
+				
 				switch(msgobj.head){
 				case chatmsg:	this.getChatterBox().writeChat((ActiveArea)msgobj.object.get(0), (String)msgobj.object.get(1));
 					break;
@@ -134,6 +137,9 @@ public class NPlayer extends PlayerSprite implements Player,ActiveArea{
 					break;
 				default:
 					break;
+				}
+				} else if(robj instanceof AutoMessage){
+					((AutoMessage)robj).call(this);
 				}
 			}
 			
@@ -195,9 +201,9 @@ public class NPlayer extends PlayerSprite implements Player,ActiveArea{
 		}
 	}
 
-	public void sendMsg(Message msgObj) {
+	public void sendMsg(Object obj) {
 		try{
-			outOStream.writeObject(msgObj);outOStream.reset();
+			outOStream.writeObject(obj);outOStream.reset();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (NullPointerException e){
@@ -265,7 +271,7 @@ public class NPlayer extends PlayerSprite implements Player,ActiveArea{
 	@Override
 	public void setMot(dir i) {
 		super.setMot(i);
-		sendMsg(new Message(Message.headers.move,new Object[]{clientAddress,vel}));
+		sendMsg(new Message(Message.headers.setMot,new Object[]{clientAddress,vel}));
 	}
 
 	@Override
