@@ -30,6 +30,7 @@ import javax.swing.Action;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import com.github.propra13.gruppe64.MessageCallbacks.AMH;
 import com.github.propra13.gruppe64.visible.Map;
 import com.github.propra13.gruppe64.visible.MapGenerator;
 import com.github.propra13.gruppe64.visible.Room;
@@ -37,7 +38,7 @@ import com.github.propra13.gruppe64.visible.World;
 
 
 
-public class Server extends NGame implements Runnable{
+public class Server extends NGame implements Runnable, MessageCallbacks{
 	
 
 	
@@ -236,10 +237,10 @@ public class Server extends NGame implements Runnable{
 	}
 
 
-	private void sendAll(Message msgobj) {
+	private void sendAll(Object obj) {
 
 		for(NPlayer pl: playerList){
-			pl.sendMsg(msgobj);
+			pl.sendMsg(obj);
 		}
 		
 	}
@@ -248,7 +249,7 @@ public class Server extends NGame implements Runnable{
 			pl.sendMsg(header, array);
 		}
 	}
-	public class ClientHandler implements Runnable{
+	public class ClientHandler implements Runnable, MessageCallbacks{
 		private Server sgame;
 		private Socket socket;
 		private Thread myThread;
@@ -297,8 +298,10 @@ public class Server extends NGame implements Runnable{
 		world.drawMap();
 		roomList.add(world);
 		world.addAll(playerList);
-		sendAll(Message.headers.closeLobby,new Object[]{});
-		sendAll(Message.headers.setMap, new Object[]{world});
+		//sendAll(Message.headers.closeLobby,new Object[]{});
+		//sendAll(Message.headers.setMap, new Object[]{world});
+		NPlayer tNpl = new NPlayer(null, null); tNpl.map=world;
+		sendAll(new AutoMessage(AMH.setMap,tNpl));
 		new ServerMapProcessor(null, roomList, playerList);
 		System.out.println("Server startet Game");
 	}
