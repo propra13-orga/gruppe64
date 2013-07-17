@@ -1,12 +1,24 @@
 package com.github.propra13.gruppe64.visible;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.MouseEvent;
 
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+
 import com.github.propra13.gruppe64.*;
+
 
 
 public class Door extends Sprite implements ActiveArea,PAS{
@@ -33,7 +45,7 @@ public class Door extends Sprite implements ActiveArea,PAS{
 	private String nick="Door";
 	
 	private static int xDim = 50;
-	private static int yDim =50;
+	private static int yDim = 50;
 	
 
 	public Door(int x, int y, int doorNr, int leadsToNr) {
@@ -141,8 +153,82 @@ public class Door extends Sprite implements ActiveArea,PAS{
 	}
 	@Override
 	public JPanel getSetupDialog(MapGenerator mg, MapEditor me) {
+		JPanel pane = new JPanel(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+
+
+		JLabel label = new JLabel("null?");
+		c.anchor=GridBagConstraints.EAST;
+		c.fill=GridBagConstraints.NONE;
+		c.gridheight = 1;
+		c.gridwidth = 2;
+		c.gridx = 0;
+		c.gridy = 0;
+		pane.add( label , c);
 		
-		return null;
+
+		JTextField tdNr = new JTextField("tDoorNr");
+		tdNr.addKeyListener(map.game.main.controller);
+		tdNr.setToolTipText("tDoorNr");
+		c.gridheight = 1;
+		c.gridwidth = 1;
+		c.gridx = 0;
+		c.gridy = 1;
+		pane.add( tdNr , c);
+		
+		JTextField dNr = new JTextField("DoorNr");
+		dNr.addKeyListener(map.game.main.controller);
+		dNr.setToolTipText("doorNr");
+		c.gridheight = 1;
+		c.gridx = 0;
+		c.gridy = 2;
+		pane.add( dNr , c);
+
+		JTextField sp = new JTextField("special");
+		sp.addKeyListener(map.game.main.controller);
+		sp.setToolTipText("special");
+		c.gridheight = 1;
+		c.gridx = 0;
+		c.gridy = 3;
+		pane.add( sp , c);
+		
+		JTextField spNr = new JTextField("specialNr");
+		spNr.addKeyListener(map.game.main.controller);
+		spNr.setToolTipText("specialNr");
+		c.gridheight = 1;
+		c.gridx = 0;
+		c.gridy = 4;
+		pane.add( spNr , c);
+		
+		JCheckBox cb1=new JCheckBox();
+		c.gridx = 1;
+		c.gridy = 1;
+		pane.add( cb1 , c);
+		
+		JCheckBox cb2=new JCheckBox();
+		c.gridx = 1;
+		c.gridy = 2;
+		pane.add( cb2 , c);
+		
+		JCheckBox cb3=new JCheckBox();
+		c.gridx = 1;
+		c.gridy = 3;
+		pane.add( cb3 , c);
+		
+		JCheckBox cb4=new JCheckBox();
+		c.gridx = 1;
+		c.gridy = 4;
+		pane.add( cb4 , c);
+		
+		
+		JButton speichern = new JButton("speichern");
+		c.gridx = 1;
+		c.gridy = 5;
+		pane.add(speichern, c);
+	
+		
+		
+		return pane;
 	}
 	@Override
 	public String getNick() {

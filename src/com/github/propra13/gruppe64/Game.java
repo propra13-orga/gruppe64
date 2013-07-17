@@ -22,7 +22,7 @@ public class Game implements Runnable{
 	/**
 	 * Instanzvariablen
 	 */
-	protected Main main; 
+	public Main main; 
 	protected Map map;
 	protected Container cp;
 	

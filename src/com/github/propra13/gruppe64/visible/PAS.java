@@ -4,7 +4,7 @@ import javax.swing.JPanel;
 
 /**
  * ProcessAble Sprite
- * ein Sprite, der mit einer Beschreibungs funktion kommt, die
+ * ein Sprite, der mit einer Beschreibungsfunktion kommt, die
  * von MapGenerator in mehreren Schritten verarbeitet werden kann und 
  * leichter menschenlesbar ist als JSON
  * @author vad
