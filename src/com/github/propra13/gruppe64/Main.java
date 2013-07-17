@@ -143,7 +143,7 @@ public class Main extends JFrame implements ActionListener{
 		    clip = (Clip) AudioSystem.getLine(info);
 		    clip.stop();
 		    clip.open(stream);
-		   // clip.start();   
+		    clip.start();   
 		}
 		catch (Exception e) {
 		    System.err.print("Sound-Fehler:\n");

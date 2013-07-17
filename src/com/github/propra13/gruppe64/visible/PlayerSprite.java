@@ -171,7 +171,7 @@ public class PlayerSprite extends Movable implements Player, SpriteContent{
 					treffer=true;
 				}
 			}
-			/*
+			
 			File f=null;
 			if(treffer)	f=slotarr.get(0).treffsnd;
 			else		f=slotarr.get(0).schlagsnd;
@@ -189,14 +189,14 @@ public class PlayerSprite extends Movable implements Player, SpriteContent{
 				    clip = (Clip) AudioSystem.getLine(info);
 				    clip.stop();
 				    clip.open(stream);
-				   // clip.start();   
+				    clip.start();   
 				}
 				catch (Exception e) {
 				    System.err.print("Sound-Fehler:\n");
 				    System.err.print(e.toString());
 				    System.err.print("\nOSX-specific\n");
 				}
-			}*/
+			}
 			 
 	
 		}
