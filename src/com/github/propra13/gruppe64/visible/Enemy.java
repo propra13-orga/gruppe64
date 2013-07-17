@@ -17,6 +17,11 @@ public class Enemy extends Movable implements SpriteNames,SpriteContent {
 	 */
 	private static final long serialVersionUID = 2216301988921162914L;
 	private char name;
+	/**
+	 * Konstruktor fuer Gegner mit Positions und Groeßenangabe und Typ des Gegners
+	 */
+	
+	
 	public Enemy(int x, int y, int xDim, int yDim,char name) {
 		this();
 		this.name=name;
@@ -26,7 +31,9 @@ public class Enemy extends Movable implements SpriteNames,SpriteContent {
 		sprite.setBounds( x, y, xDim, yDim);
 		this.x=x;this.y=y;
 	}
-	
+	/**
+	 *  Konstruktor zusaetzlich mit Elementtyp Feuer oder Eis
+	 */
 	public Enemy(int x, int y, int xDim, int yDim, char name, int elementtype) {
 		this();
 		this.elementtype=elementtype;
@@ -37,7 +44,9 @@ public class Enemy extends Movable implements SpriteNames,SpriteContent {
 		sprite.setBounds( x, y, xDim, yDim);
 		this.x=x;this.y=y;
 	}
-
+/**
+ *  Allgemeiner Gegner mit Groeße von  50 pixeln
+ */
 	public Enemy(int xDim, int yDim, char name) {
 		this();
 		this.name=name;
@@ -93,6 +102,9 @@ public class Enemy extends Movable implements SpriteNames,SpriteContent {
 	
 	
 	@Override
+	/**
+	 * aktualisiert Bewegung des Gegners
+	 */
 	public void updateMot(){
 		if(movMode!=modes.moving)return;
 		
@@ -122,6 +134,9 @@ public class Enemy extends Movable implements SpriteNames,SpriteContent {
 		// TODO Auto-generated method stub
 		return "Cat";
 	}
+	/**
+	 * entfernt Gegner von der Map
+	 */
 	protected void die(){
 		map.remove(this);
 	}

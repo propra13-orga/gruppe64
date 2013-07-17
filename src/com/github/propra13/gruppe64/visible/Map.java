@@ -45,6 +45,9 @@ public abstract class Map implements Serializable{
 	protected Player focusPlayer;
 	protected int spritewidth=50;
 	protected int spriteheight=50;
+	/**
+	 * baut Map aus Charakter
+	 */
 	protected char[][] mapArray;
 	protected ArrayList<Movable> movables;
 	protected ArrayList<Item> items;

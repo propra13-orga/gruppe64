@@ -26,16 +26,35 @@ public class Item extends Sprite implements ActiveArea,SpriteNames{
 	//Groesse des Items
 	int xd=50,yd=50;
 	private boolean isWeapon=false;
+	/**
+	 * gibt Schaden an
+	 */
 	private int Dmg;
+	/**
+	 * gibt Radius an in dem man getroffen werden kann
+	 */
 	private int Range;
+	
 	private PlayerSprite player;
+	/**
+	 * Kosten fue Items
+	 */
 	private int price=0;
+	/**
+	 * Treffer Sound
+	 */
 	public File treffsnd=null;
+	/**
+	 * Schlagsound
+	 */
 	public File schlagsnd=null;
 	
 	static public int NORMAL=0,FIRE=1,ICE=2;
 	public int elementtype=NORMAL;
-
+/**
+ *  Konstrukter für verschiedene Items (Schwert,Gold...)
+ * @param name
+ */
 	public Item( char name)// Name des Items
 	
 	{	
@@ -133,27 +152,39 @@ public class Item extends Sprite implements ActiveArea,SpriteNames{
 		super();
 	}
 	
-	
+	/**
+	 * Item aufnehmbar
+	 * @return
+	 */
 	public boolean isLootable(){
 		return lootable;
 	}
-	
+	/**
+	 * Item auf aufnehmbar setzen
+	 * @param l
+	 */
 	public void setLootable(boolean l){
 		lootable=l;
 	}
 	
-	//Methoden
+	/**
+	 * gibt Schaden an
+	 */
 	public int getDmg(){
 		return Dmg;
 	}
 	
-
+	/**
+	 * gibt Radius des Schlages an
+	 */
 	public int getRange(){
 		return Range;
 	}
 
-	//pr��fe R��stung
 	
+	/**
+	 * gibt an ob gewaehltes Item eine Ruestung ist
+	 */
 	public boolean isArmor(){
 		if(displayedName.equals("FireArmor")||displayedName.equals("IceArmor")){
 			return true;
@@ -161,17 +192,22 @@ public class Item extends Sprite implements ActiveArea,SpriteNames{
 		else return false;
 		
 	}
-	
+	/**
+	 * gibt an ob Item eine Waffe oder keine Waffe ist
+	 */
 	public boolean isWeapon() {
 		
 		return isWeapon;
 	}
 	
 	
-
+	/**
+	 * setzt Item auf "Waffe"
+	 */
 	public void setWeapon(boolean isWeapon) {
 		this.isWeapon = isWeapon;
 	}
+	
 	public void mouseClicked(MouseEvent arg0) {
 		if (arg0.getClickCount()>1){
 			if(player!=null){

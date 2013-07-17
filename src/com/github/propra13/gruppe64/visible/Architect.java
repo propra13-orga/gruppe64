@@ -3,7 +3,11 @@ package com.github.propra13.gruppe64.visible;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-
+/**
+ * Klasse Architect zur Erstellung von Maps
+ * @author mas
+ *
+ */
 public class Architect extends PlayerSprite {
 	
 	
@@ -12,6 +16,11 @@ public class Architect extends PlayerSprite {
 	 */
 	private static final long serialVersionUID = -3635199988671252120L;
 
+	/**
+	 * innere Klasse ArchitectController zur Steuerung des Architects auf der Map
+	 * @author mas
+	 *
+	 */
 	public class ArchitectController extends KeyAdapter {
 		
 		
