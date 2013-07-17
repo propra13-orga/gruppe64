@@ -452,6 +452,14 @@ public abstract class Map implements Serializable{
 			this.add(pl);
 		}
 	}
+	public void updLocalPlayer(NPlayer npl){
+		for(Player np:playerList)
+			if(np.equals(npl))
+				np=npl;
+		for(Movable mov:movables)
+			if(mov.equals(npl))
+				mov=npl;
+	}
 }
 
 

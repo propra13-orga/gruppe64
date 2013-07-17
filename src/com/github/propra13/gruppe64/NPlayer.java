@@ -55,7 +55,7 @@ public class NPlayer extends PlayerSprite implements Player,ActiveArea{
 		readyState=b;
 	}
 	public NPlayer(String nick,NGame nGame) {
-		super(0,0);
+		super(10,10);
 		this.nick=nick;
 		
 		this.nGame=nGame;
@@ -121,7 +121,7 @@ public class NPlayer extends PlayerSprite implements Player,ActiveArea{
 					break;
 				case damage:
 					break;
-				case attack:
+				case attack:	
 					break;
 				case move:		getPlayerBySA((SocketAddress) msgobj.array[0]).setVel((int[]) msgobj.array[1]);
 					break;
@@ -311,6 +311,9 @@ public class NPlayer extends PlayerSprite implements Player,ActiveArea{
 		
 	}
 
+	public boolean equals(NPlayer npl){
+		return clientAddress.equals(npl.clientAddress);
+	}
 
 	@Override
 	public ArrayList<Item> getItems() {
